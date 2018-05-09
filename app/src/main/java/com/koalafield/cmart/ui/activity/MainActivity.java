@@ -1,15 +1,20 @@
 package com.koalafield.cmart.ui.activity;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import android.widget.Toast;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.utils.DataGenerator;
+import com.koalafield.cmart.bean.home.TabEntity;
+import com.koalafield.cmart.ui.fragment.CartFragment;
+import com.koalafield.cmart.ui.fragment.CategryFragment;
+import com.koalafield.cmart.ui.fragment.HomeFragment;
+import com.koalafield.cmart.ui.fragment.PersonFragment;
+import com.koalafield.cmart.widget.BottomBarLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -24,76 +29,72 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.home_container)
     FrameLayout home_container;
-    @BindView(R.id.bottom_tab_layout)
-    TabLayout bottom_tab_layout;
+    @BindView(R.id.bottom_nav)
+    BottomBarLayout bottom_nav;
 
-    private Fragment[]mFragmensts;
+    private List<TabEntity> tabEntityList;
+    private String[] tabText = {"商场","分类","购物车","个人中心"};
+    private int[] normalIcon = {R.mipmap.home,R.mipmap.play,R.mipmap.buy,R.mipmap.mine};
+    private int[] selectIcon = {R.mipmap.home1,R.mipmap.play1,R.mipmap.buy1,R.mipmap.mine1};
+    private int normalTextColor = Color.parseColor("#999999");
+    private int selectTextColor = Color.parseColor("#fa6e51");
+
 
 
     @Override
     public int attchLayoutRes() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
     @Override
     public void initDatas() {
-        mFragmensts = DataGenerator.getFragments("TabLayout Tab");
-        bottom_tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabEntityList = new ArrayList<>();
+        for (int i=0;i< tabText.length;i++){
+            TabEntity item = new TabEntity();
+            item.setText(tabText[i]);
+            item.setNormalIconId(normalIcon[i]);
+            item.setSelectIconId(selectIcon[i]);
+            if(i== 2){
+                item.setShowPoint(true);
+                item.setNewsCount(0);
+            }else{
+                item.setShowPoint(false);
+            }
+            tabEntityList.add(item);
+        }
+        bottom_nav.setNormalTextColor(normalTextColor);
+        bottom_nav.setSelectTextColor(selectTextColor);
+        bottom_nav.setTabList(tabEntityList);
+
+        //默认是首页
+        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new HomeFragment()).commit();
+        bottom_nav.setOnItemClickListener(new BottomBarLayout.OnItemClickListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                onTabItemSelected(tab.getPosition());
-                // Tab 选中之后，改变各个Tab的状态
-                for (int i=0;i<bottom_tab_layout.getTabCount();i++){
-                    View view = bottom_tab_layout.getTabAt(i).getCustomView();
-                    ImageView icon = (ImageView) view.findViewById(R.id.tab_content_image);
-                    TextView text = (TextView) view.findViewById(R.id.tab_content_text);
-                    if(i == tab.getPosition()){ // 选中状态
-                        icon.setImageResource(DataGenerator.mTabResPressed[i]);
-                        text.setTextColor(getResources().getColor(android.R.color.black));
-                    }else{// 未选中状态
-                        icon.setImageResource(DataGenerator.mTabRes[i]);
-                        text.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                    }
+            public void onItemClick(int position) {
+                Toast.makeText(MainActivity.this,position+"",Toast.LENGTH_SHORT).show();
+                switch (position){
+                    case 0:  //商城
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new HomeFragment()).commit();
+                        break;
+                    case 1:  //分类
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new CategryFragment()).commit();
+                        break;
+                    case 2:   //购物车
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new CartFragment()).commit();
+                        break;
+                    case 3:   //个人中心
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new PersonFragment()).commit();
+
+                    default:
+                        break;
                 }
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
         });
-        // 提供自定义的布局添加Tab
-        for(int i=0;i<4;i++){
-            bottom_tab_layout.addTab(bottom_tab_layout.newTab().setCustomView(DataGenerator.getTabView(this,i)));
-        }
+
+
     }
 
     @Override
     public void upDateViews() {}
 
-
-    private void onTabItemSelected(int position){
-        Fragment fragment = null;
-        switch (position){
-            case 0:
-                fragment = mFragmensts[0];
-                break;
-            case 1:
-                fragment = mFragmensts[1];
-                break;
-
-            case 2:
-                fragment = mFragmensts[2];
-                break;
-            case 3:
-                fragment = mFragmensts[3];
-                break;
-            default:
-                break;
-        }
-        if(fragment!=null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.home_container,fragment).commit();
-        }
-    }
 }

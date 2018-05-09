@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.fragment;
 
+import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.fragment.BaseFragment;
 
 /**
@@ -11,16 +12,10 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
 
 public class CartFragment extends BaseFragment {
 
-    private  static  String mFrom ;
 
-    public static CartFragment newInstance(String from){
-        mFrom = from;
-        CartFragment fragment = new CartFragment();
-        return  fragment;
-    }
     @Override
     protected int attachLayoutRes() {
-        return 0;
+        return R.layout.fragment_cart;
     }
 
     @Override

@@ -1,3 +1,4 @@
+/*
 package com.koalafield.cmart.utils;
 
 import android.content.Context;
@@ -12,11 +13,13 @@ import com.koalafield.cmart.ui.fragment.CategryFragment;
 import com.koalafield.cmart.ui.fragment.HomeFragment;
 import com.koalafield.cmart.ui.fragment.PersonFragment;
 
+*/
 /**
  *
  * @author jiangrenming
  * @date 2018/5/9
- */
+ *//*
+
 
 public class DataGenerator {
 
@@ -33,12 +36,14 @@ public class DataGenerator {
         return fragments;
     }
 
-    /**
+    */
+/**
      * 获取Tab 显示的内容
      * @param context
      * @param position
      * @return
-     */
+     *//*
+
     public static View getTabView(Context context, int position){
         View view = LayoutInflater.from(context).inflate(R.layout.home_tab_content,null);
         ImageView tabIcon = (ImageView) view.findViewById(R.id.tab_content_image);
@@ -48,3 +53,4 @@ public class DataGenerator {
         return view;
     }
 }
+*/
