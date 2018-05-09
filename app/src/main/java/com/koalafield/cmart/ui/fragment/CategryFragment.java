@@ -11,7 +11,13 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
 
 public class CategryFragment extends BaseFragment{
 
+    private  static  String mFrom ;
 
+    public static CategryFragment newInstance(String from){
+        mFrom = from;
+        CategryFragment fragment = new CategryFragment();
+        return  fragment;
+    }
     @Override
     protected int attachLayoutRes() {
         return 0;

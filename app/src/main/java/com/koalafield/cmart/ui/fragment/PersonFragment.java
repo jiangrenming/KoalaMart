@@ -10,6 +10,14 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
  */
 
 public class PersonFragment extends BaseFragment{
+
+    private  static  String mFrom ;
+
+    public static PersonFragment newInstance(String from){
+        mFrom = from;
+        PersonFragment fragment = new PersonFragment();
+        return  fragment;
+    }
     @Override
     protected int attachLayoutRes() {
         return 0;
