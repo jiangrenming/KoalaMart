@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildTools
+    defaultConfig {
+        applicationId "com.koalafield.cmart"
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode rootProject.ext.version
+        versionName rootProject.ext.name
+        multiDexEnabled true
+    }
+    signingConfigs {
+       /* myConfig {
+            storeFile file('koalamart.keystore')
+            storePassword "koalamart"
+            keyAlias "koalamart.keystore"
+            keyPassword "koalamart"
+        }*/
+    }
+    buildTypes {
+        debug {
+            buildConfigField "String", "POST_URL", "${SIT_IP}"
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    //        signingConfig signingConfigs.myConfig
+        }
+        release {
+            buildConfigField "String", "POST_URL", "${REAL_IP}"
+            minifyEnabled true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    //        signingConfig signingConfigs.myConfig
+        }
+    }
+    // 源文件加上aidl文件夹下的java文件，默认只包含java文件夹下的。
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':retrofitlibrary')
+    compile project(':RecyclerViewHelper')
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile "com.android.support:design:${rootProject.ext.support}"
+    // leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    compile 'com.github.Rukey7:TagLayout:1.0.3'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+}
