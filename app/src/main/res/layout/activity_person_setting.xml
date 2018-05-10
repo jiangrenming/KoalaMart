@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/header"
+        layout="@layout/top_header"/>
+    <View
+        android:id="@+id/setting_view"
+        android:layout_below="@+id/header"
+        android:layout_width="match_parent"
+        android:background="@color/gray_light2"
+        android:layout_height="20dp"/>
+
+    <com.koalafield.cmart.widget.MyBoundScrollView
+        android:layout_below="@+id/setting_view"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/login_pwd"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:text="登录密码"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/right"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:paddingLeft="15dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_light2"/>
+
+            <RelativeLayout
+                android:id="@+id/clear"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:text="清理缓存"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/right"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:paddingLeft="15dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_light2"/>
+
+            <RelativeLayout
+                android:id="@+id/about_us"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:text="关于我们"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/right"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:paddingLeft="15dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_light2"/>
+
+            <RelativeLayout
+                android:id="@+id/help_centre"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:text="帮助中心"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/right"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:paddingLeft="15dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_light2"/>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/gray_light2"
+                android:layout_height="50dp"/>
+            <TextView
+                android:id="@+id/login_out"
+                android:layout_width="match_parent"
+                android:text="退出登录"
+                android:textColor="@color/red"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+    </com.koalafield.cmart.widget.MyBoundScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light2"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:background="@color/gray_light2"
+        android:text="系统版本号:1.0.0"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_weight="1"
+        android:layout_height="10dp" />
+</LinearLayout>

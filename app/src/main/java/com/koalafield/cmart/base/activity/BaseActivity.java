@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -38,6 +39,8 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
     public  abstract  void upDateViews();
     public  T mPresent;
 
+    private long lastClickTime;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,5 +73,25 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
         }
     }
 
+    /**
+     * 控制点击事件。
+     *
+     * @return
+     */
+    public boolean allowNext() {
+        long currentTime = System.currentTimeMillis();
+        long temClickTime = lastClickTime;
+        lastClickTime = currentTime;
+        return (currentTime - temClickTime) > 400;
+    }
 
+    /**
+     * 设置获取焦点
+     * @param view
+     */
+    public  void setFocus(View view) {
+        view.setFocusable(true);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+    }
 }

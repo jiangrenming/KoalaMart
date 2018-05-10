@@ -54,7 +54,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.MainActivity"/>
-
+        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.use.PrivateActivity"/>
+        <activity android:name=".ui.activity.use.UpdatePrivateActivity"/>
+        <activity android:name=".ui.activity.use.PersonSettingActivity"/>
 
     </application>
 

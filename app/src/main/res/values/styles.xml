@@ -8,4 +8,50 @@
         <!-- 用这张图这样会变形，不知是分辨率问题还是怎么着 -->
         <!--<item name="android:windowBackground">@mipmap/ic_github</item>-->
     </style>
+
+    <style name="login_comfirm">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:text">登录</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/redbutton</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="login_register">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:text">注册</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/redbutton</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="comfirm">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:text">确定</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/redbutton</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--弹窗动画-->
+    <style name="PopupWindow">
+        <item name="android:windowEnterAnimation">@anim/popup_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_out</item>
+    </style>
 </resources>
