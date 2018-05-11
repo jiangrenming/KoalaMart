@@ -128,22 +128,16 @@ public class MartOrderActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 count = position;
-                setOnPageSelectedWithPosition(position);
+                initTabColor(position);
+               // setOnPageSelectedWithPosition(position);
             }
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
-
-        indicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(count);
-                setOnPageSelectedWithPosition(count);
-            }
-        });
     }
 
-    private void setOnPageSelectedWithPosition(int position) {
+   /* private void setOnPageSelectedWithPosition(int position) {
+        initTabColor(position);
         switch (position) {
             case 0:
                 initTabColor(0);
@@ -163,5 +157,5 @@ public class MartOrderActivity extends BaseActivity {
             default:
                 break;
         }
-    }
+    }*/
 }
