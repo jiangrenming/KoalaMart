@@ -24,6 +24,7 @@
     </LinearLayout>
 
     <com.koalafield.cmart.widget.MyBoundScrollView
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:scrollbars="none"
         android:layout_height="match_parent">
@@ -187,7 +188,7 @@
                         android:id="@+id/old_buy"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
-                        android:layout_height="50dp">
+                        android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
                             android:src="@mipmap/home"
@@ -216,7 +217,7 @@
                         android:id="@+id/discount_quan"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
-                        android:layout_height="50dp">
+                        android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
                             android:src="@mipmap/home"
@@ -245,7 +246,7 @@
                         android:id="@+id/collection_product"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
-                        android:layout_height="50dp">
+                        android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
                             android:src="@mipmap/home"
@@ -274,7 +275,7 @@
                         android:id="@+id/address_manager"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
-                        android:layout_height="50dp">
+                        android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
                             android:src="@mipmap/home"
@@ -303,7 +304,7 @@
                         android:id="@+id/contact_custemer"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
-                        android:layout_height="50dp">
+                        android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
                             android:src="@mipmap/home"
@@ -333,7 +334,7 @@
                         android:id="@+id/service_infos"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
-                        android:layout_height="50dp">
+                        android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
                             android:src="@mipmap/home"
@@ -363,7 +364,7 @@
                         android:id="@+id/setting"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
-                        android:layout_height="50dp">
+                        android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
                             android:src="@mipmap/home"

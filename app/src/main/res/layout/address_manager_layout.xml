@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/address_name"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"
+            android:text="张三"/>
+        <TextView
+            android:layout_alignParentRight="true"
+            android:id="@+id/address_phone"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"
+            android:text="17621216837"/>
+        <TextView
+            android:id="@+id/address_detail"
+            android:layout_below="@+id/address_phone"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="上海上海市浦东新区世博大道鲁能国际中心b座11楼"/>
+        <View
+            android:id="@+id/address_view"
+            android:layout_width="match_parent"
+            android:background="@color/gray_light2"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/address_detail"
+            android:layout_height="0.5dp"/>
+
+        <LinearLayout
+            android:layout_below="@+id/address_view"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_select"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/edit_unselect" />
+            <TextView
+                android:id="@+id/default_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设为默认"
+                android:paddingLeft="5dp"/>
+            <LinearLayout
+                android:id="@+id/iv_address_edit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:layout_marginRight="15dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:paddingRight="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/user_edit"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="编辑"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/iv_address_trash"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:paddingRight="5dp"
+                    android:layout_height="18dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/trash" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="删除"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="10dp"/>
+</LinearLayout>

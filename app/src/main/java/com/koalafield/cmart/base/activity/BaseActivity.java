@@ -13,6 +13,7 @@ import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.presenter.IBasePresenter;
 import com.koalafield.cmart.base.view.IBaseView;
 import com.koalafield.cmart.utils.StackActivityManager;
+import com.koalafield.cmart.utils.SwipeRefreshHelper;
 import com.koalafield.cmart.widget.EmptyLayout;
 
 import butterknife.BindView;
@@ -33,12 +34,11 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
     @Nullable
     @BindView(R.id.empty_layout)
     protected EmptyLayout mEmptyLayout;
+
     @LayoutRes
     public  abstract int attchLayoutRes();
     public  abstract  void initDatas();
     public  abstract  void upDateViews();
-    public  T mPresent;
-
     private long lastClickTime;
 
     @Override

@@ -34,7 +34,6 @@
     <!--8.0安装需要的权限-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-
     <application
         android:name=".AndoridApplication"
         android:allowBackup="true"
@@ -58,6 +57,8 @@
         <activity android:name=".ui.activity.use.PrivateActivity"/>
         <activity android:name=".ui.activity.use.UpdatePrivateActivity"/>
         <activity android:name=".ui.activity.use.PersonSettingActivity"/>
+        <activity android:name=".ui.activity.use.AddressManangerActivity"/>
+        <activity android:name=".ui.activity.order.MartOrderActivity"/>
 
     </application>
 

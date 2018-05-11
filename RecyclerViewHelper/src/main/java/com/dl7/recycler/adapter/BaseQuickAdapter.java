@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -273,6 +274,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
     public void setRequestDataListener(OnRequestDataListener listener) {
         this.onRequestDataListener = listener;
+        Log.e("是否加载更多",mIsLoadMoreEnable+"");
         if (!mIsLoadMoreEnable) {
             this.enableLoadMore(true);
         }

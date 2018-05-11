@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.utils.AndoridSysUtils;
+import com.koalafield.cmart.utils.StringUtils;
+import com.koalafield.cmart.widget.CommonDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,6 +48,11 @@ public class PersonSettingActivity extends BaseActivity {
     @Override
     public void initDatas() {
         top_name.setText("设置");
+        String versionName = AndoridSysUtils.getVersion(this, this.getPackageName());
+        if (StringUtils.isEmpty(versionName)){
+            versionName = "1.1.0";
+        }
+        version.setText(versionName);
     }
 
     @Override
@@ -57,6 +65,7 @@ public class PersonSettingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.login_pwd:
+
                 break;
             case R.id.clear:
                 break;
@@ -64,7 +73,18 @@ public class PersonSettingActivity extends BaseActivity {
                 break;
             case R.id.help_centre:
                 break;
-            case R.id.login_out:
+            case R.id.login_out:  //退出登录
+                new CommonDialog(this).builder().setTitle("退出").setMsg("退出后将删除数据").setNegativeButton("退出", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //退出登陆后返回主页面，同时改变购物车界面数目显示
+                    }
+                }).setPositiveButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
                 break;
             default:
                 break;

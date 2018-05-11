@@ -2,6 +2,10 @@ package com.koalafield.cmart.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.text.TextUtils;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
@@ -40,5 +44,44 @@ public class AndoridSysUtils {
         int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         int navigationHeight = context.getResources().getDimensionPixelSize(resourceId);
         return  navigationHeight;
+    }
+
+    /**
+     * 获取应用版本号
+     */
+    public  static  String getVersion(Context context,String packageName){
+        if (null == context || TextUtils.isEmpty(packageName)){
+            return null;
+        }
+        try{
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
+            return packageInfo == null ? null :packageInfo.versionName;
+        }catch (Exception e){
+                 e.printStackTrace();
+        }
+        return  null;
+    }
+
+    /**
+     * 获取应用内部版本号
+     */
+    public  static  int getVersionCode(Context context,String packageName){
+        if (null == context || TextUtils.isEmpty(packageName)){
+            return 0;
+        }
+        try{
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
+            return packageInfo == null ? null :packageInfo.versionCode;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  0;
+    }
+
+    public static int getColorValueByResId(Context context, int resId){
+        Resources resource = (Resources) context.getResources();
+        return resource.getColor(resId);
     }
 }
