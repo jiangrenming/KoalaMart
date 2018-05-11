@@ -76,26 +76,7 @@ public class MartOrderActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             count = intent.getIntExtra("type", -1);
-            switch (count) {
-                case 0:
-                    initTabColor(0);
-                    break;
-                case 1:
-                    initTabColor(1);
-                    break;
-                case 2:
-                    initTabColor(2);
-                    break;
-                case 3:
-                    initTabColor(3);
-                    break;
-                case 4:
-                    initTabColor(4);
-                    break;
-                default:
-                    break;
-
-            }
+            initTabColor(count);
         }
         initViewPager();
     }
@@ -103,7 +84,7 @@ public class MartOrderActivity extends BaseActivity {
     @Override
     public void upDateViews() {}
 
-    private void initTabColor(int index) {
+    private void initTabColor(final int index) {
         if (TabArray == null) {
             TabArray = new TextView[]{tab_one, tab_two, tab_three, tab_four, tab_five};
         }
@@ -113,6 +94,14 @@ public class MartOrderActivity extends BaseActivity {
             } else {
                 TabArray[i].setTextColor(AndoridSysUtils.getColorValueByResId(this,R.color.text_black));
             }
+            TabArray[i].setTag(i);
+            TabArray[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int po = Integer.parseInt(view.getTag().toString());
+                    mViewPager.setCurrentItem(po, true);
+                }
+            });
         }
     }
 
@@ -129,33 +118,12 @@ public class MartOrderActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 count = position;
                 initTabColor(position);
-               // setOnPageSelectedWithPosition(position);
             }
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+
+
     }
 
-   /* private void setOnPageSelectedWithPosition(int position) {
-        initTabColor(position);
-        switch (position) {
-            case 0:
-                initTabColor(0);
-                break;
-            case 1:
-                initTabColor(1);
-                break;
-            case 2:
-                initTabColor(2);
-                break;
-            case 3:
-                initTabColor(3);
-                break;
-            case 4:
-                initTabColor(4);
-                break;
-            default:
-                break;
-        }
-    }*/
 }

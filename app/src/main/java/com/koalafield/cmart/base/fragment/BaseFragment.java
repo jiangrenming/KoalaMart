@@ -34,7 +34,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment im
     EmptyLayout mEmptyLayout;
     @Nullable
     @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout mSwipeRefresh;
+    public SwipeRefreshLayout mSwipeRefresh;
 
     protected Context mContext;
     //缓存Fragment view

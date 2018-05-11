@@ -128,7 +128,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
-    private void skipOrderActivity(String type){
+    private void skipOrderActivity(int type){
         Intent intent = new Intent(mContext, MartOrderActivity.class);
         intent.putExtra("type",type);
         startActivity(intent);
