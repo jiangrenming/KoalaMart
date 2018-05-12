@@ -1,5 +1,13 @@
 package com.koalafield.cmart.api;
 
+import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.bean.user.RegisterBean;
+
+import io.reactivex.Flowable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
 /**
  *
  * @author jiangrenming
@@ -10,6 +18,11 @@ package com.koalafield.cmart.api;
 public interface ApiService {
 
     /**********************************get 请求列表************************************/
+
+    /**********************************post 请求列表***********************************/
+    //注册
+    @POST("AppApi/Register")
+    Flowable<BaseResponseBean<RegisterBean>> getRegisterAccount(@Body RequestBody body);
 
    /* *//**
      * 首页bananer

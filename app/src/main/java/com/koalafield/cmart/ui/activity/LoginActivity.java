@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.ViewUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.ui.activity.use.RegesterActivity;
 import com.koalafield.cmart.utils.StringUtils;
 
 import butterknife.BindView;
@@ -107,7 +109,8 @@ public class LoginActivity extends BaseActivity{
 
                 }
                 break;
-            case  R.id.register:
+            case  R.id.register: //注册
+                startActivity(new Intent(this, RegesterActivity.class));
                 break;
             case R.id.wx_login:
                 break;

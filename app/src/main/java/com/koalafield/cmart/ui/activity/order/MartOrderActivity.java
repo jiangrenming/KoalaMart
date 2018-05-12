@@ -72,7 +72,7 @@ public class MartOrderActivity extends BaseActivity {
         fragmentsList.add(new WaitJusticeFragment());
 
         //viewpager设置缓存页面
-        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setOffscreenPageLimit(2);
         Intent intent = getIntent();
         if (intent != null) {
             count = intent.getIntExtra("type", -1);

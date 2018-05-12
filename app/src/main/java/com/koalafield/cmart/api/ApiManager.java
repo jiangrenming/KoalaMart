@@ -1,7 +1,13 @@
 package com.koalafield.cmart.api;
 
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.google.gson.Gson;
+import com.koalafield.cmart.AndoridApplication;
+import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.bean.user.RegisterBean;
+
 import java.util.List;
 import java.util.Map;
 import io.reactivex.Flowable;
@@ -18,6 +24,46 @@ import okhttp3.RequestBody;
  */
 
 public class ApiManager {
+
+
+    /*********************************个人中心**************************************/
+    /**
+     * 注册
+     */
+    public static Flowable<RegisterBean> getIntegralMall(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getRegisterAccount(setParams(params)))
+                .flatMap(getRegister());
+    }
+
+    /***************************************数据转换器******************************************/
+    /**
+     * 注册
+     * @return
+     */
+    private static Function<BaseResponseBean,RegisterBean> getRegister() {
+        return new Function<BaseResponseBean, RegisterBean>() {
+            @Override
+            public RegisterBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (RegisterBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+
+
+    /***************************************post添加参数json格式转换**********************************************/
+    private static RequestBody setParams(Map<String,String> params){
+
+        //添加请求头
+
+
+        return  RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
+    }
+
+
 
   /*  *//**
      * 获取首页的bananer图片
