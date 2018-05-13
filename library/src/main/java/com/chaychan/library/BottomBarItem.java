@@ -1,10 +1,13 @@
 package com.chaychan.library;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -56,14 +59,19 @@ public class BottomBarItem extends LinearLayout {
     private Drawable mMsgTextBg;
     private Drawable mNotifyPointBg;
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public BottomBarItem(Context context) {
         this(context, null);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public BottomBarItem(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public BottomBarItem(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -142,6 +150,8 @@ public class BottomBarItem extends LinearLayout {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void init() {
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);

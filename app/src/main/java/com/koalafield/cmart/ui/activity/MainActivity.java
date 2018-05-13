@@ -1,30 +1,22 @@
 package com.koalafield.cmart.ui.activity;
 
-import android.graphics.Color;
+import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.chaychan.library.BottomBarItem;
-import com.chaychan.library.BottomBarLayout;
+import android.widget.TabHost;
+import android.widget.TextView;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.bean.home.TabEntity;
-import com.koalafield.cmart.ui.fragment.CartFragment;
-import com.koalafield.cmart.ui.fragment.CategryFragment;
-import com.koalafield.cmart.ui.fragment.HomeFragment;
-import com.koalafield.cmart.ui.fragment.PersonFragment;
-import java.util.ArrayList;
-import java.util.List;
+import com.koalafield.cmart.utils.Constants;
+import com.koalafield.cmart.utils.StackActivityManager;
 
+import java.util.HashMap;
+import java.util.Map;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  *
@@ -32,105 +24,156 @@ import butterknife.BindView;
  * @date 2018/5/9
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends TabActivity implements View.OnClickListener{
 
+    private TabHost tabHost;
 
-    @BindView(R.id.home_container)
-    FrameLayout home_container;
-    @BindView(R.id.bbl)
-    BottomBarLayout bottomBarLayout;
-
-    private List<Fragment> mFragmentList = new ArrayList<>();
-
-    /*@BindView(R.id.bottom_nav)
-    BottomBarLayout bottom_nav;*/
-
-    /*private List<TabEntity> tabEntityList;
-    private String[] tabText = {"商场","分类","购物车","个人中心"};
-    private int[] normalIcon = {R.mipmap.home,R.mipmap.play,R.mipmap.buy,R.mipmap.mine};
-    private int[] selectIcon = {R.mipmap.home1,R.mipmap.play1,R.mipmap.buy1,R.mipmap.mine1};
-    private int normalTextColor = Color.parseColor("#999999");
-    private int selectTextColor = Color.parseColor("#fa6e51");*/
-
+    @BindView(R.id.layout_1)
+    FrameLayout layout1;
+    @BindView(R.id.layout_2)
+    FrameLayout layout2;
+    @BindView(R.id.layout_3)
+    FrameLayout layout3;
+    @BindView(R.id.layout_4)
+    FrameLayout layout4;
+    @BindView(R.id.iv_index)
+    TextView iv_index;
+    @BindView(R.id.iv_category)
+    TextView iv_category;
+    @BindView(R.id.iv_shopcart)
+    TextView iv_shopcart;
+    @BindView(R.id.iv_user_center)
+    TextView iv_user_center;
+    @BindView(R.id.tv_cart_num)
+    TextView tv_cart_num;
+    private FrameLayout[] layoutArray = null;
+    private Map<Integer, View[]> tabMap = null;
+    private Intent mIntent;
 
 
     @Override
-    public int attchLayoutRes() {
-        return R.layout.activity_home;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        StackActivityManager.getActivityManager().addActivity(this);
+        ButterKnife.bind(this);
+        initDatas();
+        initAction();
     }
 
-    @Override
     public void initDatas() {
-        /*tabEntityList = new ArrayList<>();
-        for (int i=0;i< tabText.length;i++){
-            TabEntity item = new TabEntity();
-            item.setText(tabText[i]);
-            item.setNormalIconId(normalIcon[i]);
-            item.setSelectIconId(selectIcon[i]);
-            if(i== 2){
-                item.setShowPoint(true);
-                item.setNewsCount(0);
-            }else{
-                item.setShowPoint(false);
-            }
-            tabEntityList.add(item);
-        }
-        bottom_nav.setNormalTextColor(normalTextColor);
-        bottom_nav.setSelectTextColor(selectTextColor);
-        bottom_nav.setTabList(tabEntityList);*/
-        Log.i("跳转","首页");
-        //默认是首页
-      //  getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new HomeFragment()).commit();
-       /* bottom_nav.setOnItemClickListener(new BottomBarLayout.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this,position+"",Toast.LENGTH_SHORT).show();
-                switch (position){
-                    case 0:  //商城
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new HomeFragment()).commit();
-                        break;
-                    case 1:  //分类
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new CategryFragment()).commit();
-                        break;
-                    case 2:   //购物车
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new CartFragment()).commit();
-                        break;
-                    case 3:   //个人中心
-                        Log.i("跳转",position+"");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_container,new PersonFragment()).commit();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });*/
+        tabHost = findViewById(android.R.id.tabhost);
+        layoutArray = new FrameLayout[]{layout1, layout2, layout3, layout4};
+        tabMap = new HashMap<>();
+        tabMap.put(1, new View[]{layout1, iv_index});
+        tabMap.put(2, new View[]{layout2, iv_category});
+        tabMap.put(3, new View[]{layout3, iv_shopcart});
+        tabMap.put(4, new View[]{layout4, iv_user_center});
+        mIntent = new Intent(this,HomeActivity.class);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        overridePendingTransition(0, 0);
+        tabHost.addTab(tabHost.newTabSpec("1").setIndicator("1").setContent(mIntent));
+        tabHost.addTab(tabHost.newTabSpec("2").setIndicator("2").setContent(new Intent(this, CategryActivity.class)));
+        tabHost.addTab(tabHost.newTabSpec("3").setIndicator("3").setContent(new Intent(this, CartActivity.class)));
+        tabHost.addTab(tabHost.newTabSpec("4").setIndicator("4").setContent(new Intent(this, PersonActivity.class)));
+        // 初始化按钮颜色
+        initSelectTab();
 
-        HomeFragment homeFragment = new HomeFragment();
-        mFragmentList.add(homeFragment);
-        CategryFragment categryFragment = new CategryFragment();
-        mFragmentList.add(categryFragment);
-        CartFragment cartFragment = new CartFragment();
-        mFragmentList.add(cartFragment);
-        PersonFragment meFragment = new PersonFragment();
-        mFragmentList.add(meFragment);
-        changeFragment(0); //默认显示第一页
-        bottomBarLayout.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(final BottomBarItem bottomBarItem, int previousPosition, final int currentPosition) {
-                Log.i("MainActivity", "position: " + currentPosition);
-                changeFragment(currentPosition);
+    }
+
+    private void initSelectTab() {
+        int index = 1;
+        String selectedIndex = this.getIntent().getStringExtra(Constants.MAIN_SELECTED_INDEX);
+        if (selectedIndex != null && selectedIndex.length() > 0) {
+            index = Integer.parseInt(selectedIndex);
+        }
+        setSelectedIndex(index);
+    }
+
+    private void initAction() {
+        for (View view : layoutArray) {
+            view.setOnClickListener(MainActivity.this);
+        }
+    }
+
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        initSelectTab();
+    }
+
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("跳转页面","**********跳转界面为*********");
+        overridePendingTransition(0, 0);
+    }
+
+   /* @Subscribe(threadMode = ThreadMode.MAIN)
+    public  void getMessage(SelectEvent event){
+        Log.i("返回的类型",event.getType());
+        int currentPosition = 0;
+        if (null != event){
+            String type = event.getType();
+            if ("cart".equals(type)){
+                //跳转购物车
+                currentPosition = 2 ;
+            }else  if ("person".equals(type)){
+                //个人中心
+                currentPosition = 3;
+            }else if ("home".equals(type)){
+                currentPosition = 0;
             }
-        });
-        bottomBarLayout.setUnread(2, 99);//设置第一个页签的未读数为20
+            changeFragment(currentPosition);
+        }
+    }*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("是否销毁","**********跳转界面为*********");
+
+  //      EventBus.getDefault().unregister(this);
     }
 
     @Override
-    public void upDateViews() {}
+    public void onClick(View view) {
+        for (int i = 0; i < layoutArray.length; i++) {
+            if (view == layoutArray[i]) {
+                int selectIndex = i + 1;
+                setSelectedIndex(selectIndex);
+                break;
+            }
+        }
+    }
+
+    public void setSelectedIndex(int index) {
+        setTabSelected(index);
+        tabHost.setCurrentTabByTag(index + "");
+    }
+
+    private void setTabSelected(int index) {
+        if (tabMap == null)
+            return;
+        for (Integer key : tabMap.keySet()) {
+            boolean selected = false;
+            if (key == index) {
+                selected = true;
+            }
+            View[] viewArray = tabMap.get(key);
+            for (View view : viewArray) {
+                view.setSelected(selected);
+            }
+        }
+    }
 
 
-    private void changeFragment(int currentPosition) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.home_container, mFragmentList.get(currentPosition));
-        transaction.commit();
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
     }
 }

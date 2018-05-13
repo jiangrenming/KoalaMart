@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="30dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@mipmap/phone"
             android:layout_height="30dp" />
         <EditText
             android:id="@+id/account"
@@ -43,7 +43,7 @@
         <ImageView
             android:layout_width="30dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@mipmap/pwd"
             android:layout_height="30dp" />
         <EditText
             android:id="@+id/password"

@@ -7,7 +7,11 @@ import com.google.gson.Gson;
 import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
+import com.koalafield.cmart.utils.AndoridSysUtils;
+import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
+import com.koalafield.cmart.utils.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import io.reactivex.Flowable;
@@ -30,14 +34,45 @@ public class ApiManager {
     /**
      * 注册
      */
-    public static Flowable<RegisterBean> getIntegralMall(Map<String,String> params){
-        return apiSubscribe(AndoridApplication.apiService.getRegisterAccount(setParams(params)))
-                .flatMap(getRegister());
+    public static Flowable<RegisterBean> getRegsterInfos(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getRegisterAccount(getHeaders(),setParams(params)))
+                .map(getRegister());
     }
+    /**
+     * 登陆
+     */
+    public  static  Flowable<RegisterBean> getLoginInfos(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getLoginAccount(getHeaders(),setParams(params)))
+                .map(getRegister());
+    }
+
+
+    /*****************************添加头部*****************************************/
+
+    private static  Map<String,String> getHeaders(){
+        //设置头部
+        String lat = ""; //经度
+        String let = "";  //w纬度
+        String uniqueId = AndoridSysUtils.getUniqueId(AndoridApplication.getContext()); //唯一标识符
+        String version = AndoridSysUtils.getVersion(AndoridApplication.getContext(), AndoridApplication.getContext().getPackageName()); //版本号
+        String deviceType ="2"; //设备类型
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        Map<String,String> headers = new HashMap<>();
+        StringBuilder sb  =new StringBuilder();
+        sb.append(version).append(";").append(lat).append(",").append(let).append(";").append(uniqueId).append(";").append(deviceType);
+        headers.put("E-Agent",sb.toString());
+        if (!StringUtils.isEmpty(tickets)){
+            headers.put("ticket",tickets);
+        }else {
+            headers.put("ticket","");
+        }
+        return  headers;
+    }
+
 
     /***************************************数据转换器******************************************/
     /**
-     * 注册
+     * 注册,登陆
      * @return
      */
     private static Function<BaseResponseBean,RegisterBean> getRegister() {
@@ -56,10 +91,6 @@ public class ApiManager {
 
     /***************************************post添加参数json格式转换**********************************************/
     private static RequestBody setParams(Map<String,String> params){
-
-        //添加请求头
-
-
         return  RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
     }
 

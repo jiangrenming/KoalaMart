@@ -14,5 +14,6 @@ public class Constants {
     public static  final int WAIT_SEND =2;
     public static  final int WAIT_RECEIVER =3;
     public static  final int WAIT_JUST =4;
+    public static final String MAIN_SELECTED_INDEX = "selectedIndex";
 
 }

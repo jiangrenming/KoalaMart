@@ -37,9 +37,9 @@
     <application
         android:name=".AndoridApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
@@ -52,7 +52,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask" />
+
+        <activity android:name=".ui.activity.HomeActivity"/>
+        <activity android:name=".ui.activity.CartActivity"/>
+        <activity android:name=".ui.activity.CategryActivity"/>
+        <activity android:name=".ui.activity.PersonActivity"/>
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.use.RegesterActivity"/>
         <activity android:name=".ui.activity.use.PrivateActivity"/>

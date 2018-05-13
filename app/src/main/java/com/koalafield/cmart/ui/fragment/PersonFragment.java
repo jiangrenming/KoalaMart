@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.fragment.BaseFragment;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
@@ -25,12 +26,15 @@ import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.activity.use.PrivateActivity;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.Constants;
+import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  *
@@ -74,8 +78,14 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     private int navigationHeight = 0;
     private static  final  int PHOTO_REQUEST_TAKEPHOTO = 1;
 
+
     @Override
     protected int attachLayoutRes() {
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        if (StringUtils.isEmpty(tickets)){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+        }
         return R.layout.fragment_person;
     }
 
@@ -242,4 +252,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     public void onDismiss() {
         setBackgroundAlpha(1);
     }
+
+
+
 }

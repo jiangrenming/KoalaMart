@@ -3,9 +3,12 @@ package com.koalafield.cmart.api;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 
+import java.util.Map;
+
 import io.reactivex.Flowable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 
 /**
@@ -22,7 +25,12 @@ public interface ApiService {
     /**********************************post 请求列表***********************************/
     //注册
     @POST("AppApi/Register")
-    Flowable<BaseResponseBean<RegisterBean>> getRegisterAccount(@Body RequestBody body);
+    Flowable<BaseResponseBean<RegisterBean>> getRegisterAccount(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+
+    //登陆
+    @POST("AppApi/Login")
+    Flowable<BaseResponseBean<RegisterBean>> getLoginAccount (@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+
 
    /* *//**
      * 首页bananer

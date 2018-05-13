@@ -19,7 +19,7 @@ public class RegaxUtils {
      */
     public static boolean isMobilePhone(String str) {
 
-        if (StringUtils.isEmpty(str)){
+        if (!StringUtils.isEmpty(str)){
             String patternStr = "^1[3|4|5|7|8][0-9]\\d{8}$";
             Pattern p = Pattern.compile(patternStr);
             Matcher m = p.matcher(str);

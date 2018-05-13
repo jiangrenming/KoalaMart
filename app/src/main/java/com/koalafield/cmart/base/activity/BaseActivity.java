@@ -4,14 +4,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.koalafield.cmart.R;
+import com.koalafield.cmart.base.fragment.BaseFragment;
 import com.koalafield.cmart.base.presenter.IBasePresenter;
 import com.koalafield.cmart.base.view.IBaseView;
+import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
 import com.koalafield.cmart.widget.EmptyLayout;
@@ -40,6 +44,8 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
     public  abstract  void initDatas();
     public  abstract  void upDateViews();
     private long lastClickTime;
+    public T presenter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,4 +100,6 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
         view.setFocusableInTouchMode(true);
         view.requestFocus();
     }
+
+
 }

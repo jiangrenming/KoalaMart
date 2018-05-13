@@ -6,10 +6,11 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/home_container"
+        android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        />
 
     <View android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -42,7 +43,7 @@
             app:textColorNormal="@color/tab_normal_color"
             app:textColorSelected="@color/tab_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="-5dp"
+            app:itemMarginTop="0dp"
             app:openTouchBg="true"
             app:touchDrawable="@drawable/selector_bg"
             />
@@ -51,16 +52,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:iconNormal="@mipmap/tab_video_normal"
-            app:iconSelected="@mipmap/tab_video_selected"
-            app:itemMarginTop="-5dp"
+            app:iconNormal="@mipmap/categry"
+            app:iconSelected="@mipmap/categry1"
+            app:itemMarginTop="0dp"
             app:itemText="分类"
             app:itemTextSize="8sp"
             app:openTouchBg="true"
             app:textColorNormal="@color/tab_normal_color"
             app:textColorSelected="@color/tab_selected_color"
-            app:touchDrawable="@drawable/selector_bg"
-            app:unreadThreshold="999" />
+            app:touchDrawable="@drawable/selector_bg"/>
 
 
         <com.chaychan.library.BottomBarItem
@@ -73,7 +73,7 @@
             app:textColorNormal="@color/tab_normal_color"
             app:textColorSelected="@color/tab_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="-5dp"
+            app:itemMarginTop="0dp"
             app:openTouchBg="true"
             app:touchDrawable="@drawable/selector_bg"
             />
@@ -88,7 +88,7 @@
             app:textColorNormal="@color/tab_normal_color"
             app:textColorSelected="@color/tab_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="-5dp"
+            app:itemMarginTop="0dp"
             app:openTouchBg="true"
             app:touchDrawable="@drawable/selector_bg"
             />

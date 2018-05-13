@@ -64,6 +64,6 @@
     <color name="tab_selected_color">#D33D3C</color>
     <color name="unreadTextColor">#00ff00</color>
     <color name="msgTextColor">#00ff00</color>
-
     <color name="ubao_red">#de2628</color>
+    <color name="btn_red">#e3215d</color>
 </resources>
