@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/gray_light2"
-        android:layout_height="50dp">
+        android:layout_height="45dp">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -35,5 +35,7 @@
         app:middle_page_cover="false"
         app:open_mz_mode="false">
     </com.koalafield.cmart.bananer.MZBannerView>
+
+
 
 </LinearLayout>

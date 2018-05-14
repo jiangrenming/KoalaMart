@@ -162,8 +162,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-           StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
-       //     finish();
+            finish();
             StackActivityManager.getActivityManager().goToMain(this);
             return false;
         }
@@ -177,7 +176,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         if (!StringUtils.isEmpty(ticket)){
             ShareBankPreferenceUtils.putString("tickets",ticket);
             if (type == 1){
-               finish();
+                finish();
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }else if (type ==2){
                 finish();

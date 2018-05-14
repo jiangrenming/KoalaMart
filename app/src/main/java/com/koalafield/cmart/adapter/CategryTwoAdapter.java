@@ -9,7 +9,6 @@ import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
-import com.koalafield.cmart.bean.categry.CategryTwoBean;
 
 import java.util.List;
 
@@ -20,9 +19,10 @@ import java.util.List;
  * 二级列表
  */
 
-public class CategryTwoAdapter extends BaseQuickAdapter {
 
-    public CategryTwoAdapter(Context context, List<CategryTwoBean> data) {
+public class CategryTwoAdapter extends BaseQuickAdapter<CategryOneBean> {
+
+    public CategryTwoAdapter(Context context, List<CategryOneBean> data) {
         super(context, data);
     }
 
@@ -32,12 +32,11 @@ public class CategryTwoAdapter extends BaseQuickAdapter {
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, Object item) {
-        CategryTwoBean items = (CategryTwoBean) item;
+    protected void convert(BaseViewHolder holder, CategryOneBean item) {
         ImageView img = holder.getView(R.id.item_img);
         TextView name = holder.getView(R.id.categry_two_name);
-        name.setText(items.getName());
-        Glide.with(mContext).load(items.getImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(img);
+        name.setText(item.getName());
+        Glide.with(mContext).load(item.getImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(img);
     }
 
 

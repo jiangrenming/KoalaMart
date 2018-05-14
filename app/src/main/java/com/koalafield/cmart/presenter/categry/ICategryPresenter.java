@@ -13,5 +13,4 @@ import java.util.Map;
 public interface ICategryPresenter extends IBasePresenter{
 
     void  getCategryData(Map<String,String> params);
-    void  getCategryTwoData(Map<String,String> params);
 }

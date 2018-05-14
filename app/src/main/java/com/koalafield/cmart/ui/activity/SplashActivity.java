@@ -32,7 +32,6 @@ public class SplashActivity extends Activity {
     @BindView(R.id.tag_skip)
     TagView mTagSkip;
     private boolean mIsSkip = false;
-    private static final int BAI_DU_READ_PHONE_STATE = 100;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

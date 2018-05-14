@@ -63,13 +63,13 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getCategrys(getHeaders(),params))
                 .flatMap(getCategry());
     }
-    /**
+   /* *//**
      * 获取二级列表数据
-     */
+     *//*
     public  static  Flowable<List<CategryTwoBean>> getCategryTwo(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.getCategryTwos(getHeaders(),params))
                 .flatMap(getCategryTwo());
-    }
+    }*/
 
     /*****************************添加头部*****************************************/
 
@@ -130,7 +130,7 @@ public class ApiManager {
     /**
      *子分类列表
      */
-    private static Function<BaseResponseBean, Flowable<List<CategryTwoBean>>> getCategryTwo() {
+   /* private static Function<BaseResponseBean, Flowable<List<CategryTwoBean>>> getCategryTwo() {
         return new Function<BaseResponseBean, Flowable<List<CategryTwoBean>>>() {
             @Override
             public Flowable<List<CategryTwoBean>> apply(BaseResponseBean response) throws Exception {
@@ -140,7 +140,7 @@ public class ApiManager {
                 return  null;
             }
         };
-    }
+    }*/
 
     /**
      * 获取主页轮播图

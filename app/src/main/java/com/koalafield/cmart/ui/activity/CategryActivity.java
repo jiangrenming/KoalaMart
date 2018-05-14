@@ -1,24 +1,24 @@
 package com.koalafield.cmart.ui.activity;
 
-import android.content.Context;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.dl7.recycler.divider.DividerItemDecoration;
-import com.dl7.recycler.helper.RecyclerViewHelper;
+import com.bumptech.glide.Glide;
+import com.dl7.recycler.adapter.BaseViewHolder;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CategryOneAdapter;
 import com.koalafield.cmart.adapter.CategryTwoAdapter;
-import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
-import com.koalafield.cmart.bean.categry.CategryTwoBean;
 import com.koalafield.cmart.presenter.categry.CategryOnePresenter;
+import com.koalafield.cmart.presenter.categry.CategryTwoPresenter;
 import com.koalafield.cmart.presenter.categry.ICategryPresenter;
+import com.koalafield.cmart.presenter.categry.ICategryTwoPresenter;
+import com.koalafield.cmart.ui.view.categry.ICategryTwoView;
 import com.koalafield.cmart.ui.view.categry.ICategryView;
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 
+import static com.dl7.recycler.helper.RecyclerViewHelper.initRecyclerViewG;
 import static com.dl7.recycler.helper.RecyclerViewHelper.initRecyclerViewV;
 
 /**
@@ -36,7 +37,8 @@ import static com.dl7.recycler.helper.RecyclerViewHelper.initRecyclerViewV;
  * @date 2018/5/13
  */
 
-public class CategryActivity extends TabBaseActivity implements ICategryView{
+public class CategryActivity extends TabBaseActivity implements ICategryView<List<CategryOneBean>>
+                                    ,ICategryTwoView<List<CategryOneBean>>{
 
 
     @BindView(R.id.categry_one)
@@ -71,7 +73,20 @@ public class CategryActivity extends TabBaseActivity implements ICategryView{
             public void onItemClick(View view, int position) {
                 Log.i("点击的位置:",position+"");
                 CategryOneBean item = categryOneAdapter.getItem(position);
+                List<CategryOneBean> data = categryOneAdapter.getData();
+                for (int i = 0; i < data.size(); i++) {
+                    if (item.getId() == data.get(i).getId()){
+                        data.get(i).setSelect(true);
+                    }else {
+                        data.get(i).setSelect(false);
+                    }
+                }
+                categryOneAdapter.updateItems(data);
+                Glide.with(CategryActivity.this).load(item.getImg()).asBitmap().
+                        placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(categry_img);
                 requestCategrtTwos(item.getId());
+
+
             }
         });
     }
@@ -81,16 +96,24 @@ public class CategryActivity extends TabBaseActivity implements ICategryView{
 
 
 
+    private  List<CategryOneBean> categryOne ;
     @Override
-    public void onSucessFul(Object data) {
-        if (data != null){
-            List<CategryOneBean> datas = (List<CategryOneBean>) data;
-            Log.i("获取分类列表",datas.size()+"/第一个数据:"+datas.get(0).getName());
-            if (datas != null &&datas.size() >0){
-                categryOneAdapter.addItems(datas);
-                int categrySuperId = datas.get(0).getId();
-                requestCategrtTwos(categrySuperId);
+    public void onSucessFul(List<CategryOneBean> data) {
+        if (data != null && data.size() >0){
+            categryOne = data;
+            categryOneAdapter.addItems(data);
+            int categrySuperId = data.get(0).getId();
+            for (int i = 0; i < data.size(); i++) {
+                CategryOneBean categryOneBean = data.get(i);
+                if (i == 0){
+                    categryOneBean.setSelect(true);
+                }else {
+                    categryOneBean.setSelect(false);
+                }
             }
+            Glide.with(this).load(data.get(0).getImg()).asBitmap().
+                    placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(categry_img);
+            requestCategrtTwos(categrySuperId);
         }
     }
 
@@ -100,25 +123,31 @@ public class CategryActivity extends TabBaseActivity implements ICategryView{
     }
 
     @Override
-    public void onSucessTwo(Object data) {
-        if (data != null){
-            List<CategryTwoBean> categryTwo = (List<CategryTwoBean>) data;
-            if (categryTwo != null && categryTwo.size() >0 ){
-                if (null == categryTwoAdapter){
-                    categryTwoAdapter = new CategryTwoAdapter(this,categryTwo);
-                    initRecyclerViewV(this,categry_two,false,categryTwoAdapter);
-                }else {
-                    categryTwoAdapter.cleanItems();
-                    categryTwoAdapter.addItems(categryTwo);
-                }
+    public void onSucessTwoFul(List<CategryOneBean> data) {
+        Log.i("获取分类列表",data.size()+"/第一个数据:"+data.get(0).getName());
+        if (data != null && data.size() > 0) {
+            if (null == categryTwoAdapter) {
+                categryTwoAdapter = new CategryTwoAdapter(this,data);
+                initRecyclerViewG(this, categry_two,  categryTwoAdapter,3);
+            } else {
+                categryTwoAdapter.cleanItems();
+                categryTwoAdapter.addItems(data);
             }
+            categryTwoAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    //跳转界面
+                }
+            });
         }
     }
+
 
     private void requestCategrtTwos(int id){
         Map<String,String > params = new HashMap<>();
         params.put("id",String.valueOf(id));
-        categryPresenter.getCategryTwoData(params);
+        ICategryTwoPresenter categryTwoPresenter = new CategryTwoPresenter(this);
+        categryTwoPresenter.getCategryTwoData(params);
     }
 
 }

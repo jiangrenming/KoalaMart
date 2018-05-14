@@ -39,8 +39,10 @@ public interface ApiService {
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
-    @GET("AppApi/CategoryList")
+   // @GET("AppApi/CategoryList")
+/*
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategryTwos(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
+*/
     @GET("AppApi/BannerList")
     Flowable<BaseResponseBean<List<HomeBanaerBean>>> getIntegralMallBananer(@HeaderMap Map<String,String> headrs);
 

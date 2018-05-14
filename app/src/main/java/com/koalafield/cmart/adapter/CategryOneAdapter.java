@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dl7.recycler.adapter.BaseQuickAdapter;
@@ -41,6 +42,15 @@ public class CategryOneAdapter extends BaseQuickAdapter<CategryOneBean> {
     @Override
     protected void convert(BaseViewHolder holder, CategryOneBean item) {
         TextView name = holder.getView(R.id.categryOne_name);
+        LinearLayout layout = holder.getView(R.id.item);
         name.setText(item.getName());
+        if (item.isSelect()){
+            layout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            name.setTextColor(mContext.getResources().getColor(R.color.btn_red));
+        }else {
+            layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
+            name.setTextColor(mContext.getResources().getColor(R.color.black));
+        }
     }
+
 }

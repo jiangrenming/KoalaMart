@@ -84,7 +84,8 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
 
         @Override
         public void onBind(Context context, int position, HomeBanaerBean data) {
-            Glide.with(context).load(data.getImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(mImageView);
+            //Glide.with(context).load(data.getImg()).asBitmap().placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(mImageView);
+            loadIntoUseFitWidth(context,data.getImg(),R.mipmap.default_img,mImageView);
         }
     }
 
