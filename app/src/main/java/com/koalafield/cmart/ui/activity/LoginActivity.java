@@ -65,6 +65,8 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     @Override
     public void initDatas() {
         top_name.setText("手机登录");
+        account.setText("15901774559");
+        password.setText("123456");
         type = getIntent().getIntExtra("type",-1);
         account.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -121,7 +123,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public  void onClick(View v){
         switch (v.getId()){
             case R.id.back: //返回首页
-                StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
+                finish();
                 StackActivityManager.getActivityManager().goToMain(this);
                 break;
             case R.id.login:
@@ -157,9 +159,11 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     }
 
 
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
+           StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
+       //     finish();
             StackActivityManager.getActivityManager().goToMain(this);
             return false;
         }
@@ -173,10 +177,10 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         if (!StringUtils.isEmpty(ticket)){
             ShareBankPreferenceUtils.putString("tickets",ticket);
             if (type == 1){
-                StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
+               finish();
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }else if (type ==2){
-                StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
+                finish();
                 StackActivityManager.getActivityManager().goToMain(this,3);
             }
         }

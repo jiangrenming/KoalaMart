@@ -28,6 +28,7 @@ import com.koalafield.cmart.ui.activity.use.PrivateActivity;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
+import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
 
 import java.io.File;
@@ -78,6 +79,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @Override
     public int attchLayoutRes() {
         String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        Log.i("返回的tickes",tickets+"");
         if (StringUtils.isEmpty(tickets)) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("type",1);
@@ -89,7 +91,19 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     @Override
     public void initDatas() {
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        Log.i("返回的tickes",tickets+"");
+        if (StringUtils.isEmpty(tickets)) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("type",1);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override

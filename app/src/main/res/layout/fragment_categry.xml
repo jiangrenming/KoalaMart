@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="分类界面" />
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textSize="16sp"
+        android:text="分类"
+        android:background="@color/white"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/categry_one"
+            android:layout_width="wrap_content"
+            android:background="@drawable/categry_bg"
+            android:scrollbars="none"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/categry_img"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@mipmap/mine"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/categry_two"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+        <include layout="@layout/layout_common_empty"/>
+    </FrameLayout>
+
 
 </LinearLayout>

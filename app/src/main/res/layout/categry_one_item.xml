@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/categryOne_name"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textSize="18sp"
+        android:text="各种饮料"/>
+
+
+</LinearLayout>

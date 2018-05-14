@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.base.presenter.IBasePresenter;
 
 /**
  * Created by jiangrenming on 2018/5/13.
@@ -15,6 +16,7 @@ public abstract class TabBaseActivity extends BaseActivity {
 
     protected long exitTime = 0L;
 
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(!intercept()){
             return super.onKeyDown(keyCode, event);

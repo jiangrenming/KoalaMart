@@ -49,6 +49,7 @@
             android:id="@+id/password"
             android:layout_width="0dp"
             android:layout_marginLeft="15dp"
+            android:inputType="textPassword"
             android:layout_weight="1"
             android:background="@null"
             android:layout_height="match_parent" />

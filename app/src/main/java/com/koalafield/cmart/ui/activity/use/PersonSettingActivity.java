@@ -7,7 +7,10 @@ import android.widget.TextView;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.utils.AndoridSysUtils;
+import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
+import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.CommonDialog;
 
@@ -78,6 +81,9 @@ public class PersonSettingActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         //退出登陆后返回主页面，同时改变购物车界面数目显示
+                        StackActivityManager.getActivityManager().goToMain(PersonSettingActivity.this,1);
+                        ShareBankPreferenceUtils.clearData("tickets");
+                        finish();
                     }
                 }).setPositiveButton("取消", new View.OnClickListener() {
                     @Override

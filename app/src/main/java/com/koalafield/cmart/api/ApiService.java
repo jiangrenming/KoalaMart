@@ -1,15 +1,20 @@
 package com.koalafield.cmart.api;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.bean.categry.CategryOneBean;
+import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
+import retrofit2.http.QueryMap;
 
 /**
  *
@@ -20,8 +25,6 @@ import retrofit2.http.POST;
 
 public interface ApiService {
 
-    /**********************************get 请求列表************************************/
-
     /**********************************post 请求列表***********************************/
     //注册
     @POST("AppApi/Register")
@@ -30,6 +33,16 @@ public interface ApiService {
     //登陆
     @POST("AppApi/Login")
     Flowable<BaseResponseBean<RegisterBean>> getLoginAccount (@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+
+
+
+    /***************************************************Get请求*******************************************/
+    @GET("AppApi/CategoryList")
+    Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
+    @GET("AppApi/CategoryList")
+    Flowable<BaseResponseBean<List<CategryOneBean>>> getCategryTwos(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
+    @GET("AppApi/BannerList")
+    Flowable<BaseResponseBean<List<HomeBanaerBean>>> getIntegralMallBananer(@HeaderMap Map<String,String> headrs);
 
 
    /* *//**

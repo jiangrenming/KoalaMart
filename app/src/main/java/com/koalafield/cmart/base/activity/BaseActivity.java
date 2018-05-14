@@ -52,7 +52,7 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
         super.onCreate(savedInstanceState);
         setContentView(attchLayoutRes());
         ButterKnife.bind(this);
-        StackActivityManager.getActivityManager().addActivity(this);
+    //    StackActivityManager.getActivityManager().addActivity(this);
         initDatas();
         upDateViews();
     }

@@ -38,12 +38,11 @@
                 android:layout_height="180dp">
                 <ImageView
                     android:id="@+id/person_av"
-                    android:layout_width="100dp"
-                    android:src="@mipmap/ic_launcher_round"
+                    android:layout_width="50dp"
+                    android:src="@mipmap/mine"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginBottom="20dp"
-                    android:layout_height="100dp" />
+                    android:layout_height="50dp" />
 
                 <TextView
                     android:id="@+id/user_name"
@@ -67,11 +66,11 @@
                     android:layout_marginRight="10dp"
                     android:layout_height="50dp">
                     <ImageView
-                        android:layout_width="30dp"
-                        android:src="@mipmap/home"
+                        android:layout_width="20dp"
+                        android:src="@mipmap/order_my"
                         android:scaleType="fitXY"
                         android:layout_gravity="center_vertical"
-                        android:layout_height="30dp" />
+                        android:layout_height="20dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -114,13 +113,14 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_height="100dp">
                         <ImageView
-                            android:layout_width="30dp"
+                            android:layout_width="25dp"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/buy"
-                            android:layout_height="30dp" />
+                            android:src="@mipmap/pay_wait"
+                            android:layout_height="25dp" />
                         <TextView
                             android:layout_width="50dp"
                             android:text="待支付"
+                            android:paddingTop="5dp"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <View
@@ -137,13 +137,14 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_height="100dp">
                         <ImageView
-                            android:layout_width="30dp"
+                            android:layout_width="25dp"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/buy"
-                            android:layout_height="30dp" />
+                            android:src="@mipmap/wait_send"
+                            android:layout_height="25dp" />
                         <TextView
                             android:layout_width="50dp"
                             android:text="待发货"
+                            android:paddingTop="5dp"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <View
@@ -160,13 +161,14 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:layout_height="100dp">
                         <ImageView
-                            android:layout_width="30dp"
+                            android:layout_width="25dp"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/buy"
-                            android:layout_height="30dp" />
+                            android:src="@mipmap/wait_receiver"
+                            android:layout_height="25dp" />
                         <TextView
                             android:layout_width="50dp"
                             android:text="待收货"
+                            android:paddingTop="5dp"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
@@ -203,11 +205,11 @@
                             android:layout_height="match_parent" />
                         <ImageView
                             android:id="@+id/old"
-                            android:layout_width="25dp"
+                            android:layout_width="20dp"
                             android:src="@mipmap/right"
                             android:scaleType="fitXY"
                             android:layout_gravity="center_vertical"
-                            android:layout_height="25dp" />
+                            android:layout_height="20dp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -220,7 +222,7 @@
                         android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
-                            android:src="@mipmap/home"
+                            android:src="@mipmap/discount"
                             android:layout_height="match_parent" />
                         <TextView
                             android:layout_width="0dp"
@@ -232,11 +234,11 @@
                             android:layout_height="match_parent" />
                         <ImageView
                             android:id="@+id/discount"
-                            android:layout_width="25dp"
+                            android:layout_width="20dp"
                             android:src="@mipmap/right"
                             android:scaleType="fitXY"
                             android:layout_gravity="center_vertical"
-                            android:layout_height="25dp" />
+                            android:layout_height="20dp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -249,7 +251,7 @@
                         android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
-                            android:src="@mipmap/home"
+                            android:src="@mipmap/collection"
                             android:layout_height="match_parent" />
                         <TextView
                             android:layout_width="0dp"
@@ -261,11 +263,11 @@
                             android:layout_height="match_parent" />
                         <ImageView
                             android:id="@+id/collection"
-                            android:layout_width="25dp"
+                            android:layout_width="20dp"
                             android:src="@mipmap/right"
                             android:scaleType="fitXY"
                             android:layout_gravity="center_vertical"
-                            android:layout_height="25dp" />
+                            android:layout_height="20dp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -278,7 +280,7 @@
                         android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
-                            android:src="@mipmap/home"
+                            android:src="@mipmap/address"
                             android:layout_height="match_parent" />
                         <TextView
                             android:layout_width="0dp"
@@ -290,11 +292,11 @@
                             android:layout_height="match_parent" />
                         <ImageView
                             android:id="@+id/adress"
-                            android:layout_width="25dp"
+                            android:layout_width="20dp"
                             android:src="@mipmap/right"
                             android:scaleType="fitXY"
                             android:layout_gravity="center_vertical"
-                            android:layout_height="25dp" />
+                            android:layout_height="20dp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -307,7 +309,7 @@
                         android:layout_height="45dp">
                         <ImageView
                             android:layout_width="25dp"
-                            android:src="@mipmap/home"
+                            android:src="@mipmap/constact"
                             android:layout_height="match_parent" />
                         <TextView
                             android:layout_width="0dp"
@@ -319,11 +321,11 @@
                             android:layout_height="match_parent" />
                         <ImageView
                             android:id="@+id/contact"
-                            android:layout_width="25dp"
+                            android:layout_width="20dp"
                             android:src="@mipmap/right"
                             android:scaleType="fitXY"
                             android:layout_gravity="center_vertical"
-                            android:layout_height="25dp" />
+                            android:layout_height="20dp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -349,11 +351,11 @@
                             android:layout_height="match_parent" />
                         <ImageView
                             android:id="@+id/service"
-                            android:layout_width="25dp"
+                            android:layout_width="20dp"
                             android:src="@mipmap/right"
                             android:scaleType="fitXY"
                             android:layout_gravity="center_vertical"
-                            android:layout_height="25dp" />
+                            android:layout_height="20dp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -379,11 +381,11 @@
                             android:layout_height="match_parent" />
                         <ImageView
                             android:id="@+id/set"
-                            android:layout_width="25dp"
+                            android:layout_width="20dp"
                             android:src="@mipmap/right"
                             android:scaleType="fitXY"
                             android:layout_gravity="center_vertical"
-                            android:layout_height="25dp" />
+                            android:layout_height="20dp" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"

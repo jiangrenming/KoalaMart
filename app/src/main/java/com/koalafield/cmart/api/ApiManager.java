@@ -1,11 +1,13 @@
 package com.koalafield.cmart.api;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.bean.categry.CategryOneBean;
+import com.koalafield.cmart.bean.categry.CategryTwoBean;
+import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
@@ -46,6 +48,28 @@ public class ApiManager {
                 .map(getRegister());
     }
 
+    /*********************************首页****************************************/
+
+    public  static  Flowable<List<HomeBanaerBean>> getHomeBananerList(){
+        return apiSubscribe(AndoridApplication.apiService.getIntegralMallBananer(getHeaders()))
+                .flatMap(getHomeBananer());
+    }
+
+    /******************************分类列表*******************************/
+    /**
+     * 获取分类列表一级分类
+     */
+    public  static  Flowable<List<CategryOneBean>> getCategryList(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getCategrys(getHeaders(),params))
+                .flatMap(getCategry());
+    }
+    /**
+     * 获取二级列表数据
+     */
+    public  static  Flowable<List<CategryTwoBean>> getCategryTwo(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getCategryTwos(getHeaders(),params))
+                .flatMap(getCategryTwo());
+    }
 
     /*****************************添加头部*****************************************/
 
@@ -88,6 +112,50 @@ public class ApiManager {
         };
     }
 
+    /**
+     *父分类列表
+     */
+    private static Function<BaseResponseBean, Flowable<List<CategryOneBean>>> getCategry() {
+        return new Function<BaseResponseBean, Flowable<List<CategryOneBean>>>() {
+            @Override
+            public Flowable<List<CategryOneBean>> apply(BaseResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<CategryOneBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
+     *子分类列表
+     */
+    private static Function<BaseResponseBean, Flowable<List<CategryTwoBean>>> getCategryTwo() {
+        return new Function<BaseResponseBean, Flowable<List<CategryTwoBean>>>() {
+            @Override
+            public Flowable<List<CategryTwoBean>> apply(BaseResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<CategryTwoBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
+     * 获取主页轮播图
+     */
+    private static Function<BaseResponseBean, Flowable<List<HomeBanaerBean>>> getHomeBananer() {
+        return new Function<BaseResponseBean, Flowable<List<HomeBanaerBean>>>() {
+            @Override
+            public Flowable<List<HomeBanaerBean>> apply(BaseResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<HomeBanaerBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
 
     /***************************************post添加参数json格式转换**********************************************/
     private static RequestBody setParams(Map<String,String> params){
