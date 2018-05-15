@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
+import com.koalafield.cmart.bean.event.CartEvent;
 import com.koalafield.cmart.presenter.cart.CartListPresenter;
 import com.koalafield.cmart.presenter.cart.CartPresenter;
 import com.koalafield.cmart.presenter.cart.ICartListPresenter;
@@ -212,21 +213,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
 
     /**
      * 接收购物车数量的变动
-     * @param type
+     * @param event
      */
     @Subscribe(threadMode  = ThreadMode.MAIN)
-    public  void getCartNUmber(int type){
-        if (type != -1){
-            if (type == 0){  //添加购物车
+    public  void getCartNUmber(CartEvent event){
 
-            }else if (type ==1){ //购物车增减
-
-            }else if (type == 2){ //购物车全部删除
-
-            }else {  //其他
-
-            }
-        }
     }
 
 

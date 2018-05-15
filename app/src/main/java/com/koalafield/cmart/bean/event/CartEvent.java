@@ -5,19 +5,11 @@ package com.koalafield.cmart.bean.event;
  */
 
 public class CartEvent {
-    public  String type;
+    public   int nCount;
+    public  int  type ;
 
-    public  CartEvent(String mType){
-        this.type = mType;
-    }
-
-
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
+    public CartEvent(int count,int type) {
+        this.nCount = count;
         this.type = type;
     }
 }
