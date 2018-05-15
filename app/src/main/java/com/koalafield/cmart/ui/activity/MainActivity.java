@@ -217,7 +217,37 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
      */
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void getCartNUmber(CartEvent event){
-
+        if (event != null){
+            if (event.nCount >0 ){
+                tv_cart_num.setVisibility(View.VISIBLE);
+                if (event.type ==0 ){   //--->代表购物车里总数量
+                    tv_cart_num.setText(String.valueOf(event.nCount));
+                }else if (event.type == 1 ){  //删除单个商品
+                    String str = tv_cart_num.getText().toString();
+                    int mCount = Integer.valueOf(str);
+                    if (mCount <= 0){
+                        tv_cart_num.setText(String.valueOf(0));
+                        tv_cart_num.setVisibility(View.GONE);
+                    }else {
+                        tv_cart_num.setText(String.valueOf(mCount-event.nCount));
+                    }
+                }else if (event.type == 2){  //购物车里减
+                    String str = tv_cart_num.getText().toString();
+                    int mCount = Integer.valueOf(str);
+                    tv_cart_num.setText(String.valueOf(mCount-event.nCount));
+                }else  if (event.type == 3){  //购物车里的增
+                    String str = tv_cart_num.getText().toString();
+                    int mCount = Integer.valueOf(str);
+                    tv_cart_num.setText(String.valueOf(mCount+event.nCount));
+                }else  if (event.type == 4){  //添加购物车
+                    String str = tv_cart_num.getText().toString();
+                    int mCount = Integer.valueOf(str);
+                    tv_cart_num.setText(String.valueOf(mCount+event.nCount));
+                }
+            }else {
+                tv_cart_num.setVisibility(View.GONE);
+            }
+        }
     }
 
 
