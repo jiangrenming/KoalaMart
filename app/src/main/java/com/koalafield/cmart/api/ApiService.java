@@ -1,6 +1,8 @@
 package com.koalafield.cmart.api;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.bean.cart.CartDataBean;
+import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
@@ -34,7 +36,9 @@ public interface ApiService {
     //登陆
     @POST("AppApi/Login")
     Flowable<BaseResponseBean<RegisterBean>> getLoginAccount (@HeaderMap Map<String,String> headrs, @Body RequestBody body);
-
+    //购物车商品数量的增减
+    @POST("AppApi/ShoppingCartChange")
+    Flowable<BaseResponseBean<List<CartDataBean>>> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
 
 
     /***************************************************Get请求*******************************************/
@@ -44,6 +48,10 @@ public interface ApiService {
     Flowable<BaseResponseBean<List<HomeBanaerBean>>> getIntegralMallBananer(@HeaderMap Map<String,String> headrs);
     @GET("AppApi/HomeCategoryGoods")
     Flowable<BaseResponseBean<List<GoodsCategryBean>>> getCategryGoodsData(@HeaderMap Map<String,String> headrs);
+    @GET("AppApi/ShoppingCartList")
+    Flowable<BaseResponseBean<List<CartDataBean>>> getCartDatas(@HeaderMap Map<String,String> headrs);
+    @GET("AppApi/ShoppingCartTotalNumber")
+    Flowable<BaseResponseBean<CartNumberBean>> getCartNumbers(@HeaderMap Map<String,String> headrs);
 
    /* *//**
      * 首页bananer

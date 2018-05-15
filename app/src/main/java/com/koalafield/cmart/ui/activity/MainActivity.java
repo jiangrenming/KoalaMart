@@ -3,6 +3,7 @@ package com.koalafield.cmart.ui.activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,10 +11,24 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.cart.CartNumberBean;
+import com.koalafield.cmart.presenter.cart.CartListPresenter;
+import com.koalafield.cmart.presenter.cart.CartPresenter;
+import com.koalafield.cmart.presenter.cart.ICartListPresenter;
+import com.koalafield.cmart.presenter.cart.ICartPresenter;
+import com.koalafield.cmart.ui.view.cart.ICartVIew;
 import com.koalafield.cmart.utils.Constants;
+import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
+import com.koalafield.cmart.utils.StringUtils;
+import com.koalafield.cmart.widget.EmptyLayout;
+import com.squareup.haha.perflib.Main;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +39,7 @@ import butterknife.ButterKnife;
  * @date 2018/5/9
  */
 
-public class MainActivity extends TabActivity implements View.OnClickListener{
+public class MainActivity extends TabActivity implements View.OnClickListener,ICartVIew<CartNumberBean>{
 
     private TabHost tabHost;
     @BindView(R.id.layout_1)
@@ -48,6 +63,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     private FrameLayout[] layoutArray = null;
     private Map<Integer, View[]> tabMap = null;
     private Intent mIntent;
+    private ICartPresenter mPresenter;
 
 
     @Override
@@ -107,6 +123,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
         overridePendingTransition(0, 0);
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        if (!StringUtils.isEmpty(tickets)){
+            mPresenter = new CartPresenter(MainActivity.this);
+            mPresenter.getData();
+        }
     }
 
    /* @Subscribe(threadMode = ThreadMode.MAIN)
@@ -172,5 +193,60 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     protected void onPause() {
         super.onPause();
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onSucessNumberful(CartNumberBean data) {
+        if (data != null){
+            if (data.getCount() <= 0){
+                tv_cart_num.setVisibility(View.GONE);
+            }else if (data.getCount() <= 99){
+                tv_cart_num.setVisibility(View.VISIBLE);
+                tv_cart_num.setText(String.valueOf(data.getCount()));
+            }else {
+                tv_cart_num.setVisibility(View.VISIBLE);
+                tv_cart_num.setText(String.format(Locale.CHINA, "%d+", 99));
+            }
+        }
+    }
+
+    /**
+     * 接收购物车数量的变动
+     * @param type
+     */
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void getCartNUmber(int type){
+        if (type != -1){
+            if (type == 0){  //添加购物车
+
+            }else if (type ==1){ //购物车增减
+
+            }else if (type == 2){ //购物车全部删除
+
+            }else {  //其他
+
+            }
+        }
+    }
+
+
+    @Override
+    public void onNumberFailure(String message) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showNetError(EmptyLayout.OnRetryListener onRetryListener) {
+
     }
 }

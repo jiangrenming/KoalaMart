@@ -5,6 +5,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.bean.cart.CartDataBean;
+import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.bean.categry.CategryTwoBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
@@ -75,6 +77,31 @@ public class ApiManager {
     public  static  Flowable<List<CategryOneBean>> getCategryList(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.getCategrys(getHeaders(),params))
                 .flatMap(getCategry());
+    }
+    /******************************购物车***********************************/
+
+    /**
+     * 获取购物车总数量
+     */
+    public static Flowable<CartNumberBean> getCartNums(){
+        return apiSubscribe(AndoridApplication.apiService.getCartNumbers(getHeaders()))
+                .map(getCartNum());
+    }
+
+    /**
+     * 获取购物车列表
+     */
+
+    public  static  Flowable<List<CartDataBean>> getCategryList(){
+        return apiSubscribe(AndoridApplication.apiService.getCartDatas(getHeaders()))
+                .flatMap(getCartList());
+    }
+    /**
+     * 改变购物车商品的数目，即增减
+     */
+    public static Flowable<CartDataBean> changeCartCount(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getRegisterAccount(getHeaders(),setParams(params)))
+                .map(changeCartCount());
     }
 
 
@@ -163,6 +190,51 @@ public class ApiManager {
         };
     }
 
+    /**
+     * 获取购物和总数量
+     */
+    private static Function<BaseResponseBean,CartNumberBean> getCartNum() {
+        return new Function<BaseResponseBean, CartNumberBean>() {
+            @Override
+            public CartNumberBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (CartNumberBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
+     * 获取购物车列表
+     */
+    private static Function<BaseResponseBean, Flowable<List<CartDataBean>>> getCartList() {
+        return new Function<BaseResponseBean, Flowable<List<CartDataBean>>>() {
+            @Override
+            public Flowable<List<CartDataBean>> apply(BaseResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<CartDataBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
+     * 增减购物车商品数量
+     */
+    private static Function<BaseResponseBean, Flowable<List<CartDataBean>>> changeCartCount() {
+        return new Function<BaseResponseBean, Flowable<List<CartDataBean>>>() {
+            @Override
+            public Flowable<List<CartDataBean>> apply(BaseResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<CartDataBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
     /***************************************post添加参数json格式转换**********************************************/
     private static RequestBody setParams(Map<String,String> params){
         return  RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
