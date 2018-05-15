@@ -29,13 +29,13 @@ public abstract class TabBaseActivity extends BaseActivity {
         if(!intercept()){
             return super.onKeyDown(keyCode, event);
         }
-
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(this,"再按一次退出",Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                System.exit(0);
+       //         System.exit(0);
+                finish();
             }
             return true;
         }

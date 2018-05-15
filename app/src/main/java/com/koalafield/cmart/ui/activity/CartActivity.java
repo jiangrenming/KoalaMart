@@ -8,7 +8,9 @@ import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
 /**
- * Created by jiangrenming on 2018/5/13.
+ *
+ * @author jiangrenming
+ * @date 2018/5/13
  */
 
 public class CartActivity extends TabBaseActivity {

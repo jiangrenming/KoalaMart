@@ -51,8 +51,8 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(attchLayoutRes());
+   //     StackActivityManager.getActivityManager().addActivity(this);
         ButterKnife.bind(this);
-    //    StackActivityManager.getActivityManager().addActivity(this);
         initDatas();
         upDateViews();
     }

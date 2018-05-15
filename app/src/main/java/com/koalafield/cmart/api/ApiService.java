@@ -2,6 +2,7 @@ package com.koalafield.cmart.api;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
+import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 
@@ -39,13 +40,10 @@ public interface ApiService {
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
-   // @GET("AppApi/CategoryList")
-/*
-    Flowable<BaseResponseBean<List<CategryOneBean>>> getCategryTwos(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
-*/
     @GET("AppApi/BannerList")
     Flowable<BaseResponseBean<List<HomeBanaerBean>>> getIntegralMallBananer(@HeaderMap Map<String,String> headrs);
-
+    @GET("AppApi/HomeCategoryGoods")
+    Flowable<BaseResponseBean<List<GoodsCategryBean>>> getCategryGoodsData(@HeaderMap Map<String,String> headrs);
 
    /* *//**
      * 首页bananer

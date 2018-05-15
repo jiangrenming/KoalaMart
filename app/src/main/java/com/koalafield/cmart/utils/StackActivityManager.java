@@ -105,6 +105,24 @@ public class StackActivityManager {
     }
 
     /**
+     * 移除
+     * @param cls
+     */
+    public void removeExceptActivity(Class<?> cls) {
+        int size = activityStack.size();
+        isRemoving = true;
+        for (int i = 0; i < size; i++) {
+            Activity activity = getTopActivity();
+            if (activity == null) {
+                break;
+            }
+            if (activity.getClass().equals(cls)) {
+                removeActivity(activity);
+            }
+        }
+    }
+
+    /**
      * 清除掉除cls以外的其他类 全部退出的时候要使用removeAllActivity()
      * @param cls
      */

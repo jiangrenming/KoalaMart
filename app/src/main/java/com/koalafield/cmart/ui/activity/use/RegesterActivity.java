@@ -19,6 +19,7 @@ import com.koalafield.cmart.bean.event.SelectEvent;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.presenter.RegisterPresent;
 import com.koalafield.cmart.presenter.IRegsterPresent;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.PersonActivity;
 import com.koalafield.cmart.ui.view.IRegesterView;
@@ -179,7 +180,8 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
 
         switch (v.getId()){
             case R.id.back:
-                finish();
+               finish();
+             //   StackActivityManager.getActivityManager().removeActivity(RegesterActivity.this);
                 break;
             case R.id.register_btn: //短信验证码
                 //调用获取验证码的接口，成功时调用timeSchedule();
@@ -236,6 +238,8 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
             if (!StringUtils.isEmpty(ticket)){
                 ShareBankPreferenceUtils.putString("tickets",ticket);
                 finish();
+          /*      StackActivityManager.getActivityManager().removeActivity(RegesterActivity.this);
+                StackActivityManager.getActivityManager().removeExceptActivity(LoginActivity.class);*/
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }
         }

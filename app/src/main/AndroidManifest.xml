@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleInstance" />
 
         <activity android:name=".ui.activity.HomeActivity"/>
         <activity android:name=".ui.activity.CartActivity"/>

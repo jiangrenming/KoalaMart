@@ -7,6 +7,7 @@ import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.bean.categry.CategryTwoBean;
+import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.utils.AndoridSysUtils;
@@ -50,9 +51,21 @@ public class ApiManager {
 
     /*********************************首页****************************************/
 
+    /**
+     * 获取轮播图
+     * @return
+     */
     public  static  Flowable<List<HomeBanaerBean>> getHomeBananerList(){
         return apiSubscribe(AndoridApplication.apiService.getIntegralMallBananer(getHeaders()))
                 .flatMap(getHomeBananer());
+    }
+
+    /**
+     * 获取首页商品列表
+     */
+    public  static  Flowable<List<GoodsCategryBean>> getHomeGoodsCategry(){
+        return apiSubscribe(AndoridApplication.apiService.getCategryGoodsData(getHeaders()))
+                .flatMap(getGoodsCategrys());
     }
 
     /******************************分类列表*******************************/
@@ -63,13 +76,7 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getCategrys(getHeaders(),params))
                 .flatMap(getCategry());
     }
-   /* *//**
-     * 获取二级列表数据
-     *//*
-    public  static  Flowable<List<CategryTwoBean>> getCategryTwo(Map<String,String> params){
-        return apiSubscribe(AndoridApplication.apiService.getCategryTwos(getHeaders(),params))
-                .flatMap(getCategryTwo());
-    }*/
+
 
     /*****************************添加头部*****************************************/
 
@@ -128,21 +135,6 @@ public class ApiManager {
     }
 
     /**
-     *子分类列表
-     */
-   /* private static Function<BaseResponseBean, Flowable<List<CategryTwoBean>>> getCategryTwo() {
-        return new Function<BaseResponseBean, Flowable<List<CategryTwoBean>>>() {
-            @Override
-            public Flowable<List<CategryTwoBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<CategryTwoBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-    }*/
-
-    /**
      * 获取主页轮播图
      */
     private static Function<BaseResponseBean, Flowable<List<HomeBanaerBean>>> getHomeBananer() {
@@ -151,6 +143,20 @@ public class ApiManager {
             public Flowable<List<HomeBanaerBean>> apply(BaseResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<HomeBanaerBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 获取主页商品分类
+     */
+    private static Function<BaseResponseBean, Flowable<List<GoodsCategryBean>>> getGoodsCategrys() {
+        return new Function<BaseResponseBean, Flowable<List<GoodsCategryBean>>>() {
+            @Override
+            public Flowable<List<GoodsCategryBean>> apply(BaseResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<GoodsCategryBean>) response.getData());
                 }
                 return  null;
             }

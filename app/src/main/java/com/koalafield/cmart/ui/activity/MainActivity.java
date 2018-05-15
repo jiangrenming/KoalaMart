@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends TabActivity implements View.OnClickListener{
 
     private TabHost tabHost;
-
     @BindView(R.id.layout_1)
     FrameLayout layout1;
     @BindView(R.id.layout_2)
@@ -96,6 +95,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
         }
     }
 
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
@@ -103,12 +103,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener{
     }
 
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("跳转页面","**********跳转界面为*********");
         overridePendingTransition(0, 0);
     }
 
