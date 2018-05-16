@@ -67,15 +67,17 @@
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
         android:background="@color/gray"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <ImageView
             android:id="@+id/select"
             android:layout_width="20dp"
             android:scaleType="fitXY"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/un_select"
+            android:src="@mipmap/select"
             android:layout_centerVertical="true"
             android:layout_height="20dp" />
         <TextView

@@ -16,6 +16,15 @@ public class CartDataBean extends BaseResponseBean {
     private String Type;
     private int Count;
     private CartItemBean Commodity;
+    private  boolean isSelect;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public int getContentId() {
         return ContentId;
