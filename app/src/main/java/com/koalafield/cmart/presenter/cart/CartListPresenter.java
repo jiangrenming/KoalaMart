@@ -5,11 +5,14 @@ import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.ui.view.cart.ICartListView;
+import com.koalafield.cmart.widget.EmptyLayout;
 
 import java.util.List;
 
 /**
- * Created by jiangrenming on 2018/5/16.
+ *
+ * @author jiangrenming
+ * @date 2018/5/16
  */
 
 public class CartListPresenter implements ICartListPresenter{
@@ -47,7 +50,12 @@ public class CartListPresenter implements ICartListPresenter{
             @Override
             public void onFailure(Throwable t) {
                 cartListView.hideLoading();
-                cartListView.onFailureCart(t.getMessage());
+                cartListView.showNetError(new EmptyLayout.OnRetryListener() {
+                    @Override
+                    public void onRetry() {
+                        getData();
+                    }
+                });
             }
 
             @Override

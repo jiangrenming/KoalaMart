@@ -1,6 +1,12 @@
 package com.koalafield.cmart.ui.activity;
 
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
@@ -10,6 +16,8 @@ import com.koalafield.cmart.ui.view.cart.ICartListView;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
+import butterknife.BindView;
+
 /**
  *
  * @author jiangrenming
@@ -17,6 +25,26 @@ import com.koalafield.cmart.utils.StringUtils;
  */
 
 public class CartActivity extends TabBaseActivity implements ICartListView<CartDataBean>{
+
+    @BindView(R.id.clear_all)
+    TextView clear_all;
+    @BindView(R.id.cart_top)
+    FrameLayout cart_top;
+    @BindView(R.id.goods_item)
+    RecyclerView goods_item_recycler;
+    @BindView(R.id.empty_cart)
+    LinearLayout empty_cart;
+    @BindView(R.id.select)
+    ImageView select;
+    @BindView(R.id.select_num)
+    TextView select_num;
+    @BindView(R.id.cart_curreny)
+    TextView cart_curreny;
+    @BindView(R.id.select_amount)
+    TextView select_amount;
+    @BindView(R.id.pay_goods)
+    LinearLayout pay_goods;
+
 
     @Override
     public int attchLayoutRes() {
@@ -37,9 +65,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<CartD
     }
 
     @Override
-    public void upDateViews() {
-
-    }
+    public void upDateViews() {}
 
     @Override
     public void onSucessCartFul(CartDataBean data) {
@@ -53,6 +79,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<CartD
 
     @Override
     public void onLoadNoData() {
-
+        empty_cart.setVisibility(View.VISIBLE);
+        cart_top.setVisibility(View.GONE);
     }
 }
