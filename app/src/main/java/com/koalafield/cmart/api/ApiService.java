@@ -1,6 +1,7 @@
 package com.koalafield.cmart.api;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
@@ -31,27 +32,29 @@ public interface ApiService {
     /**********************************post 请求列表***********************************/
     //注册
     @POST("AppApi/Register")
-    Flowable<BaseResponseBean<RegisterBean>> getRegisterAccount(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    Flowable<SpecialResponseBean<RegisterBean>> getRegisterAccount(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
 
     //登陆
     @POST("AppApi/Login")
-    Flowable<BaseResponseBean<RegisterBean>> getLoginAccount (@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    Flowable<SpecialResponseBean<RegisterBean>> getLoginAccount (@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     //购物车商品数量的增减
     @POST("AppApi/ShoppingCartChange")
-    Flowable<BaseResponseBean<List<CartDataBean>>> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    Flowable<SpecialResponseBean<List<CartDataBean>>> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    @POST("AppApi/ShoppingCartClearUp")
+    Flowable<SpecialResponseBean> clearCart(@HeaderMap Map<String,String> headrs);
 
 
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
-    Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
+    Flowable<SpecialResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
     @GET("AppApi/BannerList")
-    Flowable<BaseResponseBean<List<HomeBanaerBean>>> getIntegralMallBananer(@HeaderMap Map<String,String> headrs);
+    Flowable<SpecialResponseBean<List<HomeBanaerBean>>> getIntegralMallBananer(@HeaderMap Map<String,String> headrs);
     @GET("AppApi/HomeCategoryGoods")
-    Flowable<BaseResponseBean<List<GoodsCategryBean>>> getCategryGoodsData(@HeaderMap Map<String,String> headrs);
+    Flowable<SpecialResponseBean<List<GoodsCategryBean>>> getCategryGoodsData(@HeaderMap Map<String,String> headrs);
     @GET("AppApi/ShoppingCartList")
-    Flowable<BaseResponseBean<List<CartDataBean>>> getCartDatas(@HeaderMap Map<String,String> headrs);
+    Flowable<SpecialResponseBean<List<CartDataBean>>> getCartDatas(@HeaderMap Map<String,String> headrs);
     @GET("AppApi/ShoppingCartTotalNumber")
-    Flowable<BaseResponseBean<CartNumberBean>> getCartNumbers(@HeaderMap Map<String,String> headrs);
+    Flowable<SpecialResponseBean<CartNumberBean>> getCartNumbers(@HeaderMap Map<String,String> headrs);
 
    /* *//**
      * 首页bananer

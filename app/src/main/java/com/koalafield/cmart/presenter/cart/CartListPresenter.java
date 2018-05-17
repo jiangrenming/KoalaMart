@@ -3,6 +3,7 @@ package com.koalafield.cmart.presenter.cart;
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
 import com.koalafield.cmart.api.ApiManager;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.ui.view.cart.ICartListView;
 import com.koalafield.cmart.widget.EmptyLayout;
@@ -27,7 +28,7 @@ public class CartListPresenter implements ICartListPresenter{
 
     @Override
     public void getData() {
-        ApiManager.getCategryList().subscribe(new SubScribeCallBack<List<CartDataBean>>(new CallBack() {
+        ApiManager.getCategryList().subscribe(new SubScribeCallBack<SpecialResponseBean>(new CallBack() {
             @Override
             public void onInit() {
                 cartListView.showLoading();
@@ -36,11 +37,18 @@ public class CartListPresenter implements ICartListPresenter{
             @Override
             public <T> void onSucess(T data) {
                 if (data!= null){
-                    List<CartDataBean> cartDataBeen = (List<CartDataBean>) data;
-                    if (cartDataBeen !=null && cartDataBeen.size() >0){
-                        cartListView.onSucessCartFul(cartDataBeen);
+                    SpecialResponseBean responseBean = (SpecialResponseBean) data;
+                    if (responseBean.getCode() == 200){
+                        List<CartDataBean> cartDataBeen  = (List<CartDataBean>) responseBean.getData();
+                        if (cartDataBeen !=null && cartDataBeen.size() >0){
+                            cartListView.onSucessCartFul(cartDataBeen);
+                        }else {
+                            cartListView.onLoadNoData();
+                        }
+                    }else if (responseBean.getCode() == 401){
+                        cartListView.onFailureCart(String.valueOf(responseBean.getCode()));
                     }else {
-                        cartListView.onLoadNoData();
+                        cartListView.onFailureCart(responseBean.getMsg());
                     }
                 }else {
                     cartListView.onFailureCart("返回数据为NULL");

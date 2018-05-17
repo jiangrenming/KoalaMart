@@ -1,6 +1,7 @@
 package com.koalafield.cmart.bean.categry;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * @date 2018/5/14
  */
 
-public class CategryOneBean extends BaseResponseBean {
+public class CategryOneBean extends SpecialResponseBean {
 
 
 

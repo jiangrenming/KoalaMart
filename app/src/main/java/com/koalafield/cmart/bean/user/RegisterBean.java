@@ -1,6 +1,7 @@
 package com.koalafield.cmart.bean.user;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
 /**
  *
@@ -8,7 +9,7 @@ import com.koalafield.cmart.base.bean.BaseResponseBean;
  * @date 2018/5/12
  */
 
-public class RegisterBean extends BaseResponseBean {
+public class RegisterBean extends SpecialResponseBean {
 
     private String Ticket;
 

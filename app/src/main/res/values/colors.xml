@@ -68,4 +68,5 @@
     <color name="msgTextColor">#00ff00</color>
     <color name="ubao_red">#de2628</color>
     <color name="btn_red">#e3215d</color>
+    <color name="sc_transparent_background">#00111111</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.koalafield.cmart.bean.home;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * 首页分类商品数据
  */
 
-public class GoodsCategryBean extends BaseResponseBean {
+public class GoodsCategryBean extends SpecialResponseBean {
 
     private List<GoodItemBean> GoodsList;
     private int CategoryId;

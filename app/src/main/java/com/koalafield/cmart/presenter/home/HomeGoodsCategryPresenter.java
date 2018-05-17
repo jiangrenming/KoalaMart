@@ -50,7 +50,7 @@ public class HomeGoodsCategryPresenter implements IHomeGoodsCategryPresenter{
             @Override
             public void onFailure(Throwable t) {
                 mGoodsCategryView.hideLoading();
-                mGoodsCategryView.onGoodsCategrySucessFul(t.getMessage());
+                mGoodsCategryView.onGoodsCategryFailure(t.getMessage());
             }
 
             @Override

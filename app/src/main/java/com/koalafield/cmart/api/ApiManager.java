@@ -5,6 +5,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
+import com.koalafield.cmart.bean.cart.CartCleanBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
@@ -92,18 +94,25 @@ public class ApiManager {
      * 获取购物车列表
      */
 
-    public  static  Flowable<List<CartDataBean>> getCategryList(){
+    public  static  Flowable<SpecialResponseBean> getCategryList(){
         return apiSubscribe(AndoridApplication.apiService.getCartDatas(getHeaders()))
-                .flatMap(getCartList());
+                .map(getCartList());
     }
     /**
-     * 改变购物车商品的数目，即增减
+     * 改变购物车商品的数目，即增减删
      */
-    public static Flowable<CartDataBean> changeCartCount(Map<String,String> params){
-        return apiSubscribe(AndoridApplication.apiService.getRegisterAccount(getHeaders(),setParams(params)))
+    public  static  Flowable<SpecialResponseBean> changeCartCount(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.changeGoodsCounts(getHeaders(),setParams(params)))
                 .map(changeCartCount());
     }
+    /**
+     * 清空购物车数据
+     */
 
+    public  static  Flowable<BaseResponseBean> clearCartGoods(){
+        return apiSubscribe(AndoridApplication.apiService.clearCart(getHeaders()))
+                .map(getClearCart());
+    }
 
     /*****************************添加头部*****************************************/
 
@@ -133,10 +142,10 @@ public class ApiManager {
      * 注册,登陆
      * @return
      */
-    private static Function<BaseResponseBean,RegisterBean> getRegister() {
-        return new Function<BaseResponseBean, RegisterBean>() {
+    private static Function<SpecialResponseBean,RegisterBean> getRegister() {
+        return new Function<SpecialResponseBean, RegisterBean>() {
             @Override
-            public RegisterBean apply(BaseResponseBean response) throws Exception {
+            public RegisterBean apply(SpecialResponseBean response) throws Exception {
                 Log.i("返回的数据:",response.getCode()+"");
                 if (null !=  response && response.getCode() == 200){
                     return (RegisterBean) response.getData();
@@ -149,10 +158,10 @@ public class ApiManager {
     /**
      *父分类列表
      */
-    private static Function<BaseResponseBean, Flowable<List<CategryOneBean>>> getCategry() {
-        return new Function<BaseResponseBean, Flowable<List<CategryOneBean>>>() {
+    private static Function<SpecialResponseBean, Flowable<List<CategryOneBean>>> getCategry() {
+        return new Function<SpecialResponseBean, Flowable<List<CategryOneBean>>>() {
             @Override
-            public Flowable<List<CategryOneBean>> apply(BaseResponseBean response) throws Exception {
+            public Flowable<List<CategryOneBean>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<CategryOneBean>) response.getData());
                 }
@@ -164,10 +173,10 @@ public class ApiManager {
     /**
      * 获取主页轮播图
      */
-    private static Function<BaseResponseBean, Flowable<List<HomeBanaerBean>>> getHomeBananer() {
-        return new Function<BaseResponseBean, Flowable<List<HomeBanaerBean>>>() {
+    private static Function<SpecialResponseBean, Flowable<List<HomeBanaerBean>>> getHomeBananer() {
+        return new Function<SpecialResponseBean, Flowable<List<HomeBanaerBean>>>() {
             @Override
-            public Flowable<List<HomeBanaerBean>> apply(BaseResponseBean response) throws Exception {
+            public Flowable<List<HomeBanaerBean>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<HomeBanaerBean>) response.getData());
                 }
@@ -178,10 +187,10 @@ public class ApiManager {
     /**
      * 获取主页商品分类
      */
-    private static Function<BaseResponseBean, Flowable<List<GoodsCategryBean>>> getGoodsCategrys() {
-        return new Function<BaseResponseBean, Flowable<List<GoodsCategryBean>>>() {
+    private static Function<SpecialResponseBean, Flowable<List<GoodsCategryBean>>> getGoodsCategrys() {
+        return new Function<SpecialResponseBean, Flowable<List<GoodsCategryBean>>>() {
             @Override
-            public Flowable<List<GoodsCategryBean>> apply(BaseResponseBean response) throws Exception {
+            public Flowable<List<GoodsCategryBean>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<GoodsCategryBean>) response.getData());
                 }
@@ -193,10 +202,10 @@ public class ApiManager {
     /**
      * 获取购物和总数量
      */
-    private static Function<BaseResponseBean,CartNumberBean> getCartNum() {
-        return new Function<BaseResponseBean, CartNumberBean>() {
+    private static Function<SpecialResponseBean,CartNumberBean> getCartNum() {
+        return new Function<SpecialResponseBean, CartNumberBean>() {
             @Override
-            public CartNumberBean apply(BaseResponseBean response) throws Exception {
+            public CartNumberBean apply(SpecialResponseBean response) throws Exception {
                 Log.i("返回的数据:",response.getCode()+"");
                 if (null !=  response && response.getCode() == 200){
                     return (CartNumberBean) response.getData();
@@ -209,14 +218,11 @@ public class ApiManager {
     /**
      * 获取购物车列表
      */
-    private static Function<BaseResponseBean, Flowable<List<CartDataBean>>> getCartList() {
-        return new Function<BaseResponseBean, Flowable<List<CartDataBean>>>() {
+    private static Function<SpecialResponseBean, SpecialResponseBean> getCartList() {
+        return new Function<SpecialResponseBean,SpecialResponseBean>() {
             @Override
-            public Flowable<List<CartDataBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<CartDataBean>) response.getData());
-                }
-                return  null;
+            public SpecialResponseBean apply(SpecialResponseBean response) throws Exception {
+               return response;
             }
         };
     }
@@ -224,12 +230,22 @@ public class ApiManager {
     /**
      * 增减购物车商品数量
      */
-    private static Function<BaseResponseBean, Flowable<List<CartDataBean>>> changeCartCount() {
-        return new Function<BaseResponseBean, Flowable<List<CartDataBean>>>() {
+    private static Function<SpecialResponseBean,SpecialResponseBean> changeCartCount() {
+        return new Function<SpecialResponseBean, SpecialResponseBean>() {
             @Override
-            public Flowable<List<CartDataBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<CartDataBean>) response.getData());
+            public SpecialResponseBean apply(SpecialResponseBean response) throws Exception {
+                return response;
+            }
+        };
+    }
+
+    private static Function<BaseResponseBean,BaseResponseBean> getClearCart() {
+        return new Function<BaseResponseBean,BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return response;
                 }
                 return  null;
             }

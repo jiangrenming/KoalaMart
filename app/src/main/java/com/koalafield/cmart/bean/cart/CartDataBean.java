@@ -1,12 +1,13 @@
 package com.koalafield.cmart.bean.cart;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
 /**
  * Created by jiangrenming on 2018/5/15.
  */
 
-public class CartDataBean extends BaseResponseBean {
+public class CartDataBean extends SpecialResponseBean {
 
     private int ContentId;
     private String Color;

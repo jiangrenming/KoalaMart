@@ -1,12 +1,13 @@
 package com.koalafield.cmart.bean.home;
 
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
 /**
  * Created by jiangrenming on 2018/5/14.
  */
 
-public class HomeBanaerBean extends BaseResponseBean{
+public class HomeBanaerBean extends SpecialResponseBean {
 
     private int DataId;
     private String Img;

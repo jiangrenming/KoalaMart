@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,8 +16,8 @@
 
             <ImageView
                 android:id="@+id/iv_select"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
                 android:scaleType="fitXY"
                 android:src="@mipmap/select" />
@@ -98,8 +98,8 @@
 
                         <ImageView
                             android:id="@+id/goods_cart_minus"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:scaleType="fitXY"
@@ -115,8 +115,8 @@
 
                         <ImageView
                             android:id="@+id/goods_cart_add"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="15dp"
                             android:scaleType="fitXY"

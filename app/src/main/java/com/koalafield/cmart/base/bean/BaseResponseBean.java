@@ -8,19 +8,10 @@ import java.io.Serializable;
  * @date 2018/5/9
  */
 
-public class BaseResponseBean<T> implements Serializable{
+public class BaseResponseBean implements Serializable{
 
     private  int Code;
     private String Msg;
-    private  T Data;
-
-    public T getData() {
-        return Data;
-    }
-
-    public void setData(T data) {
-        Data = data;
-    }
 
     public int getCode() {
         return Code;
@@ -37,4 +28,35 @@ public class BaseResponseBean<T> implements Serializable{
     public void setMsg(String msg) {
         Msg = msg;
     }
+
+
+    //   private  T Data;
+
+   /* public T getData() {
+        return Data;
+    }
+
+    public void setData(T data) {
+        Data = data;
+    }*/
+
+   /* @Override
+    public int getCode() {
+        return Code;
+    }
+
+    @Override
+    public void setCode(int code) {
+        Code = code;
+    }
+
+    @Override
+    public String getMsg() {
+        return Msg;
+    }
+
+    @Override
+    public void setMsg(String msg) {
+        Msg = msg;
+    }*/
 }

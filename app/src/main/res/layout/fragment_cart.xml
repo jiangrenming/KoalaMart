@@ -27,6 +27,7 @@
 
     <FrameLayout
         android:layout_below="@+id/cart_top"
+        android:id="@+id/cart_top_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.koalafield.cmart.widget.MyBoundScrollView
