@@ -173,7 +173,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
             goods_detail_name.setText(goods_name);
             goods_detail_price.setText(data.getCurrency() +data.getCurrentPrice());
             goods_detail_sale.setText("销量:"+data.getSalesCount());
-            goods_detail_CYN_price.setText(String.format("%.2f","CYN "+ data.getCurrencyRate()* data.getCurrentPrice()));
+            goods_detail_CYN_price.setText("CYN "+String.format("%.2f", data.getCurrencyRate()* data.getCurrentPrice()));
 
             mGoodsCoomondPresenter = new GoodsCommondPresenter(this);
             mGoodsCoomondPresenter.getCommondGoods(data.getId());
