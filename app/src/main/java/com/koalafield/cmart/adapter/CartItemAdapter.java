@@ -101,7 +101,9 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
                     Toast.makeText(mContext,"已经处于最小量，无法继续减少...",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mCartItemCallBack.changeItemGoodsCount(minusCount--);
+                mCartItemCallBack.changeItemGoodsCount(-1,item.getContentId());
+                goods_cart_number.setText(String.valueOf(minusCount-1));
+
             }
         });
         //增加
@@ -110,7 +112,9 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
             public void onClick(View v) {
                 String count = goods_cart_number.getText().toString().trim();
                 int addCount  = Integer.valueOf(count);
-                mCartItemCallBack.changeItemGoodsCount(addCount++);
+                mCartItemCallBack.changeItemGoodsCount(1,item.getContentId());
+                goods_cart_number.setText(String.valueOf(addCount+1));
+
             }
         });
     }
@@ -204,7 +208,7 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         void getAllCount(int count);
         void seletAll(boolean isSelect);
         void cleatAll(boolean isNull);
-        void changeItemGoodsCount(int count);
+        void changeItemGoodsCount(int count,int contentId);
     }
 
     private CartItemCallBack mCartItemCallBack;

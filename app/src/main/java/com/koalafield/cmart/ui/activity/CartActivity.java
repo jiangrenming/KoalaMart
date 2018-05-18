@@ -11,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
+import com.dl7.recycler.listener.OnItemMoveListener;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CartItemAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.presenter.cart.CartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.CartClearPresenter;
@@ -42,7 +44,7 @@ import butterknife.OnClick;
  */
 
 public class CartActivity extends TabBaseActivity implements ICartListView<List<CartDataBean>>,
-        CartItemAdapter.CartItemCallBack,ICartClearView<BaseResponseBean>,ICartChangeCountView<List<CartDataBean>> {
+        CartItemAdapter.CartItemCallBack,ICartClearView<BaseResponseBean>,ICartChangeCountView<SpecialResponseBean> {
 
     @BindView(R.id.clear_all)
     TextView clear_all;
@@ -116,6 +118,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
                 cartItemAdapter.addItems(data);
             }
             cartItemAdapter.setCartItemCallBack(this);
+
         }
     }
 
@@ -217,9 +220,10 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
      * @param count
      */
     @Override
-    public void changeItemGoodsCount(int count) {
+    public void changeItemGoodsCount(int count,int contentId) {
         Map<String,String> params = new HashMap<>();
         params.put("count",String.valueOf(count));
+        params.put("contentId",String.valueOf(contentId));
         ICartChangeItemPresenter presenter = new CartChangeItemPresenter(this);
         presenter.getChangeCountData(params);
     }
@@ -242,10 +246,10 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     }
 
     @Override
-    public void onChangeItemSucessful(List<CartDataBean> data) {
-        if (data != null && data.size() >0){
-            cartItemAdapter.cleanItems();
-            cartItemAdapter.updateItems(data);
+    public void onChangeItemSucessful(SpecialResponseBean specialBean) {
+        if (specialBean.getCode() == 200){
+            Toast.makeText(CartActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
+            cartItemAdapter.notifyDataSetChanged();
         }
     }
 
