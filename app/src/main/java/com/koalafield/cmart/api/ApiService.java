@@ -5,6 +5,8 @@ import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
+import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
+import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
@@ -18,6 +20,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -40,9 +44,12 @@ public interface ApiService {
     //购物车商品数量的增减
     @POST("AppApi/ShoppingCartChange")
     Flowable<SpecialResponseBean<List<CartDataBean>>> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    //购物车清空
     @POST("AppApi/ShoppingCartClearUp")
     Flowable<SpecialResponseBean> clearCart(@HeaderMap Map<String,String> headrs);
-
+    //商品详情
+    @POST("AppApi/GoodsDetails")
+    Flowable<SpecialResponseBean<GoodsDetailsBean>> getGoodsDetails(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
 
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
@@ -55,6 +62,10 @@ public interface ApiService {
     Flowable<SpecialResponseBean<List<CartDataBean>>> getCartDatas(@HeaderMap Map<String,String> headrs);
     @GET("AppApi/ShoppingCartTotalNumber")
     Flowable<SpecialResponseBean<CartNumberBean>> getCartNumbers(@HeaderMap Map<String,String> headrs);
+    //商品推荐
+    @GET("AppApi/RecommendGoods/{goodsId}")
+    Flowable<SpecialResponseBean<List<GoodsRecoomendBean>>>  getGoodsReoomonds(@HeaderMap Map<String,String> headrs, @Path("goodsId") int goodsId);
+
 
    /* *//**
      * 首页bananer

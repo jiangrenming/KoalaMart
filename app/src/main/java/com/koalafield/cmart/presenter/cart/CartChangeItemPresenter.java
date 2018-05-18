@@ -47,10 +47,7 @@ public class CartChangeItemPresenter implements ICartChangeItemPresenter {
                 if (null != data){
                     SpecialResponseBean responseBean = (SpecialResponseBean) data;
                     if (responseBean != null && responseBean.getCode() ==200){
-                        List<CartDataBean> cartDataBeen = (List<CartDataBean>) responseBean.getData();
-                        if (cartDataBeen != null && cartDataBeen.size() >0){
-                            mCartChangeCountView.onChangeItemSucessful(cartDataBeen);
-                        }
+                        mCartChangeCountView.onChangeItemSucessful(responseBean);
                     }else if ( responseBean.getCode() == 401){
                         mCartChangeCountView.onChangeItemFailure(String.valueOf(responseBean.getCode()));
                     }else {

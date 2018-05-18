@@ -25,6 +25,7 @@ import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.EmptyLayout;
 import com.squareup.haha.perflib.Main;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -75,6 +76,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
         ButterKnife.bind(this);
         initDatas();
         initAction();
+        EventBus.getDefault().register(this);
     }
 
     public void initDatas() {
@@ -131,31 +133,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
         }
     }
 
-   /* @Subscribe(threadMode = ThreadMode.MAIN)
-    public  void getMessage(SelectEvent event){
-        Log.i("返回的类型",event.getType());
-        int currentPosition = 0;
-        if (null != event){
-            String type = event.getType();
-            if ("cart".equals(type)){
-                //跳转购物车
-                currentPosition = 2 ;
-            }else  if ("person".equals(type)){
-                //个人中心
-                currentPosition = 3;
-            }else if ("home".equals(type)){
-                currentPosition = 0;
-            }
-            changeFragment(currentPosition);
-        }
-    }*/
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.i("是否销毁","**********跳转界面为*********");
-
-  //      EventBus.getDefault().unregister(this);
+         EventBus.getDefault().unregister(this);
     }
 
     @Override

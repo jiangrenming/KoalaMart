@@ -1,6 +1,7 @@
 package com.koalafield.cmart.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.presenter.home.HomeBananerPresenter;
 import com.koalafield.cmart.presenter.home.HomeGoodsCategryPresenter;
 import com.koalafield.cmart.presenter.home.IHomeGoodsCategryPresenter;
+import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.view.home.IBananerView;
 import com.koalafield.cmart.ui.view.home.IGoodsCategryView;
 import com.koalafield.cmart.utils.StringUtils;
@@ -134,12 +136,12 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     }
 
     @Override
-    public void onGoodsCategrySucessFul(List<GoodsCategryBean> data) {
+    public void onGoodsCategrySucessFul( List<GoodsCategryBean> data) {
         if (data != null && data.size() >0){
             for (int i = 0; i < data.size(); i++) {
-                String showType = data.get(i).getShowType();
-                GoodsCategryBean goodsCategryBean = data.get(i);
-                int categryId = goodsCategryBean.getCategoryId();
+                 String showType = data.get(i).getShowType();
+                final  GoodsCategryBean goodsCategryBean = data.get(i);
+                 int categryId = goodsCategryBean.getCategoryId();
                 if (!StringUtils.isEmpty(showType) && "ImageGoodsArray".equals(showType)){
                     goods_one_name.setText(goodsCategryBean.getName());
                     if (goodsCategryAdapter == null ){
@@ -154,6 +156,9 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         public void onItemClick(View view, int position) {
                             //跳入详情界面
                             Log.i("点击的位置0:",position+"");
+                            Intent intent = new Intent(HomeActivity.this, GoodsDetailActivity.class);
+                            intent.putExtra("contentId",goodsCategryBean.getGoodsList().get(position).getId());
+                            startActivity(intent);
                         }
                     });
                     //更多按钮
@@ -176,6 +181,9 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         @Override
                         public void onItemClick(View view, int position) {
                             Log.i("点击的位置1:",position+"");
+                            Intent intent = new Intent(HomeActivity.this, GoodsDetailActivity.class);
+                            intent.putExtra("contentId",goodsCategryBean.getGoodsList().get(position).getId());
+                            startActivity(intent);
                         }
                     });
                     goods_categry_two.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +205,9 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         @Override
                         public void onItemClick(View view, int position) {
                             Log.i("点击的位置2:",position+"");
+                            Intent intent = new Intent(HomeActivity.this, GoodsDetailActivity.class);
+                            intent.putExtra("contentId",goodsCategryBean.getGoodsList().get(position).getId());
+                            startActivity(intent);
                         }
                     });
                 }

@@ -11,6 +11,8 @@ import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.bean.categry.CategryTwoBean;
+import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
+import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
@@ -112,6 +114,27 @@ public class ApiManager {
     public  static  Flowable<BaseResponseBean> clearCartGoods(){
         return apiSubscribe(AndoridApplication.apiService.clearCart(getHeaders()))
                 .map(getClearCart());
+    }
+    /*******************************商品**********************************************************/
+
+    /**
+     * 商品详情
+     * @param params
+     * @return
+     */
+    public static Flowable<GoodsDetailsBean> getGoodsDetailsInfos(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getGoodsDetails(getHeaders(),setParams(params)))
+                .map(getGoodsDetails());
+    }
+
+    /**
+     * 商品推荐
+     * @param goodsId
+     * @return
+     */
+    public  static  Flowable<List<GoodsRecoomendBean>> getGoodsRecommends(int goodsId){
+        return apiSubscribe(AndoridApplication.apiService.getGoodsReoomonds(getHeaders(),goodsId))
+                .flatMap(getGoodsCommond());
     }
 
     /*****************************添加头部*****************************************/
@@ -239,13 +262,40 @@ public class ApiManager {
         };
     }
 
+    /**
+     * 清空购物车
+     * @return
+     */
     private static Function<BaseResponseBean,BaseResponseBean> getClearCart() {
         return new Function<BaseResponseBean,BaseResponseBean>() {
             @Override
             public BaseResponseBean apply(BaseResponseBean response) throws Exception {
                 Log.i("返回的数据:",response.getCode()+"");
-                if (null !=  response && response.getCode() == 200){
-                    return response;
+                return response;
+            }
+        };
+    }
+    /**
+     * 商品详情
+     */
+    private static Function<SpecialResponseBean,GoodsDetailsBean> getGoodsDetails() {
+        return new Function<SpecialResponseBean, GoodsDetailsBean>() {
+            @Override
+            public GoodsDetailsBean apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                return (GoodsDetailsBean) response.getData();
+            }
+        };
+    }
+    /**
+     * 获取商品推荐
+     */
+    private static Function<SpecialResponseBean, Flowable<List<GoodsRecoomendBean>>> getGoodsCommond() {
+        return new Function<SpecialResponseBean, Flowable<List<GoodsRecoomendBean>>>() {
+            @Override
+            public Flowable<List<GoodsRecoomendBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<GoodsRecoomendBean>) response.getData());
                 }
                 return  null;
             }

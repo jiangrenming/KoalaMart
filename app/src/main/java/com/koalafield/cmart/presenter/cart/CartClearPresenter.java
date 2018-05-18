@@ -40,7 +40,7 @@ public class CartClearPresenter implements ICartClearPresenter {
                     if (clear.getCode() == 200){
                         mCartClearView.onClearSucessful(clear);
                     }else {
-                        mCartClearView.onClearFailure(clear.getMsg()+"");
+                        mCartClearView.onClearFailure(clear.getMsg());
                     }
                 }else {
                     mCartClearView.onClearFailure("返回数据为NULL");

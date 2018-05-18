@@ -1,0 +1,45 @@
+package com.koalafield.cmart.adapter;
+
+import android.content.Context;
+import android.graphics.Paint;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.dl7.recycler.adapter.BaseQuickAdapter;
+import com.dl7.recycler.adapter.BaseViewHolder;
+import com.koalafield.cmart.R;
+import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
+
+import java.util.List;
+
+/**
+ *
+ * @author jiangrenming
+ * @date 2018/5/18
+ */
+
+public class GoodsDetailCommondAdapter extends BaseQuickAdapter<GoodsRecoomendBean> {
+
+
+    public GoodsDetailCommondAdapter(Context context, List data) {
+        super(context, data);
+    }
+
+    @Override
+    protected int attachLayoutRes() {
+        return R.layout.commond_goods_layout;
+    }
+
+    @Override
+    protected void convert(BaseViewHolder holder, GoodsRecoomendBean item) {
+        ImageView goods_commond_img = holder.getView(R.id.goods_commond_img);
+        TextView old_price = holder.getView(R.id.old_price);
+        old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        old_price.setText(item.getOriginalPrice());
+        holder.setText(R.id.goods_commond_name,item.getName()).setText(R.id._curreny,"AUD").setText(R.id.current_price,item.getCurrentPrice());
+    }
+
+
+}

@@ -1,24 +1,34 @@
 package com.koalafield.cmart.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
+import com.dl7.recycler.listener.OnRemoveDataListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartItemBean;
+import com.koalafield.cmart.bean.event.CartEvent;
+import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.StringUtils;
+import com.koalafield.cmart.widget.FrontViewToMove;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.data;
+import static android.R.attr.factor;
 import static android.R.attr.primaryContentAlpha;
 
 /**
@@ -31,9 +41,11 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
 
 
     private List<CartDataBean> selects = new ArrayList<>();
+    private RecyclerView mListView;
 
-    public CartItemAdapter(Context context, List<CartDataBean> data) {
+    public CartItemAdapter(Context context, List<CartDataBean> data, RecyclerView view) {
         super(context, data);
+        mListView =view;
     }
 
     @Override
@@ -51,8 +63,11 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         TextView goods_cart_color = holder.getView(R.id.goods_cart_color);
         TextView goods_cart_size = holder.getView(R.id.goods_cart_size);
         Log.i("商品的数据:","数量="+item.getCount());
-        TextView delete_item = holder.getView(R.id.delete_item);
+        TextView delete_item = holder.getView(R.id.btn_delete);
         ImageView img = holder.getView(R.id.goods_cart_img);
+       final LinearLayout frontView = holder.getView(R.id.id_front);
+        //关键语句，使用自己写的类来对frontView的ontouch事件复写，实现视图滑动效果
+        new FrontViewToMove(frontView, mListView,200);
         holder.setText(R.id.goods_cart_name,commodity.getName())
                 .setText(R.id.goods_cart_curreny,commodity.getCurrency()+":")
                 .setText(R.id.goods_cart_amount,commodity.getCurrentPrice())
@@ -82,37 +97,69 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
                 if (checkSelect(item)){
                     iv_select.setImageResource(R.mipmap.un_select);
                     removeSelectList(item);
+                    mCartItemCallBack.seletSigle(false,item);
                 }else {
                     iv_select.setImageResource(R.mipmap.select);
                     addSelectList(item);
+                    mCartItemCallBack.seletSigle(true,item);
                 }
-                isAllSelect();  //是否全选
-                changePrice();  //改变选中总金额
-                changeCount();  //改变选中的总数量
             }
         });
         //减少
         goods_cart_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isSelected = true;
                 String count = goods_cart_number.getText().toString().trim();
                 int minusCount  = Integer.valueOf(count);
                 if (minusCount <= 1){
                     Toast.makeText(mContext,"已经处于最小量，无法继续减少...",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mCartItemCallBack.changeItemGoodsCount(minusCount--);
+                if (checkSelect(item)){
+                    isSelected = true;
+                }else {
+                    isSelected = false;
+                }
+                mCartItemCallBack.changeItemGoodsCount(-1,item,isSelected);
+                EventBus.getDefault().post(new CartEvent(1,2));
             }
         });
         //增加
         goods_cart_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isSelected = true;
                 String count = goods_cart_number.getText().toString().trim();
                 int addCount  = Integer.valueOf(count);
-                mCartItemCallBack.changeItemGoodsCount(addCount++);
+                if (checkSelect(item)){
+                    isSelected = true;
+                }else {
+                    isSelected = false;
+                }
+                mCartItemCallBack.changeItemGoodsCount(1,item,isSelected);
+                EventBus.getDefault().post(new CartEvent(1,3));
             }
         });
+        //删除单条目
+        delete_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isSelected = true;
+                if (checkSelect(item)){
+                    isSelected = true;
+                    selects.remove(item);
+                }else {
+                    isSelected = false;
+                }
+                String count = goods_cart_number.getText().toString().trim();
+                int addCount  = Integer.valueOf(count);
+                EventBus.getDefault().post(new CartEvent(addCount,1));
+                mCartItemCallBack.changeItemGoodsCount(0,item,isSelected);
+                new FrontViewToMove(frontView, mListView,200).generateRevealAnimate(frontView,0);
+            }
+        });
+
     }
 
 
@@ -149,11 +196,10 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
      */
     public void changePrice(){
 
-        double amount =0;
+        double amount = 0;
         if (selects != null && selects.size() >0){
             for (int i = 0; i < selects.size(); i++) {
-                amount += (selects.get(i).getCount()*(Double.parseDouble(selects.get(i).getCommodity().getCurrentPrice())));
-
+                amount += selects.get(i).getCount()*Double.parseDouble(selects.get(i).getCommodity().getCurrentPrice());
             }
         }
         mCartItemCallBack.getAllPrice(amount);
@@ -177,10 +223,17 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
      */
     public  void isAllSelect(){
         int allCount =0;
+        int selectCount = 0;
         for (int i = 0; i <mData.size()  ; i++) {
             allCount += mData.get(i).getCount();
         }
-        if (selects != null && selects.size() > 0 && selects.size() == allCount){
+        Log.i("总的商品数量:",allCount+"/被选中的商品数量:"+selects.size());
+        if (selects != null && selects.size() > 0){
+            for (int i = 0; i < selects.size(); i++) {
+                selectCount += selects.get(i).getCount();
+            }
+        }
+        if (allCount !=0 &&  selectCount!= 0 && allCount == selectCount){
             mCartItemCallBack.seletAll(true);
         }else {
             mCartItemCallBack.seletAll(false);
@@ -203,8 +256,9 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         void getAllPrice(double price);
         void getAllCount(int count);
         void seletAll(boolean isSelect);
+        void seletSigle(boolean isSelect,CartDataBean item);
         void cleatAll(boolean isNull);
-        void changeItemGoodsCount(int count);
+        void changeItemGoodsCount(int count,CartDataBean item,boolean isSelect);
     }
 
     private CartItemCallBack mCartItemCallBack;

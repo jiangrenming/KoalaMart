@@ -11,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
+import com.dl7.recycler.listener.OnItemMoveListener;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CartItemAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
+import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.presenter.cart.CartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.CartClearPresenter;
@@ -25,6 +27,7 @@ import com.koalafield.cmart.presenter.cart.ICartClearPresenter;
 import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 import com.koalafield.cmart.ui.view.cart.ICartClearView;
 import com.koalafield.cmart.ui.view.cart.ICartListView;
+import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
@@ -42,7 +45,7 @@ import butterknife.OnClick;
  */
 
 public class CartActivity extends TabBaseActivity implements ICartListView<List<CartDataBean>>,
-        CartItemAdapter.CartItemCallBack,ICartClearView<BaseResponseBean>,ICartChangeCountView<List<CartDataBean>> {
+        CartItemAdapter.CartItemCallBack,ICartClearView<BaseResponseBean>,ICartChangeCountView<SpecialResponseBean> {
 
     @BindView(R.id.clear_all)
     TextView clear_all;
@@ -64,8 +67,6 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     LinearLayout pay_goods;
 
     private CartItemAdapter cartItemAdapter;
-    private  long allAmount =0;
-    private int allCount = 0;
     private ICartClearPresenter cartClearPresenter;
     private  boolean isAllSelect = true;
     private  List<CartDataBean> mCartBean ;
@@ -109,7 +110,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
             }
             mCartBean = data;
             if (cartItemAdapter == null){
-                cartItemAdapter = new CartItemAdapter(CartActivity.this,data);
+                cartItemAdapter = new CartItemAdapter(CartActivity.this,data,goods_item_recycler);
                 RecyclerViewHelper.initRecyclerViewV(CartActivity.this,goods_item_recycler,false,cartItemAdapter);
             }else {
                 cartItemAdapter.cleanItems();
@@ -174,9 +175,10 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
 
     @Override
     public void getAllPrice(double price) {
+        Long.valueOf((long) (price*100));
         cart_curreny.setText("AUD:");
-        if (price > 0 || price > 0.00){
-            select_amount.setText(String.valueOf(price));
+        if (price > 0  && price > 0.00){
+            select_amount.setText(String.format("%.2f", price));
         }else {
             select_amount.setText("0.00");
         }
@@ -203,6 +205,16 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     }
 
     @Override
+    public void seletSigle(boolean isSelect, CartDataBean item) {
+        for (int i = 0; i <mCartBean.size() ; i++) {
+            if (mCartBean.get(i).equals(item)){
+                mCartBean.get(i).setSelect(isSelect);
+            }
+        }
+        cartItemAdapter.updateItems(mCartBean);
+    }
+
+    @Override
     public void cleatAll(boolean isNull) {
         cart_curreny.setText("AUD:");
         if (isNull){
@@ -217,11 +229,38 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
      * @param count
      */
     @Override
-    public void changeItemGoodsCount(int count) {
+    public void changeItemGoodsCount(int count,CartDataBean item,boolean isSelect) {
+        if (count == 0){
+            if (mCartBean != null && mCartBean.size() >0){
+                for (int i = 0; i < mCartBean.size() ; i++) {
+                    if (item.equals(mCartBean.get(i))){
+                        mCartBean.remove(item);
+                    }
+                }
+            }
+        }else {
+            if (mCartBean != null &&mCartBean.size() >0){
+                for (int i = 0; i < mCartBean.size() ; i++) {
+                    if (item.equals(mCartBean.get(i))){
+                        mCartBean.get(i).setCount(item.getCount()+count);
+                        mCartBean.get(i).setSelect(isSelect);
+                    }
+                }
+            }
+        }
+
         Map<String,String> params = new HashMap<>();
         params.put("count",String.valueOf(count));
+        params.put("contentId",String.valueOf(item.getContentId()));
+        params.put("color",item.getColor());
+        params.put("size",item.getSize());
+        params.put("weight",item.getWeight());
+        params.put("material",item.getMaterial());
+        params.put("type",item.getType());
+        params.put("tag","0");
         ICartChangeItemPresenter presenter = new CartChangeItemPresenter(this);
         presenter.getChangeCountData(params);
+
     }
 
     @Override
@@ -242,10 +281,17 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     }
 
     @Override
-    public void onChangeItemSucessful(List<CartDataBean> data) {
-        if (data != null && data.size() >0){
-            cartItemAdapter.cleanItems();
-            cartItemAdapter.updateItems(data);
+    public void onChangeItemSucessful(SpecialResponseBean responseBean) {
+        if (responseBean != null && responseBean.getCode() == 200 ){
+            Toast.makeText(CartActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
+            cartItemAdapter.updateItems(mCartBean);
+        }
+        if (mCartBean != null  && mCartBean.size() == 0){
+            empty_cart.setVisibility(View.VISIBLE);
+            cart_top_layout.setVisibility(View.GONE);
+        }else {
+            empty_cart.setVisibility(View.GONE);
+            cart_top_layout.setVisibility(View.VISIBLE);
         }
     }
 
