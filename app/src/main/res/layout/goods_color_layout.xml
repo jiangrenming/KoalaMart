@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <ImageView
+            android:id="@+id/goods_img"
+            android:layout_width="110dp"
+            android:paddingLeft="20dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/default_img"
+            android:layout_height="110dp" />
+        <LinearLayout
+            android:layout_toRightOf="@+id/goods_img"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/goods_short_name"
+                android:paddingTop="15dp"
+                android:layout_width="match_parent"
+                android:lines="2"
+                android:text="我滴是打哈哈多久啊回到家看啥都会撒上的 "
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/curreny_"
+                    android:layout_width="wrap_content"
+                    android:text="¥ "
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/curreny_price"
+                    android:layout_width="wrap_content"
+                    android:text="9.80"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/goods_close"
+            android:layout_width="20dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/close"
+            android:layout_height="20dp" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray"
+        android:layout_height="0.5dp"/>
+    <com.koalafield.cmart.widget.MyBoundScrollView
+        android:id="@+id/cll_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/view_two"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="11dp"
+                android:background="#eee" />
+
+        </LinearLayout>
+
+    </com.koalafield.cmart.widget.MyBoundScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:padding="12sp"
+        android:gravity="center_vertical" >
+        <TextView
+            android:id="@+id/fragment_commodity_getcolors_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="10dp"
+            android:text="购买数量"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/fragment_commodity_getcolors_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="48dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/add" />
+
+        <TextView
+            android:id="@+id/fragment_commodity_getcolors_zhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/fragment_commodity_getcolors_sub"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/fragment_commodity_getcolors_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/fragment_commodity_getcolors_zhi"
+            android:contentDescription="@null"
+            android:src="@mipmap/minus" />
+    </RelativeLayout>
+
+</LinearLayout>
