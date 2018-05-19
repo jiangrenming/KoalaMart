@@ -2,6 +2,7 @@ package com.koalafield.cmart.bean.goods;
 
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -51,6 +52,17 @@ public class GoodsDetailsBean extends SpecialResponseBean {
     //销量
     private boolean Favorite;
     private String SalesCount ;
+
+    //判断是否打开弹出窗
+    private  boolean IsOpenSelection;
+
+    public boolean isOpenSelection() {
+        return IsOpenSelection;
+    }
+
+    public void setOpenSelection(boolean openSelection) {
+        IsOpenSelection = openSelection;
+    }
 
     public List<GoodsItem> getColorList() {
         return ColorList;
@@ -298,5 +310,42 @@ public class GoodsDetailsBean extends SpecialResponseBean {
 
     public void setSalesCount(String salesCount) {
         SalesCount = salesCount;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsDetailsBean{" +
+                "ColorList=" + ColorList +
+                ", SizeList=" + SizeList +
+                ", MaterialList=" + MaterialList +
+                ", TypeList=" + TypeList +
+                ", WeightList=" + WeightList +
+                ", ImageList=" + Arrays.toString(ImageList) +
+                ", Id=" + Id +
+                ", Name='" + Name + '\'' +
+                ", ShortName='" + ShortName + '\'' +
+                ", ContentHTML='" + ContentHTML + '\'' +
+                ", CanComment=" + CanComment +
+                ", Comment=" + Comment +
+                ", Following=" + Following +
+                ", Viewed=" + Viewed +
+                ", PublishTime='" + PublishTime + '\'' +
+                ", GoodType='" + GoodType + '\'' +
+                ", FreeDelivery=" + FreeDelivery +
+                ", GiveScore=" + GiveScore +
+                ", Availablescore=" + Availablescore +
+                ", LinkGoods='" + LinkGoods + '\'' +
+                ", Sku='" + Sku + '\'' +
+                ", DiscountType='" + DiscountType + '\'' +
+                ", Discount='" + Discount + '\'' +
+                ", MinPurchase=" + MinPurchase +
+                ", MaxBookingCustomer=" + MaxBookingCustomer +
+                ", Currency='" + Currency + '\'' +
+                ", CurrencyRate=" + CurrencyRate +
+                ", CurrentPrice=" + CurrentPrice +
+                ", OriginalPrice=" + OriginalPrice +
+                ", Favorite=" + Favorite +
+                ", SalesCount='" + SalesCount + '\'' +
+                '}';
     }
 }

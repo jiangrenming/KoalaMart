@@ -38,6 +38,24 @@ public class GoodsRecoomendBean extends SpecialResponseBean {
     private String CurrentPrice;
     private String  OriginalPrice;
     private String LinkGoods;
+    private  String CoverImg;
+    private  String Currency;
+
+    public String getCurrency() {
+        return Currency;
+    }
+
+    public void setCurrency(String currency) {
+        Currency = currency;
+    }
+
+    public String getCoverImg() {
+        return CoverImg;
+    }
+
+    public void setCoverImg(String coverImg) {
+        CoverImg = coverImg;
+    }
 
     public List<GoodsItem> getColorList() {
         return ColorList;
@@ -237,5 +255,38 @@ public class GoodsRecoomendBean extends SpecialResponseBean {
 
     public void setLinkGoods(String linkGoods) {
         LinkGoods = linkGoods;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsRecoomendBean{" +
+                "ColorList=" + ColorList +
+                ", SizeList=" + SizeList +
+                ", MaterialList=" + MaterialList +
+                ", TypeList=" + TypeList +
+                ", WeightList=" + WeightList +
+                ", Name='" + Name + '\'' +
+                ", ShortName='" + ShortName + '\'' +
+                ", ContentHTML='" + ContentHTML + '\'' +
+                ", CanComment=" + CanComment +
+                ", Comment=" + Comment +
+                ", Following=" + Following +
+                ", Viewed=" + Viewed +
+                ", PublishTime='" + PublishTime + '\'' +
+                ", GoodType='" + GoodType + '\'' +
+                ", FreeDelivery=" + FreeDelivery +
+                ", GiveScore=" + GiveScore +
+                ", Availablescore=" + Availablescore +
+                ", Sku='" + Sku + '\'' +
+                ", DiscountType='" + DiscountType + '\'' +
+                ", Discount='" + Discount + '\'' +
+                ", MinPurchase=" + MinPurchase +
+                ", MaxBookingCustomer=" + MaxBookingCustomer +
+                ", CurrentPrice='" + CurrentPrice + '\'' +
+                ", OriginalPrice='" + OriginalPrice + '\'' +
+                ", LinkGoods='" + LinkGoods + '\'' +
+                ", CoverImg='" + CoverImg + '\'' +
+                ", Currency='" + Currency + '\'' +
+                '}';
     }
 }

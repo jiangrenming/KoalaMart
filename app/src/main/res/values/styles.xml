@@ -87,6 +87,7 @@
         <item name="android:layout_height">15dp</item>
         <item name="android:background">@drawable/shape_red_for_text</item>
         <item name="android:textSize">7sp</item>
+        <item name="android:text">0</item>
         <item name="android:textColor">@color/category_select</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginRight">-9dip</item>

@@ -121,16 +121,16 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 startActivity(new Intent(this, PrivateActivity.class));
                 break;
             case R.id.order_infos:  //全部订单
-                skipOrderActivity(Constants.ALL);
+   //             skipOrderActivity(Constants.ALL);
                 break;
             case R.id.no_pay:
-                skipOrderActivity(Constants.PAY_WAIT);
+   //             skipOrderActivity(Constants.PAY_WAIT);
                 break;
             case R.id.pay_wait:
-                skipOrderActivity(Constants.WAIT_SEND);
+   //             skipOrderActivity(Constants.WAIT_SEND);
                 break;
             case R.id.wait_self:
-                skipOrderActivity(Constants.WAIT_RECEIVER);
+    //            skipOrderActivity(Constants.WAIT_RECEIVER);
                 break;
             case R.id.old:
                 break;

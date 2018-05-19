@@ -9,7 +9,7 @@
         android:id="@+id/goods_top"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:background="@color/gray"
+        android:background="@color/gray_light"
         android:layout_height="50dp">
         <ImageView
             android:id="@+id/goods_back"
@@ -142,6 +142,29 @@
                     android:id="@+id/goods_commonds"
                     android:layout_width="wrap_content"
                     android:layout_height="200dp" />
+                <!--<View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/gray_light" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="大家评价"
+                        android:layout_height="match_parent" />
+                    <TextView
+                        android:id="@+id/judget_more"
+                        android:layout_width="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="查看更多"
+                        android:layout_height="match_parent" />
+                </LinearLayout>-->
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
@@ -156,27 +179,29 @@
                     android:id="@+id/webViews"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent"/>
             </LinearLayout>
-            <!--<include layout="@layout/layout_common_empty"/>-->
+            <include layout="@layout/layout_common_empty"/>
         </FrameLayout>
     </com.koalafield.cmart.widget.MyBoundScrollView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/gray"
+        android:background="@color/gray_light"
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
+
         <ImageView
             android:id="@+id/goods_collection"
-            android:layout_width="25dp"
-            android:scaleType="fitXY"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/collection"
-            android:layout_height="25dp" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/collection" />select_collection1.png
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -185,8 +210,8 @@
             android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/goods_minus"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:scaleType="fitXY"
@@ -202,8 +227,8 @@
                     android:text="1" />
                 <ImageView
                     android:id="@+id/goods_add"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
                     android:scaleType="fitXY"
                     android:src="@mipmap/add" />

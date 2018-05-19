@@ -50,6 +50,14 @@ public interface ApiService {
     //商品详情
     @POST("AppApi/GoodsDetails")
     Flowable<SpecialResponseBean<GoodsDetailsBean>> getGoodsDetails(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    //添加收藏
+    @POST("AppApi/AddFollow")
+    Flowable<BaseResponseBean> getGoodsCollection(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+
+    //取消收藏
+    @POST("AppApi/DeleteFollow")
+    Flowable<BaseResponseBean> getGoodsCollectionDelete(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+
 
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")

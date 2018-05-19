@@ -19,6 +19,7 @@ import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
+import com.koalafield.cmart.bean.event.CartEvent;
 import com.koalafield.cmart.presenter.cart.CartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.CartClearPresenter;
 import com.koalafield.cmart.presenter.cart.CartListPresenter;
@@ -30,6 +31,8 @@ import com.koalafield.cmart.ui.view.cart.ICartListView;
 import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -85,9 +88,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
 
     @Override
     public void initDatas() {
-        presenter = new CartListPresenter(CartActivity.this);
 
-        presenter.getData();
     }
 
     @Override
@@ -97,6 +98,8 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     protected void onResume() {
         super.onResume();
         Log.e("登录后是否走这里","**********************************************");
+        presenter = new CartListPresenter(CartActivity.this);
+        presenter.getData();
     }
 
     @Override
@@ -105,6 +108,10 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
             Log.i("商品的数据:","购物车含有的数据="+data.size());
             clear_all.setEnabled(true);
             clear_all.setClickable(true);
+            select.setClickable(true);
+            select.setEnabled(true);
+            empty_cart.setVisibility(View.GONE);
+            cart_top_layout.setVisibility(View.VISIBLE);
             for (int i = 0; i < data.size(); i++) {
                 data.get(i).setSelect(true);
             }
@@ -117,6 +124,9 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
                 cartItemAdapter.addItems(data);
             }
             cartItemAdapter.setCartItemCallBack(this);
+        }else{
+            clear_all.setEnabled(false);
+            clear_all.setClickable(false);
         }
     }
 
@@ -139,6 +149,10 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         empty_cart.setVisibility(View.VISIBLE);
         cart_top_layout.setVisibility(View.GONE);
         select.setImageResource(R.mipmap.un_select);
+        select.setClickable(false);
+        select.setEnabled(false);
+        clear_all.setEnabled(false);
+        clear_all.setClickable(false);
         select_num.setText("0");
         cart_curreny.setText("AUD:");
         select_amount.setText("0.00");
@@ -266,11 +280,21 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     @Override
     public void onClearSucessful(BaseResponseBean data) {
         if (data != null){
+            int mCount = 0;
             if (data.getCode() ==200){
                 Log.e("清空购物车","清除成功");
                 cartItemAdapter.cleanItems();
+                cartItemAdapter.isClearAll();
+                for (int i = 0; i < mCartBean.size(); i++) {
+                    mCount += mCartBean.get(i).getCount();
+                }
+                EventBus.getDefault().post(new CartEvent(mCount,5));
                 clear_all.setEnabled(false);
                 clear_all.setClickable(false);
+                empty_cart.setVisibility(View.VISIBLE);
+                cart_top_layout.setVisibility(View.GONE);
+                select.setClickable(false);
+                select.setEnabled(false);
             }
         }
     }
@@ -286,12 +310,21 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
             Toast.makeText(CartActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
             cartItemAdapter.updateItems(mCartBean);
         }
-        if (mCartBean != null  && mCartBean.size() == 0){
+        if (mCartBean == null  || mCartBean.size() == 0){
             empty_cart.setVisibility(View.VISIBLE);
             cart_top_layout.setVisibility(View.GONE);
+            select.setClickable(false);
+            select.setEnabled(false);
+            clear_all.setEnabled(false);
+            clear_all.setClickable(false);
+            cartItemAdapter.isClearAll();
         }else {
             empty_cart.setVisibility(View.GONE);
             cart_top_layout.setVisibility(View.VISIBLE);
+            select.setClickable(true);
+            select.setEnabled(true);
+            clear_all.setEnabled(true);
+            clear_all.setClickable(true);
         }
     }
 

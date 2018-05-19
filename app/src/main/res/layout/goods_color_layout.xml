@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -50,14 +51,16 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/goods_close"
-            android:layout_width="20dp"
-            android:layout_margin="10dp"
+            android:layout_width="10dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/close"
-            android:layout_height="20dp" />
+            android:layout_height="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -97,7 +100,6 @@
         android:padding="12sp"
         android:gravity="center_vertical" >
         <TextView
-            android:id="@+id/fragment_commodity_getcolors_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -109,7 +111,7 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/fragment_commodity_getcolors_sub"
+            android:id="@+id/add_goods_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -119,25 +121,33 @@
             android:src="@mipmap/add" />
 
         <TextView
-            android:id="@+id/fragment_commodity_getcolors_zhi"
+            android:id="@+id/goods_pop_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/fragment_commodity_getcolors_sub"
+            android:layout_toLeftOf="@id/add_goods_num"
             android:text="1"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/fragment_commodity_getcolors_minus"
+            android:id="@+id/minus_pop_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/fragment_commodity_getcolors_zhi"
+            android:layout_toLeftOf="@id/goods_pop_num"
             android:contentDescription="@null"
             android:src="@mipmap/minus" />
     </RelativeLayout>
-
+    <TextView
+        android:id="@+id/add_pop_cart"
+        android:layout_width="match_parent"
+        android:text="加入购物车"
+        android:background="@color/btn_red"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_height="50dp" />
 </LinearLayout>

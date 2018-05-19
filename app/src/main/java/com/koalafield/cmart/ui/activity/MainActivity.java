@@ -23,12 +23,9 @@ import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.EmptyLayout;
-import com.squareup.haha.perflib.Main;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -227,6 +224,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
                     String str = tv_cart_num.getText().toString();
                     int mCount = Integer.valueOf(str);
                     tv_cart_num.setText(String.valueOf(mCount+event.nCount));
+                }else if (event.type ==5){  //全部清除
+                    String str = tv_cart_num.getText().toString();
+                    int mCount = Integer.valueOf(str);
+                    tv_cart_num.setText(String.valueOf(mCount-event.nCount));
+                    Log.i("tag",event.nCount+"");
+                    tv_cart_num.setVisibility(View.GONE);
+
                 }
             }else {
                 tv_cart_num.setVisibility(View.GONE);

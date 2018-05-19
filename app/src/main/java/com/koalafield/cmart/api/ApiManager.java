@@ -136,7 +136,23 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getGoodsReoomonds(getHeaders(),goodsId))
                 .flatMap(getGoodsCommond());
     }
+    /**
+     * 添加收藏
+     */
 
+    public  static  Flowable<BaseResponseBean> goods_collections(Map<String,String>params){
+        return apiSubscribe(AndoridApplication.apiService.getGoodsCollection(getHeaders(),setParams(params)))
+                .map(addCollcetion());
+    }
+
+    /**
+     * 取消收藏
+     */
+
+    public  static  Flowable<BaseResponseBean> goods_delete_collections(Map<String,String>params){
+        return apiSubscribe(AndoridApplication.apiService.getGoodsCollection(getHeaders(),setParams(params)))
+                .map(addCollcetion());
+    }
     /*****************************添加头部*****************************************/
 
     private static  Map<String,String> getHeaders(){
@@ -298,6 +314,20 @@ public class ApiManager {
                     return Flowable.fromArray((List<GoodsRecoomendBean>) response.getData());
                 }
                 return  null;
+            }
+        };
+    }
+
+    /**
+     * 收藏商品
+     * @return
+     */
+    private static Function<BaseResponseBean,BaseResponseBean> addCollcetion() {
+        return new Function<BaseResponseBean,BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                return response;
             }
         };
     }

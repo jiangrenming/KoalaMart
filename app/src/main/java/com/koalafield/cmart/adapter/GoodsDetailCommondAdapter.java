@@ -38,7 +38,8 @@ public class GoodsDetailCommondAdapter extends BaseQuickAdapter<GoodsRecoomendBe
         TextView old_price = holder.getView(R.id.old_price);
         old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         old_price.setText(item.getOriginalPrice());
-        holder.setText(R.id.goods_commond_name,item.getName()).setText(R.id._curreny,"AUD").setText(R.id.current_price,item.getCurrentPrice());
+        holder.setText(R.id.goods_commond_name,item.getName()).setText(R.id._curreny,item.getCurrency()+":").setText(R.id.current_price,item.getCurrentPrice());
+        Glide.with(mContext).load(item.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(goods_commond_img);
     }
 
 

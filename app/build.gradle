@@ -12,12 +12,12 @@ android {
         multiDexEnabled true
     }
     signingConfigs {
-       /* myConfig {
-            storeFile file('koalamart.keystore')
+        myConfig {
+            storeFile file('app/koalamart.jks')
             storePassword "koalamart"
             keyAlias "koalamart.keystore"
             keyPassword "koalamart"
-        }*/
+        }
     }
     buildTypes {
         debug {
@@ -29,10 +29,10 @@ android {
         }
         release {
             buildConfigField "String", "POST_URL", "${REAL_IP}"
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    //        signingConfig signingConfigs.myConfig
+            signingConfig signingConfigs.myConfig
         }
     }
     // 源文件加上aidl文件夹下的java文件，默认只包含java文件夹下的。

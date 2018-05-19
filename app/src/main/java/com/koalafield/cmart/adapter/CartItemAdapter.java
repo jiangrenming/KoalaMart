@@ -79,7 +79,6 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
             goods_cart_size.setText("尺寸:"+item.getSize());
         }
         Glide.with(mContext).load(commodity.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(img);
-        isClearAll();
         if (item.isSelect()){
             iv_select.setImageResource(R.mipmap.select);
             addSelectList(item);
@@ -87,6 +86,7 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
             iv_select.setImageResource(R.mipmap.un_select);
             removeSelectList(item);
         }
+    //    isClearAll();    //是否全部删除
         isAllSelect();  //是否全选
         changePrice();  //改变选中总金额
         changeCount();  //改变选中的总数量
@@ -244,11 +244,13 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
      * 用于全部清除操作
      */
     public  void isClearAll(){
-        if (mData .size() == 0){
+        if (mData == null  || mData .size() == 0){
+            selects.clear();
             mCartItemCallBack.cleatAll(true);
         }else {
             mCartItemCallBack.cleatAll(false);
         }
+        notifyDataSetChanged();
     }
 
 
