@@ -1,6 +1,7 @@
 package com.koalafield.cmart.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,39 +53,49 @@ public class TitleAdpater extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        TitleHovlder titleHovlder = null;
-        if (convertView == null){
-            titleHovlder = new TitleHovlder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.color_select,null);
-            titleHovlder.items_layout = convertView.findViewById(R.id.layout);
-            titleHovlder.itemText = convertView.findViewById(R.id.itemText);
-            convertView.setTag(titleHovlder);
-        }
-        titleHovlder = (TitleHovlder) convertView.getTag();
-        GoodsItem goodsItem = mLists.get(position);
-        Log.i("返回的数据为:",mLists.size()+"");
-        /** 设置TextView显示的内容，即我们存放在动态数组中的数据 */
-        titleHovlder.itemText.setText(goodsItem.getName());
-      /*switch (item.getState()) {
-                // 选中
-                case "0":
-                    layout.setBackgroundResource(R.xml.shape2);
-                    title.setTextColor(Color.WHITE);
-                    break;
-                // 未选中
-                case "1":
-                    layout.setBackgroundResource(R.xml.shape1);
-                    title.setTextColor(Color.BLACK);
-                    break;
-                // 不可选
-                case "2":
-                    layout.setBackgroundResource(R.xml.shape1);
-                    title.setTextColor(Color.parseColor("#999999"));
-                    break;
-                default:
-                    break;
-            }*/
+    public View getView(final int position, View convertView, ViewGroup parent) {
+            TitleHovlder titleHovlder = null;
+            if (convertView == null){
+                titleHovlder = new TitleHovlder();
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.color_select,null);
+                titleHovlder.items_layout = convertView.findViewById(R.id.layout);
+                titleHovlder.itemText = convertView.findViewById(R.id.itemText);
+                convertView.setTag(titleHovlder);
+            }
+            titleHovlder = (TitleHovlder) convertView.getTag();
+            final GoodsItem goodsItem = mLists.get(position);
+            Log.i("返回的数据为:",mLists.size()+"");
+            /** 设置TextView显示的内容，即我们存放在动态数组中的数据 */
+            titleHovlder.itemText.setText(goodsItem.getName());
+           switch (goodsItem.getState()) {
+                     // 选中
+                    case 0:
+                        titleHovlder.items_layout.setBackgroundResource(R.xml.shape2);
+                        titleHovlder.itemText .setTextColor(Color.WHITE);
+                        break;
+                    // 未选中
+                    case 1:
+                        titleHovlder.items_layout.setBackgroundResource(R.xml.shape1);
+                        titleHovlder.itemText .setTextColor(Color.BLACK);
+                        break;
+                    // 不可选
+                    case 2:
+                        titleHovlder.items_layout.setBackgroundResource(R.xml.shape1);
+                        titleHovlder.itemText .setTextColor(Color.parseColor("#999999"));
+                        break;
+                    default:
+                        break;
+                }
+            titleHovlder.items_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClickListener != null) {
+                        if (goodsItem.getState() != 2) {
+                            itemClickListener.onItemClick(goodsItem, position);
+                        }
+                    }
+                }
+            });
 
         return convertView;
     }
@@ -94,4 +105,13 @@ public class TitleAdpater extends BaseAdapter {
         private TextView itemText;
         private LinearLayout items_layout;
     }
+    public onItemClickListener itemClickListener;// 接口回调
+    public interface onItemClickListener {
+        public void onItemClick(GoodsItem bean, int position);
+    }
+
+    public void setItemClickListener(onItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
 }
