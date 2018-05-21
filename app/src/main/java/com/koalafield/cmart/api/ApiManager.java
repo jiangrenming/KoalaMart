@@ -6,11 +6,9 @@ import com.google.gson.Gson;
 import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
-import com.koalafield.cmart.bean.cart.CartCleanBean;
-import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
-import com.koalafield.cmart.bean.categry.CategryTwoBean;
+import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
 import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
@@ -150,9 +148,18 @@ public class ApiManager {
      */
 
     public  static  Flowable<BaseResponseBean> goods_delete_collections(Map<String,String>params){
-        return apiSubscribe(AndoridApplication.apiService.getGoodsCollection(getHeaders(),setParams(params)))
+        return apiSubscribe(AndoridApplication.apiService.getGoodsCollectionDelete(getHeaders(),setParams(params)))
                 .map(addCollcetion());
     }
+
+    /**
+     * 收藏列表
+     */
+    public  static  Flowable<List<GoodsCollectionsBean>> getGoodsCollection(int pageIndex){
+        return apiSubscribe(AndoridApplication.apiService.getCollectionList(getHeaders(),pageIndex))
+                .flatMap(getGoodsCollect());
+    }
+
     /*****************************添加头部*****************************************/
 
     private static  Map<String,String> getHeaders(){
@@ -319,7 +326,7 @@ public class ApiManager {
     }
 
     /**
-     * 收藏商品
+     * 收藏，取消，商品
      * @return
      */
     private static Function<BaseResponseBean,BaseResponseBean> addCollcetion() {
@@ -328,6 +335,21 @@ public class ApiManager {
             public BaseResponseBean apply(BaseResponseBean response) throws Exception {
                 Log.i("返回的数据:",response.getCode()+"");
                 return response;
+            }
+        };
+    }
+
+    /**
+     * 获取收藏列表
+     */
+    private static Function<SpecialResponseBean, Flowable<List<GoodsCollectionsBean>>> getGoodsCollect() {
+        return new Function<SpecialResponseBean, Flowable<List<GoodsCollectionsBean>>>() {
+            @Override
+            public Flowable<List<GoodsCollectionsBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<GoodsCollectionsBean>) response.getData());
+                }
+                return  null;
             }
         };
     }

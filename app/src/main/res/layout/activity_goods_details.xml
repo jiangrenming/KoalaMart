@@ -37,6 +37,7 @@
                 android:src="@mipmap/buy"
                 android:layout_height="30dp" />
             <TextView
+                android:visibility="gone"
                 android:id="@+id/goods_cart_num"
                 style="@style/bg_text_style"
                 android:layout_gravity="center_vertical"
@@ -200,7 +201,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/collection" />select_collection1.png
+            android:src="@mipmap/collection" />
 
         <LinearLayout
             android:layout_width="0dp"

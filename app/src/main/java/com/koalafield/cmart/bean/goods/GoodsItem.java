@@ -10,6 +10,15 @@ public class GoodsItem implements Serializable{
 
     private String Name;
     private String RaisePrice;
+    private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getName() {
         return Name;

@@ -5,6 +5,7 @@ import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
+import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
 import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
@@ -53,7 +54,6 @@ public interface ApiService {
     //添加收藏
     @POST("AppApi/AddFollow")
     Flowable<BaseResponseBean> getGoodsCollection(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
-
     //取消收藏
     @POST("AppApi/DeleteFollow")
     Flowable<BaseResponseBean> getGoodsCollectionDelete(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
@@ -73,7 +73,9 @@ public interface ApiService {
     //商品推荐
     @GET("AppApi/RecommendGoods/{goodsId}")
     Flowable<SpecialResponseBean<List<GoodsRecoomendBean>>>  getGoodsReoomonds(@HeaderMap Map<String,String> headrs, @Path("goodsId") int goodsId);
-
+    //收藏列表
+    @GET("AppApi/FollowList/{pageIndex}")
+    Flowable<SpecialResponseBean<List<GoodsCollectionsBean>>> getCollectionList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
 
    /* *//**
      * 首页bananer

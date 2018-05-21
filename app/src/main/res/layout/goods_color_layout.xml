@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/goods_img"
             android:layout_width="110dp"
@@ -22,7 +22,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/goods_short_name"
                 android:paddingTop="15dp"
@@ -68,6 +68,7 @@
         android:layout_height="0.5dp"/>
     <com.koalafield.cmart.widget.MyBoundScrollView
         android:id="@+id/cll_color"
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
@@ -76,33 +77,167 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical" >
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/item_title"
+            <LinearLayout
+                android:id="@+id/item_color_layout"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="颜色"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="30dp" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-            <View
-                android:id="@+id/view_two"
+                <!--<com.koalafield.cmart.widget.MyGridView
+                    android:id="@+id/item_color"
+                    android:layout_width="match_parent"
+                    android:numColumns="3"
+                    android:layout_height="wrap_content"/>-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="11dp"
+                    android:background="#eee" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/item_size_layout"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="11dp"
-                android:background="#eee" />
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="尺寸"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="30dp" />
+               <!-- <com.koalafield.cmart.widget.MyGridView
+                    android:id="@+id/item_size"
+                    android:layout_width="match_parent"
+                    android:numColumns="3"
+                    android:layout_height="wrap_content"/>-->
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="11dp"
+                    android:background="#eee" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/item_weight_layout"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="重量"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="30dp" />
+               <!-- <com.koalafield.cmart.widget.MyGridView
+                    android:id="@+id/item_weight"
+                    android:numColumns="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="11dp"
+                    android:background="#eee" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/item_type_layout"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="类型"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="30dp" />
+              <!--  <com.koalafield.cmart.widget.MyGridView
+                    android:id="@+id/item_type"
+                    android:layout_width="match_parent"
+                    android:numColumns="3"
+                    android:layout_height="wrap_content"/>-->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="11dp"
+                    android:background="#eee" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/item_materi_layout"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="风格"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="30dp" />
+                <!--<com.koalafield.cmart.widget.MyGridView
+                    android:id="@+id/item_materi"
+                    android:layout_width="match_parent"
+                    android:numColumns="3"
+                    android:layout_height="wrap_content"/>-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_materi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="11dp"
+                    android:background="#eee" />
+            </LinearLayout>
         </LinearLayout>
-
     </com.koalafield.cmart.widget.MyBoundScrollView>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:padding="12sp"
         android:gravity="center_vertical" >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="10dp"

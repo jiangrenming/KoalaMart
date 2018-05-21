@@ -32,7 +32,7 @@ public class GoodsCollectionDelPresenter implements IGoodsCollectionDelPresenter
 
     @Override
     public void getDetails(Map<String, String> params) {
-        ApiManager.goods_collections(params).subscribe(new SubScribeCallBack<BaseResponseBean>(new CallBack() {
+        ApiManager.goods_delete_collections(params).subscribe(new SubScribeCallBack<BaseResponseBean>(new CallBack() {
             @Override
             public void onInit() {
                 deleteView.showLoading();

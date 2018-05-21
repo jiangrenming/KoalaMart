@@ -15,11 +15,10 @@ public class GoodsDetailsBean extends SpecialResponseBean {
 
     private List<GoodsItem> ColorList;
     private List<GoodsItem> SizeList;
-
     private List<GoodsItem> MaterialList;
     private List<GoodsItem> TypeList;
-
     private List<GoodsItem> WeightList;
+
     private String[] ImageList;
     private  int Id;
     private String Name;
@@ -324,7 +323,6 @@ public class GoodsDetailsBean extends SpecialResponseBean {
                 ", Id=" + Id +
                 ", Name='" + Name + '\'' +
                 ", ShortName='" + ShortName + '\'' +
-                ", ContentHTML='" + ContentHTML + '\'' +
                 ", CanComment=" + CanComment +
                 ", Comment=" + Comment +
                 ", Following=" + Following +

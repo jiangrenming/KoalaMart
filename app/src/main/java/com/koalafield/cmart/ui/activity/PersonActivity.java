@@ -136,7 +136,8 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 break;
             case R.id.discount:
                 break;
-            case R.id.collection:
+            case R.id.collection: //收藏列表
+
                 break;
             case R.id.address_manager:  //地址管理
                 startActivity(new Intent(this, AddressManangerActivity.class));
