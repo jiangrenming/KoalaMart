@@ -8,6 +8,7 @@ import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
+import com.koalafield.cmart.bean.goods.CommentDatas;
 import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
 import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
@@ -158,6 +159,14 @@ public class ApiManager {
     public  static  Flowable<List<GoodsCollectionsBean>> getGoodsCollection(int pageIndex){
         return apiSubscribe(AndoridApplication.apiService.getCollectionList(getHeaders(),pageIndex))
                 .flatMap(getGoodsCollect());
+    }
+
+    /**
+     * 评论列表
+     */
+    public  static  Flowable<List<CommentDatas>> getGoodsComment(Map<String, String> params){
+        return apiSubscribe(AndoridApplication.apiService.getCommentDatas(getHeaders(),params))
+                .flatMap(getGoodsComments());
     }
 
     /*****************************添加头部*****************************************/
@@ -348,6 +357,22 @@ public class ApiManager {
             public Flowable<List<GoodsCollectionsBean>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<GoodsCollectionsBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+
+
+    /**
+     * 获取评论列表
+     */
+    private static Function<SpecialResponseBean, Flowable<List<CommentDatas>>> getGoodsComments() {
+        return new Function<SpecialResponseBean, Flowable<List<CommentDatas>>>() {
+            @Override
+            public Flowable<List<CommentDatas>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<CommentDatas>) response.getData());
                 }
                 return  null;
             }

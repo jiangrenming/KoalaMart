@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/collection_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/default_img"/>
+        <LinearLayout
+            android:layout_toRightOf="@+id/collection_img"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/collection_name"
+                android:layout_width="match_parent"
+                android:text="你是好低啊吊事奥菲斯撒覅是"
+                android:lines="2"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/collection_curreny"
+                    android:layout_width="wrap_content"
+                    android:text="AUD"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/collection_price"
+                    android:layout_width="0dp"
+                    android:paddingLeft="5dp"
+                    android:text="12.88"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/collection_del"
+                    android:layout_width="15dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/user_edit"
+                    android:layout_height="15dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -66,6 +66,8 @@
         <activity android:name=".ui.activity.use.AddressManangerActivity"/>
         <activity android:name=".ui.activity.order.MartOrderActivity"/>
         <activity android:name=".ui.activity.goods.GoodsDetailActivity"/>
+        <activity android:name=".ui.activity.use.CollectionActivity"/>
+        <activity android:name=".ui.activity.goods.GoodsCommentActivity"/>
 
     </application>
 

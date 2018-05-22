@@ -19,7 +19,7 @@ public class CollectionPresenter implements  ICollectionPresenter{
 
 
     private ICollectionView mCollectionView;
-    private  int pageIndex = 1;
+    private  int pageIndex = 0;
 
 
     public CollectionPresenter(ICollectionView collectionView){
@@ -28,7 +28,7 @@ public class CollectionPresenter implements  ICollectionPresenter{
 
     @Override
     public void getData() {
-
+        pageIndex = 0;
         ApiManager.getGoodsCollection(pageIndex).subscribe(new SubScribeCallBack<List<GoodsCollectionsBean>>(new CallBack() {
             @Override
             public void onInit() {
@@ -39,10 +39,10 @@ public class CollectionPresenter implements  ICollectionPresenter{
             public <T> void onSucess(T data) {
                 List<GoodsCollectionsBean> collectionsBeen = (List<GoodsCollectionsBean>) data;
                 if (collectionsBeen != null && collectionsBeen.size() > 0){
-                    mCollectionView.loadCollectionMoreData(collectionsBeen);
+                    mCollectionView.onCollectionSucessFul(collectionsBeen);
                     pageIndex++;
                 }else {
-                    mCollectionView.loadCollectionNoData();
+                    mCollectionView.loadCollectionEmptyData();
                 }
             }
 
@@ -74,7 +74,7 @@ public class CollectionPresenter implements  ICollectionPresenter{
                     mCollectionView.loadCollectionMoreData(collectionsBeen);
                     pageIndex++;
                 }else {
-                    mCollectionView.loadCollectionNoData();
+                    mCollectionView.loadCollectionNoMoreData();
                 }
             }
 

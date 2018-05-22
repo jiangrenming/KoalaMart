@@ -5,6 +5,7 @@ import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
+import com.koalafield.cmart.bean.goods.CommentDatas;
 import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
 import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
@@ -76,6 +77,9 @@ public interface ApiService {
     //收藏列表
     @GET("AppApi/FollowList/{pageIndex}")
     Flowable<SpecialResponseBean<List<GoodsCollectionsBean>>> getCollectionList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
+    //评论列表
+    @GET("AppApi/CommentList")
+    Flowable<SpecialResponseBean<List<CommentDatas>>> getCommentDatas(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
 
    /* *//**
      * 首页bananer

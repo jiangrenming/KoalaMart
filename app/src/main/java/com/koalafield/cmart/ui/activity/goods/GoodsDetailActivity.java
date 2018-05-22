@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.koalafield.cmart.R;
+import com.koalafield.cmart.adapter.CommentAdapter;
 import com.koalafield.cmart.adapter.GoodsDetailCommondAdapter;
 import com.koalafield.cmart.adapter.SkuAdapter;
 import com.koalafield.cmart.adapter.TitleAdpater;
@@ -37,9 +39,11 @@ import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.Point;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
+import com.koalafield.cmart.bean.goods.CommentDatas;
 import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsItem;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
+import com.koalafield.cmart.bean.goods.SkuBean;
 import com.koalafield.cmart.presenter.cart.CartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.CartPresenter;
 import com.koalafield.cmart.presenter.cart.ICartChangeItemPresenter;
@@ -121,6 +125,10 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     LinearLayout pay_goods;
     @BindView(R.id.goods_car_img)
     ImageView goods_car_img;
+    @BindView(R.id.judget_more)
+    TextView judget_more;
+    @BindView(R.id.comment_content)
+    RecyclerView comment_content;
 
     private  int contentId;
     private IGoodsDetailPresenter mGoodsDetailPresenter;
@@ -161,7 +169,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
 
-    @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection})
+    @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection,R.id.judget_more})
     public  void goodsClick(View view){
         String tickets = null;
         String num = null;
@@ -253,14 +261,17 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     return;
                 }
                 break;
+            case  R.id.judget_more: //评论更多
+                Intent intent = new Intent(GoodsDetailActivity.this, GoodsCommentActivity.class);
+                intent.putExtra("contentId",contentId);
+                startActivity(intent);
+                overridePendingTransition(R.anim.comment_anim_out, R.anim.comment_anim_in);
+                break;
             default:
                 break;
         }
     }
 
-    /**
-     *
-     */
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
     private void openPopupWindow(View v) {
@@ -300,11 +311,12 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     private  TextView goods_pop_num;
     private  ImageView minus_pop_num;
     private  TextView add_pop_cart;
+ //   private  TextView goods_type;
     private LinearLayout item_color_layout,item_size_layout,item_weight_layout,item_type_layout,item_materi_layout;
-    //private SkuAdapter color_adater,sizeAdapter,weightAdapter,typeAdapter,materAdapter;
     private TitleAdpater color_adater,sizeAdapter,weightAdapter,typeAdapter,materAdapter;
-    private String size,color,weight,type,matres;
     private List<GoodsItem> colorItems,sizeItems,weightItems,typeItems,matreItems;
+    private List<SkuBean> skuBeanList = new ArrayList<>();
+    private  int select_count =0;
 
     private void setOnPopupViewClick(View view) {
         goods_short_name = view.findViewById(R.id.goods_short_name);
@@ -316,6 +328,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         item_size  = view.findViewById(R.id.item_size);
         item_weight  = view.findViewById(R.id.item_weight);
         item_type  = view.findViewById(R.id.item_type);
+  //      goods_type = view.findViewById(R.id.goods_type);
         item_materi  = view.findViewById(R.id.item_materi);
         item_color_layout = view.findViewById(R.id.item_color_layout);
         item_size_layout = view.findViewById(R.id.item_size_layout);
@@ -330,18 +343,19 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         add_goods_num.setOnClickListener(this);
         minus_pop_num.setOnClickListener(this);
         add_pop_cart.setOnClickListener(this);
+        select_count = 0;
         if (mBean != null){
             goods_short_name.setText(mBean.getName());
             Glide.with(GoodsDetailActivity.this).load(mBean.getImageList()[0]).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(goods_img);
             curreny_.setText(mBean.getCurrency());
             curreny_price.setText(String.format("%.2f",  mBean.getCurrentPrice()));
+
             if (mBean.getColorList() != null && mBean.getColorList().size()>0){
+                select_count++;
                 item_color_layout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < mBean.getColorList().size(); i++) {
                     mBean.getColorList().get(i).setState(1);
                 }
-          //      color_adater = new SkuAdapter(GoodsDetailActivity.this,mBean.getColorList());
-         //       RecyclerViewHelper.initRecyclerViewG(GoodsDetailActivity.this,item_color,false,color_adater,4);
                 color_adater = new TitleAdpater(GoodsDetailActivity.this,mBean.getColorList());
                 item_color.setAdapter(color_adater);
                 item_color.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
@@ -349,7 +363,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     @Override
                     public void onItemClick(GoodsItem bean, int position) {
                         GoodsItem goodsItem = mBean.getColorList().get(position);
-                        color = goodsItem.getName();
+                        String color = goodsItem.getName();
                         String raisePrice = goodsItem.getRaisePrice();
                         switch (goodsItem.getState()){
                             case 0: //选中
@@ -362,38 +376,16 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                                 break;
                             default:
                                 break;
-
                         }
                     }
                 });
-                /*color_adater.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        GoodsItem goodsItem = mBean.getColorList().get(position);
-                        color = goodsItem.getName();
-                        String raisePrice = goodsItem.getRaisePrice();
-                        switch (goodsItem.getState()){
-                            case 0: //选中
-                                colorItems = SelectSkuCalulator.clearAdapterStates(mBean.getColorList());
-                                color_adater.notifyDataSetChanged();
-                                break;
-                            case  1 : //未选中
-                                colorItems = SelectSkuCalulator.selectCalutor(mBean.getColorList(), position, 0);
-                                color_adater.notifyDataSetChanged();
-                                break;
-                            default:
-                                break;
-
-                        }
-                    }
-                });*/
             }
             if (mBean.getSizeList() != null && mBean.getSizeList().size() >0){
                 item_size_layout.setVisibility(View.VISIBLE);
+                select_count++;
                 for (int i = 0; i < mBean.getSizeList().size(); i++) {
                     mBean.getSizeList().get(i).setState(1);
                 }
-
                 sizeAdapter = new TitleAdpater(GoodsDetailActivity.this,mBean.getSizeList());
                 item_size.setAdapter(sizeAdapter);
                 item_size.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
@@ -401,10 +393,11 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     @Override
                     public void onItemClick(GoodsItem bean, int position) {
                         GoodsItem goodsItem = mBean.getSizeList().get(position);
-                        size = goodsItem.getName();
+                        String size = goodsItem.getName();
                         String raisePrice = goodsItem.getRaisePrice();
                         switch (goodsItem.getState()){
                             case 0: //选中
+
                                 sizeItems = SelectSkuCalulator.clearAdapterStates(mBean.getSizeList());
                                 sizeAdapter.notifyDataSetChanged();
                                 break;
@@ -418,35 +411,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                         }
                     }
                 });
-                /*sizeAdapter = new SkuAdapter(GoodsDetailActivity.this,mBean.getSizeList());
-                RecyclerViewHelper.initRecyclerViewG(GoodsDetailActivity.this,item_size,false,sizeAdapter,4);
-                sizeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        GoodsItem goodsItem = mBean.getSizeList().get(position);
-                        size = goodsItem.getName();
-                        String raisePrice = goodsItem.getRaisePrice();
-                        switch (goodsItem.getState()){
-                            case 0:
-                                sizeItems = SelectSkuCalulator.clearAdapterStates(mBean.getSizeList());
-                                sizeAdapter.notifyDataSetChanged();
-                                break;
-                            case  1 :
-                                sizeItems = SelectSkuCalulator.selectCalutor(mBean.getSizeList(), position, 0);
-                                sizeAdapter.notifyDataSetChanged();
-                                break;
-                            default:
-                                break;
-
-                        }
-                    }
-                });*/
             }
             if (mBean.getWeightList() != null && mBean.getWeightList().size() >0){
                 item_weight_layout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < mBean.getWeightList().size(); i++) {
                     mBean.getWeightList().get(i).setState(1);
                 }
+                select_count++;
                 weightAdapter = new TitleAdpater(GoodsDetailActivity.this,mBean.getWeightList());
                 item_weight.setAdapter(weightAdapter);
                 item_weight.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
@@ -454,7 +425,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     @Override
                     public void onItemClick(GoodsItem bean, int position) {
                         GoodsItem goodsItem = mBean.getWeightList().get(position);
-                        weight = goodsItem.getName();
+                        String weight = goodsItem.getName();
                         String raisePrice = goodsItem.getRaisePrice();
                         switch (goodsItem.getState()){
                             case 0:
@@ -471,31 +442,9 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                         }
                     }
                 });
-                /*weightAdapter = new SkuAdapter(GoodsDetailActivity.this,mBean.getWeightList());
-                RecyclerViewHelper.initRecyclerViewG(GoodsDetailActivity.this,item_weight,false,weightAdapter,4);
-                weightAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        GoodsItem goodsItem = mBean.getWeightList().get(position);
-                        weight = goodsItem.getName();
-                        String raisePrice = goodsItem.getRaisePrice();
-                        switch (goodsItem.getState()){
-                            case 0:
-                                weightItems = SelectSkuCalulator.clearAdapterStates(mBean.getWeightList());
-                                weightAdapter.notifyDataSetChanged();
-                                break;
-                            case  1 :
-                                weightItems = SelectSkuCalulator.selectCalutor(mBean.getWeightList(), position, 0);
-                                weightAdapter.notifyDataSetChanged();
-                                break;
-                            default:
-                                break;
-
-                        }
-                    }
-                });*/
             }
             if (mBean.getMaterialList() != null && mBean.getMaterialList().size() >0){
+                select_count++;
                 item_materi_layout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < mBean.getMaterialList().size(); i++) {
                     mBean.getMaterialList().get(i).setState(1);
@@ -507,15 +456,17 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 materAdapter.setItemClickListener(new TitleAdpater.onItemClickListener() {
                     @Override
                     public void onItemClick(GoodsItem bean, int position) {
-                        GoodsItem goodsItem = mBean.getColorList().get(position);
-                        matres = goodsItem.getName();
+                        GoodsItem goodsItem = mBean.getMaterialList().get(position);
+                        String matres = goodsItem.getName();
                         String raisePrice = goodsItem.getRaisePrice();
                         switch (goodsItem.getState()){
                             case  0:
+
                                 matreItems = SelectSkuCalulator.clearAdapterStates(mBean.getMaterialList());
                                 materAdapter.notifyDataSetChanged();
                                 break;
                             case  1 :
+
                                 matreItems = SelectSkuCalulator.selectCalutor(mBean.getMaterialList(), position, 0);
                                 materAdapter.notifyDataSetChanged();
                                 break;
@@ -525,32 +476,9 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                         }
                     }
                 });
-
-               /* materAdapter = new SkuAdapter(GoodsDetailActivity.this,mBean.getMaterialList());
-                RecyclerViewHelper.initRecyclerViewG(GoodsDetailActivity.this,item_materi,false,materAdapter,4);
-                materAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        GoodsItem goodsItem = mBean.getColorList().get(position);
-                        matres = goodsItem.getName();
-                        String raisePrice = goodsItem.getRaisePrice();
-                        switch (goodsItem.getState()){
-                            case  0:
-                                matreItems = SelectSkuCalulator.clearAdapterStates(mBean.getMaterialList());
-                                materAdapter.notifyDataSetChanged();
-                                break;
-                            case  1 :
-                                matreItems = SelectSkuCalulator.selectCalutor(mBean.getMaterialList(), position, 0);
-                                materAdapter.notifyDataSetChanged();
-                                break;
-                            default:
-                                break;
-
-                        }
-                    }
-                });*/
             }
             if (mBean.getTypeList() != null && mBean.getTypeList().size() >0){
+                select_count++;
                 item_type_layout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < mBean.getTypeList().size(); i++) {
                     mBean.getTypeList().get(i).setState(1);
@@ -562,15 +490,17 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 typeAdapter.setItemClickListener(new TitleAdpater.onItemClickListener() {
                     @Override
                     public void onItemClick(GoodsItem bean, int position) {
-                        GoodsItem goodsItem = mBean.getColorList().get(position);
-                        color = goodsItem.getName();
+                        GoodsItem goodsItem = mBean.getTypeList().get(position);
+                        String type = goodsItem.getName();
                         String raisePrice = goodsItem.getRaisePrice();
                         switch (goodsItem.getState()){
                             case 0:
+
                                 typeItems = SelectSkuCalulator.clearAdapterStates(mBean.getTypeList());
                                 typeAdapter.notifyDataSetChanged();
                                 break;
                             case  1 :
+
                                 typeItems = SelectSkuCalulator.selectCalutor(mBean.getTypeList(), position, 0);
                                 typeAdapter.notifyDataSetChanged();
                                 break;
@@ -581,29 +511,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     }
                 });
 
-                /*typeAdapter = new SkuAdapter(GoodsDetailActivity.this,mBean.getTypeList());
-                RecyclerViewHelper.initRecyclerViewG(GoodsDetailActivity.this,item_type,false,typeAdapter,4);
-                typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                         GoodsItem goodsItem = mBean.getColorList().get(position);
-                         color = goodsItem.getName();
-                         String raisePrice = goodsItem.getRaisePrice();
-                        switch (goodsItem.getState()){
-                            case 0:
-                                typeItems = SelectSkuCalulator.clearAdapterStates(mBean.getTypeList());
-                                typeAdapter.notifyDataSetChanged();
-                                break;
-                            case  1 :
-                                typeItems = SelectSkuCalulator.selectCalutor(mBean.getTypeList(), position, 0);
-                                typeAdapter.notifyDataSetChanged();
-                                break;
-                            default:
-                                break;
-
-                        }
-                    }
-                });*/
             }
         }
     }
@@ -642,6 +549,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
      * 商品详情的请求
      * @param data
      */
+    private  List<CommentDatas> new_comments = new ArrayList<>();
     @Override
     public void onGoodsDetailsSucessFul(GoodsDetailsBean data) {
         if (data != null){
@@ -690,7 +598,17 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
             }else {
                 goods_collection.setImageResource(R.mipmap.collection);
             }
-             openSelection = data.isOpenSelection();
+            openSelection = data.isOpenSelection();
+
+            //获取评论内容前2条
+            if (null != data.getCommentList() && data.getCommentList().size() >0 ){
+                comment_content.setVisibility(View.VISIBLE);
+                CommentAdapter commentAdapter = new CommentAdapter(this,data.getCommentList());
+                RecyclerViewHelper.initRecyclerViewV(this,comment_content,true,commentAdapter);
+            }else {
+                comment_content.setVisibility(View.GONE);
+            }
+            //推荐商品
             mGoodsCoomondPresenter = new GoodsCommondPresenter(this);
             mGoodsCoomondPresenter.getCommondGoods(data.getId());
         }
@@ -778,6 +696,9 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     public void onChangeItemSucessful(SpecialResponseBean data) {
         if (data.getCode() == 200){
             Toast.makeText(GoodsDetailActivity.this,"添加购物车成功",Toast.LENGTH_SHORT).show();
+            if (popupWindow != null &&popupWindow.isShowing()){
+                popupWindow.dismiss();
+            }
             goods_cart_num.setVisibility(View.VISIBLE);
             goods_cart_num.setText(String.valueOf(Integer.valueOf(goods_cart_num.getText().toString())+Integer.valueOf(goods_number.getText().toString())));
             int[] loc = new int[2];
@@ -797,16 +718,147 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         setBackgroundAlpha(1);
     }
 
+
+
+
+
+    private String color,size,weight,type,matre;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.goods_close: //关闭你弹出窗
+                if (popupWindow != null &&popupWindow.isShowing()){
+                    popupWindow.dismiss();
+                }
                 break;
             case R.id.add_goods_num: //增加数量
+                String count = goods_pop_num.getText().toString();
+                int _count = Integer.valueOf(count);
+                goods_pop_num.setText(String.valueOf(_count+1));
                 break;
             case  R.id.minus_pop_num: //减少数量
+                String minus_count = goods_pop_num.getText().toString();
+                int minusCount = Integer.valueOf(minus_count);
+                if (minusCount <= 1){
+                    Toast.makeText(GoodsDetailActivity.this,"已经是最少数量，无法再减",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                goods_pop_num.setText(String.valueOf(minusCount-1));
                 break;
             case R.id.add_pop_cart: //添加购物车
+                if (mColorList != null && mColorList .size() > 0){
+                    for (int i = 0; i < colorItems.size(); i++) {
+                        if (colorItems.get(i).getState() == 0){
+                            String  color_Name = colorItems.get(i).getName();
+                            SkuBean skuBean  = new SkuBean();
+                            skuBean.setName(color_Name);
+                            skuBean.setId(1);
+                            skuBean.setPrice(colorItems.get(i).getRaisePrice());
+                            skuBeanList.add(skuBean);
+                        }
+                    }
+                }
+                if (mSizeList != null && mSizeList .size() > 0){
+                    for (int i = 0; i < mSizeList.size(); i++) {
+                        if (mSizeList.get(i).getState() == 0){
+                            SkuBean skuBean  = new SkuBean();
+                            skuBean.setId(2);
+                            skuBean.setName(mSizeList.get(i).getName());
+                            skuBean.setPrice(mSizeList.get(i).getRaisePrice());
+                            skuBeanList.add(skuBean);
+                        }
+                    }
+                }
+                if (mWeightList != null && mWeightList .size() > 0){
+                    for (int i = 0; i < mWeightList.size(); i++) {
+                        if (mWeightList.get(i).getState() == 0){
+                            SkuBean skuBean  = new SkuBean();
+                            skuBean.setId(3);
+                            skuBean.setName(mWeightList.get(i).getName());
+                            skuBean.setPrice(mWeightList.get(i).getRaisePrice());
+                            skuBeanList.add(skuBean);
+                        }
+                    }
+                }
+                if (mTypeList != null && mTypeList .size() > 0){
+                    for (int i = 0; i < mTypeList.size(); i++) {
+                        if (mTypeList.get(i).getState() == 0){
+                            SkuBean skuBean  = new SkuBean();
+                            skuBean.setId(4);
+                            skuBean.setName(mTypeList.get(i).getName());
+                            skuBean.setPrice(mTypeList.get(i).getRaisePrice());
+                            skuBeanList.add(skuBean);
+                        }
+                    }
+                }
+                if (mMaterialList != null && mMaterialList .size() > 0){
+                    for (int i = 0; i < mMaterialList.size(); i++) {
+                        if (mMaterialList.get(i).getState() == 0){
+                            SkuBean skuBean  = new SkuBean();
+                            skuBean.setId(5);
+                            skuBean.setName(mMaterialList.get(i).getName());
+                            skuBean.setPrice(mMaterialList.get(i).getRaisePrice());
+                            skuBeanList.add(skuBean);
+                        }
+                    }
+                }
+                if (null != skuBeanList && skuBeanList.size() > 0){
+                    if (skuBeanList.size() == select_count){
+                        for (int i = 0; i < skuBeanList.size(); i++) {
+                            if (skuBeanList.get(i).getId() == 1){
+                                color =  skuBeanList.get(i).getName();
+                            }else if (skuBeanList.get(i).getId() == 2){
+                                 size = skuBeanList.get(i).getName();
+                            }else if (skuBeanList.get(i).getId() == 3){
+                                weight = skuBeanList.get(i).getName();
+                            }else if (skuBeanList.get(i).getId() ==4){
+                                type = skuBeanList.get(i).getName();
+                            }else if (skuBeanList.get(i).getId() == 5){
+                                matre = skuBeanList.get(i).getName();
+                            }
+                        }
+                        ICartChangeItemPresenter presenter = new CartChangeItemPresenter(this);
+                        String goods_num = goods_pop_num.getText().toString();
+                        Map<String,String> addCarts = new HashMap<>();
+                        if (!StringUtils.isEmpty(goods_num)){
+                            addCarts.put("count",goods_num);
+                        }
+                        addCarts.put("contentId",String.valueOf(contentId));
+                        if (!StringUtils.isEmpty(weight)){
+                            addCarts.put("weight",weight);
+                        }else {
+                            addCarts.put("weight",null);
+                        }
+                        if (!StringUtils.isEmpty(type)){
+                            addCarts.put("type",type);
+                        }else {
+                            addCarts.put("type",null);
+                        }
+                        if (!StringUtils.isEmpty(color)){
+                            addCarts.put("color",color);
+                        }else {
+                            addCarts.put("color",null);
+                        }
+                        if (!StringUtils.isEmpty(size)){
+                            addCarts.put("size",size);
+                        }else {
+                            addCarts.put("size",null);
+                        }
+                        if (!StringUtils.isEmpty(matre)){
+                            addCarts.put("material",matre);
+                        }else {
+                            addCarts.put("material",null);
+                        }
+                        addCarts.put("tag","0");
+                        presenter.getChangeCountData(addCarts);
+                    }else {
+                        Toast.makeText(GoodsDetailActivity.this,"还有规格未选，请选择",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }else {
+                    Toast.makeText(GoodsDetailActivity.this,"请选择规格",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
             default:
                 break;

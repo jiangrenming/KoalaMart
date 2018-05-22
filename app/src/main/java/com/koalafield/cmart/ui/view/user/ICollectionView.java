@@ -12,6 +12,7 @@ public interface ICollectionView<T> extends IBaseView {
 
     void onCollectionSucessFul(T data);
     void onCollectionFailure(String message);
-    void loadCollectionNoData();
+    void loadCollectionEmptyData();
+    void loadCollectionNoMoreData();
     void loadCollectionMoreData(T data);
 }

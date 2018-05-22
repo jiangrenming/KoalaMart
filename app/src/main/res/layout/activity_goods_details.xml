@@ -143,7 +143,7 @@
                     android:id="@+id/goods_commonds"
                     android:layout_width="wrap_content"
                     android:layout_height="200dp" />
-                <!--<View
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:background="@color/gray_light" />
@@ -152,20 +152,32 @@
                     android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_height="20dp">
+                    android:layout_height="40dp">
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="大家评价"
+                        android:textColor="@color/black"
                         android:layout_height="match_parent" />
                     <TextView
                         android:id="@+id/judget_more"
                         android:layout_width="wrap_content"
                         android:gravity="center_vertical"
                         android:text="查看更多"
+                        android:textColor="@color/btn_red"
                         android:layout_height="match_parent" />
-                </LinearLayout>-->
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/gray_light" />
 
+               <android.support.v7.widget.RecyclerView
+                   android:layout_width="match_parent"
+                   android:layout_marginTop="10dp"
+                   android:id="@+id/comment_content"
+                   android:layout_height="wrap_content"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="20dp"

@@ -107,7 +107,7 @@ public class TitleAdpater extends BaseAdapter {
     }
     public onItemClickListener itemClickListener;// 接口回调
     public interface onItemClickListener {
-        public void onItemClick(GoodsItem bean, int position);
+         void onItemClick(GoodsItem bean, int position);
     }
 
     public void setItemClickListener(onItemClickListener itemClickListener) {

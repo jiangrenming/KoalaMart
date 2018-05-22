@@ -20,9 +20,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.koalafield.cmart.R;
+import com.koalafield.cmart.adapter.CollectionAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
+import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.activity.use.PrivateActivity;
 import com.koalafield.cmart.utils.AndoridSysUtils;
@@ -137,7 +139,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             case R.id.discount:
                 break;
             case R.id.collection: //收藏列表
-
+                startActivity(new Intent(this, CollectionActivity.class));
                 break;
             case R.id.address_manager:  //地址管理
                 startActivity(new Intent(this, AddressManangerActivity.class));

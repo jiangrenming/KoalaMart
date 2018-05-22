@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_height="30dp">
+        <ImageView
+            android:id="@+id/comment_img"
+            android:layout_width="25dp"
+            android:src="@mipmap/default_img"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:layout_height="25dp" />
+        <TextView
+            android:id="@+id/comment_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="喝点水带好伞"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/comment_content"
+        android:gravity="center_vertical"
+        android:text=""
+        android:layout_width="match_parent"
+        android:lines="2"
+        android:layout_marginLeft="10dp"
+        android:ellipsize="end"
+        android:layout_height="wrap_content" />
+</LinearLayout>

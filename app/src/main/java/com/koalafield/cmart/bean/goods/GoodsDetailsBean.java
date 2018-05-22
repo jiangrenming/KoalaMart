@@ -55,6 +55,17 @@ public class GoodsDetailsBean extends SpecialResponseBean {
     //判断是否打开弹出窗
     private  boolean IsOpenSelection;
 
+    //评论内容
+    private  List<CommentDatas> CommentList;
+
+    public List<CommentDatas> getCommentList() {
+        return CommentList;
+    }
+
+    public void setCommentList(List<CommentDatas> commentList) {
+        CommentList = commentList;
+    }
+
     public boolean isOpenSelection() {
         return IsOpenSelection;
     }

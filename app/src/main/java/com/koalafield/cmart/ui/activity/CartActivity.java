@@ -116,13 +116,15 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
                 data.get(i).setSelect(true);
             }
             mCartBean = data;
-            if (cartItemAdapter == null){
+            cartItemAdapter = new CartItemAdapter(CartActivity.this,data,goods_item_recycler);
+            RecyclerViewHelper.initRecyclerViewV(CartActivity.this,goods_item_recycler,false,cartItemAdapter);
+            /*if (cartItemAdapter == null){
                 cartItemAdapter = new CartItemAdapter(CartActivity.this,data,goods_item_recycler);
                 RecyclerViewHelper.initRecyclerViewV(CartActivity.this,goods_item_recycler,false,cartItemAdapter);
             }else {
                 cartItemAdapter.cleanItems();
                 cartItemAdapter.addItems(data);
-            }
+            }*/
             cartItemAdapter.setCartItemCallBack(this);
         }else{
             clear_all.setEnabled(false);

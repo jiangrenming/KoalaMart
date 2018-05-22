@@ -1,6 +1,7 @@
 package com.koalafield.cmart.utils;
 
 import com.koalafield.cmart.bean.goods.GoodsItem;
+import com.koalafield.cmart.bean.goods.SkuBean;
 
 import java.util.List;
 
@@ -49,7 +50,21 @@ public class SelectSkuCalulator {
         return mList;
     }
 
-
-
+    /**
+     * 清除选中的sku数据
+     */
+    public static List<SkuBean> clearSkuData(List<SkuBean> mList,String name) {
+        if (mList != null &&mList.size() > 0){
+            int size = mList.size();
+            for (int i = 0; i < size; i++) {
+                SkuBean skuBean = mList.get(i);
+                if (skuBean.getName().equals(name)){
+                    mList.remove(skuBean);
+                }
+            }
+            return mList;
+        }
+       return  null;
+    }
 
 }
