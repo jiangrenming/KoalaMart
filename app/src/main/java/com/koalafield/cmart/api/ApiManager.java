@@ -289,6 +289,7 @@ public class ApiManager {
         return new Function<SpecialResponseBean, SpecialResponseBean>() {
             @Override
             public SpecialResponseBean apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.toString());
                 return response;
             }
         };

@@ -61,7 +61,7 @@ public class CartChangeItemPresenter implements ICartChangeItemPresenter {
             @Override
             public void onFailure(Throwable t) {
                 mCartChangeCountView.hideLoading();
-                mCartChangeCountView.onChangeItemFailure(t.getMessage());
+                 mCartChangeCountView.onChangeItemFailure(t.getMessage());
             }
 
             @Override

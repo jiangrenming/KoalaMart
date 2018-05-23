@@ -21,7 +21,13 @@ public class SpecialResponseBean<T>  extends BaseResponseBean{
         Data = data;
     }
 
-    /* private  int Code;
+    @Override
+    public String toString() {
+        return "SpecialResponseBean{" +
+                "Data=" + Data +
+                '}';
+    }
+/* private  int Code;
     private String Msg;
 
     public int getCode() {

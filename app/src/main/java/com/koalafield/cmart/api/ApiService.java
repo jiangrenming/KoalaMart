@@ -45,7 +45,7 @@ public interface ApiService {
     Flowable<SpecialResponseBean<RegisterBean>> getLoginAccount (@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     //购物车商品数量的增减
     @POST("AppApi/ShoppingCartChange")
-    Flowable<SpecialResponseBean<List<CartDataBean>>> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    Flowable<SpecialResponseBean> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     //购物车清空
     @POST("AppApi/ShoppingCartClearUp")
     Flowable<SpecialResponseBean> clearCart(@HeaderMap Map<String,String> headrs);
