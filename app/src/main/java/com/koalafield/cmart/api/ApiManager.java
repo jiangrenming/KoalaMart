@@ -14,6 +14,7 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
@@ -73,6 +74,14 @@ public class ApiManager {
                 .flatMap(getGoodsCategrys());
     }
 
+    /**
+     * 热门搜索
+     */
+    public  static  Flowable<String[]> getHotKeyWords(){
+        return apiSubscribe(AndoridApplication.apiService.getHotDatas(getHeaders()))
+                .flatMap(getGoodsCategrys());
+    }
+
     /******************************分类列表*******************************/
     /**
      * 获取分类列表一级分类
@@ -102,7 +111,7 @@ public class ApiManager {
     /**
      * 改变购物车商品的数目，即增减删
      */
-    public  static  Flowable<SpecialResponseBean> changeCartCount(Map<String,String> params){
+    public  static  Flowable<BaseResponseBean> changeCartCount(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.changeGoodsCounts(getHeaders(),setParams(params)))
                 .map(changeCartCount());
     }
@@ -168,6 +177,17 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getCommentDatas(getHeaders(),params))
                 .flatMap(getGoodsComments());
     }
+    /**
+     * 买过的商品列表
+     */
+    public  static  Flowable<List<PurchaseOffBean>> getGoodsPurchaseOff(int pageIndex){
+        return apiSubscribe(AndoridApplication.apiService.getPurchaseOffList(getHeaders(),pageIndex))
+                .flatMap(getPurchaseOff());
+    }
+
+    /**
+     *
+     */
 
     /*****************************添加头部*****************************************/
 
@@ -255,6 +275,21 @@ public class ApiManager {
     }
 
     /**
+     * 获取热门搜索关键词
+     */
+    private static Function<SpecialResponseBean, Flowable<String []>> getHotWords() {
+        return new Function<SpecialResponseBean, Flowable<String []>>() {
+            @Override
+            public Flowable<String []> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return (Flowable<String[]>) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
      * 获取购物和总数量
      */
     private static Function<SpecialResponseBean,CartNumberBean> getCartNum() {
@@ -285,10 +320,10 @@ public class ApiManager {
     /**
      * 增减购物车商品数量
      */
-    private static Function<SpecialResponseBean,SpecialResponseBean> changeCartCount() {
-        return new Function<SpecialResponseBean, SpecialResponseBean>() {
+    private static Function<BaseResponseBean,BaseResponseBean> changeCartCount() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
             @Override
-            public SpecialResponseBean apply(SpecialResponseBean response) throws Exception {
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
                 return response;
             }
         };
@@ -373,6 +408,21 @@ public class ApiManager {
             public Flowable<List<CommentDatas>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<CommentDatas>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
+     * 获取买过的列表
+     */
+    private static Function<SpecialResponseBean, Flowable<List<PurchaseOffBean>>> getPurchaseOff() {
+        return new Function<SpecialResponseBean, Flowable<List<PurchaseOffBean>>>() {
+            @Override
+            public Flowable<List<PurchaseOffBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<PurchaseOffBean>) response.getData());
                 }
                 return  null;
             }

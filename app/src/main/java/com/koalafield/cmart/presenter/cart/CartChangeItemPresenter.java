@@ -3,6 +3,7 @@ package com.koalafield.cmart.presenter.cart;
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
 import com.koalafield.cmart.api.ApiManager;
+import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
@@ -36,7 +37,7 @@ public class CartChangeItemPresenter implements ICartChangeItemPresenter {
 
     @Override
     public void getChangeCountData(Map<String, String> params) {
-        ApiManager.changeCartCount(params).subscribe(new SubScribeCallBack<SpecialResponseBean>(new CallBack() {
+        ApiManager.changeCartCount(params).subscribe(new SubScribeCallBack<BaseResponseBean>(new CallBack() {
             @Override
             public void onInit() {
                 mCartChangeCountView.showLoading();
@@ -45,7 +46,7 @@ public class CartChangeItemPresenter implements ICartChangeItemPresenter {
             @Override
             public <T> void onSucess(T data) {
                 if (null != data){
-                    SpecialResponseBean responseBean = (SpecialResponseBean) data;
+                    BaseResponseBean responseBean = (BaseResponseBean) data;
                     if (responseBean != null && responseBean.getCode() ==200){
                         mCartChangeCountView.onChangeItemSucessful(responseBean);
                     }else if ( responseBean.getCode() == 401){
