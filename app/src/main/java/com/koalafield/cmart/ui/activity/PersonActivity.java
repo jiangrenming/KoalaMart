@@ -18,15 +18,20 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CollectionAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.user.PersonNumber;
+import com.koalafield.cmart.presenter.user.IPersonNumberPresenter;
+import com.koalafield.cmart.presenter.user.PersonNumberPresenter;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.activity.use.PrivateActivity;
+import com.koalafield.cmart.ui.view.user.IPersonNumberView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
@@ -34,6 +39,7 @@ import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
 
 import java.io.File;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,7 +48,7 @@ import butterknife.OnClick;
  * Created by jiangrenming on 2018/5/13.
  */
 
-public class PersonActivity extends TabBaseActivity implements View.OnClickListener,PopupWindow.OnDismissListener{
+public class PersonActivity extends TabBaseActivity implements View.OnClickListener,PopupWindow.OnDismissListener,IPersonNumberView<PersonNumber>{
 
     @BindView(R.id.share)
     ImageView share;  //分享
@@ -72,6 +78,10 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     ImageView service;  //服务
     @BindView(R.id.set)
     ImageView set;  //设置
+    @BindView(R.id.discount_num)
+    TextView discount_num;
+    @BindView(R.id.collection_num)
+    TextView collection_num;
 
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
@@ -106,6 +116,9 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             startActivity(intent);
             finish();
         }
+
+        IPersonNumberPresenter personNumberPresenter = new PersonNumberPresenter(this);
+        personNumberPresenter.getData();
     }
 
     @Override
@@ -274,4 +287,42 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     }
 
 
+    @Override
+    public void onPersonNumberSucessFul(PersonNumber data) {
+        if (data != null){
+            int followCount = data.getFollowCount();
+            if (followCount <= 0){
+                collection_num.setVisibility(View.GONE);
+            }else if (followCount <=99){
+                collection_num.setVisibility(View.VISIBLE);
+                collection_num.setText(String.valueOf(followCount));
+            }else {
+                collection_num.setVisibility(View.VISIBLE);
+                collection_num.setText(String.format(Locale.CHINA, "%d+", 99));
+            }
+            int couponCount = data.getCouponCount();
+            if (couponCount <= 0){
+                discount_num.setVisibility(View.GONE);
+            }else if (couponCount <=99){
+                discount_num.setVisibility(View.VISIBLE);
+                discount_num.setText(String.valueOf(followCount));
+            }else {
+                discount_num.setVisibility(View.VISIBLE);
+                discount_num.setText(String.format(Locale.CHINA, "%d+", 99));
+            }
+        }
+    }
+
+    @Override
+    public void onPersonNumberFailure(String message) {
+        if (!StringUtils.isEmpty(message) && message.equals("401")){
+            //session去重新登录
+            Intent intent = new Intent(this,LoginActivity.class);
+            intent.putExtra("type",1);
+            startActivity(intent);
+            finish();
+        }else {
+            Toast.makeText(PersonActivity.this,message,Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -40,6 +40,15 @@ public class GoodsRecoomendBean extends SpecialResponseBean {
     private String LinkGoods;
     private  String CoverImg;
     private  String Currency;
+    private  int Id;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 
     public String getCurrency() {
         return Currency;
@@ -287,6 +296,7 @@ public class GoodsRecoomendBean extends SpecialResponseBean {
                 ", LinkGoods='" + LinkGoods + '\'' +
                 ", CoverImg='" + CoverImg + '\'' +
                 ", Currency='" + Currency + '\'' +
+                ", Id=" + Id +
                 '}';
     }
 }

@@ -632,9 +632,10 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
      * @param data
      */
     @Override
-    public void onGoodsCommondSucessFul(List<GoodsRecoomendBean> data) {
+    public void onGoodsCommondSucessFul(final List<GoodsRecoomendBean> data) {
 
         if (data != null &&data.size() >0){
+            Log.i("返回推荐的数据",data.toString());
             if (mAdapter == null){
                 mAdapter = new GoodsDetailCommondAdapter(this,data);
                 RecyclerViewHelper.initRecyclerViewH(this,goods_commonds,false,mAdapter);
@@ -642,6 +643,15 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 mAdapter.cleanItems();
                 mAdapter.addItems(data);
             }
+            mAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    int id = data.get(position).getId();
+                    Intent intent = new Intent(GoodsDetailActivity.this,GoodsDetailActivity.class);
+                    intent.putExtra("contentId",id);
+                    startActivity(intent);
+                }
+            });
         }
     }
 

@@ -11,6 +11,8 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.user.PersonNumber;
+import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 
 import java.util.List;
@@ -80,6 +82,17 @@ public interface ApiService {
     //评论列表
     @GET("AppApi/CommentList")
     Flowable<SpecialResponseBean<List<CommentDatas>>> getCommentDatas(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
+    //热门搜索词
+    @GET("AppApi/HotSearchText")
+    Flowable<SpecialResponseBean<String[]>> getHotDatas(@HeaderMap Map<String,String> headrs);
+    //买过的商品
+    @GET("AppApi/PurchaseOff/{pageIndex}")
+    Flowable<SpecialResponseBean<List<PurchaseOffBean>>> getPurchaseOffList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
+    //获取优惠券收藏等数量
+    @GET("AppApi/CustomerInfoCount")
+    Flowable<SpecialResponseBean<PersonNumber>> getPersionNumbers(@HeaderMap Map<String,String> headrs);
+
+
 
    /* *//**
      * 首页bananer

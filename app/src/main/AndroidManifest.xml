@@ -68,7 +68,8 @@
         <activity android:name=".ui.activity.goods.GoodsDetailActivity"/>
         <activity android:name=".ui.activity.use.CollectionActivity"/>
         <activity android:name=".ui.activity.goods.GoodsCommentActivity"/>
-
+        <activity android:name=".ui.activity.use.PurchareOffActivity"/>
+        <activity android:name=".ui.activity.goods.SearchActivity"/>
     </application>
 
 </manifest>
