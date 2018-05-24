@@ -110,7 +110,7 @@ public interface ApiService {
     Flowable<SpecialResponseBean<List<AddressManagerBean>>> getAddress(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
     //获取当前用户的优惠券
     @GET("AppApi/MyCoupon/{enabled}/{pageIndex}")
-    Flowable<SpecialResponseBean<DisCountBean>> getDisCountsData(@HeaderMap Map<String,String> headrs, @Path("enabled") int enabled, @Path("pageIndex") int pageIndex);
+    Flowable<SpecialResponseBean<List<DisCountBean>>> getDisCountsData(@HeaderMap Map<String,String> headrs, @Path("enabled") int enabled, @Path("pageIndex") int pageIndex);
     //获取积分列表
     @GET("AppApi/ScoreList/{pageIndex}")
     Flowable<SpecialResponseBean<ScoreBean>> getScoreList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);

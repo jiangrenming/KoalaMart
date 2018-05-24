@@ -190,6 +190,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             case R.id.select_country:
                 break;
             case  R.id.select_state:
+                selectCity();
                 break;
             case  R.id.add_address:
                 if (checkAllInfos()){
@@ -201,7 +202,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                             String state = state_name.getText().toString().trim();
                             String suggestion = et_suggestion.getText().toString().trim();
                             Map<String,String > params = new HashMap<>();
-                            params.put("country",country);
+                            params.put("country","Australia");
                             params.put("state",state);
                             params.put("city",country); //暂时未有
                             params.put("area",country);//暂时未有
@@ -226,6 +227,11 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             default:
                 break;
         }
+    }
+
+    private void selectCity() {
+
+
     }
 
     private  boolean checkAllInfos(){
