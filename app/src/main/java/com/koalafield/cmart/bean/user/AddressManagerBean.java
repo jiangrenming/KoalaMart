@@ -9,19 +9,70 @@ import java.io.Serializable;
  */
 
 public class AddressManagerBean implements Serializable{
-
-    private String name;
+    private  int customerid;
+    private String country;
+    private String state;
+    private String city;
+    private String area;
     private String address;
-    private String phone;
-    private Boolean isCheck;  //是否设为默认
-    private  int addressId;
+    private String number;
+    private String contactname;
+    private String contactphone;
+    private String contactid;
+    private String images;
+    private String zipcode;
+    private String createdtime;
+    private String lat;
+    private String lng;
+    private int Id;
+    private  boolean isSelected;
 
-    public String getName() {
-        return name;
+    public boolean isSelected() {
+        return isSelected;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public int getCustomerid() {
+        return customerid;
+    }
+
+    public void setCustomerid(int customerid) {
+        this.customerid = customerid;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getAddress() {
@@ -32,29 +83,105 @@ public class AddressManagerBean implements Serializable{
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public Boolean getCheck() {
-        return isCheck;
+    public String getContactname() {
+        return contactname;
     }
 
-    public void setCheck(Boolean check) {
-        isCheck = check;
+    public void setContactname(String contactname) {
+        this.contactname = contactname;
     }
 
-    public int getAddressId() {
-        return addressId;
+    public String getContactphone() {
+        return contactphone;
     }
 
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
+    public void setContactphone(String contactphone) {
+        this.contactphone = contactphone;
     }
 
+    public String getContactid() {
+        return contactid;
+    }
 
+    public void setContactid(String contactid) {
+        this.contactid = contactid;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getCreatedtime() {
+        return createdtime;
+    }
+
+    public void setCreatedtime(String createdtime) {
+        this.createdtime = createdtime;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressManagerBean{" +
+                "customerid=" + customerid +
+                ", country='" + country + '\'' +
+                ", state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", area='" + area + '\'' +
+                ", address='" + address + '\'' +
+                ", number='" + number + '\'' +
+                ", contactname='" + contactname + '\'' +
+                ", contactphone='" + contactphone + '\'' +
+                ", contactid='" + contactid + '\'' +
+                ", images='" + images + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", createdtime='" + createdtime + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lng='" + lng + '\'' +
+                ", Id=" + Id +
+                '}';
+    }
 }

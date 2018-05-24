@@ -43,26 +43,28 @@ public class AddressManagerAdapter extends BaseQuickAdapter<AddressManagerBean> 
         final ImageView iv_select = holder.getView(R.id.iv_select); //默认地址
         LinearLayout iv_address_edit = holder.getView(R.id.iv_address_edit); //编辑
         LinearLayout iv_address_trash = holder.getView(R.id.iv_address_trash); //删除
-        holder.setText(R.id.address_name, item.getName())
-                .setText(R.id.address_phone, item.getPhone())
+        holder.setText(R.id.address_name, item.getContactname())
+                .setText(R.id.address_phone, item.getContactphone())
                 .setText(R.id.address_detail, item.getAddress());
-          final boolean isCheck = item.getCheck();
-            if (isCheck){  //默认
-               iv_select.setImageResource(R.mipmap.edit_select);
-            }else{
-               iv_select.setImageResource(R.mipmap.edit_unselect);
-            }
+        final boolean selected = item.isSelected();
+        if (selected){
+            iv_select.setImageResource(R.mipmap.select);
+        }else {
+            iv_select.setImageResource(R.mipmap.un_select);
+        }
         //默认选择
         iv_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("是否选中",item.getCheck()+"");
-                if (item.getCheck()){
-                    iv_select.setImageResource(R.mipmap.edit_unselect);
-                }else {
-                    iv_select.setImageResource(R.mipmap.edit_select);
-                }
                 //需要将默认状态上传,调用接口同时刷新数据（将默认选中的数据永远放在第一位）
+                if (selected){
+                    iv_select.setImageResource(R.mipmap.un_select);
+                    mSelectBack.checkSelect(item,false);
+                }else {
+                    iv_select.setImageResource(R.mipmap.select);
+                    item.setSelected(true);
+                    mSelectBack.checkSelect(item,true);
+                }
             }
         });
 
@@ -72,6 +74,7 @@ public class AddressManagerAdapter extends BaseQuickAdapter<AddressManagerBean> 
             @Override
             public void onClick(View v) {
                 Log.i("跳转编辑",item.getAddress());
+                mSelectBack.editAddress(item);
             }
         });
         //删除
@@ -79,9 +82,18 @@ public class AddressManagerAdapter extends BaseQuickAdapter<AddressManagerBean> 
             @Override
             public void onClick(View v) {
                 //删除接口调用，同时刷新数据
-              removeItem(item);
+                mSelectBack.delAddress(item);
             }
         });
+    }
 
+    public  SelectAddressCallBack mSelectBack;
+    public void SelectAddressCallBack(SelectAddressCallBack selectBack){
+        this.mSelectBack = selectBack;
+    }
+    public interface SelectAddressCallBack{
+        void checkSelect(AddressManagerBean item,boolean isSelect);
+        void editAddress(AddressManagerBean item);
+        void delAddress(AddressManagerBean item);
     }
 }

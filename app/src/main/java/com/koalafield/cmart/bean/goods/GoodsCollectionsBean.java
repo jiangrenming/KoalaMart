@@ -2,13 +2,15 @@ package com.koalafield.cmart.bean.goods;
 
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jiangrenming
  * @date 2018/5/21
  */
 
-public class GoodsCollectionsBean extends SpecialResponseBean {
+public class GoodsCollectionsBean  implements Serializable {
 
     private  int Id;
     private String CoverImg;

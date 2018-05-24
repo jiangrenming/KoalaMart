@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/top_header"/>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="收货人"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/castact_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="请输入收货人名称"
+            android:layout_marginLeft="10dp"
+            android:textSize="13sp"
+            android:background="@null"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="联系电话"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/castact_phone"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="请输入收货人电话"
+            android:layout_marginLeft="10dp"
+            android:textSize="13sp"
+            android:background="@null"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/select_country"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="国家"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/country_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="澳大利亚"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_width="20dp"
+            android:src="@mipmap/right"
+            android:scaleType="fitXY"
+            android:layout_height="20dp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:id="@+id/select_state"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="所在区域"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/state_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:hint="选择所在区域"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_width="20dp"
+            android:src="@mipmap/right"
+            android:scaleType="fitXY"
+            android:layout_height="20dp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="1dp"/>
+    <EditText
+        android:id="@+id/et_suggestion"
+        android:layout_width="match_parent"
+        android:hint="输入详细地址"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/address_bg"
+        android:maxLength="40"
+        android:textSize="13sp"
+        android:minHeight="100dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="5dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="设为默认"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/select"
+            android:layout_width="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/un_select"
+            android:layout_height="20dp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/add_address"
+        android:layout_width="match_parent"
+        android:background="@color/btn_red"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="新增收货地址"
+        android:layout_height="50dp" />
+</LinearLayout>

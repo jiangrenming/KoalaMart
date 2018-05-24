@@ -70,6 +70,7 @@
         <activity android:name=".ui.activity.goods.GoodsCommentActivity"/>
         <activity android:name=".ui.activity.use.PurchareOffActivity"/>
         <activity android:name=".ui.activity.goods.SearchActivity"/>
+        <activity android:name=".ui.activity.use.ChangeAddressActivity"/>
     </application>
 
 </manifest>

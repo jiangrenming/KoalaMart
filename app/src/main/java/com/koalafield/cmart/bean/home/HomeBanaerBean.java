@@ -3,11 +3,13 @@ package com.koalafield.cmart.bean.home;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
+import java.io.Serializable;
+
 /**
  * Created by jiangrenming on 2018/5/14.
  */
 
-public class HomeBanaerBean extends SpecialResponseBean {
+public class HomeBanaerBean implements Serializable {
 
     private int DataId;
     private String Img;

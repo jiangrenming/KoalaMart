@@ -14,9 +14,12 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.user.AddressManagerBean;
+import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
+import com.koalafield.cmart.bean.user.ScoreBean;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
@@ -54,6 +57,59 @@ public class ApiManager {
     public  static  Flowable<RegisterBean> getLoginInfos(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.getLoginAccount(getHeaders(),setParams(params)))
                 .map(getRegister());
+    }
+
+    /**
+     * 地址列表
+     */
+    public  static  Flowable<List<AddressManagerBean>> getAddressList(int pageIndex){
+        return apiSubscribe(AndoridApplication.apiService.getAddress(getHeaders(),pageIndex))
+                .flatMap(getAddresses());
+    }
+
+    /**
+     * 新增地址列表
+     */
+    public  static  Flowable<BaseResponseBean> addAddresses(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.addAddress(getHeaders(),setParams(params)))
+                .map(addAdress());
+    }
+    /**
+     *修改地址列表
+     */
+    public  static  Flowable<BaseResponseBean> editAddresses(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.editAddress(getHeaders(),setParams(params)))
+                .map(addAdress());
+    }
+    /**
+     * 删除地址
+     */
+    public  static  Flowable<BaseResponseBean> delAddresses(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.delAddress(getHeaders(),setParams(params)))
+                .map(delAdress());
+    }
+
+    /**
+     * 地址详情
+     */
+    public  static  Flowable<AddressManagerBean> getAddressDetails(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getDetailsAddress(getHeaders(),setParams(params)))
+                .flatMap(getDetails());
+    }
+
+    /**
+     * 获取当前用户的优惠券
+     */
+    public  static  Flowable<List<DisCountBean>> getDisCountList(int enabled,int pageIndex){
+        return apiSubscribe(AndoridApplication.apiService.getDisCountsData(getHeaders(),enabled,pageIndex))
+                .flatMap(getDisCounts());
+    }
+    /**
+     * 获取积分列表
+     */
+    public  static  Flowable<List<ScoreBean>> getScoreList(int pageIndex){
+        return apiSubscribe(AndoridApplication.apiService.getScoreList(getHeaders(),pageIndex))
+                .flatMap(getScores());
     }
 
     /*********************************首页****************************************/
@@ -396,7 +452,7 @@ public class ApiManager {
             @Override
             public PersonNumber apply(SpecialResponseBean response) throws Exception {
                 Log.i("返回的数据:",response.getCode()+"");
-                return (PersonNumber) response;
+                return (PersonNumber) response.getData();
             }
         };
     }
@@ -441,6 +497,89 @@ public class ApiManager {
             public Flowable<List<PurchaseOffBean>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<PurchaseOffBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+
+
+    /**
+     * 地址列表
+     */
+    private static Function<SpecialResponseBean, Flowable<List<AddressManagerBean>>> getAddresses() {
+        return new Function<SpecialResponseBean, Flowable<List<AddressManagerBean>>>() {
+            @Override
+            public Flowable<List<AddressManagerBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<AddressManagerBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 新增修改地址
+     */
+    private static Function<BaseResponseBean,BaseResponseBean> addAdress() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                return response;
+            }
+        };
+    }
+    /**
+     * 删除地址
+     */
+    private static Function<BaseResponseBean,BaseResponseBean>delAdress() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                return response;
+            }
+        };
+    }
+
+    /**
+     * 获取地址详情
+     */
+    private static Function<SpecialResponseBean,AddressManagerBean> getDetails() {
+        return new Function<SpecialResponseBean, AddressManagerBean>() {
+            @Override
+            public AddressManagerBean apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (AddressManagerBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
+     * 获取主页轮播图
+     */
+    private static Function<SpecialResponseBean, Flowable<List<DisCountBean>>> getDisCounts() {
+        return new Function<SpecialResponseBean, Flowable<List<DisCountBean>>>() {
+            @Override
+            public Flowable<List<DisCountBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<DisCountBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 获取积分列表
+     */
+    private static Function<SpecialResponseBean, Flowable<List<ScoreBean>>> getScores() {
+        return new Function<SpecialResponseBean, Flowable<List<ScoreBean>>>() {
+            @Override
+            public Flowable<List<ScoreBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<ScoreBean>) response.getData());
                 }
                 return  null;
             }

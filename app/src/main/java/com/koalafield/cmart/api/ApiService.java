@@ -11,9 +11,12 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.user.AddressManagerBean;
+import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
+import com.koalafield.cmart.bean.user.ScoreBean;
 
 import java.util.List;
 import java.util.Map;
@@ -60,7 +63,18 @@ public interface ApiService {
     //取消收藏
     @POST("AppApi/DeleteFollow")
     Flowable<BaseResponseBean> getGoodsCollectionDelete(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
-
+    //新增地址
+    @POST("AppApi/AddAddress")
+    Flowable<BaseResponseBean> addAddress(@HeaderMap Map<String,String> headrs,@Body RequestBody body);
+    //修改地址
+    @POST("AppApi/EditAddress")
+    Flowable<BaseResponseBean> editAddress(@HeaderMap Map<String,String> headrs,@Body RequestBody body);
+    //删除地址
+    @POST("AppApi/DeleteAddress")
+    Flowable<BaseResponseBean> delAddress(@HeaderMap Map<String,String> headrs,@Body RequestBody body);
+    //用户地址详情
+    @POST("AppApi/AddressDetail")
+    Flowable<SpecialResponseBean<AddressManagerBean>> getDetailsAddress(@HeaderMap Map<String,String> headrs,@Body RequestBody body);
 
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
@@ -91,10 +105,19 @@ public interface ApiService {
     //获取优惠券收藏等数量
     @GET("AppApi/CustomerInfoCount")
     Flowable<SpecialResponseBean<PersonNumber>> getPersionNumbers(@HeaderMap Map<String,String> headrs);
+    //用户地址列表
+    @GET("AppApi/AddressList/{pageIndex}")
+    Flowable<SpecialResponseBean<List<AddressManagerBean>>> getAddress(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
+    //获取当前用户的优惠券
+    @GET("AppApi/MyCoupon/{enabled}/{pageIndex}")
+    Flowable<SpecialResponseBean<DisCountBean>> getDisCountsData(@HeaderMap Map<String,String> headrs, @Path("enabled") int enabled, @Path("pageIndex") int pageIndex);
+    //获取积分列表
+    @GET("AppApi/ScoreList/{pageIndex}")
+    Flowable<SpecialResponseBean<ScoreBean>> getScoreList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
 
 
 
-   /* *//**
+    /* *//**
      * 首页bananer
      * @return
      *//*

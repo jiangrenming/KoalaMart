@@ -2,6 +2,7 @@ package com.koalafield.cmart.bean.goods;
 
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @date 2018/5/18
  */
 
-public class GoodsRecoomendBean extends SpecialResponseBean {
+public class GoodsRecoomendBean  implements Serializable {
 
     private List<GoodsItem> ColorList;
     private List<GoodsItem> SizeList;

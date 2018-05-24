@@ -3,6 +3,7 @@ package com.koalafield.cmart.bean.home;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * 首页分类商品数据
  */
 
-public class GoodsCategryBean extends SpecialResponseBean {
+public class GoodsCategryBean  implements Serializable {
 
     private List<GoodItemBean> GoodsList;
     private int CategoryId;
