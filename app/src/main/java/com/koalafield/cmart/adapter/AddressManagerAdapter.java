@@ -96,4 +96,9 @@ public class AddressManagerAdapter extends BaseQuickAdapter<AddressManagerBean> 
         void editAddress(AddressManagerBean item);
         void delAddress(AddressManagerBean item);
     }
+
+    private AddressManagerBean addressManagerBean;
+    public void setSelectItem(AddressManagerBean addressManagerBean){
+        this.addressManagerBean = addressManagerBean;
+    }
 }

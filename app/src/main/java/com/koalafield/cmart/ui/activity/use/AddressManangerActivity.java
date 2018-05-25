@@ -152,14 +152,19 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     public void onAddressSucessFul(final List<AddressManagerBean> data) {
         if (data != null && data.size() >0){
             pageIndex ++;
-            final int addressId = ShareBankPreferenceUtils.getInt("addressId", -1);
+            final AddressManagerBean addressId = ShareBankPreferenceUtils.getObject("addressId", AddressManagerBean.class);
             for (int i = 0; i < data.size(); i++) {
                 AddressManagerBean addressManagerBean = data.get(i);
-                if (addressId == addressManagerBean.getId()){
-                    data.get(i).setSelected(true);
+                if (addressId != null){
+                    if (addressId.getId() == addressManagerBean.getId()){
+                        data.get(i).setSelected(true);
+                    }else {
+                        data.get(i).setSelected(false);
+                    }
                 }else {
                     data.get(i).setSelected(false);
                 }
+
             }
             addresses = data;
             if (addressManagerAdapter == null){
@@ -181,15 +186,18 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
                 @Override
                 public void checkSelect(AddressManagerBean item,boolean isSelect) {
                     if (isSelect){
-                        ShareBankPreferenceUtils.putInt("addressId",item.getId());
+                        ShareBankPreferenceUtils.setObject("addressId",item);
                     }else {
                         ShareBankPreferenceUtils.clearData("addressId");
                     }
-                    for (int i = 0; i <addresses.size() ; i++) {
-                        if (addresses.get(i).getId() == item.getId()){
-                            item.setSelected(isSelect);
-                            if (item.isSelected()){
-                                Collections.swap(addresses,0,i);
+
+                    for (int i = 0; i < addresses.size(); i++) {  //0,1
+                        AddressManagerBean addressManagerBean = addresses.get(i);
+                        if (addressManagerBean.getId() == item.getId()){ //1
+                            addressManagerBean.setSelected(isSelect);
+                        }else {
+                            if (addressManagerBean.isSelected()){
+                                addressManagerBean.setSelected(false);
                             }
                         }
                     }

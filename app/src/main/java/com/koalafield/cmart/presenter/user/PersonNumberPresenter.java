@@ -33,7 +33,7 @@ public class PersonNumberPresenter implements IPersonNumberPresenter{
             public <T> void onSucess(T data) {
                 if (null != data){
                     PersonNumber personNumber = (PersonNumber) data;
-                    if (personNumber.getCode() == 200){
+                    if (personNumber.getCode() == 200 || personNumber.getCode() == 0){
                         personNumberView.onPersonNumberSucessFul(personNumber);
                     } else  if (personNumber.getCode() == 401){
                         personNumberView.onPersonNumberFailure(String.valueOf(personNumber.getCode()));
