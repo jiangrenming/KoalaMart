@@ -18,7 +18,7 @@ public class AddressPresenter implements IAddressPresenter {
 
 
     private IAddressListView addressListView;
-    private  int pageIndex = 0;
+    private  int mPageIndex ;
 
     public AddressPresenter(IAddressListView addressListView){
         this.addressListView = addressListView;
@@ -28,7 +28,7 @@ public class AddressPresenter implements IAddressPresenter {
 
     @Override
     public void getData() {
-        ApiManager.getAddressList(pageIndex).subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
+        ApiManager.getAddressList(mPageIndex).subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
             @Override
             public void onInit() {
                 addressListView.showLoading();
@@ -40,7 +40,6 @@ public class AddressPresenter implements IAddressPresenter {
                     List<AddressManagerBean> addressManagerBean = (List<AddressManagerBean>) data;
                     if (addressManagerBean != null && addressManagerBean.size() >0){
                         addressListView.onAddressSucessFul(addressManagerBean);
-                        pageIndex++;
                     }else {
                         addressListView.loadAddressEmptyData();
                     }
@@ -64,7 +63,7 @@ public class AddressPresenter implements IAddressPresenter {
 
     @Override
     public void getMoreData() {
-        ApiManager.getAddressList(pageIndex).subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
+        ApiManager.getAddressList(mPageIndex).subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
             @Override
             public void onInit() {
                 addressListView.showLoading();
@@ -76,7 +75,6 @@ public class AddressPresenter implements IAddressPresenter {
                     List<AddressManagerBean> addressManagerBean = (List<AddressManagerBean>) data;
                     if (addressManagerBean != null && addressManagerBean.size() >0){
                         addressListView.loadAddressMoreData(addressManagerBean);
-                        pageIndex++;
                     }else {
                         addressListView.loadAddressNoMoreData();
                     }
@@ -96,5 +94,10 @@ public class AddressPresenter implements IAddressPresenter {
                 addressListView.hideLoading();
             }
         }));
+    }
+
+    @Override
+    public void setPrarms(int pageIndex) {
+        mPageIndex = pageIndex;
     }
 }

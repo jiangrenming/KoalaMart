@@ -1,12 +1,18 @@
 package com.koalafield.cmart.ui.activity.use;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +27,7 @@ import com.koalafield.cmart.presenter.user.IAddressPresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.view.user.IAddAddressView;
 import com.koalafield.cmart.ui.view.user.IEditAddressView;
+import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.RegaxUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
@@ -29,6 +36,10 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kankan.wheel.widget.OnWheelChangedListener;
+import kankan.wheel.widget.OnWheelScrollListener;
+import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
 /**
  *
@@ -36,7 +47,7 @@ import butterknife.OnClick;
  * @date 2018/5/24
  */
 
-public class ChangeAddressActivity extends BaseActivity implements IAddAddressView<BaseResponseBean>,IEditAddressView<BaseResponseBean>{
+public class ChangeAddressActivity extends BaseActivity implements IAddAddressView<BaseResponseBean>,IEditAddressView<BaseResponseBean>,PopupWindow.OnDismissListener,View.OnClickListener{
 
     @BindView(R.id.back)
     ImageView back;
@@ -256,5 +267,114 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             return false;
         }
         return true;
+    }
+
+    private PopupWindow popupWindow;
+    private int navigationHeight = 0;
+    private boolean scrolling = false;
+    final String cities[] = new String[] {
+            "New South Wales",
+            "Australian Capital Territory",
+            "Victoria",
+            "Western Australia",
+            "South Australia",
+            "Queensland",
+            "Northern Territory",
+            "Northern Tasmania"
+    };
+
+    private void openPopupWindow(View v) {
+        //防止重复按按钮
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
+        }
+        //设置PopupWindow的View
+        View view = LayoutInflater.from(this).inflate(R.layout.select_citys, null);
+        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        //设置背景
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击弹窗外退出
+        popupWindow.setFocusable(false);
+        popupWindow.setOutsideTouchable(false);
+        //设置动画
+        popupWindow.setAnimationStyle(R.style.PopupWindow);
+        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)){
+            navigationHeight = AndoridSysUtils.getNavigationBarHeigh(this);
+        }
+        //设置显示的位置
+        popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, navigationHeight);
+        //设置消失监听
+        popupWindow.setOnDismissListener(this);
+        //设置PopupWindow的View点击事件
+        setOnPopupViewClick(view);
+        //设置背景透明度
+        setBackgroundAlpha(0.5f);
+    }
+
+    @Override
+    public void onDismiss() {
+        setBackgroundAlpha(1f);
+    }
+    //设置屏幕背景透明效果
+    public void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+        lp.alpha = alpha;
+        this. getWindow().setAttributes(lp);
+    }
+
+    private void setOnPopupViewClick(View view) {
+         TextView ib_cancle = view.findViewById(R.id.ib_cancle);
+         TextView ib_confirm = view.findViewById(R.id.ib_confirm);
+         final WheelView country = findViewById(R.id.id_province);
+         ib_confirm.setOnClickListener(this);
+         ib_cancle.setOnClickListener(this);
+         country.setVisibleItems(3);
+         country.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+                if (!scrolling) {
+                    updateCities(country, cities, newValue);
+                }
+            }
+        });
+
+        country.addScrollingListener( new OnWheelScrollListener() {
+            @Override
+            public void onScrollingStarted(WheelView wheel) {
+                scrolling = true;
+            }
+            @Override
+            public void onScrollingFinished(WheelView wheel) {
+                scrolling = false;
+                updateCities(country, cities, country.getCurrentItem());
+            }
+        });
+        country.setCurrentItem(1);
+    }
+
+    /**
+     * Updates the city wheel
+     */
+    private void updateCities(WheelView city, String cities[], int index) {
+        ArrayWheelAdapter<String> adapter =
+                new ArrayWheelAdapter<String>(this, cities);
+        adapter.setTextSize(16);
+        city.setViewAdapter(adapter);
+        city.setCurrentItem(cities.length / 2);
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case  R.id.ib_cancle :
+                if (popupWindow != null &&popupWindow.isShowing()){
+                    popupWindow.dismiss();
+                }
+                break;
+            case R.id.ib_confirm:
+
+                break;
+            default:
+                break;
+        }
     }
 }

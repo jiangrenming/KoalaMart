@@ -68,6 +68,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     private IAddressPresenter addressPresenter;
     private  AddressManagerAdapter addressManagerAdapter;
     private List<AddressManagerBean> addresses;
+    private  int pageIndex = 0;
 
     @Override
     public int attchLayoutRes() {
@@ -84,6 +85,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     @Override
     public void upDateViews() {
         addressPresenter = new AddressPresenter(this);
+        addressPresenter.setPrarms(pageIndex);
         addressPresenter.getData();
     }
 
@@ -138,7 +140,9 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
             SwipeRefreshHelper.init(swipe_refresh, new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
+                    pageIndex = 0;
                     upDateViews();
+                    SwipeRefreshHelper.controlRefresh(swipe_refresh,false);
                 }
             });
         }
@@ -147,6 +151,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     @Override
     public void onAddressSucessFul(final List<AddressManagerBean> data) {
         if (data != null && data.size() >0){
+            pageIndex ++;
             final int addressId = ShareBankPreferenceUtils.getInt("addressId", -1);
             for (int i = 0; i < data.size(); i++) {
                 AddressManagerBean addressManagerBean = data.get(i);
@@ -167,6 +172,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
             addressManagerAdapter.setRequestDataListener(new OnRequestDataListener() {
                 @Override
                 public void onLoadMore() {
+                    addressPresenter.setPrarms(pageIndex);
                     addressPresenter.getMoreData();
                 }
             });
@@ -239,6 +245,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     public void loadAddressMoreData(List<AddressManagerBean> data) {
         addressManagerAdapter.loadComplete();
         addressManagerAdapter.addItems(data);
+        pageIndex++;
     }
 
     @Override

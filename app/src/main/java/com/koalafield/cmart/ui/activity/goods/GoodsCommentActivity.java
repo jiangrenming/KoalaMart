@@ -130,6 +130,7 @@ public class GoodsCommentActivity extends BaseActivity implements IGoodsCommentV
         Log.i("加载更多的数据",data.size()+"");
         mAdapter.loadComplete();
         mAdapter.addItems(data);
+        pageIndex++;
     }
 
     /**

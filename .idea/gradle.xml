@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/retrofitlibrary" />
+            <option value="$PROJECT_DIR$/wheel" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

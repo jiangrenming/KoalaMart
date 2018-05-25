@@ -29,6 +29,7 @@ import com.koalafield.cmart.presenter.user.PersonNumberPresenter;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.CollectionActivity;
+import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.activity.use.PrivateActivity;
 import com.koalafield.cmart.ui.view.user.IPersonNumberView;
@@ -150,6 +151,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             case R.id.old:
                 break;
             case R.id.discount:
+                startActivity(new Intent(this, DisCountActivity.class));
                 break;
             case R.id.collection: //收藏列表
                 startActivity(new Intent(this, CollectionActivity.class));

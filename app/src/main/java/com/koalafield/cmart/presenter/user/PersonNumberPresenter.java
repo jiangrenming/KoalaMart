@@ -37,10 +37,8 @@ public class PersonNumberPresenter implements IPersonNumberPresenter{
                         personNumberView.onPersonNumberSucessFul(personNumber);
                     } else  if (personNumber.getCode() == 401){
                         personNumberView.onPersonNumberFailure(String.valueOf(personNumber.getCode()));
-
                     }else {
                         personNumberView.onPersonNumberFailure(personNumber.getMsg());
-
                     }
                 }else {
                     personNumberView.onPersonNumberFailure("返回的数据为NULL");

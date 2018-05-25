@@ -5,26 +5,39 @@
     android:layout_height="match_parent"
     android:background="#E9E9E9"
     android:orientation="vertical" >
-   <RelativeLayout 
+   <RelativeLayout
        android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-       <ImageButton 
+       android:background="#C7C7C7"
+       android:paddingLeft="10dp"
+       android:paddingRight="10dp"
+       android:gravity="center_vertical"
+       android:layout_height="30dp">
+       <TextView
            android:id="@+id/ib_cancle"
            android:layout_width="wrap_content"
            android:background="@color/transparent"
-           android:contentDescription="@null"
            android:layout_gravity="start"
-           android:layout_height="wrap_content"
-           android:src="@android:drawable/ic_menu_close_clear_cancel"/>
-        <ImageButton 
+           android:textColor="#696969"
+           android:text="取消"
+           android:layout_height="wrap_content" />
+       <TextView
+           android:layout_width="wrap_content"
+           android:background="@color/transparent"
+           android:layout_centerHorizontal="true"
+           android:textSize="18sp"
+           android:layout_gravity="start"
+           android:text="选择地区"
+           android:layout_height="wrap_content" />
+        <TextView
            android:id="@+id/ib_confirm"
            android:layout_alignParentRight="true"
            android:contentDescription="@null"
+            android:textColor="#696969"
            android:layout_width="wrap_content"
            android:background="@color/transparent"
            android:layout_gravity="end"
-           android:layout_height="wrap_content"
-           android:src="@android:drawable/ic_menu_save"/>
+            android:text="确定"
+           android:layout_height="wrap_content"/>
    </RelativeLayout>
 
     <LinearLayout
@@ -32,12 +45,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <com.koalafield.cmart.wheel.WheelView
+        <kankan.wheel.widget.WheelView
             android:id="@+id/id_province"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </com.koalafield.cmart.wheel.WheelView>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </kankan.wheel.widget.WheelView>
 
     </LinearLayout>
 

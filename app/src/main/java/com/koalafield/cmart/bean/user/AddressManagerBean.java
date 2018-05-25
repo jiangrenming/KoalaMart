@@ -9,150 +9,142 @@ import java.io.Serializable;
  */
 
 public class AddressManagerBean implements Serializable{
-    private  int customerid;
-    private String country;
-    private String state;
-    private String city;
-    private String area;
-    private String address;
-    private String number;
-    private String contactname;
-    private String contactphone;
-    private String contactid;
-    private String images;
-    private String zipcode;
-    private String createdtime;
-    private String lat;
-    private String lng;
+    private  int Customerid;
+    private String Country;
+    private String State;
+    private String City;
+    private String Area;
+    private String Address;
+    private String Number;
+    private String Contactname;
+    private String Contactphone;
+    private String Contactid;
+    private String Images;
+    private String Zipcode;
+    private String Createdtime;
+    private String Lat;
+    private String Lng;
     private int Id;
     private  boolean isSelected;
 
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
     public int getCustomerid() {
-        return customerid;
+        return Customerid;
     }
 
     public void setCustomerid(int customerid) {
-        this.customerid = customerid;
+        Customerid = customerid;
     }
 
     public String getCountry() {
-        return country;
+        return Country;
     }
 
     public void setCountry(String country) {
-        this.country = country;
+        Country = country;
     }
 
     public String getState() {
-        return state;
+        return State;
     }
 
     public void setState(String state) {
-        this.state = state;
+        State = state;
     }
 
     public String getCity() {
-        return city;
+        return City;
     }
 
     public void setCity(String city) {
-        this.city = city;
+        City = city;
     }
 
     public String getArea() {
-        return area;
+        return Area;
     }
 
     public void setArea(String area) {
-        this.area = area;
+        Area = area;
     }
 
     public String getAddress() {
-        return address;
+        return Address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        Address = address;
     }
 
     public String getNumber() {
-        return number;
+        return Number;
     }
 
     public void setNumber(String number) {
-        this.number = number;
+        Number = number;
     }
 
     public String getContactname() {
-        return contactname;
+        return Contactname;
     }
 
     public void setContactname(String contactname) {
-        this.contactname = contactname;
+        Contactname = contactname;
     }
 
     public String getContactphone() {
-        return contactphone;
+        return Contactphone;
     }
 
     public void setContactphone(String contactphone) {
-        this.contactphone = contactphone;
+        Contactphone = contactphone;
     }
 
     public String getContactid() {
-        return contactid;
+        return Contactid;
     }
 
     public void setContactid(String contactid) {
-        this.contactid = contactid;
+        Contactid = contactid;
     }
 
     public String getImages() {
-        return images;
+        return Images;
     }
 
     public void setImages(String images) {
-        this.images = images;
+        Images = images;
     }
 
     public String getZipcode() {
-        return zipcode;
+        return Zipcode;
     }
 
     public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+        Zipcode = zipcode;
     }
 
     public String getCreatedtime() {
-        return createdtime;
+        return Createdtime;
     }
 
     public void setCreatedtime(String createdtime) {
-        this.createdtime = createdtime;
+        Createdtime = createdtime;
     }
 
     public String getLat() {
-        return lat;
+        return Lat;
     }
 
     public void setLat(String lat) {
-        this.lat = lat;
+        Lat = lat;
     }
 
     public String getLng() {
-        return lng;
+        return Lng;
     }
 
     public void setLng(String lng) {
-        this.lng = lng;
+        Lng = lng;
     }
 
     public int getId() {
@@ -163,25 +155,34 @@ public class AddressManagerBean implements Serializable{
         Id = id;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     @Override
     public String toString() {
         return "AddressManagerBean{" +
-                "customerid=" + customerid +
-                ", country='" + country + '\'' +
-                ", state='" + state + '\'' +
-                ", city='" + city + '\'' +
-                ", area='" + area + '\'' +
-                ", address='" + address + '\'' +
-                ", number='" + number + '\'' +
-                ", contactname='" + contactname + '\'' +
-                ", contactphone='" + contactphone + '\'' +
-                ", contactid='" + contactid + '\'' +
-                ", images='" + images + '\'' +
-                ", zipcode='" + zipcode + '\'' +
-                ", createdtime='" + createdtime + '\'' +
-                ", lat='" + lat + '\'' +
-                ", lng='" + lng + '\'' +
+                "Customerid=" + Customerid +
+                ", Country='" + Country + '\'' +
+                ", State='" + State + '\'' +
+                ", City='" + City + '\'' +
+                ", Area='" + Area + '\'' +
+                ", Address='" + Address + '\'' +
+                ", Number='" + Number + '\'' +
+                ", Contactname='" + Contactname + '\'' +
+                ", Contactphone='" + Contactphone + '\'' +
+                ", Contactid='" + Contactid + '\'' +
+                ", Images='" + Images + '\'' +
+                ", Zipcode='" + Zipcode + '\'' +
+                ", Createdtime='" + Createdtime + '\'' +
+                ", Lat='" + Lat + '\'' +
+                ", Lng='" + Lng + '\'' +
                 ", Id=" + Id +
+                ", isSelected=" + isSelected +
                 '}';
     }
 }
