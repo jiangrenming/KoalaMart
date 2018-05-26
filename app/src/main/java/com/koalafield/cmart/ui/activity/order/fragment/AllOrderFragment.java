@@ -41,22 +41,11 @@ public class AllOrderFragment extends BaseFragment{
         SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //模拟假数据
-                for (int i = 0; i < 4; i++) {
-                    OrderBean order = new OrderBean();
-                    order.setOrder_time("2018/5/11"+i);
-                    order.setOrderCount(3+i);
-                    order.setOrderNo("1234567890"+i);
-                    order.setStatue("P");
-                    order.setTotalAmount(1230);
-
-                }
 
             }
         });
         orderAdapter = new CommonOrderAdapter(mContext,orderList);
         RecyclerViewHelper.initRecyclerViewV(mContext,order_recyclerView,false,orderAdapter);
-
     }
 
     @Override

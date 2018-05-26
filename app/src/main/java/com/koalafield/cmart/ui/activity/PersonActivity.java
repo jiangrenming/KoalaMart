@@ -32,6 +32,8 @@ import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.activity.use.PrivateActivity;
+import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
+import com.koalafield.cmart.ui.activity.use.ScoresActivity;
 import com.koalafield.cmart.ui.view.user.IPersonNumberView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.Constants;
@@ -52,7 +54,9 @@ import butterknife.OnClick;
 public class PersonActivity extends TabBaseActivity implements View.OnClickListener,PopupWindow.OnDismissListener,IPersonNumberView<PersonNumber>{
 
     @BindView(R.id.share)
-    ImageView share;  //分享
+    LinearLayout share;  //分享
+    @BindView(R.id.advice)
+    LinearLayout advice;  //意见反馈
     @BindView(R.id.person_av)
     ImageView person_av;  //头像
     @BindView(R.id.user_name)
@@ -65,24 +69,28 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     LinearLayout pay_wait;  //待发货
     @BindView(R.id.wait_self)
     LinearLayout wait_self;  //待收货
-    @BindView(R.id.old)
-    ImageView old;  //买过
+    @BindView(R.id.old_buy)
+    LinearLayout old;  //买过
     @BindView(R.id.discount)
-    ImageView discount;  //优惠券
+    LinearLayout discount;  //优惠券
     @BindView(R.id.collection)
-    ImageView collection;  //收藏
+    LinearLayout collection;  //收藏
+    @BindView(R.id.counp)
+    LinearLayout counp;  //积分
     @BindView(R.id.address_manager)
     LinearLayout address_manager;  //地址
-    @BindView(R.id.contact)
-    ImageView contact;  //联系客服
-    @BindView(R.id.service)
-    ImageView service;  //服务
-    @BindView(R.id.set)
-    ImageView set;  //设置
+    @BindView(R.id.contact_custemer)
+    LinearLayout contact;  //联系客服
+    @BindView(R.id.service_infos)
+    LinearLayout service_infos;  //服务
+    @BindView(R.id.setting)
+    LinearLayout set;  //设置
     @BindView(R.id.discount_num)
     TextView discount_num;
     @BindView(R.id.collection_num)
     TextView collection_num;
+    @BindView(R.id.counp_num)
+    TextView counp_num;
 
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
@@ -127,8 +135,8 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     }
 
-    @OnClick({R.id.share, R.id.person_av, R.id.order_infos, R.id.no_pay, R.id.pay_wait, R.id.wait_self, R.id.old, R.id.discount,
-            R.id.collection, R.id.address_manager, R.id.contact, R.id.service, R.id.set})
+    @OnClick({R.id.share, R.id.person_av, R.id.order_infos, R.id.no_pay, R.id.pay_wait, R.id.wait_self, R.id.old_buy, R.id.discount,
+            R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting,R.id.counp})
     public void onButterClick(View v) {
         switch (v.getId()) {
             case R.id.share: //进入朋友圈分享
@@ -137,34 +145,38 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 startActivity(new Intent(this, PrivateActivity.class));
                 break;
             case R.id.order_infos:  //全部订单
-   //             skipOrderActivity(Constants.ALL);
+                skipOrderActivity(Constants.ALL);
                 break;
             case R.id.no_pay:
-   //             skipOrderActivity(Constants.PAY_WAIT);
+                skipOrderActivity(Constants.PAY_WAIT);
                 break;
             case R.id.pay_wait:
-   //             skipOrderActivity(Constants.WAIT_SEND);
+               skipOrderActivity(Constants.WAIT_SEND);
                 break;
             case R.id.wait_self:
-    //            skipOrderActivity(Constants.WAIT_RECEIVER);
+                skipOrderActivity(Constants.WAIT_RECEIVER);
                 break;
-            case R.id.old:
+            case R.id.old_buy:
+                startActivity(new Intent(PersonActivity.this, PurchareOffActivity.class));
                 break;
-            case R.id.discount:
+            case R.id.discount: //优惠券
                 startActivity(new Intent(this, DisCountActivity.class));
                 break;
             case R.id.collection: //收藏列表
                 startActivity(new Intent(this, CollectionActivity.class));
                 break;
+            case R.id.counp: //积分列表
+                startActivity(new Intent(this, ScoresActivity.class));
+                break;
             case R.id.address_manager:  //地址管理
                 startActivity(new Intent(this, AddressManangerActivity.class));
                 break;
-            case R.id.contact:  //联系客服
+            case R.id.contact_custemer:  //联系客服
                 openPopupWindow(v);
                 break;
-            case R.id.service:
+            case R.id.service_infos:
                 break;
-            case R.id.set: //设置
+            case R.id.setting: //设置
                 startActivity(new Intent(this, PersonSettingActivity.class));
                 break;
             default:
@@ -293,24 +305,22 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void onPersonNumberSucessFul(PersonNumber data) {
         if (data != null){
             int followCount = data.getFollowCount();
-            if (followCount <= 0){
-                collection_num.setVisibility(View.GONE);
-            }else if (followCount <=99){
-                collection_num.setVisibility(View.VISIBLE);
+             if (followCount <=99){
                 collection_num.setText(String.valueOf(followCount));
             }else {
-                collection_num.setVisibility(View.VISIBLE);
                 collection_num.setText(String.format(Locale.CHINA, "%d+", 99));
             }
             int couponCount = data.getCouponCount();
-            if (couponCount <= 0){
-                discount_num.setVisibility(View.GONE);
-            }else if (couponCount <=99){
-                discount_num.setVisibility(View.VISIBLE);
+            if (couponCount <=99){
                 discount_num.setText(String.valueOf(followCount));
             }else {
-                discount_num.setVisibility(View.VISIBLE);
                 discount_num.setText(String.format(Locale.CHINA, "%d+", 99));
+            }
+            int scoreCount = data.getScoreCount();
+            if (scoreCount <=99){
+                counp_num.setText(String.valueOf(scoreCount));
+            }else {
+                counp_num.setText(String.format(Locale.CHINA, "%d+", 99));
             }
         }
     }

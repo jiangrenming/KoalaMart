@@ -1,13 +1,18 @@
 package com.koalafield.cmart.ui.activity.use;
 
+import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,8 +27,10 @@ import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.presenter.user.AddCountryPresenter;
 import com.koalafield.cmart.presenter.user.AddressPresenter;
+import com.koalafield.cmart.presenter.user.EditCountryPresenter;
 import com.koalafield.cmart.presenter.user.IAddCountryPresenter;
 import com.koalafield.cmart.presenter.user.IAddressPresenter;
+import com.koalafield.cmart.presenter.user.IEditCountryPresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.view.user.IAddAddressView;
 import com.koalafield.cmart.ui.view.user.IEditAddressView;
@@ -39,7 +46,11 @@ import butterknife.OnClick;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+import kankan.wheel.widget.adapters.WheelViewAdapter;
+
+import static com.koalafield.cmart.R.layout.country_layout;
 
 /**
  *
@@ -129,7 +140,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                         || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
                     String pwd = castact_phone.getText().toString();
                     if (StringUtils.isEmpty(pwd) || !RegaxUtils.isMobilePhone(pwd)||pwd.length() == 0) {  //还未对密码格式做判断
-                        Toast.makeText(ChangeAddressActivity.this,"密码格式不正确",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangeAddressActivity.this,"电话格式不正确",Toast.LENGTH_SHORT).show();
                     } else {
                         setFocus(et_suggestion);
                     }
@@ -156,10 +167,23 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                         if (checkAllInfos()){
                             String phone = castact_phone.getText().toString().trim();
                             if (RegaxUtils.isMobilePhone(phone)){
+                                String name = castact_name.getText().toString().trim();
+                                String country = country_name.getText().toString().trim();
+                                String state = state_name.getText().toString().trim();
+                                Map<String,String > params = new HashMap<>();
+                                params.put("country","Australia");
+                                params.put("state",state == null ? "" : state);
+                                params.put("city",""); //暂时未有
+                                params.put("area","");//暂时未有
+                                params.put("address",suggestion == null ? "" : suggestion);
+                                params.put("contactname",name == null ? "" : name);
+                                params.put("contactphone",phone == null ? "" : phone);
                                 if (addressType == 1){
-
+                                    IAddCountryPresenter add = new AddCountryPresenter(ChangeAddressActivity.this);
+                                    add.getParamsData(params);
                                 }else {
-
+                                    IEditCountryPresenter edit = new EditCountryPresenter(ChangeAddressActivity.this);
+                                    edit.getParamsData(params);
                                 }
                             }else {
                                 Toast.makeText(ChangeAddressActivity.this,"手机号码格式不正确",Toast.LENGTH_SHORT).show();
@@ -183,16 +207,32 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
     public void upDateViews() {}
 
     @Override
-    public void onAddAddressSucessFul(BaseResponseBean data) {}
+    public void onAddAddressSucessFul(BaseResponseBean data) {
+        if (data != null && data.getCode() == 200 ){
+            Toast.makeText(this,data.getMsg(),Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
+            finish();
+        }
+    }
 
     @Override
-    public void onAddAddressFailure(String message) {}
+    public void onAddAddressFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 
     @Override
-    public void onEditAddressSucessFul(BaseResponseBean data) {}
+    public void onEditAddressSucessFul(BaseResponseBean data) {
+        if (data != null && data.getCode() == 200 ){
+            Toast.makeText(this,data.getMsg(),Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
+            finish();
+        }
+    }
 
     @Override
-    public void onEditAddressFailure(String message) {}
+    public void onEditAddressFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 
 
     @OnClick({R.id.select_country,R.id.select_state,R.id.add_address})
@@ -201,29 +241,35 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             case R.id.select_country:
                 break;
             case  R.id.select_state:
-                selectCity();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm.isActive()) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                    openPopupWindow(v);
+                }
                 break;
             case  R.id.add_address:
                 if (checkAllInfos()){
                     String phone = castact_phone.getText().toString().trim();
                     if (RegaxUtils.isMobilePhone(phone)){
+                        String name = castact_name.getText().toString().trim();
+                        String country = country_name.getText().toString().trim();
+                        String state = state_name.getText().toString().trim();
+                        String suggestion = et_suggestion.getText().toString().trim();
+                        Map<String,String > params = new HashMap<>();
+                        params.put("country","Australia");
+                        params.put("state",state == null ? "" : state);
+                        params.put("city","");
+                        params.put("area","");
+                        params.put("address",suggestion == null ? "" : suggestion);
+                        params.put("contactname",name == null ? "" : name);
+                        params.put("contactphone",phone == null ? "" : phone);
                         if (addressType == 1){
-                            String name = castact_name.getText().toString().trim();
-                            String country = country_name.getText().toString().trim();
-                            String state = state_name.getText().toString().trim();
-                            String suggestion = et_suggestion.getText().toString().trim();
-                            Map<String,String > params = new HashMap<>();
-                            params.put("country","Australia");
-                            params.put("state",state);
-                            params.put("city",country); //暂时未有
-                            params.put("area",country);//暂时未有
-                            params.put("address",suggestion);
-                            params.put("contactname",name);
-                            params.put("contactphone",phone);
                             IAddCountryPresenter add = new AddCountryPresenter(ChangeAddressActivity.this);
                             add.getParamsData(params);
                         }else {
-
+                            IEditCountryPresenter edit = new EditCountryPresenter(ChangeAddressActivity.this);
+                            edit.getParamsData(params);
                         }
                     }else {
                         Toast.makeText(this,"手机号码格式不正确",Toast.LENGTH_SHORT).show();
@@ -238,11 +284,6 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             default:
                 break;
         }
-    }
-
-    private void selectCity() {
-
-
     }
 
     private  boolean checkAllInfos(){
@@ -272,15 +313,15 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
     private boolean scrolling = false;
-    final String cities[] = new String[] {
-            "New South Wales",
-            "Australian Capital Territory",
-            "Victoria",
-            "Western Australia",
-            "South Australia",
-            "Queensland",
-            "Northern Territory",
-            "Northern Tasmania"
+    final String cities[]  = new String[]  {
+       "New South Wales",
+                  "Australian Capital Territory",
+                  "Victoria",
+                  "Western Australia",
+                  "South Australia",
+                  "Queensland",
+                  "Northern Territory",
+                  "Northern Tasmania"
     };
 
     private void openPopupWindow(View v) {
@@ -301,18 +342,19 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
         if (AndoridSysUtils.checkDeviceHasNavigationBar(this)){
             navigationHeight = AndoridSysUtils.getNavigationBarHeigh(this);
         }
+        //设置PopupWindow的View点击事件
+        setOnPopupViewClick(view);
         //设置显示的位置
         popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, navigationHeight);
         //设置消失监听
         popupWindow.setOnDismissListener(this);
-        //设置PopupWindow的View点击事件
-        setOnPopupViewClick(view);
         //设置背景透明度
         setBackgroundAlpha(0.5f);
     }
 
     @Override
     public void onDismiss() {
+        disPopuWindow();
         setBackgroundAlpha(1f);
     }
     //设置屏幕背景透明效果
@@ -322,23 +364,28 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
         this. getWindow().setAttributes(lp);
     }
 
+    private  String statue ;
     private void setOnPopupViewClick(View view) {
          TextView ib_cancle = view.findViewById(R.id.ib_cancle);
          TextView ib_confirm = view.findViewById(R.id.ib_confirm);
-         final WheelView country = findViewById(R.id.id_province);
+          final WheelView city = view.findViewById(R.id.id_province);
+          CountryAdapter countryAdapter = new CountryAdapter(this);
+          city.setViewAdapter(countryAdapter);
+          city.setVisibleItems(5);
+          city.setWheelBackground(R.color.gray_light7);
          ib_confirm.setOnClickListener(this);
          ib_cancle.setOnClickListener(this);
-         country.setVisibleItems(3);
-         country.addChangingListener(new OnWheelChangedListener() {
+         city.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
                 if (!scrolling) {
-                    updateCities(country, cities, newValue);
+                    Log.i("滚动的值2",cities[oldValue]+"/新位置"+cities[newValue]+"/"+cities[city.getCurrentItem()]);
+                    statue = cities[city.getCurrentItem()];
                 }
             }
         });
 
-        country.addScrollingListener( new OnWheelScrollListener() {
+        city.addScrollingListener( new OnWheelScrollListener() {
             @Override
             public void onScrollingStarted(WheelView wheel) {
                 scrolling = true;
@@ -346,35 +393,76 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             @Override
             public void onScrollingFinished(WheelView wheel) {
                 scrolling = false;
-                updateCities(country, cities, country.getCurrentItem());
+                Log.i("滚动的值",cities[city.getCurrentItem()]);
+                statue =cities[city.getCurrentItem()];
             }
         });
-        country.setCurrentItem(1);
+        city.setCurrentItem(1);
     }
 
-    /**
-     * Updates the city wheel
-     */
-    private void updateCities(WheelView city, String cities[], int index) {
-        ArrayWheelAdapter<String> adapter =
-                new ArrayWheelAdapter<String>(this, cities);
-        adapter.setTextSize(16);
-        city.setViewAdapter(adapter);
-        city.setCurrentItem(cities.length / 2);
-    }
+
+    private boolean isSelect =false;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case  R.id.ib_cancle :
-                if (popupWindow != null &&popupWindow.isShowing()){
-                    popupWindow.dismiss();
-                }
+                disPopuWindow();
                 break;
             case R.id.ib_confirm:
-
+                if (!StringUtils.isEmpty(statue)){
+                    disPopuWindow();
+                    state_name.setText(statue);
+                }
                 break;
+            case R.id.select:
+                if (isSelect){
+                    select.setImageResource(R.mipmap.un_select);
+                }else {
+                    select.setImageResource(R.mipmap.select);
+                }
             default:
                 break;
+        }
+    }
+    private  void disPopuWindow(){
+        if (null != popupWindow && popupWindow .isShowing()){
+            popupWindow.dismiss();
+        }
+    }
+
+    private class CountryAdapter extends AbstractWheelTextAdapter {
+
+       private Context mContext;
+        protected CountryAdapter(Context context) {
+            super(context);
+            this.mContext = context;
+        }
+
+        @Override
+        public View getItem(int index, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+            if (convertView == null){
+                holder = new ViewHolder();
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.country_layout,null);
+                holder.name = convertView.findViewById(R.id.city_item_name);
+                convertView.setTag(holder);
+            }
+            holder = (ViewHolder) convertView.getTag();
+            holder.name .setText(cities[index]);
+            return convertView;
+        }
+
+        @Override
+        public int getItemsCount() {
+            return cities.length;
+        }
+
+        @Override
+        protected CharSequence getItemText(int index) {
+            return  cities[index];
+        }
+        private class ViewHolder{
+            TextView name;
         }
     }
 }

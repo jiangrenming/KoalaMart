@@ -71,6 +71,8 @@
         <activity android:name=".ui.activity.use.PurchareOffActivity"/>
         <activity android:name=".ui.activity.goods.SearchActivity"/>
         <activity android:name=".ui.activity.use.ChangeAddressActivity"/>
+        <activity android:name=".ui.activity.use.DisCountActivity"/>
+        <activity android:name=".ui.activity.use.ScoresActivity"/>
     </application>
 
 </manifest>

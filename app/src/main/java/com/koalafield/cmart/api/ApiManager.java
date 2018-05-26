@@ -100,8 +100,8 @@ public class ApiManager {
     /**
      * 获取当前用户的优惠券
      */
-    public  static  Flowable<List<DisCountBean>> getDisCountList(int enabled,int pageIndex){
-        return apiSubscribe(AndoridApplication.apiService.getDisCountsData(getHeaders(),enabled,pageIndex))
+    public  static  Flowable<List<DisCountBean>> getDisCountList(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getDisCountsData(getHeaders(),params))
                 .flatMap(getDisCounts());
     }
     /**
@@ -532,7 +532,7 @@ public class ApiManager {
     /**
      * 删除地址
      */
-    private static Function<BaseResponseBean,BaseResponseBean>delAdress() {
+    private static Function<BaseResponseBean,BaseResponseBean> delAdress() {
         return new Function<BaseResponseBean, BaseResponseBean>() {
             @Override
             public BaseResponseBean apply(BaseResponseBean response) throws Exception {
@@ -558,7 +558,7 @@ public class ApiManager {
     }
 
     /**
-     * 获取主页轮播图
+     * 获取用户优惠券
      */
     private static Function<SpecialResponseBean, Flowable<List<DisCountBean>>> getDisCounts() {
         return new Function<SpecialResponseBean, Flowable<List<DisCountBean>>>() {

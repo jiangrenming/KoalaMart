@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
@@ -105,7 +106,7 @@ public class PurchareOffActivity extends BaseActivity implements IPurchaseOffVie
 
     @Override
     public void onPurchaseOffFailure(String message) {
-
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

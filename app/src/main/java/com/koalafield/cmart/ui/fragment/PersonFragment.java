@@ -45,7 +45,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class PersonFragment extends BaseFragment implements View.OnClickListener,PopupWindow.OnDismissListener{
 
-    @BindView(R.id.share)
+   /* @BindView(R.id.share)
     ImageView share;  //分享
     @BindView(R.id.person_av)
     ImageView person_av;  //头像
@@ -72,7 +72,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     @BindView(R.id.service)
     ImageView service;  //服务
     @BindView(R.id.set)
-    ImageView set;  //设置
+    ImageView set;  //设置*/
 
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
@@ -95,7 +95,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void updateViews() {}
 
-    @OnClick({R.id.share,R.id.person_av,R.id.order_infos,R.id.no_pay,R.id.pay_wait,R.id.wait_self,R.id.old,R.id.discount,
+  /*  @OnClick({R.id.share,R.id.person_av,R.id.order_infos,R.id.no_pay,R.id.pay_wait,R.id.wait_self,R.id.old,R.id.discount,
             R.id.collection,R.id.address_manager,R.id.contact,R.id.service,R.id.set})
     public  void onButterClick(View v){
         switch (v.getId()){
@@ -136,7 +136,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             default:
                 break;
         }
-    }
+    }*/
 
     private void skipOrderActivity(int type){
         Intent intent = new Intent(mContext, MartOrderActivity.class);

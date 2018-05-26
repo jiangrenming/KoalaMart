@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
+import com.koalafield.cmart.R;
 import com.koalafield.cmart.bean.order.OrderBean;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class CommonOrderAdapter extends BaseQuickAdapter<OrderBean> {
 
     @Override
     protected int attachLayoutRes() {
-        return 0;
+        return R.layout.my_order_item;
     }
 
     @Override

@@ -46,9 +46,9 @@ public class RetrofitService{
 
     public static  void init(){
         // 指定缓存路径,缓存大小100Mb
-        Cache cache = new Cache(new File(mConfig.getmContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+    //    Cache cache = new Cache(new File(mConfig.getmContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
         OkHttpClient client = new OkHttpClient().newBuilder()
-                .cache(cache)
+    //            .cache(cache)
                 .addInterceptor(sLoggingInterceptor)
                 .addNetworkInterceptor(sRewriteCacheControlInterceptor)
                 .connectTimeout(10, TimeUnit.SECONDS)

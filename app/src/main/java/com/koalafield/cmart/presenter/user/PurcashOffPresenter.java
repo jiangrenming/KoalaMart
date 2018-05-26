@@ -4,6 +4,7 @@ import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
+import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.ui.view.user.ICollectionView;
 import com.koalafield.cmart.ui.view.user.IPurchaseOffView;
 
@@ -25,7 +26,7 @@ public class PurcashOffPresenter implements IPurcashOffPresenter {
     @Override
     public void getData() {
         pageIndex = 0;
-        ApiManager.getGoodsCollection(pageIndex).subscribe(new SubScribeCallBack<List<GoodsCollectionsBean>>(new CallBack() {
+        ApiManager.getGoodsPurchaseOff(pageIndex).subscribe(new SubScribeCallBack<List<PurchaseOffBean>>(new CallBack() {
             @Override
             public void onInit() {
                 mPurchaseOffView.showLoading();
@@ -33,7 +34,7 @@ public class PurcashOffPresenter implements IPurcashOffPresenter {
 
             @Override
             public <T> void onSucess(T data) {
-                List<GoodsCollectionsBean> collectionsBeen = (List<GoodsCollectionsBean>) data;
+                List<PurchaseOffBean> collectionsBeen = (List<PurchaseOffBean>) data;
                 if (collectionsBeen != null && collectionsBeen.size() > 0){
                     mPurchaseOffView.onPurchaseOffSucessFul(collectionsBeen);
                     pageIndex++;
@@ -57,7 +58,7 @@ public class PurcashOffPresenter implements IPurcashOffPresenter {
 
     @Override
     public void getMoreData() {
-        ApiManager.getGoodsCollection(pageIndex).subscribe(new SubScribeCallBack<List<GoodsCollectionsBean>>(new CallBack() {
+        ApiManager.getGoodsPurchaseOff(pageIndex).subscribe(new SubScribeCallBack<List<PurchaseOffBean>>(new CallBack() {
             @Override
             public void onInit() {
                 mPurchaseOffView.showLoading();
@@ -65,7 +66,7 @@ public class PurcashOffPresenter implements IPurcashOffPresenter {
 
             @Override
             public <T> void onSucess(T data) {
-                List<GoodsCollectionsBean> collectionsBeen = (List<GoodsCollectionsBean>) data;
+                List<PurchaseOffBean> collectionsBeen = (List<PurchaseOffBean>) data;
                 if (collectionsBeen != null && collectionsBeen.size() > 0){
                     mPurchaseOffView.loadPurchaseOffMoreData(collectionsBeen);
                     pageIndex++;

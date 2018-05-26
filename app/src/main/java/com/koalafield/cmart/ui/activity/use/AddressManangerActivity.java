@@ -79,16 +79,28 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     public void initDatas() {
         top_name.setText("收货地址");
         initSwipeRefresh();
-
     }
 
     @Override
     public void upDateViews() {
+        addressManagerAdapter = new AddressManagerAdapter(this);
+        RecyclerViewHelper.initRecyclerViewV(this,rv_news_list,true,addressManagerAdapter);
+        addressManagerAdapter.setRequestDataListener(new OnRequestDataListener() {
+            @Override
+            public void onLoadMore() {
+                addressPresenter.setPrarms(pageIndex);
+                addressPresenter.getMoreData();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         addressPresenter = new AddressPresenter(this);
         addressPresenter.setPrarms(pageIndex);
         addressPresenter.getData();
     }
-
 
     @OnClick({R.id.back,R.id.add_address})
     public  void addressOnClick(View v){
@@ -99,7 +111,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
             case R.id.add_address:
                 Intent intent = new Intent(AddressManangerActivity.this,ChangeAddressActivity.class);
                 intent.putExtra("addressType",1);
-                startActivity(intent);
+                startActivityForResult(intent,1000);
                 break;
             default:
                 break;
@@ -167,20 +179,8 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
 
             }
             addresses = data;
-            if (addressManagerAdapter == null){
-                addressManagerAdapter = new AddressManagerAdapter(this,data);
-                RecyclerViewHelper.initRecyclerViewV(this,rv_news_list,true,addressManagerAdapter);
-            }else {
-                addressManagerAdapter.cleanItems();
-                addressManagerAdapter.addItems(data);
-            }
-            addressManagerAdapter.setRequestDataListener(new OnRequestDataListener() {
-                @Override
-                public void onLoadMore() {
-                    addressPresenter.setPrarms(pageIndex);
-                    addressPresenter.getMoreData();
-                }
-            });
+            addressManagerAdapter.updateItems(data);
+
             //地址的变化
             addressManagerAdapter.SelectAddressCallBack(new AddressManagerAdapter.SelectAddressCallBack() {
                 @Override
@@ -191,9 +191,9 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
                         ShareBankPreferenceUtils.clearData("addressId");
                     }
 
-                    for (int i = 0; i < addresses.size(); i++) {  //0,1
+                    for (int i = 0; i < addresses.size(); i++) {
                         AddressManagerBean addressManagerBean = addresses.get(i);
-                        if (addressManagerBean.getId() == item.getId()){ //1
+                        if (addressManagerBean.getId() == item.getId()){
                             addressManagerBean.setSelected(isSelect);
                         }else {
                             if (addressManagerBean.isSelected()){
@@ -209,7 +209,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
                     Intent intent = new Intent(AddressManangerActivity.this,ChangeAddressActivity.class);
                     intent.putExtra("addressType",2);
                     intent.putExtra("address",item);
-                    startActivity(intent);
+                    startActivityForResult(intent,1001);
                 }
 
                 @Override
@@ -261,6 +261,12 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
         if (data != null){
             if (data.getCode() ==200){
                 addressManagerAdapter.updateItems(addresses);
+                if (addresses != null && addresses.size() == 0){
+                    SwipeRefreshHelper.controlRefresh(swipe_refresh,false);
+                    hideLoading();
+                    swipe_refresh.setVisibility(View.GONE);
+                    empty_address.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -268,5 +274,18 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     @Override
     public void onDelAddressFailure(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            if (requestCode == 10000){
+                SwipeRefreshHelper.controlRefresh(swipe_refresh,true);
+                showLoading();
+                swipe_refresh.setVisibility(View.VISIBLE);
+                empty_address.setVisibility(View.GONE);
+            }
+        }
     }
 }

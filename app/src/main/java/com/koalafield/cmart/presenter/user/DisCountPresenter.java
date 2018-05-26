@@ -7,6 +7,7 @@ import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.ui.view.user.IDisCountListView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jiangrenming on 2018/5/25.
@@ -15,8 +16,8 @@ import java.util.List;
 public class DisCountPresenter implements  IDisCountPresenter{
 
     private IDisCountListView disCountListView;
-    private int mEnable ;
-    private  int mIndexPage;
+    private Map<String,String> params ;
+
 
     public DisCountPresenter( IDisCountListView disCountListView){
             this.disCountListView = disCountListView;
@@ -25,7 +26,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
 
     @Override
     public void getData() {
-        ApiManager.getDisCountList(mEnable,mIndexPage).subscribe(new SubScribeCallBack<List<DisCountBean>>(new CallBack() {
+        ApiManager.getDisCountList(params).subscribe(new SubScribeCallBack<List<DisCountBean>>(new CallBack() {
             @Override
             public void onInit() {
                 disCountListView.showLoading();
@@ -60,7 +61,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
 
     @Override
     public void getMoreData() {
-        ApiManager.getDisCountList(mEnable,mIndexPage).subscribe(new SubScribeCallBack<List<DisCountBean>>(new CallBack() {
+        ApiManager.getDisCountList(params).subscribe(new SubScribeCallBack<List<DisCountBean>>(new CallBack() {
             @Override
             public void onInit() {
                 disCountListView.showLoading();
@@ -94,8 +95,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
     }
 
     @Override
-    public void setParams(int enable, int pageIndex) {
-        mEnable = enable;
-        mIndexPage = pageIndex;
+    public void setParams(Map<String,String> params) {
+        this.params = params;
     }
 }

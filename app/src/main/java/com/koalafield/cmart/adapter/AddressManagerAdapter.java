@@ -28,6 +28,9 @@ import java.util.List;
 
 public class AddressManagerAdapter extends BaseQuickAdapter<AddressManagerBean> {
 
+    public AddressManagerAdapter(Context context) {
+        super(context);
+    }
 
     public AddressManagerAdapter(Context context, List<AddressManagerBean> data) {
         super(context, data);

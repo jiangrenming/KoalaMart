@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dl7.recycler.helper.RecyclerViewHelper;
@@ -17,6 +18,7 @@ import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.GoodsCategryAdapter;
 import com.koalafield.cmart.adapter.GoodsCategryThreeAdapter;
 import com.koalafield.cmart.adapter.GoodsCategryTwoAdapter;
+import com.koalafield.cmart.adapter.PurchareOffAdapter;
 import com.koalafield.cmart.bananer.MZBannerView;
 import com.koalafield.cmart.bananer.MZHolderCreator;
 import com.koalafield.cmart.bananer.MZViewHolder;
@@ -27,8 +29,11 @@ import com.koalafield.cmart.presenter.home.HomeBananerPresenter;
 import com.koalafield.cmart.presenter.home.HomeGoodsCategryPresenter;
 import com.koalafield.cmart.presenter.home.IHomeGoodsCategryPresenter;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
+import com.koalafield.cmart.ui.activity.use.DisCountActivity;
+import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.view.home.IBananerView;
 import com.koalafield.cmart.ui.view.home.IGoodsCategryView;
+import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.EmptyLayout;
 
@@ -104,8 +109,22 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
             case R.id.customer: //客服
                 break;
             case R.id.already_buy: //买过的
+                String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+                if (!StringUtils.isEmpty(tickets)){
+                    startActivity(new Intent(this, PurchareOffActivity.class));
+                }else {
+                    Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
             case R.id.discount_juan: //优惠券
+                String ticket= ShareBankPreferenceUtils.getString("tickets", null);
+                if (!StringUtils.isEmpty(ticket)){
+                    startActivity(new Intent(this, DisCountActivity.class));
+                }else {
+                    Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
 
             default:
@@ -114,7 +133,7 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     }
 
     @Override
-    public void onSucessFul(List<HomeBanaerBean> data) {
+    public void onSucessFul(final List<HomeBanaerBean> data) {
         if (data != null && data.size() >0 ){
             banner.setIndicatorVisible(true);
             banner.setIndicatorRes(R.drawable.unseletc_dot,R.drawable.select_dot);
@@ -125,6 +144,15 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                 @Override
                 public MZViewHolder createViewHolder() {
                     return new NomralBannerViewHolder();
+                }
+            });
+            banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
+                @Override
+                public void onPageClick(View view, int position) {
+                    int dataId = data.get(position).getDataId();
+                    Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
+                    intent.putExtra("contentId",dataId);
+                    startActivity(intent);
                 }
             });
         }
@@ -235,7 +263,6 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
 
         @Override
         public void onBind(Context context, int position, HomeBanaerBean data) {
-            //Glide.with(context).load(data.getImg()).asBitmap().placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(mImageView);
             loadIntoUseFitWidth(context,data.getImg(),R.mipmap.default_img,mImageView);
         }
     }

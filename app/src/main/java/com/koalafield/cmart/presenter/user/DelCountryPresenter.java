@@ -35,7 +35,7 @@ public class DelCountryPresenter implements  IDelCountryPresenter{
 
     @Override
     public void getParamsData(Map<String, String> params) {
-        ApiManager.addAddresses(params).subscribe(new SubScribeCallBack<BaseResponseBean>(new CallBack() {
+        ApiManager.delAddresses(params).subscribe(new SubScribeCallBack<BaseResponseBean>(new CallBack() {
             @Override
             public void onInit() {
                 delAddressView.showLoading();

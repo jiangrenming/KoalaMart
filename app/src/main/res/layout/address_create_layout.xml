@@ -147,6 +147,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
         android:layout_height="30dp">
         <TextView
             android:layout_width="0dp"
