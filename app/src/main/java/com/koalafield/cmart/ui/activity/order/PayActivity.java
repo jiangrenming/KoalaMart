@@ -59,6 +59,12 @@ import butterknife.OnClick;
 
 public class PayActivity extends BaseActivity implements IPayView<PayBean>,PopupWindow.OnDismissListener,View.OnClickListener{
 
+
+    //头部地区
+    @BindView(R.id.top_name)
+    TextView top_name;
+    @BindView(R.id.back)
+    ImageView back;
     //地址区
     @BindView(R.id.empty_adress)
     LinearLayout  empty_adress;
@@ -124,6 +130,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     @Override
     public void initDatas() {
+        top_name.setText("确认订单");
         AddressManagerBean managerBean = ShareBankPreferenceUtils.getObject("addressId", AddressManagerBean.class);
         if (managerBean != null){
             empty_adress.setVisibility(View.GONE);
@@ -145,8 +152,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             params.put("scIds",datas);
             payPresenter.setParams(params);
         }
-        mPayAdapter = new PayAdapter(this);
-        RecyclerViewHelper.initRecyclerViewV(this,goods_pay,true,mPayAdapter);
+
     }
 
 
@@ -206,7 +212,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         final RecyclerView time_categry = view.findViewById(R.id.time_categry);
 
         final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
-        RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,3);
+        RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,4);
 
         final List<TimeInterval> timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
         final TimeRuleAdapter ruleAdapter = new TimeRuleAdapter(this,timeIntervalList);
@@ -230,9 +236,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 typeAdapter.updateItems(mDelivery);
 
                 List<Rule> ruleList = delivery.getRuleList();
-                List<TimeInterval> intervalList = ruleList.get(0).getTimeIntervalList();
-                if (ruleAdapter  != null){
-                   ruleAdapter.updateItems(intervalList);
+                if (ruleList != null && ruleList.size()>0){
+                    List<TimeInterval> intervalList = ruleList.get(0).getTimeIntervalList();
+                    if (ruleAdapter  != null){
+                        ruleAdapter.updateItems(intervalList);
+                    }
+                }else {
+                    ruleAdapter.cleanItems();
                 }
             }
         });
@@ -257,16 +267,18 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         final List<TimerBean> timers= new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             TimerBean timerBean =new TimerBean();
-            day++;
-            if (day > 30 || day > 31){
-                month++;
-            }
-            timerBean.setDate(year + "-" + month + "-" + day);
             if (i == 0){
                 timerBean.setSelect(true);
             }else {
                 timerBean.setSelect(false);
             }
+            day++;
+            if (day > 30 || day > 31){
+                day = 1;
+                month++;
+            }
+            timerBean.setDate(year + "-" + month + "-" + day);
+
             timers.add(timerBean);
         }
         final TimerAdapter timeAdapter = new TimerAdapter(this,timers);
@@ -292,14 +304,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            /*case R.id.normal_time:
-                break;
-            case R.id.query_time:
-                break;
-            case R.id.quick_time:
-                break;
-            default:
-                break;*/
+
         }
     }
     //设置屏幕背景透明效果
@@ -319,10 +324,16 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             int allCount  =0 ;
             List<ShoppingCart> shoppingCartDTOList = data.getShoppingCartDTOList();
             if (shoppingCartDTOList != null && shoppingCartDTOList.size() > 0){
-                mPayAdapter.updateItems(shoppingCartDTOList);
-            }
-            for (int i = 0; i < shoppingCartDTOList.size(); i++) {
-                allCount += shoppingCartDTOList.get(i).getCount();
+                if (mPayAdapter == null){
+                    mPayAdapter = new PayAdapter(this);
+                    RecyclerViewHelper.initRecyclerViewV(this,goods_pay,true,mPayAdapter);
+                }else {
+                    mPayAdapter.cleanItems();
+                    mPayAdapter.addItems(shoppingCartDTOList);
+                }
+                for (int i = 0; i < shoppingCartDTOList.size(); i++) {
+                    allCount += shoppingCartDTOList.get(i).getCount();
+                }
             }
             count_goods.setText("共"+allCount+"件");
             actual_amount.setText("实际付款："+data.getOrderPriceDTO().getTotalPriceAfterDiscount());

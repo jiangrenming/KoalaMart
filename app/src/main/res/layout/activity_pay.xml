@@ -9,7 +9,7 @@
     <com.koalafield.cmart.widget.MyBoundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
         android:background="@color/white"
         android:scrollbars="none">
 

@@ -9,6 +9,8 @@ import com.dl7.recycler.adapter.BaseViewHolder;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.bean.order.ShoppingCart;
 
+import java.util.List;
+
 /**
  * Created by jiangrenming on 2018/5/27.
  */
@@ -20,7 +22,9 @@ public class PayAdapter extends BaseQuickAdapter<ShoppingCart> {
         super(context);
     }
 
-
+    public PayAdapter(Context context, List<ShoppingCart> data) {
+        super(context, data);
+    }
 
     @Override
     protected int attachLayoutRes() {
