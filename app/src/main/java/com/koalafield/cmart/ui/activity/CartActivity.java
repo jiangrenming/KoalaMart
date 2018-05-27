@@ -25,6 +25,7 @@ import com.koalafield.cmart.presenter.cart.CartClearPresenter;
 import com.koalafield.cmart.presenter.cart.CartListPresenter;
 import com.koalafield.cmart.presenter.cart.ICartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.ICartClearPresenter;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 import com.koalafield.cmart.ui.view.cart.ICartClearView;
 import com.koalafield.cmart.ui.view.cart.ICartListView;
@@ -118,13 +119,6 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
             mCartBean = data;
             cartItemAdapter = new CartItemAdapter(CartActivity.this,data,goods_item_recycler);
             RecyclerViewHelper.initRecyclerViewV(CartActivity.this,goods_item_recycler,false,cartItemAdapter);
-            /*if (cartItemAdapter == null){
-                cartItemAdapter = new CartItemAdapter(CartActivity.this,data,goods_item_recycler);
-                RecyclerViewHelper.initRecyclerViewV(CartActivity.this,goods_item_recycler,false,cartItemAdapter);
-            }else {
-                cartItemAdapter.cleanItems();
-                cartItemAdapter.addItems(data);
-            }*/
             cartItemAdapter.setCartItemCallBack(this);
         }else{
             clear_all.setEnabled(false);
@@ -160,7 +154,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         select_amount.setText("0.00");
     }
 
-    @OnClick({R.id.clear_all,R.id.select})
+    @OnClick({R.id.clear_all,R.id.select,R.id.pay_goods})
     public  void onDeleteAll(View v){
         switch (v.getId()){
             case R.id.clear_all: //全部清空
@@ -182,6 +176,22 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
                         mCartBean.get(i).setSelect(true);
                     }
                     cartItemAdapter.updateItems(mCartBean);
+                }
+                break;
+            case R.id.pay_goods: //结算
+                StringBuilder sb  = new StringBuilder();
+                if (mCartBean != null && mCartBean.size() >0 ){
+                    for (int i = 0; i < mCartBean.size(); i++) {
+                        if (mCartBean.get(i).isSelect()){
+                            sb.append(mCartBean.get(i).getCommodity().getId()).append(",");
+                        }
+                    }
+                    String data = sb.substring(0, sb.length() - 1);
+                    Log.i("数据为：",data);
+
+                    Intent payIntent = new Intent(CartActivity.this, PayActivity.class);
+                    payIntent.putExtra("payDatas",data);
+                    startActivity(payIntent);
                 }
                 break;
             default:

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/pay_img"
+            android:layout_width="100dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@mipmap/default_img"
+            android:layout_height="100dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/goods_name"
+                android:layout_width="match_parent"
+                android:lines="2"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="红牛功能性饮料"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_below="@+id/goods_name"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="top"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/yanse"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="颜色："
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/chicun"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="尺寸："
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/zhongliang"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="重量："
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/leixing"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="类型："
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/fenge"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="风格："
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/goods_name"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/pay_curreny"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/btn_red"
+                    android:gravity="bottom"
+                    android:text="AUD"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/pay_price"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/btn_red"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="bottom"
+                    android:text="0.00"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/pay_count"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="bottom"
+                android:text="共1件"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

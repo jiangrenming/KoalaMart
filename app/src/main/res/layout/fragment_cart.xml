@@ -71,8 +71,8 @@
         android:background="@color/gray"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_toRightOf="@+id/empty_cart"
+        android:layout_toEndOf="@+id/empty_cart">
         <ImageView
             android:id="@+id/select"
             android:layout_width="20dp"

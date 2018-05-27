@@ -11,6 +11,8 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.order.OrderListBean;
+import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
@@ -75,6 +77,9 @@ public interface ApiService {
     //用户地址详情
     @POST("AppApi/AddressDetail")
     Flowable<SpecialResponseBean<AddressManagerBean>> getDetailsAddress(@HeaderMap Map<String,String> headrs,@Body RequestBody body);
+    //结算
+    @POST("AppApi/Checkout")
+    Flowable<SpecialResponseBean<PayBean>> getPayMents(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
 
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
@@ -114,7 +119,9 @@ public interface ApiService {
     //获取积分列表
     @GET("AppApi/ScoreList/{pageIndex}")
     Flowable<SpecialResponseBean<List<ScoreBean>>> getScoreList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
-
+    //订单列表
+    @GET("AppApi/BillList")
+    Flowable<SpecialResponseBean<List<OrderListBean>>> getOrderList(@HeaderMap Map<String,String> headrs, @QueryMap Map<String,String> params);
 
 
     /* *//**

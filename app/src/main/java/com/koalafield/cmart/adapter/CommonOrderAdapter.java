@@ -6,6 +6,7 @@ import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.bean.order.OrderBean;
+import com.koalafield.cmart.bean.order.OrderListBean;
 
 import java.util.List;
 
@@ -14,8 +15,11 @@ import java.util.List;
  * 订单的共同适配器
  */
 
-public class CommonOrderAdapter extends BaseQuickAdapter<OrderBean> {
+public class CommonOrderAdapter extends BaseQuickAdapter<OrderListBean> {
 
+    public CommonOrderAdapter(Context context) {
+        super(context);
+    }
 
     public CommonOrderAdapter(Context context, List data) {
         super(context, data);
@@ -27,8 +31,9 @@ public class CommonOrderAdapter extends BaseQuickAdapter<OrderBean> {
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, OrderBean item) {
+    protected void convert(BaseViewHolder holder, OrderListBean item) {
 
     }
+
 
 }

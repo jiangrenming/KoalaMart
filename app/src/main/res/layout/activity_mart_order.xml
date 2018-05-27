@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="待评价"
+                android:text="已完成"
                 android:textColor="@drawable/order_type_selector" />
         </com.koalafield.cmart.widget.IndicatorView>
 

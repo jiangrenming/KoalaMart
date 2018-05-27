@@ -226,6 +226,17 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
                     delAdapter.getParamsData(params);
                 }
             });
+
+            //回调选中
+            addressManagerAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent = new Intent();
+                    intent.putExtra("address",data.get(position));
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }
+            });
         }
     }
 

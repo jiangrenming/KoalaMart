@@ -14,6 +14,8 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.order.OrderListBean;
+import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
@@ -110,6 +112,21 @@ public class ApiManager {
     public  static  Flowable<List<ScoreBean>> getScoreList(int pageIndex){
         return apiSubscribe(AndoridApplication.apiService.getScoreList(getHeaders(),pageIndex))
                 .flatMap(getScores());
+    }
+    /**
+     * 订单列表
+     */
+    public  static  Flowable<List<OrderListBean>> getOrderList(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getOrderList(getHeaders(),params))
+                .flatMap(getOrders());
+    }
+
+    /**
+     * 结算
+     */
+    public static Flowable<PayBean> getPays(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getPayMents(getHeaders(),setParams(params)))
+                .map(getPay());
     }
 
     /*********************************首页****************************************/
@@ -285,6 +302,21 @@ public class ApiManager {
                 Log.i("返回的数据:",response.getCode()+"");
                 if (null !=  response && response.getCode() == 200){
                     return (RegisterBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 结算
+     */
+    private static Function<SpecialResponseBean,PayBean> getPay() {
+        return new Function<SpecialResponseBean, PayBean>() {
+            @Override
+            public PayBean apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (PayBean) response.getData();
                 }
                 return  null;
             }
@@ -580,6 +612,21 @@ public class ApiManager {
             public Flowable<List<ScoreBean>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return Flowable.fromArray((List<ScoreBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+
+    /**
+     * 获取订单列表
+     */
+    private static Function<SpecialResponseBean, Flowable<List<OrderListBean>>> getOrders() {
+        return new Function<SpecialResponseBean, Flowable<List<OrderListBean>>>() {
+            @Override
+            public Flowable<List<OrderListBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<OrderListBean>) response.getData());
                 }
                 return  null;
             }

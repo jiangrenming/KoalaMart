@@ -16,4 +16,10 @@ public class Constants {
     public static  final int WAIT_JUST =4;
     public static final String MAIN_SELECTED_INDEX = "selectedIndex";
 
+    public static  final int ALL_ORDER =10;
+    public static  final int PAY_WAIT_ORDER =0;
+    public static  final int WAIT_SEND_ORDER =1;
+    public static  final int WAIT_RECEIVER_ORDER =2;
+    public static  final int WAIT_JUST_ORDER =4;
+
 }
