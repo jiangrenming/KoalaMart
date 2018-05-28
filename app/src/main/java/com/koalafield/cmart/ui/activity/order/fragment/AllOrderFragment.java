@@ -58,13 +58,6 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
 
     @Override
     protected void initViews() {
-        SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                pageIndex =0 ;
-                updateViews();
-                SwipeRefreshHelper.controlRefresh(mSwipeRefresh,false);            }
-        });
         orderAdapter = new CommonOrderAdapter(mContext);
         RecyclerViewHelper.initRecyclerViewV(mContext,order_recyclerView,true,orderAdapter);
         orderAdapter.setRequestDataListener(new OnRequestDataListener() {
@@ -91,9 +84,7 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
     }
 
     private Map<String,String> getParams(){
-
         Map<String,String> params = new HashMap<>();
-        params.put("pageIndex",String.valueOf(pageIndex));
         params.put("status",String.valueOf(Constants.ALL_ORDER));
         return  params;
 

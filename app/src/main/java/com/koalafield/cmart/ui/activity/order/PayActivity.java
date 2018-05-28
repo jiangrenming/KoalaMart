@@ -32,6 +32,7 @@ import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.Payment;
 import com.koalafield.cmart.bean.order.Rule;
+import com.koalafield.cmart.bean.order.SdkPayBean;
 import com.koalafield.cmart.bean.order.ShoppingCart;
 import com.koalafield.cmart.bean.order.TimeInterval;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
@@ -39,13 +40,16 @@ import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.presenter.order.CreateOrderPresenter;
 import com.koalafield.cmart.presenter.order.ICreateOrderPresenter;
 import com.koalafield.cmart.presenter.order.IPayPresenter;
+import com.koalafield.cmart.presenter.order.IPaySdkPresenter;
 import com.koalafield.cmart.presenter.order.IPricePresenter;
 import com.koalafield.cmart.presenter.order.PayPresenter;
+import com.koalafield.cmart.presenter.order.PaySdkPresenter;
 import com.koalafield.cmart.presenter.order.PricePresenter;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.view.order.ICreateOrderView;
+import com.koalafield.cmart.ui.view.order.IPaySdkView;
 import com.koalafield.cmart.ui.view.order.IPayView;
 import com.koalafield.cmart.ui.view.order.IPriceView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
@@ -74,7 +78,8 @@ import org.json.JSONObject;
  * Created by jiangrenming on 2018/5/27.
  */
 
-public class PayActivity extends BaseActivity implements IPayView<PayBean>,PopupWindow.OnDismissListener,View.OnClickListener,IPriceView<OrderPrice>,ICreateOrderView<CreateOrderBean>{
+public class PayActivity extends BaseActivity implements IPayView<PayBean>,PopupWindow.OnDismissListener,View.OnClickListener,
+        IPriceView<OrderPrice>,ICreateOrderView<CreateOrderBean>,IPaySdkView<SdkPayBean>{
 
 
     //头部地区
@@ -156,7 +161,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             have_detail_adress.setVisibility(View.VISIBLE);
             address_name.setText(managerBean.getContactname());
             address_phone.setText(managerBean.getContactphone());
-            address_details.setText(managerBean.getAddress());
+            address_details.setText(managerBean.getCountry()+managerBean.getCity()+managerBean.getAddress());
         }else {
             empty_adress.setVisibility(View.VISIBLE);
             have_name_adress.setVisibility(View.GONE);
@@ -229,9 +234,28 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         if (data != null){
             String orderNo = data.getOrderNo();
             if (!StringUtils.isEmpty(orderNo)){
-                 UPPayAssistEx.startPay(PayActivity.this,null,null,orderNo,serVerMode);
+                Map<String,String> params = new HashMap<>();
+                IPaySdkPresenter mPresenter = new PaySdkPresenter(this);
+                params.put("billCode",orderNo) ;
+                params.put("paymentId",String.valueOf(payId)) ;
+                mPresenter.setParams(params);
+                mPresenter.getData();
             }
         }
+    }
+    @Override
+    public void onPaySdkData(SdkPayBean data) {
+        if (data != null){
+            String transactionNo = data.getTransactionNo();
+            if (!StringUtils.isEmpty(transactionNo)){
+                UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo,serVerMode);
+            }
+        }
+    }
+
+    @Override
+    public void onPaySdkFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -269,6 +293,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     private String date;
     private  int deliveryId = 0;
+    private List<TimeInterval> timeIntervalList;
     private void setOnPopupViewClick(View view) {
             RecyclerView timer_type = view.findViewById(R.id.timer_type);
             RecyclerView time_select = view.findViewById(R.id.time_select);
@@ -277,13 +302,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
             RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,3);
 
-            final List<TimeInterval> timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
+            timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
             final TimeRuleAdapter ruleAdapter = new TimeRuleAdapter(this,timeIntervalList);
             RecyclerViewHelper.initRecyclerViewV(this,time_categry,true,ruleAdapter);
 
             setTimer(time_select);
 
-
+            deliveryId = mDelivery.get(0).getId();
             typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -300,9 +325,9 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
                     List<Rule> ruleList = delivery.getRuleList();
                     if (ruleList != null && ruleList.size()>0){
-                        List<TimeInterval> intervalList = ruleList.get(0).getTimeIntervalList();
+                        timeIntervalList = ruleList.get(0).getTimeIntervalList();
                         if (ruleAdapter  != null){
-                            ruleAdapter.updateItems(intervalList);
+                            ruleAdapter.updateItems(timeIntervalList);
                         }
                     }else {
                         ruleAdapter.cleanItems();
@@ -346,6 +371,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             timerBean.setDate(year + "-" + month + "-" + day);
             timers.add(timerBean);
         }
+        date = timers.get(0).getDate();
         final TimerAdapter timeAdapter = new TimerAdapter(this,timers);
         RecyclerViewHelper.initRecyclerViewV(this,time_select,false,timeAdapter);
         timeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
@@ -402,11 +428,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 }
             }
             count_goods.setText("共"+allCount+"件");
-            actual_amount.setText("实际付款："+data.getOrderPriceDTO().getTotalPriceAfterDiscount());
+            actual_amount.setText("实际付款："+String.format("%.2f",data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
             rmb_amount.setText("约合RMB:¥"+String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()*data.getOrderPriceDTO().getRate()));
             order_curreny.setText("AUD");
-            order_total_amount.setText(String.valueOf(data.getOrderPriceDTO().getTotalPrice()));
-            tax_amount.setText(String.valueOf(data.getOrderPriceDTO().getDeliveryPrice()));
+            order_total_amount.setText(String.format("%.2f",data.getOrderPriceDTO().getTotalPrice()));
+            tax_amount.setText(String.format("%.2f",data.getOrderPriceDTO().getDeliveryPrice()));
            /* if (data.isAllowUseScore()){
                 score_count.setVisibility(View.VISIBLE);
                 score_count.setText(String.valueOf(data.getAvailableScore()));
@@ -433,6 +459,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     mPayment.get(i).setSelect(false);
                 }
             }
+            payId = mPayment.get(0).getId();
            final PayChooseAdapter chooseAdapter = new PayChooseAdapter(this,mPayment);
             RecyclerViewHelper.initRecyclerViewV(PayActivity.this,choose_pay,true,chooseAdapter);
             chooseAdapter.setmPayCallBack(new PayChooseAdapter.PayClickCallBack() {
@@ -454,12 +481,12 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                           payId = mPayment.get(i).getId();
                       }
                    }
-                   //改变价格
-                   if (payId >0 && addRessId >0 && deliveryId >0){
-                       changePrice();
-                   }
                }
            });
+            //改变价格
+            if (payId >0 && addRessId >0 && deliveryId >0){
+                changePrice();
+            }
         }
 
     }
@@ -484,7 +511,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     have_detail_adress.setVisibility(View.VISIBLE);
                     address_name.setText(addressManagerBean.getContactname());
                     address_phone.setText(addressManagerBean.getContactphone());
-                    address_details.setText(addressManagerBean.getAddress());
+                    address_details.setText(addressManagerBean.getCountry()+" "+addressManagerBean.getCity()+addressManagerBean.getAddress());
                     addRessId = addressManagerBean.getId();
                     if (payId >0 && addRessId >0 && deliveryId  >0){
                         changePrice();
@@ -500,7 +527,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 if (data == null) {
                     return;
                 }
-
                 String msg = "";
         /*
          * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
@@ -516,16 +542,8 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                             JSONObject resultJson = new JSONObject(result);
                             String sign = resultJson.getString("sign");
                             String dataOrg = resultJson.getString("data");
-                            // 此处的verify建议送去商户后台做验签
-                            // 如要放在手机端验，则代码必须支持更新证书
-                            boolean ret = verify(dataOrg, sign, serVerMode);
-                            if (ret) {
-                                // 验签成功，显示支付结果
-                                msg = "支付成功！";
-                            } else {
-                                // 验签失败
-                                msg = "支付失败！";
-                            }
+                            // 验签成功，显示支付结果
+                            msg = "支付成功！";
                         } catch (JSONException e) {
                         }
                     }
@@ -536,14 +554,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 } else if (str.equalsIgnoreCase("cancel")) {
                     msg = "用户取消了支付";
                 }
+                Toast.makeText(PayActivity.this,msg,Toast.LENGTH_SHORT).show();
             }
         }
     }
-    private boolean verify(String msg, String sign64, String mode) {
-        // 此处的verify，商户需送去商户后台做验签
-        return true;
 
-    }
     /**
      * 变更价格
      */
@@ -552,10 +567,10 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         params.put("scIds",datas);
         params.put("deliveryId",String.valueOf(deliveryId));
         params.put("addressId",String.valueOf(addRessId));
-        params.put("paymentId","");
+        params.put("paymentId",String.valueOf(payId));
         params.put("couponCode",disCountCode);
-        mPricePresenter.setParams(params);
         mPricePresenter = new PricePresenter(this);
+        mPricePresenter.setParams(params);
         mPricePresenter.getData();
     }
 
@@ -573,16 +588,17 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     @Override
     public void onPriceData(OrderPrice data) {
-        actual_amount.setText("实际付款："+data.getTotalPriceAfterDiscount());
+        actual_amount.setText("实际付款："+String.format("%.2f",data.getTotalPriceAfterDiscount()));
         rmb_amount.setText("约合RMB:¥"+String.format("%.2f", data.getTotalPriceAfterDiscount()*data.getRate()));
         order_curreny.setText("AUD");
-        order_total_amount.setText(String.valueOf(data.getTotalPrice()));
+        order_total_amount.setText(String.format("%.2f",data.getTotalPrice()));
     }
 
     @Override
     public void onPriceFailure(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
+
 
 
 }

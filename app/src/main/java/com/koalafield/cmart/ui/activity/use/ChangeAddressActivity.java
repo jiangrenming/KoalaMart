@@ -172,8 +172,8 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                                 String state = state_name.getText().toString().trim();
                                 Map<String,String > params = new HashMap<>();
                                 params.put("country","Australia");
-                                params.put("state",state == null ? "" : state);
-                                params.put("city",""); //暂时未有
+                                params.put("state","");
+                                params.put("city",state == null ? "" : state); //暂时未有
                                 params.put("area","");//暂时未有
                                 params.put("address",suggestion == null ? "" : suggestion);
                                 params.put("contactname",name == null ? "" : name);
@@ -258,8 +258,8 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                         String suggestion = et_suggestion.getText().toString().trim();
                         Map<String,String > params = new HashMap<>();
                         params.put("country","Australia");
-                        params.put("state",state == null ? "" : state);
-                        params.put("city","");
+                        params.put("state","");
+                        params.put("city",state == null ? "" : state);
                         params.put("area","");
                         params.put("address",suggestion == null ? "" : suggestion);
                         params.put("contactname",name == null ? "" : name);

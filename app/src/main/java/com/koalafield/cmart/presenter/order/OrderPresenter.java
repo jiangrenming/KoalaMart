@@ -18,6 +18,7 @@ public class OrderPresenter implements IOrderPresenter{
 
     public IOrderView mOrderView;
     private Map<String,String> mParams;
+    private  int pageIndex = 0;
 
 
     public OrderPresenter(IOrderView orderView){
@@ -26,6 +27,8 @@ public class OrderPresenter implements IOrderPresenter{
 
     @Override
     public void getData() {
+        pageIndex =0;
+        mParams.put("pageIndex",String.valueOf(pageIndex));
         ApiManager.getOrderList(mParams).subscribe(new SubScribeCallBack<List<OrderListBean>>(new CallBack() {
             @Override
             public void onInit() {
@@ -38,6 +41,7 @@ public class OrderPresenter implements IOrderPresenter{
                     List<OrderListBean> orderListBeen = (List<OrderListBean>) data;
                     if (orderListBeen != null && orderListBeen.size() >0){
                         mOrderView.onSucessOrderList(orderListBeen);
+                        pageIndex++;
                     }else {
                         mOrderView.loadEmptyData();
                     }
@@ -61,6 +65,7 @@ public class OrderPresenter implements IOrderPresenter{
 
     @Override
     public void getMoreData() {
+        mParams.put("pageIndex",String.valueOf(pageIndex));
         ApiManager.getOrderList(mParams).subscribe(new SubScribeCallBack<List<OrderListBean>>(new CallBack() {
             @Override
             public void onInit() {
@@ -74,6 +79,7 @@ public class OrderPresenter implements IOrderPresenter{
                     List<OrderListBean> orderListBeen = (List<OrderListBean>) data;
                     if (orderListBeen != null && orderListBeen.size() >0){
                         mOrderView.loadMoreData(orderListBeen);
+                        pageIndex++;
                     }else {
                         mOrderView.loadNoMoreData();
                     }

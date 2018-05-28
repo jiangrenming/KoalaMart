@@ -1,5 +1,7 @@
 package com.jrm.retrofitlibrary.retrofit;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.jrm.retrofitlibrary.utils.NetUtil;
 import com.orhanobut.logger.Logger;
@@ -53,9 +55,12 @@ public class RetrofitService{
                 .addNetworkInterceptor(sRewriteCacheControlInterceptor)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .build();
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         retrofit = new Retrofit.Builder()
                 .client(client)
-                .addConverterFactory(/*CustomGsonConverterFactory.create()*/GsonConverterFactory.create())
+                .addConverterFactory(/*CustomGsonConverterFactory.create()*/GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(mConfig.getBaseUrl())
                 .build();

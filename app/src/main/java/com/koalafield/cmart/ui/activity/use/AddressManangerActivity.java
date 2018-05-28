@@ -111,7 +111,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
             case R.id.add_address:
                 Intent intent = new Intent(AddressManangerActivity.this,ChangeAddressActivity.class);
                 intent.putExtra("addressType",1);
-                startActivityForResult(intent,1000);
+                startActivityForResult(intent,10000);
                 break;
             default:
                 break;
