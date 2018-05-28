@@ -20,6 +20,15 @@ public class CartDataBean  implements Serializable {
     private int Count;
     private CartItemBean Commodity;
     private  boolean isSelect;
+    private  int Id;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 
     public boolean isSelect() {
         return isSelect;

@@ -14,7 +14,9 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
+import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
@@ -127,6 +129,20 @@ public class ApiManager {
     public static Flowable<PayBean> getPays(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.getPayMents(getHeaders(),setParams(params)))
                 .map(getPay());
+    }
+    /**
+     * 价格变动
+     */
+    public static Flowable<OrderPrice> getPrice(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.changePrices(getHeaders(),setParams(params)))
+                .map(getChangePrice());
+    }
+    /**
+     * 提交订单
+     */
+    public static Flowable<CreateOrderBean> createOrders(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.createOrders(getHeaders(),setParams(params)))
+                .map(getOrder());
     }
 
     /*********************************首页****************************************/
@@ -322,7 +338,36 @@ public class ApiManager {
             }
         };
     }
-
+    /**
+     * 价格变动
+     */
+    private static Function<SpecialResponseBean,OrderPrice> getChangePrice() {
+        return new Function<SpecialResponseBean, OrderPrice>() {
+            @Override
+            public OrderPrice apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (OrderPrice) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 生成订单
+     */
+    private static Function<SpecialResponseBean,CreateOrderBean> getOrder() {
+        return new Function<SpecialResponseBean, CreateOrderBean>() {
+            @Override
+            public CreateOrderBean apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (CreateOrderBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
     /**
      *父分类列表
      */

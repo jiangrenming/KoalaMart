@@ -183,7 +183,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
                 if (mCartBean != null && mCartBean.size() >0 ){
                     for (int i = 0; i < mCartBean.size(); i++) {
                         if (mCartBean.get(i).isSelect()){
-                            sb.append(mCartBean.get(i).getCommodity().getId()).append(",");
+                            sb.append(mCartBean.get(i).getId()).append(",");
                         }
                     }
                     String data = sb.substring(0, sb.length() - 1);

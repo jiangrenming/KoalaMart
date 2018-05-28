@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="100dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,15 +31,14 @@
                 android:layout_height="wrap_content" />
             <LinearLayout
                 android:layout_below="@+id/goods_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/goods_clk"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:gravity="top"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/yanse"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:gravity="bottom"
                     android:text="颜色："
                     android:layout_height="wrap_content" />
@@ -50,17 +49,24 @@
                     android:gravity="bottom"
                     android:text="尺寸："
                     android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/goods_clk"
+                android:layout_width="match_parent"
+                android:id="@+id/weights_"
+                android:orientation="horizontal"
+                android:gravity="top"
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/zhongliang"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:gravity="bottom"
                     android:text="重量："
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/leixing"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:gravity="bottom"
                     android:text="类型："
                     android:layout_height="wrap_content" />
@@ -73,16 +79,15 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
-                android:layout_below="@+id/goods_name"
+                android:layout_below="@+id/weights_"
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_alignParentBottom="true"
                 android:gravity="bottom"
                 android:orientation="horizontal"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/pay_curreny"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:textColor="@color/btn_red"
                     android:gravity="bottom"
                     android:text="AUD"
@@ -99,7 +104,6 @@
             </LinearLayout>
             <TextView
                 android:id="@+id/pay_count"
-                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"

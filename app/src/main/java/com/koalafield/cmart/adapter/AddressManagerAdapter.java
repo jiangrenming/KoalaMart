@@ -65,7 +65,6 @@ public class AddressManagerAdapter extends BaseQuickAdapter<AddressManagerBean> 
                     mSelectBack.checkSelect(item,false);
                 }else {
                     iv_select.setImageResource(R.mipmap.select);
-                    item.setSelected(true);
                     mSelectBack.checkSelect(item,true);
                 }
             }

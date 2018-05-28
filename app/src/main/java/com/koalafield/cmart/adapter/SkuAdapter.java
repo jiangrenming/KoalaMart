@@ -36,17 +36,17 @@ public class SkuAdapter extends BaseQuickAdapter<GoodsItem> {
         switch (item.getState()) {
             // 选中
             case 0:
-                layout.setBackgroundResource(R.xml.shape2);
+                layout.setBackgroundResource(R.drawable.shape2);
                 title.setTextColor(Color.WHITE);
                 break;
             // 未选中
             case 1:
-                layout.setBackgroundResource(R.xml.shape1);
+                layout.setBackgroundResource(R.drawable.shape1);
                 title.setTextColor(Color.BLACK);
                 break;
             // 不可选
             case 2:
-                layout.setBackgroundResource(R.xml.shape1);
+                layout.setBackgroundResource(R.drawable.shape1);
                 title.setTextColor(Color.parseColor("#999999"));
                 break;
             default:

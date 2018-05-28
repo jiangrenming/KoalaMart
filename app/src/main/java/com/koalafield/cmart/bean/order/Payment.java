@@ -12,6 +12,15 @@ public class Payment implements Serializable{
     private String DisplayName;
     private  String PaymentName;
     private  String Cost;
+    private  boolean isSelect;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public int getId() {
         return Id;

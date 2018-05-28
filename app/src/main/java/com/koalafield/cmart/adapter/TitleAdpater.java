@@ -70,17 +70,17 @@ public class TitleAdpater extends BaseAdapter {
            switch (goodsItem.getState()) {
                      // 选中
                     case 0:
-                        titleHovlder.items_layout.setBackgroundResource(R.xml.shape2);
+                        titleHovlder.items_layout.setBackgroundResource(R.drawable.shape2);
                         titleHovlder.itemText .setTextColor(Color.WHITE);
                         break;
                     // 未选中
                     case 1:
-                        titleHovlder.items_layout.setBackgroundResource(R.xml.shape1);
+                        titleHovlder.items_layout.setBackgroundResource(R.drawable.shape1);
                         titleHovlder.itemText .setTextColor(Color.BLACK);
                         break;
                     // 不可选
                     case 2:
-                        titleHovlder.items_layout.setBackgroundResource(R.xml.shape1);
+                        titleHovlder.items_layout.setBackgroundResource(R.drawable.shape1);
                         titleHovlder.itemText .setTextColor(Color.parseColor("#999999"));
                         break;
                     default:

@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity.use;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.OrderViewPagerAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.ui.activity.order.fragment.AllOrderFragment;
 import com.koalafield.cmart.ui.activity.order.fragment.PayWaitFragment;
@@ -108,6 +110,18 @@ public class DisCountActivity extends BaseActivity {
                     discount_viewpager.setCurrentItem(po, true);
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK ){
+            DisCountBean discount = (DisCountBean) data.getSerializableExtra("counpon");
+            Intent intent = new Intent();
+            intent.putExtra("counpon",discount);
+            setResult(RESULT_OK ,intent);
+            finish();
         }
     }
 }

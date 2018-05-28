@@ -11,7 +11,9 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
+import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
@@ -80,6 +82,12 @@ public interface ApiService {
     //结算
     @POST("AppApi/Checkout")
     Flowable<SpecialResponseBean<PayBean>> getPayMents(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    //修改价格
+    @POST("AppApi/CalculateOrderPrice")
+    Flowable<SpecialResponseBean<OrderPrice>> changePrices(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    //生成订单
+    @POST("AppApi/CreateOrder")
+    Flowable<SpecialResponseBean<CreateOrderBean>> createOrders(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
 
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")

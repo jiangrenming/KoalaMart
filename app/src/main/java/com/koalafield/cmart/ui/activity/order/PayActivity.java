@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,26 +20,38 @@ import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.PayAdapter;
+import com.koalafield.cmart.adapter.PayChooseAdapter;
 import com.koalafield.cmart.adapter.TimeRuleAdapter;
 import com.koalafield.cmart.adapter.TimerAdapter;
 import com.koalafield.cmart.adapter.TimerTypeAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.TimerBean;
+import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.Delivery;
+import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.PayBean;
+import com.koalafield.cmart.bean.order.Payment;
 import com.koalafield.cmart.bean.order.Rule;
 import com.koalafield.cmart.bean.order.ShoppingCart;
 import com.koalafield.cmart.bean.order.TimeInterval;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
+import com.koalafield.cmart.bean.user.DisCountBean;
+import com.koalafield.cmart.presenter.order.CreateOrderPresenter;
+import com.koalafield.cmart.presenter.order.ICreateOrderPresenter;
 import com.koalafield.cmart.presenter.order.IPayPresenter;
+import com.koalafield.cmart.presenter.order.IPricePresenter;
 import com.koalafield.cmart.presenter.order.PayPresenter;
+import com.koalafield.cmart.presenter.order.PricePresenter;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
+import com.koalafield.cmart.ui.view.order.ICreateOrderView;
 import com.koalafield.cmart.ui.view.order.IPayView;
+import com.koalafield.cmart.ui.view.order.IPriceView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
+import com.koalafield.cmart.widget.MyBoundScrollView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,12 +65,16 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import com.unionpay.UPPayAssistEx;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by jiangrenming on 2018/5/27.
  */
 
-public class PayActivity extends BaseActivity implements IPayView<PayBean>,PopupWindow.OnDismissListener,View.OnClickListener{
+public class PayActivity extends BaseActivity implements IPayView<PayBean>,PopupWindow.OnDismissListener,View.OnClickListener,IPriceView<OrderPrice>,ICreateOrderView<CreateOrderBean>{
 
 
     //头部地区
@@ -111,17 +128,18 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     TextView order_tax_curreny;
     @BindView(R.id.tax_amount)
     TextView tax_amount;
-    @BindView(R.id.score_count)
-    TextView score_count;
+  /*  @BindView(R.id.score_count)
+    TextView score_count;*/
     @BindView(R.id.discount_content)
     TextView discount_content;
     @BindView(R.id.skip_discount)
     ImageView skip_discount;
-
+    @BindView(R.id.choose_pay)
+    RecyclerView choose_pay;
     private PayAdapter mPayAdapter;
-
-
     private PopupWindow mPopuWindow;
+    private IPricePresenter mPricePresenter;
+    private String datas;
 
     @Override
     public int attchLayoutRes() {
@@ -145,7 +163,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             have_detail_adress.setVisibility(View.GONE);
         }
 
-        String datas = getIntent().getStringExtra("payDatas");
+         datas = getIntent().getStringExtra("payDatas");
         if (!StringUtils.isEmpty(datas)){
             IPayPresenter payPresenter = new PayPresenter(this);
             Map<String,String> params = new HashMap<>();
@@ -156,7 +174,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
 
-    @OnClick({R.id.click_address,R.id.change_address,R.id.skip_discount,R.id.change_time})
+    @OnClick({R.id.click_address,R.id.change_address,R.id.skip_discount,R.id.change_time,R.id.comfir_order})
     public  void addAddressClick(View view){
         switch (view.getId()){
             case  R.id.click_address:
@@ -165,14 +183,60 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 startActivityForResult(intent,10000);
                 break;
             case R.id.skip_discount: //满减
-                startActivityForResult(new Intent(PayActivity.this, DisCountActivity.class),10001);
+               startActivityForResult(new Intent(PayActivity.this, DisCountActivity.class),10001);
                 break;
             case R.id.change_time: //配送时间
                 openWindow(view);
                 break;
+            case R.id.comfir_order: //提交订单
+                if (addRessId <= 0){
+                    Toast.makeText(PayActivity.this,"请选择地址",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (deliveryId <= 0){
+                    Toast.makeText(PayActivity.this,"请选择配送时间",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (payId <= 0){
+                    Toast.makeText(PayActivity.this,"请选择支付方式",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //创建订单
+                Map<String,String> params = new HashMap<>();
+                params.put("scIds",datas);
+                params.put("deliveryId",String.valueOf(deliveryId));
+                params.put("addressId",String.valueOf(addRessId));
+                params.put("paymentId",String.valueOf(payId));
+                params.put("couponCode ",disCountCode);
+                params.put("bookTime","");
+                params.put("remark","");
+                params.put("isUserScore","false");
+                ICreateOrderPresenter orderPresenter = new CreateOrderPresenter(this);
+                orderPresenter.setParams(params);
+                orderPresenter.getData();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 测试环境是01，正式环境是00
+     */
+    private String serVerMode = "01";
+    @Override
+    public void onCreateOrderData(CreateOrderBean data) {
+        if (data != null){
+            String orderNo = data.getOrderNo();
+            if (!StringUtils.isEmpty(orderNo)){
+                 UPPayAssistEx.startPay(PayActivity.this,null,null,orderNo,serVerMode);
+            }
+        }
+    }
+
+    @Override
+    public void onCreateOrderFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     private int navigationHeight = 0;
@@ -181,9 +245,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         if (mPopuWindow != null && mPopuWindow.isShowing()) {
             return;
         }
-
-        //设置PopupWindow的View
-        View view = LayoutInflater.from(this).inflate(R.layout.customer_timer, null);
+        View view =  LayoutInflater.from(this).inflate(R.layout.customer_timer, null);
         mPopuWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         //设置背景
         mPopuWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -206,55 +268,59 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
     private String date;
+    private  int deliveryId = 0;
     private void setOnPopupViewClick(View view) {
-        RecyclerView timer_type = view.findViewById(R.id.timer_type);
-        RecyclerView time_select = view.findViewById(R.id.time_select);
-        final RecyclerView time_categry = view.findViewById(R.id.time_categry);
+            RecyclerView timer_type = view.findViewById(R.id.timer_type);
+            RecyclerView time_select = view.findViewById(R.id.time_select);
+            final RecyclerView time_categry = view.findViewById(R.id.time_categry);
 
-        final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
-        RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,4);
+            final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
+            RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,3);
 
-        final List<TimeInterval> timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
-        final TimeRuleAdapter ruleAdapter = new TimeRuleAdapter(this,timeIntervalList);
-        RecyclerViewHelper.initRecyclerViewV(this,time_categry,true,ruleAdapter);
+            final List<TimeInterval> timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
+            final TimeRuleAdapter ruleAdapter = new TimeRuleAdapter(this,timeIntervalList);
+            RecyclerViewHelper.initRecyclerViewV(this,time_categry,true,ruleAdapter);
 
-        setTimer(time_select);
+            setTimer(time_select);
 
 
-        typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Delivery delivery = mDelivery.get(position);
+            typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Delivery delivery = mDelivery.get(position);
+                     deliveryId = delivery.getId();
+                    for (int i = 0; i < mDelivery.size(); i++) {
+                        if (deliveryId == mDelivery.get(i).getId()){
+                            mDelivery.get(i).setTypeSelect(true);
+                        }else {
+                            mDelivery.get(i).setTypeSelect(false);
+                        }
+                    }
+                    typeAdapter.updateItems(mDelivery);
 
-                for (int i = 0; i < mDelivery.size(); i++) {
-                    if (delivery.getId() == mDelivery.get(i).getId()){
-                        mDelivery.get(i).setTypeSelect(true);
+                    List<Rule> ruleList = delivery.getRuleList();
+                    if (ruleList != null && ruleList.size()>0){
+                        List<TimeInterval> intervalList = ruleList.get(0).getTimeIntervalList();
+                        if (ruleAdapter  != null){
+                            ruleAdapter.updateItems(intervalList);
+                        }
                     }else {
-                        mDelivery.get(i).setTypeSelect(false);
+                        ruleAdapter.cleanItems();
                     }
                 }
-                typeAdapter.updateItems(mDelivery);
+            });
 
-                List<Rule> ruleList = delivery.getRuleList();
-                if (ruleList != null && ruleList.size()>0){
-                    List<TimeInterval> intervalList = ruleList.get(0).getTimeIntervalList();
-                    if (ruleAdapter  != null){
-                        ruleAdapter.updateItems(intervalList);
+            ruleAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    TimeInterval timeInterval = timeIntervalList.get(position);
+                    disPopuWindow();
+                    select_time.setText(date+" "+timeInterval.getStartTime()+"-"+timeInterval.getEndTime());
+                    if (payId >0 && addRessId >0 && deliveryId  >0){
+                        changePrice();
                     }
-                }else {
-                    ruleAdapter.cleanItems();
                 }
-            }
-        });
-
-        ruleAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                TimeInterval timeInterval = timeIntervalList.get(position);
-                disPopuWindow();
-                select_time.setText(date+" "+timeInterval.getStartTime()+"-"+timeInterval.getEndTime());
-            }
-        });
+            });
 
     }
 
@@ -278,7 +344,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 month++;
             }
             timerBean.setDate(year + "-" + month + "-" + day);
-
             timers.add(timerBean);
         }
         final TimerAdapter timeAdapter = new TimerAdapter(this,timers);
@@ -318,6 +383,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     public void upDateViews() {}
 
     private List<Delivery> mDelivery;
+    private  int payId = 0;
     @Override
     public void onSubmitList(PayBean data) {
         if (data != null){
@@ -325,7 +391,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             List<ShoppingCart> shoppingCartDTOList = data.getShoppingCartDTOList();
             if (shoppingCartDTOList != null && shoppingCartDTOList.size() > 0){
                 if (mPayAdapter == null){
-                    mPayAdapter = new PayAdapter(this);
+                    mPayAdapter = new PayAdapter(this,shoppingCartDTOList);
                     RecyclerViewHelper.initRecyclerViewV(this,goods_pay,true,mPayAdapter);
                 }else {
                     mPayAdapter.cleanItems();
@@ -340,13 +406,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             rmb_amount.setText("约合RMB:¥"+String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()*data.getOrderPriceDTO().getRate()));
             order_curreny.setText("AUD");
             order_total_amount.setText(String.valueOf(data.getOrderPriceDTO().getTotalPrice()));
-            tax_amount.setText(String.valueOf(data.getOrderPriceDTO().getConsumptionTax()));
-            if (data.isAllowUseScore()){
+            tax_amount.setText(String.valueOf(data.getOrderPriceDTO().getDeliveryPrice()));
+           /* if (data.isAllowUseScore()){
                 score_count.setVisibility(View.VISIBLE);
                 score_count.setText(String.valueOf(data.getAvailableScore()));
             }else {
                 score_count.setVisibility(View.GONE);
-            }
+            }*/
             mDelivery = data.getDeliveryListDTO();
             if (mDelivery != null && mDelivery.size() >0){
                 for (int i = 0; i < mDelivery.size(); i++) {
@@ -357,7 +423,43 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     }
                 }
             }
-
+        }
+        final  List<Payment>  mPayment = data.getPaymentDTOList();
+        if (mPayment != null && mPayment.size() >0){
+            for (int i = 0; i < mPayment.size(); i++) {
+                if (i == 0){
+                    mPayment.get(i).setSelect(true);
+                }else {
+                    mPayment.get(i).setSelect(false);
+                }
+            }
+           final PayChooseAdapter chooseAdapter = new PayChooseAdapter(this,mPayment);
+            RecyclerViewHelper.initRecyclerViewV(PayActivity.this,choose_pay,true,chooseAdapter);
+            chooseAdapter.setmPayCallBack(new PayChooseAdapter.PayClickCallBack() {
+               @Override
+               public void onSucess(Payment item, boolean isSelect) {
+                   for (int i = 0; i < mPayment.size(); i++) {
+                       Payment payment = mPayment.get(i);
+                       if (payment.getId() == item.getId()){
+                           payment.setSelect(isSelect);
+                       }else {
+                           if (payment.isSelect()){
+                               payment.setSelect(false);
+                           }
+                       }
+                   }
+                   chooseAdapter.updateItems(mPayment);
+                   for (int i = 0; i < mPayment.size(); i++) {
+                      if (mPayment.get(i).isSelect()){
+                          payId = mPayment.get(i).getId();
+                      }
+                   }
+                   //改变价格
+                   if (payId >0 && addRessId >0 && deliveryId >0){
+                       changePrice();
+                   }
+               }
+           });
         }
 
     }
@@ -368,6 +470,8 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
 
+    private String disCountCode;
+    private  int addRessId = 0;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -381,11 +485,78 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     address_name.setText(addressManagerBean.getContactname());
                     address_phone.setText(addressManagerBean.getContactphone());
                     address_details.setText(addressManagerBean.getAddress());
+                    addRessId = addressManagerBean.getId();
+                    if (payId >0 && addRessId >0 && deliveryId  >0){
+                        changePrice();
+                    }
                 }
             }else if (requestCode == 10001){  //优惠卷
+                DisCountBean discount = (DisCountBean) data.getSerializableExtra("counpon");
+                if (discount != null){
+                    discount_content.setText(String.valueOf(discount.getAmount()));
+                    disCountCode = discount.getCode();
+                }
+            }else {
+                if (data == null) {
+                    return;
+                }
 
+                String msg = "";
+        /*
+         * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
+         */
+                String str = data.getExtras().getString("pay_result");
+                if (str.equalsIgnoreCase("success")) {
+
+                    // 如果想对结果数据验签，可使用下面这段代码，但建议不验签，直接去商户后台查询交易结果
+                    // result_data结构见c）result_data参数说明
+                    if (data.hasExtra("result_data")) {
+                        String result = data.getExtras().getString("result_data");
+                        try {
+                            JSONObject resultJson = new JSONObject(result);
+                            String sign = resultJson.getString("sign");
+                            String dataOrg = resultJson.getString("data");
+                            // 此处的verify建议送去商户后台做验签
+                            // 如要放在手机端验，则代码必须支持更新证书
+                            boolean ret = verify(dataOrg, sign, serVerMode);
+                            if (ret) {
+                                // 验签成功，显示支付结果
+                                msg = "支付成功！";
+                            } else {
+                                // 验签失败
+                                msg = "支付失败！";
+                            }
+                        } catch (JSONException e) {
+                        }
+                    }
+                    // 结果result_data为成功时，去商户后台查询一下再展示成功
+                    msg = "支付成功！";
+                } else if (str.equalsIgnoreCase("fail")) {
+                    msg = "支付失败！";
+                } else if (str.equalsIgnoreCase("cancel")) {
+                    msg = "用户取消了支付";
+                }
             }
         }
+    }
+    private boolean verify(String msg, String sign64, String mode) {
+        // 此处的verify，商户需送去商户后台做验签
+        return true;
+
+    }
+    /**
+     * 变更价格
+     */
+    private void changePrice() {
+        Map<String,String> params = new HashMap<>();
+        params.put("scIds",datas);
+        params.put("deliveryId",String.valueOf(deliveryId));
+        params.put("addressId",String.valueOf(addRessId));
+        params.put("paymentId","");
+        params.put("couponCode",disCountCode);
+        mPricePresenter.setParams(params);
+        mPricePresenter = new PricePresenter(this);
+        mPricePresenter.getData();
     }
 
     @Override
@@ -397,6 +568,20 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         if (null != mPopuWindow && mPopuWindow .isShowing()){
             mPopuWindow.dismiss();
         }
+    }
+
+
+    @Override
+    public void onPriceData(OrderPrice data) {
+        actual_amount.setText("实际付款："+data.getTotalPriceAfterDiscount());
+        rmb_amount.setText("约合RMB:¥"+String.format("%.2f", data.getTotalPriceAfterDiscount()*data.getRate()));
+        order_curreny.setText("AUD");
+        order_total_amount.setText(String.valueOf(data.getTotalPrice()));
+    }
+
+    @Override
+    public void onPriceFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
 

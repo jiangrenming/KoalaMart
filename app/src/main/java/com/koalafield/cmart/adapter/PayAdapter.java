@@ -33,15 +33,15 @@ public class PayAdapter extends BaseQuickAdapter<ShoppingCart> {
 
     @Override
     protected void convert(BaseViewHolder holder, ShoppingCart item) {
-        holder.setText(R.id.yanse,item.getColor() == null ? "": item.getColor())
-                .setText(R.id.chicun,item.getSize() == null ?"":item.getSize())
+        holder.setText(R.id.yanse,item.getColor() == null ? "颜色:": "颜色:"+(item.getColor()))
+                .setText(R.id.chicun,item.getSize() == null ?"尺寸:": "尺寸:"+item.getSize())
                 .setText(R.id.goods_name,item.getCommodity().getName())
                 .setText(R.id.pay_curreny,item.getCommodity().getCurrency())
                 .setText(R.id.pay_price,item.getCommodity().getCurrentPrice())
-                .setText(R.id.zhongliang,item.getWeight()== null ? "" :item.getWeight())
-                .setText(R.id.leixing,item.getType()== null ? "" :item.getType())
-                .setText(R.id.fenge,item.getMaterial() == null ? "" :item.getMaterial())
-                .setText(R.id.pay_count,String.valueOf(item.getCount()));
+                .setText(R.id.zhongliang,item.getWeight()== null ? "重量" :"重量:"+item.getWeight())
+                .setText(R.id.leixing,item.getType()== null ? "类型:" : "类型:"+item.getType())
+                .setText(R.id.fenge,item.getMaterial() == null ? "风格:" :"风格:"+item.getMaterial())
+                .setText(R.id.pay_count,String.valueOf("共"+item.getCount())+"件");
         ImageView pay_img = holder.getView(R.id.pay_img);
         Glide.with(mContext).load(item.getCommodity().getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
     }

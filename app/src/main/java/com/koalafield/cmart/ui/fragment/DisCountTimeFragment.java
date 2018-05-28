@@ -1,5 +1,7 @@
 package com.koalafield.cmart.ui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
+import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.dl7.recycler.listener.OnRequestDataListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.DisCountAdapter;
@@ -15,6 +18,7 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.presenter.user.DisCountPresenter;
 import com.koalafield.cmart.presenter.user.IDisCountPresenter;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.user.IDisCountListView;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
 import com.koalafield.cmart.widget.EmptyLayout;
@@ -60,6 +64,7 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
                 countPresenter.getMoreData();
             }
         });
+
     }
 
     @Override
@@ -73,7 +78,7 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
 
     }
     @Override
-    public void onDisCountSucessFul(List<DisCountBean> data) {
+    public void onDisCountSucessFul(final List<DisCountBean> data) {
         for (int i = 0; i < data.size(); i++) {
             Log.i("返回的数据:",data.get(i).toString());
         }
@@ -81,6 +86,15 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
             pageIndex++;
             disCountAdapter.updateItems(data);
         }
+        disCountAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                DisCountBean disCountBean = data.get(position);
+                Intent intent = new Intent();
+                intent.putExtra("counpon",disCountBean);
+                getActivity().setResult(Activity.RESULT_OK,intent);
+            }
+        });
     }
 
     @Override
