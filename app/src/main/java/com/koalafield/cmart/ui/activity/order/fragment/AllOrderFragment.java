@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity.order.fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,6 +21,7 @@ import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.presenter.order.IOrderPresenter;
 import com.koalafield.cmart.presenter.order.OrderPresenter;
 import com.koalafield.cmart.ui.activity.MainActivity;
+import com.koalafield.cmart.ui.activity.order.OrderDetailsActivity;
 import com.koalafield.cmart.ui.view.order.IOrderView;
 import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
@@ -49,7 +51,6 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
 
     private CommonOrderAdapter orderAdapter;
     private IOrderPresenter presenter;
-    private int pageIndex = 0;
 
     @Override
     protected int attachLayoutRes() {
@@ -67,12 +68,7 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
                 presenter.getMoreData();
             }
         });
-        orderAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
 
-            }
-        });
     }
 
     @Override
@@ -92,10 +88,18 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
 
 
     @Override
-    public void onSucessOrderList(List<OrderListBean> data) {
+    public void onSucessOrderList(final List<OrderListBean> data) {
         if (data !=null && data.size() >0 ){
-            pageIndex++;
             orderAdapter.updateItems(data);
+            orderAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    OrderListBean orderListBean = data.get(position);
+                    Intent intent = new Intent(mContext,OrderDetailsActivity.class);
+                    intent.putExtra("billNo",orderListBean.getBillNo());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -115,7 +119,6 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
     public void loadMoreData(List<OrderListBean> data) {
         orderAdapter.loadComplete();
         orderAdapter.addItems(data);
-        pageIndex++;
     }
 
     @Override

@@ -85,6 +85,7 @@
         <activity android:name=".ui.activity.use.DisCountActivity"/>
         <activity android:name=".ui.activity.use.ScoresActivity"/>
         <activity android:name=".ui.activity.order.PayActivity"/>
+        <activity android:name=".ui.activity.order.OrderDetailsActivity"/>
         <activity
             android:name="com.unionpay.uppay.PayActivity"
             android:configChanges="orientation|keyboardHidden|keyboard"

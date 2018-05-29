@@ -17,6 +17,7 @@ import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.bean.order.OrderPrice;
+import com.koalafield.cmart.bean.order.OrderdetailsBean;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.SdkPayBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
@@ -122,6 +123,13 @@ public class ApiManager {
     public  static  Flowable<List<OrderListBean>> getOrderList(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.getOrderList(getHeaders(),params))
                 .flatMap(getOrders());
+    }
+    /**
+     * 订单详情
+     */
+    public  static  Flowable<OrderdetailsBean> getOrderDetails(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getOrderDetials(getHeaders(),params))
+                .map(getOrderdetails());
     }
 
     /**
@@ -385,6 +393,21 @@ public class ApiManager {
                 Log.i("返回的数据2:",response.getCode()+"");
                 if (null !=  response && response.getCode() == 200){
                     return (SdkPayBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 订单详情
+     */
+    private static Function<SpecialResponseBean,OrderdetailsBean> getOrderdetails() {
+        return new Function<SpecialResponseBean, OrderdetailsBean>() {
+            @Override
+            public OrderdetailsBean apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (OrderdetailsBean) response.getData();
                 }
                 return  null;
             }

@@ -14,6 +14,7 @@ import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.bean.order.OrderPrice;
+import com.koalafield.cmart.bean.order.OrderdetailsBean;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.SdkPayBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
@@ -133,6 +134,8 @@ public interface ApiService {
     //订单列表
     @GET("AppApi/BillList")
     Flowable<SpecialResponseBean<List<OrderListBean>>> getOrderList(@HeaderMap Map<String,String> headrs, @QueryMap Map<String,String> params);
+    @GET("AppApi/BillDetails")
+    Flowable<SpecialResponseBean<OrderdetailsBean>> getOrderDetials(@HeaderMap Map<String,String> headrs, @QueryMap Map<String,String> params);
 
 
     /* *//**

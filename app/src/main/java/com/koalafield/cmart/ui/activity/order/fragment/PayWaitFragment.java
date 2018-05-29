@@ -44,7 +44,6 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
 
     private CommonOrderAdapter orderAdapter;
     private IOrderPresenter presenter;
-    private int pageIndex = 0;
 
     @Override
     protected int attachLayoutRes() {
@@ -56,7 +55,6 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
         SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                pageIndex =0 ;
                 updateViews();
                 SwipeRefreshHelper.controlRefresh(mSwipeRefresh,false);            }
         });
@@ -81,7 +79,6 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
     private Map<String,String> getParams(){
 
         Map<String,String> params = new HashMap<>();
-        params.put("pageIndex",String.valueOf(pageIndex));
         params.put("status",String.valueOf(Constants.PAY_WAIT_ORDER));
         return  params;
 
@@ -89,7 +86,6 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
     @Override
     public void onSucessOrderList(List<OrderListBean> data) {
         if (data !=null && data.size() >0 ){
-            pageIndex++;
             orderAdapter.updateItems(data);
         }
     }
@@ -110,7 +106,6 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
     public void loadMoreData(List<OrderListBean> data) {
         orderAdapter.loadComplete();
         orderAdapter.addItems(data);
-        pageIndex++;
     }
 
     @Override

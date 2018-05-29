@@ -19,6 +19,7 @@ public class OrderListBean implements Serializable{
     private String CreatedTime;
     List<OrderItemAttrs>  GoodsList;
 
+
     public String getBillNo() {
         return BillNo;
     }

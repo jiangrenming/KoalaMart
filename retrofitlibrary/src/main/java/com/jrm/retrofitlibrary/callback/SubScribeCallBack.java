@@ -1,5 +1,7 @@
 package com.jrm.retrofitlibrary.callback;
 
+import android.util.Log;
+
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
@@ -26,6 +28,7 @@ public class SubScribeCallBack<T> implements Subscriber<T>{
 
     @Override
     public void onNext(T t) {
+        Log.i("返回的数据",t.toString());
         mCallBack.onSucess(t);
     }
 

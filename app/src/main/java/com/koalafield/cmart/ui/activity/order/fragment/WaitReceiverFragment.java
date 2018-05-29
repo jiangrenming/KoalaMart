@@ -43,7 +43,6 @@ public class WaitReceiverFragment extends BaseFragment implements IOrderView<Lis
 
     private CommonOrderAdapter orderAdapter;
     private IOrderPresenter presenter;
-    private int pageIndex = 0;
 
     @Override
     protected int attachLayoutRes() {
@@ -55,7 +54,6 @@ public class WaitReceiverFragment extends BaseFragment implements IOrderView<Lis
         SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                pageIndex =0 ;
                 updateViews();
                 SwipeRefreshHelper.controlRefresh(mSwipeRefresh,false);            }
         });
@@ -73,7 +71,6 @@ public class WaitReceiverFragment extends BaseFragment implements IOrderView<Lis
     private Map<String,String> getParams(){
 
         Map<String,String> params = new HashMap<>();
-        params.put("pageIndex",String.valueOf(pageIndex));
         params.put("status",String.valueOf(Constants.WAIT_RECEIVER_ORDER));
         return  params;
 
@@ -90,7 +87,6 @@ public class WaitReceiverFragment extends BaseFragment implements IOrderView<Lis
     @Override
     public void onSucessOrderList(List<OrderListBean> data) {
         if (data !=null && data.size() >0 ){
-            pageIndex++;
             orderAdapter.updateItems(data);
         }
     }
@@ -111,7 +107,6 @@ public class WaitReceiverFragment extends BaseFragment implements IOrderView<Lis
     public void loadMoreData(List<OrderListBean> data) {
         orderAdapter.loadComplete();
         orderAdapter.addItems(data);
-        pageIndex++;
     }
 
     @Override
