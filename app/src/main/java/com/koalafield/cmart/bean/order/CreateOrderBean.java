@@ -2,11 +2,13 @@ package com.koalafield.cmart.bean.order;
 
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
+import java.io.Serializable;
+
 /**
  * Created by jiangrenming on 2018/5/28.
  */
 
-public class CreateOrderBean extends SpecialResponseBean {
+public class CreateOrderBean implements Serializable {
 
     private  String OrderNo;
 

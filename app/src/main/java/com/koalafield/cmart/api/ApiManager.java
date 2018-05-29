@@ -18,6 +18,7 @@ import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.PayBean;
+import com.koalafield.cmart.bean.order.SdkPayBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
@@ -144,7 +145,13 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.createOrders(getHeaders(),setParams(params)))
                 .map(getOrder());
     }
-
+    /**
+     * 调起Sdk
+     */
+    public static Flowable<SdkPayBean> createSdkPay(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.paySdk(getHeaders(),setParams(params)))
+                .map(getSdkpay());
+    }
     /*********************************首页****************************************/
 
     /**
@@ -363,6 +370,21 @@ public class ApiManager {
                 Log.i("返回的数据:",response.getCode()+"");
                 if (null !=  response && response.getCode() == 200){
                     return (CreateOrderBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 调起Sdk
+     */
+    private static Function<SpecialResponseBean,SdkPayBean> getSdkpay() {
+        return new Function<SpecialResponseBean, SdkPayBean>() {
+            @Override
+            public SdkPayBean apply(SpecialResponseBean response) throws Exception {
+                Log.i("返回的数据2:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (SdkPayBean) response.getData();
                 }
                 return  null;
             }
