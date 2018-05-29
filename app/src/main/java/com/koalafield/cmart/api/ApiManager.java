@@ -14,6 +14,7 @@ import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.home.ToolsBarBean;
 import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.bean.order.OrderPrice;
@@ -169,6 +170,13 @@ public class ApiManager {
     public  static  Flowable<List<HomeBanaerBean>> getHomeBananerList(){
         return apiSubscribe(AndoridApplication.apiService.getIntegralMallBananer(getHeaders()))
                 .flatMap(getHomeBananer());
+    }
+    /**
+     * 获取首页导航栏
+     */
+    public  static  Flowable<List<ToolsBarBean>> getHomeToolsBar(){
+        return apiSubscribe(AndoridApplication.apiService.getHomeToolsBarData(getHeaders()))
+                .flatMap(getHomeToolsBars());
     }
 
     /**
@@ -457,6 +465,20 @@ public class ApiManager {
         };
     }
 
+    /**
+     * 获取主页导航栏
+     */
+    private static Function<SpecialResponseBean, Flowable<List<ToolsBarBean>>> getHomeToolsBars() {
+        return new Function<SpecialResponseBean, Flowable<List<ToolsBarBean>>>() {
+            @Override
+            public Flowable<List<ToolsBarBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return Flowable.fromArray((List<ToolsBarBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
     /**
      * 获取热门搜索关键词
      */

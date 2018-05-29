@@ -85,7 +85,7 @@ public class RetrofitService{
             //打印url信息
             Logger.w(request.url() + (request.body() != null ? "?" + _parseParams(request.body(), requestBuffer) : ""));
             final Response response = chain.proceed(request);
-            Logger.w("返回的数据:",response.body().string()+"/"+response.code()+"/"+response.toString());
+            Logger.w("返回的数据:",response.body().toString()+"");
             return response;
         }
     };

@@ -249,6 +249,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             String transactionNo = data.getTransactionNo();
             if (!StringUtils.isEmpty(transactionNo)){
                 UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo,serVerMode);
+                finish();
             }
         }
     }

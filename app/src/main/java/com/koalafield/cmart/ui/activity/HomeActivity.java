@@ -19,20 +19,27 @@ import com.koalafield.cmart.adapter.GoodsCategryAdapter;
 import com.koalafield.cmart.adapter.GoodsCategryThreeAdapter;
 import com.koalafield.cmart.adapter.GoodsCategryTwoAdapter;
 import com.koalafield.cmart.adapter.PurchareOffAdapter;
+import com.koalafield.cmart.adapter.ToolsBarAdapter;
 import com.koalafield.cmart.bananer.MZBannerView;
 import com.koalafield.cmart.bananer.MZHolderCreator;
 import com.koalafield.cmart.bananer.MZViewHolder;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
+import com.koalafield.cmart.bean.home.ToolsBarBean;
+import com.koalafield.cmart.presenter.goods.HotSearchPresenter;
 import com.koalafield.cmart.presenter.home.HomeBananerPresenter;
 import com.koalafield.cmart.presenter.home.HomeGoodsCategryPresenter;
+import com.koalafield.cmart.presenter.home.HomeToolsBarPresenter;
 import com.koalafield.cmart.presenter.home.IHomeGoodsCategryPresenter;
+import com.koalafield.cmart.presenter.home.IHomeToolsBarPresenter;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
+import com.koalafield.cmart.ui.activity.goods.SearchActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.view.home.IBananerView;
 import com.koalafield.cmart.ui.view.home.IGoodsCategryView;
+import com.koalafield.cmart.ui.view.home.IHomeToolsView;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.EmptyLayout;
@@ -46,22 +53,16 @@ import butterknife.OnClick;
  * Created by jiangrenming on 2018/5/13.
  */
 
-public class HomeActivity extends TabBaseActivity implements IBananerView<List<HomeBanaerBean>>,IGoodsCategryView<List<GoodsCategryBean>>{
+public class HomeActivity extends TabBaseActivity implements IBananerView<List<HomeBanaerBean>>,
+        IGoodsCategryView<List<GoodsCategryBean>>,IHomeToolsView<List<ToolsBarBean>>{
 
 
     @BindView(R.id.nomral_banner)
     MZBannerView banner;
     @BindView(R.id.search)
     ImageView search;
-    @BindView(R.id.discount_juan)
-    LinearLayout discount_juan;
-    @BindView(R.id.already_buy)
-    LinearLayout already_buy;
-    @BindView(R.id.customer)
-    LinearLayout customer;
-    @BindView(R.id.new_goods)
-    LinearLayout new_goods;
-
+    @BindView(R.id.tools_bar)
+    RecyclerView  tools_bar;
     @BindView(R.id.goods_one_name)
     TextView goods_one_name;
     @BindView(R.id.categry_one_more)
@@ -99,32 +100,18 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
         //获取商品分类
         IHomeGoodsCategryPresenter goodsCategryPresenter = new HomeGoodsCategryPresenter(this);
         goodsCategryPresenter.getData();
+
+        //获取导航栏
+        IHomeToolsBarPresenter toolsBarPresenter = new HomeToolsBarPresenter(this);
+        toolsBarPresenter.getData();
     }
 
-    @OnClick({R.id.discount_juan,R.id.already_buy,R.id.customer,R.id.new_goods})
+    @OnClick({R.id.search})
     public  void setHomeClick(View v){
         switch (v.getId()){
-            case R.id.new_goods: //新品
-                break;
-            case R.id.customer: //客服
-                break;
-            case R.id.already_buy: //买过的
-                String tickets = ShareBankPreferenceUtils.getString("tickets", null);
-                if (!StringUtils.isEmpty(tickets)){
-                    startActivity(new Intent(this, PurchareOffActivity.class));
-                }else {
-                    Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                break;
-            case R.id.discount_juan: //优惠券
-                String ticket= ShareBankPreferenceUtils.getString("tickets", null);
-                if (!StringUtils.isEmpty(ticket)){
-                    startActivity(new Intent(this, DisCountActivity.class));
-                }else {
-                    Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            case R.id.search: //搜索
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(intent);
                 break;
 
             default:
@@ -246,6 +233,52 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     @Override
     public void onGoodsCategryFailure(String message) {
         Log.i("获取商品分类数据失败:","异常信息"+message);
+    }
+
+    @Override
+    public void onToolsBarSucessFul(final List<ToolsBarBean> data) {
+        if (data != null && data.size() >0){
+            ToolsBarAdapter toolsBarAdapter = new ToolsBarAdapter(this,data);
+            RecyclerViewHelper.initRecyclerViewG(this,tools_bar,false,toolsBarAdapter,4);
+            toolsBarAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    ToolsBarBean toolsBarBean = data.get(position);
+                    if (toolsBarBean.getTypeName().equals("Category")){
+                        Intent intent = new Intent(HomeActivity.this,CategryActivity.class);
+                        startActivity(intent);
+                    }else if (toolsBarBean.getTypeName().equals("CustomerServices")){
+
+                    }else if (toolsBarBean.getTypeName().equals("Buyed")){
+                        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+                        if (!StringUtils.isEmpty(tickets)){
+                            Intent intent = new Intent(HomeActivity.this,PurchareOffActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                    }else if (toolsBarBean.getTypeName().equals("Coupon")){
+                        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+                        if (!StringUtils.isEmpty(tickets)){
+                            Intent intent = new Intent(HomeActivity.this,DisCountActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void onToolsBarFailure(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
     }
 
     /**
