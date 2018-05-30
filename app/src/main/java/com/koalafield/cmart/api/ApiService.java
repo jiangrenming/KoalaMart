@@ -18,6 +18,7 @@ import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.OrderdetailsBean;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.SdkPayBean;
+import com.koalafield.cmart.bean.search.SearchListBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
@@ -117,6 +118,9 @@ public interface ApiService {
     //热门搜索词
     @GET("AppApi/HotSearchText")
     Flowable<SpecialResponseBean<List<String>>> getHotDatas(@HeaderMap Map<String,String> headrs);
+    //搜索列表分类
+    @GET("AppApi/Search")
+    Flowable<SpecialResponseBean<List<SearchListBean>>> getSearchList(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
     //买过的商品
     @GET("AppApi/PurchaseOff/{pageIndex}")
     Flowable<SpecialResponseBean<List<PurchaseOffBean>>> getPurchaseOffList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);

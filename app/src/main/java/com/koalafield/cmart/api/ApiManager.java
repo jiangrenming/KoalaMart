@@ -21,6 +21,7 @@ import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.OrderdetailsBean;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.SdkPayBean;
+import com.koalafield.cmart.bean.search.SearchListBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
@@ -194,7 +195,13 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getHotDatas(getHeaders()))
                 .flatMap(getHotWords());
     }
-
+    /**
+     * 搜索列表
+     */
+    public  static  Flowable<List<SearchListBean>> getserchList(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getSearchList(getHeaders(),params))
+                .flatMap(getsearchs());
+    }
     /******************************分类列表*******************************/
     /**
      * 获取分类列表一级分类
@@ -493,7 +500,20 @@ public class ApiManager {
             }
         };
     }
-
+    /**
+     * 获取热门搜索关键词列表
+     */
+    private static Function<SpecialResponseBean, Flowable<List<SearchListBean>>> getsearchs() {
+        return new Function<SpecialResponseBean, Flowable<List<SearchListBean>>>() {
+            @Override
+            public Flowable<List<SearchListBean>> apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return  Flowable.fromArray((List<SearchListBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
     /**
      * 获取购物和总数量
      */
