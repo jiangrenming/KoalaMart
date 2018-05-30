@@ -116,7 +116,7 @@ public interface ApiService {
     Flowable<SpecialResponseBean<List<CommentDatas>>> getCommentDatas(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
     //热门搜索词
     @GET("AppApi/HotSearchText")
-    Flowable<SpecialResponseBean<String[]>> getHotDatas(@HeaderMap Map<String,String> headrs);
+    Flowable<SpecialResponseBean<List<String>>> getHotDatas(@HeaderMap Map<String,String> headrs);
     //买过的商品
     @GET("AppApi/PurchaseOff/{pageIndex}")
     Flowable<SpecialResponseBean<List<PurchaseOffBean>>> getPurchaseOffList(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);

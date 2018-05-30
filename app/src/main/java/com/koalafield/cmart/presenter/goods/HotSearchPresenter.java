@@ -5,6 +5,8 @@ import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.ui.view.goods.IHotWordsView;
 
+import java.util.List;
+
 /**
  * Created by jiangrenming on 2018/5/23.
  */
@@ -18,7 +20,7 @@ public class HotSearchPresenter implements IHotSearchPresenter{
 
     @Override
     public void getData() {
-        ApiManager.getHotKeyWords().subscribe(new SubScribeCallBack<String[]>(new CallBack() {
+        ApiManager.getHotKeyWords().subscribe(new SubScribeCallBack<List<String>>(new CallBack() {
             @Override
             public void onInit() {
                 hotWordsView.showLoading();
@@ -27,8 +29,8 @@ public class HotSearchPresenter implements IHotSearchPresenter{
             @Override
             public <T> void onSucess(T data) {
                 if (data != null){
-                    String[] words = (String[]) data;
-                    if (words != null && words.length >0){
+                    List<String> words = (List<String>) data;
+                    if (words != null && words.size() >0){
                         hotWordsView.onHotWordsSucessFul(words);
                     }else {
                         hotWordsView.onHotWordsNoData();

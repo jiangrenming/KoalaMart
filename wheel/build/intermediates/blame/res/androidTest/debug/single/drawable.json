@@ -1,18 +1,26 @@
 [
     {
-        "merged": "/Users/jiangrenming/KoalaMart/wheel/build/intermediates/res/merged/androidTest/debug/drawable/wheel_val.xml",
-        "source": "/Users/jiangrenming/KoalaMart/wheel/build/intermediates/bundles/debug/res/drawable/wheel_val.xml"
+        "merged": "G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_bg.xml",
+        "source": "G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_bg.xml"
     },
     {
-        "merged": "/Users/jiangrenming/KoalaMart/wheel/build/intermediates/res/merged/androidTest/debug/drawable/wheel_bg.xml",
-        "source": "/Users/jiangrenming/KoalaMart/wheel/build/intermediates/bundles/debug/res/drawable/wheel_bg.xml"
+        "merged": "G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_val.xml",
+        "source": "G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_val.xml"
     },
     {
-        "merged": "/Users/jiangrenming/KoalaMart/G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_bg.xml",
-        "source": "/Users/jiangrenming/KoalaMart/G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_bg.xml"
+        "merged": "G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_bg.xml",
+        "source": "G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_bg.xml"
     },
     {
-        "merged": "/Users/jiangrenming/KoalaMart/G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_val.xml",
-        "source": "/Users/jiangrenming/KoalaMart/G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_val.xml"
+        "merged": "G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_bg.xml",
+        "source": "G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_bg.xml"
+    },
+    {
+        "merged": "G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_val.xml",
+        "source": "G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_val.xml"
+    },
+    {
+        "merged": "G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_val.xml",
+        "source": "G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_val.xml"
     }
 ]

@@ -190,9 +190,9 @@ public class ApiManager {
     /**
      * 热门搜索
      */
-    public  static  Flowable<String[]> getHotKeyWords(){
+    public  static  Flowable<List<String>> getHotKeyWords(){
         return apiSubscribe(AndoridApplication.apiService.getHotDatas(getHeaders()))
-                .flatMap(getGoodsCategrys());
+                .flatMap(getHotWords());
     }
 
     /******************************分类列表*******************************/
@@ -482,12 +482,12 @@ public class ApiManager {
     /**
      * 获取热门搜索关键词
      */
-    private static Function<SpecialResponseBean, Flowable<String []>> getHotWords() {
-        return new Function<SpecialResponseBean, Flowable<String []>>() {
+    private static Function<SpecialResponseBean, Flowable<List<String>>> getHotWords() {
+        return new Function<SpecialResponseBean, Flowable<List<String>>>() {
             @Override
-            public Flowable<String []> apply(SpecialResponseBean response) throws Exception {
+            public Flowable<List<String>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
-                    return (Flowable<String[]>) response.getData();
+                    return  Flowable.fromArray((List<String>) response.getData());
                 }
                 return  null;
             }

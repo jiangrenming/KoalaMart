@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.koalafield.cmart.bean.HistoryContent;
 import com.koalafield.cmart.bean.User;
 import com.koalafield.cmart.db.dao.Column;
 import com.koalafield.cmart.db.dao.Table;
@@ -38,7 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            db.execSQL(getCreateTableSql(User.class));
+            db.execSQL(getCreateTableSql(HistoryContent.class));
             onUpgrade(db, 1, DB_VERSION);
         } catch (Exception e) {
             e.printStackTrace();
