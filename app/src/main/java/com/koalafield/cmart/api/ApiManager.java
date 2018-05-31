@@ -7,6 +7,7 @@ import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
+import com.koalafield.cmart.bean.categry.CateBrandGoodsListBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.bean.goods.CommentDatas;
 import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
@@ -198,7 +199,7 @@ public class ApiManager {
     /**
      * 搜索列表
      */
-    public  static  Flowable<List<SearchListBean>> getserchList(Map<String,String> params){
+    public  static  Flowable<List<SearchListBean>> getSearchList(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.getSearchList(getHeaders(),params))
                 .flatMap(getsearchs());
     }
@@ -209,6 +210,13 @@ public class ApiManager {
     public  static  Flowable<List<CategryOneBean>> getCategryList(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.getCategrys(getHeaders(),params))
                 .flatMap(getCategry());
+    }
+    /**
+     * 分类列表数据
+     */
+    public  static  Flowable<CateBrandGoodsListBean> getCategryLists(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getCategryList(getHeaders(),params))
+                .map(getCatgies());
     }
     /******************************购物车***********************************/
 
@@ -509,6 +517,20 @@ public class ApiManager {
             public Flowable<List<SearchListBean>> apply(SpecialResponseBean response) throws Exception {
                 if ( null !=  response && response.getCode() == 200){
                     return  Flowable.fromArray((List<SearchListBean>) response.getData());
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 获取热门搜索关键词列表
+     */
+    private static Function<SpecialResponseBean, CateBrandGoodsListBean> getCatgies() {
+        return new Function<SpecialResponseBean, CateBrandGoodsListBean>() {
+            @Override
+            public CateBrandGoodsListBean apply(SpecialResponseBean response) throws Exception {
+                if ( null !=  response && response.getCode() == 200){
+                    return (CateBrandGoodsListBean) response.getData();
                 }
                 return  null;
             }

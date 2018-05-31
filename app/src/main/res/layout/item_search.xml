@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/search_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/default_img"/>
+        <LinearLayout
+            android:layout_toRightOf="@+id/search_img"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/search_name"
+                android:layout_width="match_parent"
+                android:text=""
+                android:lines="2"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/search_curreny"
+                    android:layout_width="wrap_content"
+                    android:text="AUD"
+                    android:gravity="center_vertical"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:id="@+id/search_price"
+                    android:layout_width="0dp"
+                    android:paddingLeft="5dp"
+                    android:text="12.88"
+                    android:layout_weight="1"
+                    android:layout_height="25dp" />
+                <ImageView
+                    android:id="@+id/search_add"
+                    android:layout_width="25dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/buy"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:textSize="16sp"
-        android:text="分类"
-        android:background="@color/gray_light"/>
+    android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -25,7 +17,7 @@
             android:layout_width="wrap_content"
             android:background="@color/gray_light"
             android:scrollbars="none"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
                 android:layout_width="0dp"
@@ -36,16 +28,17 @@
                 android:id="@+id/categry_img"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:background="@color/white"
                 android:src="@mipmap/default_img"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/categry_two"
                 android:layout_width="match_parent"
                 android:background="@color/white"
                 android:scrollbars="none"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
-        <include layout="@layout/layout_common_empty"/>
     </FrameLayout>
 
 

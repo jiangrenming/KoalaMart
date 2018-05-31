@@ -4,6 +4,7 @@ import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
+import com.koalafield.cmart.bean.categry.CateBrandGoodsListBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.bean.goods.CommentDatas;
 import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
@@ -143,6 +144,8 @@ public interface ApiService {
     Flowable<SpecialResponseBean<OrderdetailsBean>> getOrderDetials(@HeaderMap Map<String,String> headrs, @QueryMap Map<String,String> params);
     @GET("AppAPi/ToolsBar")
     Flowable<SpecialResponseBean<List<ToolsBarBean>>> getHomeToolsBarData(@HeaderMap Map<String,String> headrs);
+    @GET("AppApi/CateBrandGoodsList")
+    Flowable<SpecialResponseBean<CateBrandGoodsListBean>> getCategryList(@HeaderMap Map<String,String> headrs, @QueryMap Map<String,String> params);
 
     /* *//**
      * 首页bananer

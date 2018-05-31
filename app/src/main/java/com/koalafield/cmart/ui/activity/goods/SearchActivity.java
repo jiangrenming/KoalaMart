@@ -1,6 +1,7 @@
 package com.koalafield.cmart.ui.activity.goods;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -25,6 +26,7 @@ import com.koalafield.cmart.db.HistoryService;
 import com.koalafield.cmart.db.IHistoryService;
 import com.koalafield.cmart.presenter.goods.HotSearchPresenter;
 import com.koalafield.cmart.presenter.goods.IHotSearchPresenter;
+import com.koalafield.cmart.ui.activity.search.SearchListActivity;
 import com.koalafield.cmart.ui.activity.use.ChangeAddressActivity;
 import com.koalafield.cmart.ui.view.goods.IHotWordsView;
 import com.koalafield.cmart.utils.StringUtils;
@@ -101,6 +103,9 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
                             if (content == null){
                                 mHistory.addKeyWords(historyContent);
                             }
+                            Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
+                            intent.putExtra("title",vaule);
+                            startActivity(intent);
                         } catch (DuplicatedTraceException e) {
                             e.printStackTrace();
                         }
@@ -131,7 +136,9 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
             his_flowLayout.setOnTagClickListener(new FlowLayout.OnTagClickListener() {
                 @Override
                 public void TagClick(String text) {
-                    Toast.makeText(SearchActivity.this,text,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
+                    intent.putExtra("title",text);
+                    startActivity(intent);
                 }
             });
         }
@@ -170,7 +177,9 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
             hot_flowLayout.setOnTagClickListener(new FlowLayout.OnTagClickListener() {
                 @Override
                 public void TagClick(String text) {
-                    Toast.makeText(SearchActivity.this,text,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
+                    intent.putExtra("title",text);
+                    startActivity(intent);
                 }
             });
         }

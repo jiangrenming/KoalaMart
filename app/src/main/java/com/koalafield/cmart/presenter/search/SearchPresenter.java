@@ -27,7 +27,7 @@ public class SearchPresenter implements ISearchPresenter{
     @Override
     public void getData() {
         mParams.put("pageIndex",String.valueOf(0));
-        ApiManager.getserchList(mParams).subscribe(new SubScribeCallBack<List<SearchListBean>>(new CallBack() {
+        ApiManager.getSearchList(mParams).subscribe(new SubScribeCallBack<List<SearchListBean>>(new CallBack() {
             @Override
             public void onInit() {
                 mSearchView.showLoading();
@@ -66,7 +66,7 @@ public class SearchPresenter implements ISearchPresenter{
     public void getMoreData() {
 
         mParams.put("pageIndex",String.valueOf(indexPage));
-        ApiManager.getserchList(mParams).subscribe(new SubScribeCallBack<List<SearchListBean>>(new CallBack() {
+        ApiManager.getSearchList(mParams).subscribe(new SubScribeCallBack<List<SearchListBean>>(new CallBack() {
             @Override
             public void onInit() {
                 mSearchView.showLoading();

@@ -100,8 +100,8 @@ public class CategryActivity extends TabBaseActivity implements ICategryView<Lis
     @Override
     public void onSucessFul(List<CategryOneBean> data) {
         if (data != null && data.size() >0){
-            categryOne = data;
-            categryOneAdapter.addItems(data);
+            one_list = data;
+            categryOneAdapter.updateItems(data);
             int categrySuperId = data.get(0).getId();
             for (int i = 0; i < data.size(); i++) {
                 CategryOneBean categryOneBean = data.get(i);
