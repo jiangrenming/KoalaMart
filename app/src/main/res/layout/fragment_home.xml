@@ -137,29 +137,33 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
+
                 <RelativeLayout
-                    android:background="@color/gray_light"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:background="@color/gray_light">
+
                     <TextView
                         android:id="@+id/goods_one_name"
-                        android:gravity="center_vertical"
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:text="各类饮料"
-                        android:textColor="@color/black"
-                        android:layout_height="match_parent" />
+                        android:textColor="@color/black" />
+
                     <TextView
                         android:id="@+id/categry_one_more"
-                        android:gravity="center_vertical"
                         android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:layout_alignParentRight="true"
                         android:text="更多"
-                        android:textColor="@color/black"
-                        android:layout_height="match_parent" />
+                        android:textColor="@color/black" />
                 </RelativeLayout>
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"

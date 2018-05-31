@@ -72,24 +72,25 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_tool_bar_test_ctl"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll">
-
                 <!--填充置顶可缩进的布局-->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/brand_list"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent" />
             </android.support.design.widget.CollapsingToolbarLayout>
             <!--填充置顶的布局-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/categry_list"
                 android:layout_width="match_parent"
-                android:layout_height="45dp" />
+                android:background="@color/white"
+                android:layout_height="wrap_content" />
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
@@ -98,19 +99,22 @@
             android:layout_height="match_parent"
             android:overScrollMode="always"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <android.support.v4.widget.SwipeRefreshLayout
-                android:orientation="vertical"
                 android:id="@+id/brand_swipe_refresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/goods_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-              <!--      <include layout="@layout/layout_common_empty"/>-->
+                        android:layout_height="match_parent" />
+                    <!--      <include layout="@layout/layout_common_empty"/>-->
                 </FrameLayout>
             </android.support.v4.widget.SwipeRefreshLayout>
         </android.support.v4.widget.NestedScrollView>

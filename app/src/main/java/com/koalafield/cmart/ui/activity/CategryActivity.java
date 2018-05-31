@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.koalafield.cmart.presenter.categry.CategryOnePresenter;
 import com.koalafield.cmart.presenter.categry.CategryTwoPresenter;
 import com.koalafield.cmart.presenter.categry.ICategryPresenter;
 import com.koalafield.cmart.presenter.categry.ICategryTwoPresenter;
+import com.koalafield.cmart.ui.activity.search.GoodsListActivity;
 import com.koalafield.cmart.ui.view.categry.ICategryTwoView;
 import com.koalafield.cmart.ui.view.categry.ICategryView;
 
@@ -123,7 +125,7 @@ public class CategryActivity extends TabBaseActivity implements ICategryView<Lis
     }
 
     @Override
-    public void onSucessTwoFul(List<CategryOneBean> data) {
+    public void onSucessTwoFul(final List<CategryOneBean> data) {
         Log.i("获取分类列表",data.size()+"/第一个数据:"+data.get(0).getName());
         if (data != null && data.size() > 0) {
             if (null == categryTwoAdapter) {
@@ -137,6 +139,9 @@ public class CategryActivity extends TabBaseActivity implements ICategryView<Lis
                 @Override
                 public void onItemClick(View view, int position) {
                     //跳转界面
+                    Intent intent = new Intent(CategryActivity.this, GoodsListActivity.class);
+                    intent.putExtra("cateId",data.get(position).getId());
+                    startActivity(intent);
                 }
             });
         }
