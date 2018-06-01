@@ -127,12 +127,6 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
             banner.setIndicatorAlign(MZBannerView.IndicatorAlign.BOTTOM);
             banner.setIndicatorPadding(10,0,0,10);
             banner.setDelayedTime(5000);
-            banner.setPages(data, new MZHolderCreator() {
-                @Override
-                public MZViewHolder createViewHolder() {
-                    return new NomralBannerViewHolder();
-                }
-            });
             banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
                 @Override
                 public void onPageClick(View view, int position) {
@@ -140,6 +134,13 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                     Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
                     intent.putExtra("contentId",dataId);
                     startActivity(intent);
+                }
+            });
+
+            banner.setPages(data, new MZHolderCreator<MZViewHolder>() {
+                @Override
+                public MZViewHolder createViewHolder() {
+                    return new NomralBannerViewHolder();
                 }
             });
         }

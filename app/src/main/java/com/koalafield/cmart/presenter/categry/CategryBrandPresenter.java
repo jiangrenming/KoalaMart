@@ -4,6 +4,7 @@ import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.categry.CateBrandGoodsListBean;
+import com.koalafield.cmart.bean.categry.GoodsListBean;
 import com.koalafield.cmart.ui.view.categry.ICategryListView;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class CategryBrandPresenter implements ICategryBrandPresenter{
 
     @Override
     public void getData() {
-        mParams.put("pageIndex",String.valueOf(pageIndex));
+        mParams.put("pageIndex",String.valueOf(0));
         ApiManager.getCategryLists(mParams).subscribe(new SubScribeCallBack<CateBrandGoodsListBean>(new CallBack() {
             @Override
             public void onInit() {
@@ -76,7 +77,8 @@ public class CategryBrandPresenter implements ICategryBrandPresenter{
             public <T> void onSucess(T data) {
                 if (data != null){
                     CateBrandGoodsListBean brands = (CateBrandGoodsListBean) data;
-                    if (brands != null ){
+                    List<GoodsListBean> goodsList = brands.getGoodsList();
+                    if (goodsList!= null && goodsList.size() >0){
                         mListView.loadMoreData(brands);
                         pageIndex++;
                     }else {

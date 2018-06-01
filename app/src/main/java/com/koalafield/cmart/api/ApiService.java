@@ -3,6 +3,7 @@ package com.koalafield.cmart.api;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
+import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CateBrandGoodsListBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
@@ -59,7 +60,7 @@ public interface ApiService {
     Flowable<SpecialResponseBean<RegisterBean>> getLoginAccount (@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     //购物车商品数量的增减
     @POST("AppApi/ShoppingCartChange")
-    Flowable<SpecialResponseBean> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    Flowable<SpecialResponseBean<CartIdBean>> changeGoodsCounts(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     //购物车清空
     @POST("AppApi/ShoppingCartClearUp")
     Flowable<SpecialResponseBean> clearCart(@HeaderMap Map<String,String> headrs);
@@ -147,75 +148,4 @@ public interface ApiService {
     @GET("AppApi/CateBrandGoodsList")
     Flowable<SpecialResponseBean<CateBrandGoodsListBean>> getCategryList(@HeaderMap Map<String,String> headrs, @QueryMap Map<String,String> params);
 
-    /* *//**
-     * 首页bananer
-     * @return
-     *//*
-    @GET("app/ubstore/banner/list")
-    Flowable<BaseResponseBean<List<ProductBannerBean>>> getIntegralMallBananer();
-
-    *//**
-     * 首页主题分类
-     *//*
-    @GET("app/ubstore/franchisee/activity/list")
-    Flowable<BaseResponseBean<List<UbProductMainListBean>>> getHomeCategry(@QueryMap Map<String, String> params);
-
-    *//**
-     * 购物车列表
-     *//*
-     @GET("app/user/shopcart/list")
-    Flowable<BaseResponseBean<List<ShopCartItemBean>>> getCartShopping();
-
-
-    *//**
-     * 联盟商家轮播图
-     * @return
-     *//*
-    @GET("app/union_shop/banner")
-    Flowable<BaseResponseBean<List<ProductBannerBean>>> getUnioBananers();
-
-
-    *//**
-     * 联盟商家分类列表
-     *//*
-    @GET("app/union_shop/category")
-    Flowable<BaseResponseBean<List<SellerCategoryBean>>> getUnioCategry();
-
-    *//**
-     * 联盟商家列表
-     *//*
-    @GET("app/union_shop/list")
-    Flowable<BaseResponseBean<List<SellerBean>>> getUnioList(@QueryMap Map<String, String> params);
-
-    *//**
-     * 联盟商家具体分类入口
-     * @return
-     *//*
-    @GET("app/union_shop/category_detail")
-    Flowable<BaseResponseBean<List<SellerBean>>> getUnioCategryIn(@QueryMap Map<String, String> params);
-    *//**
-     * 附近联盟商家
-     *//*
-    @GET("app/union_shop/nearby_list")
-    Flowable<BaseResponseBean<List<SellerBean>>> getUnioNearByShopers(@QueryMap Map<String, String> params);
-
-    *//**********************************post 请求列表***********************************//*
-    *//**
-     * 首页推荐商品
-     *//*
-    @POST("app/ubstore/franchisee/product/recommend")
-    Flowable<BaseResponseBean<List<ProductListBean>>> getHomeRecommend(@Body RequestBody body);
-
-    *//**
-     * 添加加盟商收藏
-     *//*
-    @POST("app/franchisee/favor/add")
-    Flowable<BaseResponseBean<Object>> getAddShopers(@Body RequestBody body);
-
-    *//**
-     *首页加盟商下拉店铺列表
-     *//*
-    @POST("app/ubstore/franchisee/select/list")
-    Flowable<BaseResponseBean<List<SpinnerListBean>>> getSelectShops(@Body RequestBody body);
-*/
 }

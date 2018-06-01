@@ -14,13 +14,13 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
             android:src="@mipmap/back" />
 
-        <EditText
+        <TextView
             android:id="@+id/search_words"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -29,6 +29,7 @@
             android:layout_weight="1"
             android:background="@drawable/edit_bg"
             android:hint="搜索您想搜索的东西"
+            android:gravity="center_vertical"
             android:imeOptions="actionSearch"
             android:paddingLeft="2dp"
             android:textSize="12sp" />
@@ -50,16 +51,17 @@
             <TextView
                 android:id="@+id/search_cart_num"
                 style="@style/bg_text_style"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
-                android:textSize="10sp"
                 android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textSize="10sp"
                 tools:ignore="SmallSp" />
         </FrameLayout>
     </LinearLayout>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/scrollview"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff">
@@ -92,32 +94,21 @@
                 android:background="@color/white"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/myMainScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="always"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/brand_swipe_refresh"
+        <com.koalafield.cmart.zoomswifresh.GZoomSwifrefresh
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_height="wrap_content"
+                android:id="@+id/swiperefresh">
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/goods_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                    <!--      <include layout="@layout/layout_common_empty"/>-->
+                        android:layout_height="wrap_content" />
+                    <include layout="@layout/layout_common_empty"/>
                 </FrameLayout>
-            </android.support.v4.widget.SwipeRefreshLayout>
-        </android.support.v4.widget.NestedScrollView>
+            </com.koalafield.cmart.zoomswifresh.GZoomSwifrefresh>
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

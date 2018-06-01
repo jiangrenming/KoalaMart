@@ -42,4 +42,9 @@ public class BrandCategryAdapter extends BaseQuickAdapter<BrandListBean> {
         }
     }
 
+    private  int posId;
+    public  void setposId(int id){
+        this.posId = id;
+    }
+
 }

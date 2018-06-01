@@ -125,8 +125,9 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         switch (v.getId()){
             case R.id.back: //返回首页
                 finish();
-            //    StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
-                StackActivityManager.getActivityManager().goToMain(this);
+                if (type !=3 ){
+                    StackActivityManager.getActivityManager().goToMain(this);
+                }
                 break;
             case R.id.login:
                 if (allRight()){  //登录接口调用
@@ -165,9 +166,9 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             finish();
-            Log.i("返回的信息","go to");
-           // StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
-            StackActivityManager.getActivityManager().goToMain(this);
+            if (type != 3){
+                StackActivityManager.getActivityManager().goToMain(this);
+            }
             return false;
         }
 
@@ -188,12 +189,12 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
             ShareBankPreferenceUtils.putString("tickets",ticket);
             if (type == 1){
                 finish();
-        //        StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }else if (type ==2){
                 finish();
-       //         StackActivityManager.getActivityManager().removeActivity(LoginActivity.this);
                 StackActivityManager.getActivityManager().goToMain(this,3);
+            }else if (type ==3){
+                finish();
             }
         }
     }

@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:background="@color/gray_light2"
-        android:layout_height="45dp">
+        android:background="@color/white"
+        android:layout_height="40dp">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -18,12 +18,12 @@
             android:text="跨境超市"/>
         <ImageView
             android:id="@+id/search"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:src="@mipmap/search"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:scaleType="fitXY"
-            android:layout_height="30dp" />
+            android:layout_height="25dp" />
     </LinearLayout>
     <com.koalafield.cmart.widget.MyBoundScrollView
         android:background="@color/white"
@@ -57,79 +57,6 @@
                     android:id="@+id/tools_bar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-                <!--<LinearLayout
-                    android:id="@+id/new_goods"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@mipmap/pay_wait"
-                        android:scaleType="fitXY"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="wrap_content"
-                        android:text="新品"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/customer"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@mipmap/constact"
-                        android:scaleType="fitXY"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="wrap_content"
-                        android:text="客服"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/already_buy"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@mipmap/wait_send"
-                        android:scaleType="fitXY"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="wrap_content"
-                        android:text="买过的"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/discount_juan"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@mipmap/discount"
-                        android:scaleType="fitXY"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="wrap_content"
-                        android:text="优惠券"/>
-                </LinearLayout>-->
             </LinearLayout>
 
             <LinearLayout

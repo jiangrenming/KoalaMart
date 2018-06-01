@@ -36,9 +36,14 @@ public class GoodsDetailCommondAdapter extends BaseQuickAdapter<GoodsRecoomendBe
     protected void convert(BaseViewHolder holder, GoodsRecoomendBean item) {
         ImageView goods_commond_img = holder.getView(R.id.goods_commond_img);
         TextView old_price = holder.getView(R.id.old_price);
-        old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        old_price.setText(item.getOriginalPrice());
-        holder.setText(R.id.goods_commond_name,item.getName()).setText(R.id._curreny,item.getCurrency()+":").setText(R.id.current_price,item.getCurrentPrice());
+        if (item.getCurrentPrice() >= item.getOriginalPrice()){
+            old_price.setVisibility(View.GONE);
+        }else {
+            old_price.setVisibility(View.VISIBLE);
+            old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            old_price.setText(String.format("%.2f", item.getOriginalPrice()));
+        }
+        holder.setText(R.id.goods_commond_name,item.getName()).setText(R.id._curreny,item.getCurrency()+":").setText(R.id.current_price,String.format("%.2f", item.getCurrentPrice()));
         Glide.with(mContext).load(item.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(goods_commond_img);
     }
 

@@ -24,7 +24,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:text="商品详情"
             android:layout_height="match_parent" />
-        <FrameLayout
+        <!--<FrameLayout
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_height="match_parent">
@@ -44,7 +44,7 @@
                 android:layout_marginLeft="20dp"
                 android:textSize="10sp"
                 tools:ignore="SmallSp"/>
-        </FrameLayout>
+        </FrameLayout>-->
     </RelativeLayout>
     <com.koalafield.cmart.widget.MyBoundScrollView
         android:layout_below="@+id/goods_top"
@@ -67,7 +67,6 @@
                     app:indicatorAlign="center"
                     app:middle_page_cover="false"
                     app:open_mz_mode="false"/>
-    
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
@@ -214,10 +213,29 @@
             android:layout_marginLeft="10dp"
             android:scaleType="fitXY"
             android:src="@mipmap/collection" />
-
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/goods_car_img"
+                android:layout_width="20dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@mipmap/buy"
+                android:layout_height="20dp" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/goods_cart_num"
+                style="@style/bg_text_style"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"/>
+        </FrameLayout>
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:layout_height="match_parent">
@@ -245,6 +263,21 @@
                     android:layout_gravity="center_vertical"
                     android:scaleType="fitXY"
                     android:src="@mipmap/add" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pay_buy"
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
+            android:background="@color/progress_yellow"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="立即购买"
+                android:textColor="@color/white"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_height="match_parent" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/pay_goods"

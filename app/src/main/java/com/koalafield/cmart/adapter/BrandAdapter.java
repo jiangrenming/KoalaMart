@@ -37,4 +37,10 @@ public class BrandAdapter extends BaseQuickAdapter<CateListBean> {
             brand_select.setVisibility(View.INVISIBLE);
         }
     }
+
+
+    private int selectId;
+    public  void setSelect(int id){
+        this.selectId = id;
+    }
 }

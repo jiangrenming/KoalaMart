@@ -1,4 +1,4 @@
-package com.koalafield.cmart.ui.activity;
+package com.koalafield.cmart.ui.activity.goods;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
-import com.dl7.recycler.listener.OnItemMoveListener;
-import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CartItemAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
@@ -26,13 +24,12 @@ import com.koalafield.cmart.presenter.cart.CartClearPresenter;
 import com.koalafield.cmart.presenter.cart.CartListPresenter;
 import com.koalafield.cmart.presenter.cart.ICartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.ICartClearPresenter;
-import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
+import com.koalafield.cmart.ui.activity.CartActivity;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 import com.koalafield.cmart.ui.view.cart.ICartClearView;
 import com.koalafield.cmart.ui.view.cart.ICartListView;
-import com.koalafield.cmart.utils.AndroidTools;
-import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,12 +42,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- *
- * @author jiangrenming
- * @date 2018/5/13
+ * Created by jiangrenming on 2018/6/1.
  */
 
-public class CartActivity extends TabBaseActivity implements ICartListView<List<CartDataBean>>,
+public class CartShoppingActivity extends BaseActivity implements ICartListView<List<CartDataBean>>,
         CartItemAdapter.CartItemCallBack,ICartClearView<BaseResponseBean>,ICartChangeCountView<CartIdBean> {
 
     @BindView(R.id.clear_all)
@@ -71,22 +66,17 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     TextView select_amount;
     @BindView(R.id.pay_goods)
     LinearLayout pay_goods;
+    @BindView(R.id.back)
+    ImageView back;
+
 
     private CartItemAdapter cartItemAdapter;
     private ICartClearPresenter cartClearPresenter;
     private  boolean isAllSelect = true;
-    private  List<CartDataBean> mCartBean ;
-
+    private List<CartDataBean> mCartBean ;
     @Override
     public int attchLayoutRes() {
-        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
-        if (StringUtils.isEmpty(tickets)){
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
-            startActivity(intent);
-            finish();
-        }
-        return R.layout.fragment_cart;
+        return R.layout.goods_fragment_cart;
     }
 
     @Override
@@ -101,61 +91,9 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     protected void onResume() {
         super.onResume();
         Log.e("登录后是否走这里","**********************************************");
-        presenter = new CartListPresenter(CartActivity.this);
+        presenter = new CartListPresenter(CartShoppingActivity.this);
         presenter.getData();
     }
-
-    @Override
-    public void onSucessCartFul(List<CartDataBean> data) {
-        if (data != null && data.size() >0 ){
-            Log.i("商品的数据:","购物车含有的数据="+data.size());
-            clear_all.setEnabled(true);
-            clear_all.setClickable(true);
-            select.setClickable(true);
-            select.setEnabled(true);
-            empty_cart.setVisibility(View.GONE);
-            cart_top_layout.setVisibility(View.VISIBLE);
-            for (int i = 0; i < data.size(); i++) {
-                data.get(i).setSelect(true);
-            }
-            mCartBean = data;
-            cartItemAdapter = new CartItemAdapter(CartActivity.this,data,goods_item_recycler);
-            RecyclerViewHelper.initRecyclerViewV(CartActivity.this,goods_item_recycler,false,cartItemAdapter);
-            cartItemAdapter.setCartItemCallBack(this);
-        }else{
-            clear_all.setEnabled(false);
-            clear_all.setClickable(false);
-        }
-    }
-
-    @Override
-    public void onFailureCart(String message) {
-        Log.e("查找列表失败","异常信息:"+message);
-        if (!StringUtils.isEmpty(message) && message.equals("401")){
-            //session去重新登录
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
-            startActivity(intent);
-            finish();
-        }else {
-            Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onLoadNoData() {
-        empty_cart.setVisibility(View.VISIBLE);
-        cart_top_layout.setVisibility(View.GONE);
-        select.setImageResource(R.mipmap.un_select);
-        select.setClickable(false);
-        select.setEnabled(false);
-        clear_all.setEnabled(false);
-        clear_all.setClickable(false);
-        select_num.setText("0");
-        cart_curreny.setText("AUD:");
-        select_amount.setText("0.00");
-    }
-
     @OnClick({R.id.clear_all,R.id.select,R.id.pay_goods})
     public  void onDeleteAll(View v){
         switch (v.getId()){
@@ -190,14 +128,127 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
                     }
                     String data = sb.substring(0, sb.length() - 1);
                     Log.i("数据为：",data);
-
-                    Intent payIntent = new Intent(CartActivity.this, PayActivity.class);
+                    Intent payIntent = new Intent(CartShoppingActivity.this, PayActivity.class);
                     payIntent.putExtra("payDatas",data);
                     startActivity(payIntent);
                 }
                 break;
+            case R.id.back:
+                finish();
             default:
                 break;
+        }
+    }
+    @Override
+    public void onSucessCartFul(List<CartDataBean> data) {
+        if (data != null && data.size() >0 ){
+            Log.i("商品的数据:","购物车含有的数据="+data.size());
+            clear_all.setEnabled(true);
+            clear_all.setClickable(true);
+            select.setClickable(true);
+            select.setEnabled(true);
+            empty_cart.setVisibility(View.GONE);
+            cart_top_layout.setVisibility(View.VISIBLE);
+            for (int i = 0; i < data.size(); i++) {
+                data.get(i).setSelect(true);
+            }
+            mCartBean = data;
+            cartItemAdapter = new CartItemAdapter(CartShoppingActivity.this,data,goods_item_recycler);
+            RecyclerViewHelper.initRecyclerViewV(CartShoppingActivity.this,goods_item_recycler,false,cartItemAdapter);
+            cartItemAdapter.setCartItemCallBack(this);
+        }else{
+            clear_all.setEnabled(false);
+            clear_all.setClickable(false);
+        }
+    }
+
+    @Override
+    public void onFailureCart(String message) {
+        Log.e("查找列表失败","异常信息:"+message);
+        if (!StringUtils.isEmpty(message) && message.equals("401")){
+            //session去重新登录
+            Intent intent = new Intent(this,LoginActivity.class);
+            intent.putExtra("type",2);
+            startActivity(intent);
+            finish();
+        }else {
+            Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onLoadNoData() {
+        empty_cart.setVisibility(View.VISIBLE);
+        cart_top_layout.setVisibility(View.GONE);
+        select.setImageResource(R.mipmap.un_select);
+        select.setClickable(false);
+        select.setEnabled(false);
+        clear_all.setEnabled(false);
+        clear_all.setClickable(false);
+        select_num.setText("0");
+        cart_curreny.setText("AUD:");
+        select_amount.setText("0.00");
+    }
+
+    @Override
+    public void onClearSucessful(BaseResponseBean data) {
+        if (data != null){
+            int mCount = 0;
+            if (data.getCode() ==200){
+                Log.e("清空购物车","清除成功");
+                cartItemAdapter.cleanItems();
+                cartItemAdapter.isClearAll();
+                for (int i = 0; i < mCartBean.size(); i++) {
+                    mCount += mCartBean.get(i).getCount();
+                }
+                EventBus.getDefault().post(new CartEvent(mCount,5));
+                clear_all.setEnabled(false);
+                clear_all.setClickable(false);
+                empty_cart.setVisibility(View.VISIBLE);
+                cart_top_layout.setVisibility(View.GONE);
+                select.setClickable(false);
+                select.setEnabled(false);
+            }
+        }
+    }
+
+    @Override
+    public void onClearFailure(String message) {
+        Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onChangeItemSucessful(CartIdBean responseBean) {
+        Toast.makeText(CartShoppingActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
+        cartItemAdapter.updateItems(mCartBean);
+        if (mCartBean == null  || mCartBean.size() == 0){
+            empty_cart.setVisibility(View.VISIBLE);
+            cart_top_layout.setVisibility(View.GONE);
+            select.setClickable(false);
+            select.setEnabled(false);
+            clear_all.setEnabled(false);
+            clear_all.setClickable(false);
+            cartItemAdapter.isClearAll();
+        }else {
+            empty_cart.setVisibility(View.GONE);
+            cart_top_layout.setVisibility(View.VISIBLE);
+            select.setClickable(true);
+            select.setEnabled(true);
+            clear_all.setEnabled(true);
+            clear_all.setClickable(true);
+        }
+    }
+
+    @Override
+    public void onChangeItemFailure(String message) {
+        if (!StringUtils.isEmpty(message) && message.equals("401")){
+            //session去重新登录
+            Intent intent = new Intent(this,LoginActivity.class);
+            intent.putExtra("type",2);
+            startActivity(intent);
+            finish();
+        }else {
+            Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -252,12 +303,8 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         }
     }
 
-    /**
-     * 增减删除时调用的接口
-     * @param count
-     */
     @Override
-    public void changeItemGoodsCount(int count,CartDataBean item,boolean isSelect) {
+    public void changeItemGoodsCount(int count, CartDataBean item, boolean isSelect) {
         if (count == 0){
             if (mCartBean != null && mCartBean.size() >0){
                 for (int i = 0; i < mCartBean.size() ; i++) {
@@ -288,75 +335,12 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         params.put("tag","0");
         ICartChangeItemPresenter presenter = new CartChangeItemPresenter(this);
         presenter.getChangeCountData(params);
-
     }
 
     @Override
     public void skipGoodsDeatils(CartDataBean item) {
-        Intent intent = new Intent(CartActivity.this,GoodsDetailActivity.class);
+        Intent intent = new Intent(CartShoppingActivity.this,GoodsDetailActivity.class);
         intent.putExtra("contentId",item.getId());
         startActivity(intent);
-    }
-
-    @Override
-    public void onClearSucessful(BaseResponseBean data) {
-        if (data != null){
-            int mCount = 0;
-            if (data.getCode() ==200){
-                Log.e("清空购物车","清除成功");
-                cartItemAdapter.cleanItems();
-                cartItemAdapter.isClearAll();
-                for (int i = 0; i < mCartBean.size(); i++) {
-                    mCount += mCartBean.get(i).getCount();
-                }
-                EventBus.getDefault().post(new CartEvent(mCount,5));
-                clear_all.setEnabled(false);
-                clear_all.setClickable(false);
-                empty_cart.setVisibility(View.VISIBLE);
-                cart_top_layout.setVisibility(View.GONE);
-                select.setClickable(false);
-                select.setEnabled(false);
-            }
-        }
-    }
-
-    @Override
-    public void onClearFailure(String message) {
-        Log.e("清空购物车","清除失败信息:"+message);
-    }
-
-    @Override
-    public void onChangeItemSucessful(CartIdBean responseBean) {
-        Toast.makeText(CartActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
-        cartItemAdapter.updateItems(mCartBean);
-        if (mCartBean == null  || mCartBean.size() == 0){
-            empty_cart.setVisibility(View.VISIBLE);
-            cart_top_layout.setVisibility(View.GONE);
-            select.setClickable(false);
-            select.setEnabled(false);
-            clear_all.setEnabled(false);
-            clear_all.setClickable(false);
-            cartItemAdapter.isClearAll();
-        }else {
-            empty_cart.setVisibility(View.GONE);
-            cart_top_layout.setVisibility(View.VISIBLE);
-            select.setClickable(true);
-            select.setEnabled(true);
-            clear_all.setEnabled(true);
-            clear_all.setClickable(true);
-        }
-    }
-
-    @Override
-    public void onChangeItemFailure(String message) {
-        if (!StringUtils.isEmpty(message) && message.equals("401")){
-            //session去重新登录
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
-            startActivity(intent);
-            finish();
-        }else {
-            Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
-        }
     }
 }

@@ -159,7 +159,12 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
                 new FrontViewToMove(frontView, mListView,200).generateRevealAnimate(frontView,0);
             }
         });
-
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCartItemCallBack.skipGoodsDeatils(item);
+            }
+        });
     }
 
 
@@ -261,6 +266,7 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         void seletSigle(boolean isSelect,CartDataBean item);
         void cleatAll(boolean isNull);
         void changeItemGoodsCount(int count,CartDataBean item,boolean isSelect);
+        void skipGoodsDeatils(CartDataBean item);
     }
 
     private CartItemCallBack mCartItemCallBack;

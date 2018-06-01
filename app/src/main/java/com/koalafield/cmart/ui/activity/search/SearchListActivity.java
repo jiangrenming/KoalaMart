@@ -43,7 +43,9 @@ import com.koalafield.cmart.presenter.categry.ICategryTwoPresenter;
 import com.koalafield.cmart.presenter.search.ISearchPresenter;
 import com.koalafield.cmart.presenter.search.SearchPresenter;
 import com.koalafield.cmart.ui.activity.CategryActivity;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
+import com.koalafield.cmart.ui.activity.goods.CartShoppingActivity;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.goods.SearchActivity;
 import com.koalafield.cmart.ui.view.cart.ICartVIew;
@@ -96,6 +98,8 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     SwipeRefreshLayout search_swipe_refresh;
     @BindView(R.id.empty_search)
     LinearLayout empty_search;
+    @BindView(R.id.goods_car_img)
+    ImageView goods_car_img;
 
     private ISearchPresenter mSearchList;
     private String title;
@@ -110,16 +114,21 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     @Override
     public void initDatas() {
         initSwipeRefresh();
-        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
-        if (!StringUtils.isEmpty(tickets)){
-             ICartPresenter mPresenter = new CartPresenter(SearchListActivity.this);
-             mPresenter.getData();
-        }
          title = getIntent().getStringExtra("title");
         if (!StringUtils.isEmpty(title)){
             search_title.setText(title);
         }
         setDefaultDrawable();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        if (!StringUtils.isEmpty(tickets)){
+            ICartPresenter mPresenter = new CartPresenter(SearchListActivity.this);
+            mPresenter.getData();
+        }
     }
 
     @Override
@@ -134,7 +143,7 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     }
 
     private  String ordercolumn = "CurrentPrice";
-    @OnClick({R.id.all_categry,R.id.currentPrice,R.id.currentSale})
+    @OnClick({R.id.all_categry,R.id.currentPrice,R.id.currentSale,R.id.goods_car_img})
     public  void changeClick(View view){
         switch (view.getId()){
             case R.id.all_categry:
@@ -150,6 +159,16 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
             case  R.id.currentSale:
                 setDrawable(2);
                 ordercolumn = "SalesCount";
+                break;
+            case R.id.goods_car_img:
+                String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+                if (!StringUtils.isEmpty(tickets)){
+                    startActivity(new Intent(SearchListActivity.this,CartShoppingActivity.class));
+                }else {
+                    Intent intent = new Intent(SearchListActivity.this, LoginActivity.class);
+                    intent.putExtra("type",3);
+                    startActivity(intent);
+                }
                 break;
             default:
                 break;

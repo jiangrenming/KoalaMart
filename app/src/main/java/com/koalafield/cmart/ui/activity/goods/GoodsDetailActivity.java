@@ -38,6 +38,7 @@ import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.Point;
+import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.goods.CommentDatas;
 import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
@@ -57,6 +58,8 @@ import com.koalafield.cmart.presenter.goods.IGoodsCollectionPresenter;
 import com.koalafield.cmart.presenter.goods.IGoodsCommondPresenter;
 import com.koalafield.cmart.presenter.goods.IGoodsDetailPresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
+import com.koalafield.cmart.ui.activity.search.SearchListActivity;
 import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 import com.koalafield.cmart.ui.view.cart.ICartVIew;
 import com.koalafield.cmart.ui.view.goods.IGoodsCollectionDeleteView;
@@ -89,7 +92,7 @@ import static com.koalafield.cmart.ui.activity.TabBaseActivity.loadIntoUseFitWid
 
 public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartNumberBean>,IGoodsCommondlView<List<GoodsRecoomendBean>>,
         IGoodsDetailView<GoodsDetailsBean>,IGoodsCollectionView<BaseResponseBean>,IGoodsCollectionDeleteView<BaseResponseBean>,
-        ICartChangeCountView<SpecialResponseBean>,PopupWindow.OnDismissListener,View.OnClickListener{
+        ICartChangeCountView<CartIdBean>,PopupWindow.OnDismissListener,View.OnClickListener{
 
     //头部布局
     @BindView(R.id.goods_back)
@@ -129,6 +132,8 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     TextView judget_more;
     @BindView(R.id.comment_content)
     RecyclerView comment_content;
+    @BindView(R.id.pay_buy)
+    LinearLayout pay_buy;
 
     private  int contentId;
     private IGoodsDetailPresenter mGoodsDetailPresenter;
@@ -169,61 +174,22 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
 
-    @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection,R.id.judget_more})
+    private  int clickType ;
+    @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection,R.id.judget_more,R.id.goods_car_img,R.id.pay_buy})
     public  void goodsClick(View view){
         String tickets = null;
         String num = null;
+        Intent intent = null;
         switch (view.getId()){
             case R.id.pay_goods:
                  tickets = ShareBankPreferenceUtils.getString("tickets", null);
                 if (!StringUtils.isEmpty(tickets)){
-                    if (openSelection){
-                        openPopupWindow(view);
-                    }else {
-                        ICartChangeItemPresenter presenter = new CartChangeItemPresenter(this);
-                        String goods_num = goods_number.getText().toString();
-                        Map<String,String> addCarts = new HashMap<>();
-                        if (!StringUtils.isEmpty(goods_num)){
-                            addCarts.put("count",goods_num);
-                        }
-                        addCarts.put("contentId",String.valueOf(contentId));
-
-                        if (mWeightList != null && mWeightList.size() >0){
-                            addCarts.put("weight",mWeightList.get(0).getName());
-                        }else {
-                            addCarts.put("weight",null);
-
-                        }
-                        if (mTypeList != null && mTypeList.size() >0){
-                            addCarts.put("type",mTypeList.get(0).getName());
-                        }else {
-                            addCarts.put("type",null);
-
-                        }
-                        if (mColorList != null && mColorList.size() >0){
-                            addCarts.put("color",mColorList.get(0).getName());
-                        }else {
-                            addCarts.put("color",null);
-
-                        }
-                        if (mSizeList != null && mSizeList.size() >0){
-                            addCarts.put("size",mSizeList.get(0).getName());
-                        }else {
-                            addCarts.put("size",null);
-
-                        }
-                        if (mMaterialList != null && mMaterialList.size() >0){
-                            addCarts.put("material",mMaterialList.get(0).getName());
-                        }else {
-                            addCarts.put("material",null);
-
-                        }
-                        addCarts.put("tag","0");
-                        presenter.getChangeCountData(addCarts);
-                    }
-
+                    clickType = 1;
+                    addCartData(view);
                 }else {
-                    startActivity(new Intent(GoodsDetailActivity.this, LoginActivity.class));
+                    intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
+                    intent.putExtra("type",3);
+                    startActivity(intent);
                 }
                 break;
             case R.id.goods_minus:
@@ -257,18 +223,88 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                         collectionDel.getDetails(params);
                     }
                 }else {
-                    Toast.makeText(GoodsDetailActivity.this,"请先登陆",Toast.LENGTH_SHORT).show();
-                    return;
+                     intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
+                    intent.putExtra("type",3);
+                    startActivity(intent);
                 }
                 break;
             case  R.id.judget_more: //评论更多
-                Intent intent = new Intent(GoodsDetailActivity.this, GoodsCommentActivity.class);
+                 intent = new Intent(GoodsDetailActivity.this, GoodsCommentActivity.class);
                 intent.putExtra("contentId",contentId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.comment_anim_out, R.anim.comment_anim_in);
                 break;
+            case R.id.goods_car_img:
+                tickets = ShareBankPreferenceUtils.getString("tickets", null);
+                if (!StringUtils.isEmpty(tickets)){
+                    startActivity(new Intent(GoodsDetailActivity.this,CartShoppingActivity.class));
+                }else {
+                    intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
+                    intent.putExtra("type",3);
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.pay_buy:
+                tickets = ShareBankPreferenceUtils.getString("tickets", null);
+                if (!StringUtils.isEmpty(tickets)){
+                    clickType = 2;
+                    addCartData(view);
+                }else {
+                     intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
+                    intent.putExtra("type",3);
+                    startActivity(intent);
+                }
+                break;
             default:
                 break;
+        }
+    }
+
+    private void addCartData(View view) {
+        if (openSelection){
+            openPopupWindow(view);
+        }else {
+            ICartChangeItemPresenter presenter = new CartChangeItemPresenter(this);
+            String goods_num = goods_number.getText().toString();
+            Map<String,String> addCarts = new HashMap<>();
+            if (!StringUtils.isEmpty(goods_num)){
+                addCarts.put("count",goods_num);
+            }
+            addCarts.put("contentId",String.valueOf(contentId));
+
+            if (mWeightList != null && mWeightList.size() >0){
+                addCarts.put("weight",mWeightList.get(0).getName());
+            }else {
+                addCarts.put("weight",null);
+
+            }
+            if (mTypeList != null && mTypeList.size() >0){
+                addCarts.put("type",mTypeList.get(0).getName());
+            }else {
+                addCarts.put("type",null);
+
+            }
+            if (mColorList != null && mColorList.size() >0){
+                addCarts.put("color",mColorList.get(0).getName());
+            }else {
+                addCarts.put("color",null);
+
+            }
+            if (mSizeList != null && mSizeList.size() >0){
+                addCarts.put("size",mSizeList.get(0).getName());
+            }else {
+                addCarts.put("size",null);
+
+            }
+            if (mMaterialList != null && mMaterialList.size() >0){
+                addCarts.put("material",mMaterialList.get(0).getName());
+            }else {
+                addCarts.put("material",null);
+
+            }
+            addCarts.put("tag","0");
+            presenter.getChangeCountData(addCarts);
         }
     }
 
@@ -703,17 +739,21 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     //添加购物车
 
     @Override
-    public void onChangeItemSucessful(SpecialResponseBean data) {
-        if (data.getCode() == 200){
-            Toast.makeText(GoodsDetailActivity.this,"添加购物车成功",Toast.LENGTH_SHORT).show();
-            if (popupWindow != null &&popupWindow.isShowing()){
-                popupWindow.dismiss();
-            }
-            goods_cart_num.setVisibility(View.VISIBLE);
-            goods_cart_num.setText(String.valueOf(Integer.valueOf(goods_cart_num.getText().toString())+Integer.valueOf(goods_number.getText().toString())));
-            int[] loc = new int[2];
-            pay_goods.getLocationInWindow(loc);
-            playAnimation(loc);
+    public void onChangeItemSucessful(CartIdBean data) {
+        Toast.makeText(GoodsDetailActivity.this,"添加购物车成功",Toast.LENGTH_SHORT).show();
+        if (popupWindow != null &&popupWindow.isShowing()){
+            popupWindow.dismiss();
+        }
+        goods_cart_num.setVisibility(View.VISIBLE);
+        goods_cart_num.setText(String.valueOf(Integer.valueOf(goods_cart_num.getText().toString())+Integer.valueOf(goods_number.getText().toString())));
+        int[] loc = new int[2];
+        pay_goods.getLocationInWindow(loc);
+        playAnimation(loc);
+        if (clickType ==2){
+            //跳转到提交订单的页面
+            Intent intent = new Intent(GoodsDetailActivity.this, PayActivity.class);
+            intent.putExtra("payDatas",String.valueOf(data.getId()));
+            startActivity(intent);
         }
     }
 
@@ -736,7 +776,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.goods_close: //关闭你弹出窗
+            case R.id.goods_close: //关闭弹出窗
                 if (popupWindow != null &&popupWindow.isShowing()){
                     popupWindow.dismiss();
                 }

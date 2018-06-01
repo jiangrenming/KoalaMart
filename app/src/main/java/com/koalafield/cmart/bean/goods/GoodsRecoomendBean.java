@@ -36,8 +36,8 @@ public class GoodsRecoomendBean  implements Serializable {
     private   String Discount;
     private int MinPurchase;
     private int MaxBookingCustomer;
-    private String CurrentPrice;
-    private String  OriginalPrice;
+    private double CurrentPrice;
+    private double  OriginalPrice;
     private String LinkGoods;
     private  String CoverImg;
     private  String Currency;
@@ -243,19 +243,19 @@ public class GoodsRecoomendBean  implements Serializable {
         MaxBookingCustomer = maxBookingCustomer;
     }
 
-    public String getCurrentPrice() {
+    public double getCurrentPrice() {
         return CurrentPrice;
     }
 
-    public void setCurrentPrice(String currentPrice) {
+    public void setCurrentPrice(double currentPrice) {
         CurrentPrice = currentPrice;
     }
 
-    public String getOriginalPrice() {
+    public double getOriginalPrice() {
         return OriginalPrice;
     }
 
-    public void setOriginalPrice(String originalPrice) {
+    public void setOriginalPrice(double originalPrice) {
         OriginalPrice = originalPrice;
     }
 

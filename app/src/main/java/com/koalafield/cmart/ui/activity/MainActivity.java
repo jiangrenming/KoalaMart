@@ -85,7 +85,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
         tabMap.put(3, new View[]{layout3, iv_shopcart});
         tabMap.put(4, new View[]{layout4, iv_user_center});
         mIntent = new Intent(this,HomeActivity.class);
-        mIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+      //  mIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         overridePendingTransition(0, 0);
         tabHost.addTab(tabHost.newTabSpec("1").setIndicator("1").setContent(mIntent));
         tabHost.addTab(tabHost.newTabSpec("2").setIndicator("2").setContent(new Intent(this, CategryActivity.class)));

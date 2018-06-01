@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/cart_top"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/gray"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="25dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/back"
+            android:layout_marginLeft="10dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="购物车"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/clear_all"
+            android:layout_width="wrap_content"
+            android:text="清空购物车"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_below="@+id/cart_top"
+        android:id="@+id/cart_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.koalafield.cmart.widget.MyBoundScrollView
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/goods_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <include layout="@layout/layout_common_empty"/>
+            </FrameLayout>
+        </com.koalafield.cmart.widget.MyBoundScrollView>
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/empty_cart"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="25dp"
+            android:src="@mipmap/buy"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:layout_height="25dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="购物车空空的"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/gray"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/empty_cart"
+        android:layout_toEndOf="@+id/empty_cart">
+        <ImageView
+            android:id="@+id/select"
+            android:layout_width="20dp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/select"
+            android:layout_centerVertical="true"
+            android:layout_height="20dp" />
+        <TextView
+            android:layout_toRightOf="@+id/select"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="全选" />
+        <LinearLayout
+            android:id="@+id/pay_goods"
+            android:layout_width="120dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/btn_red"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="结算"
+                android:textColor="@color/white"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="("
+                android:textColor="@color/white"
+                android:background="@color/btn_red"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/select_num"
+                android:layout_width="wrap_content"
+                android:text="999"
+                android:textColor="@color/white"
+                android:background="@color/btn_red"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text=")"
+                android:textColor="@color/white"
+                android:background="@color/btn_red"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_toLeftOf="@+id/pay_goods"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:layout_height="0dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:text="总计:"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/cart_curreny"
+                    android:layout_width="wrap_content"
+                    android:textSize="12sp"
+                    android:text="AUD"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/select_amount"
+                    android:layout_width="wrap_content"
+                    android:textSize="12sp"
+                    android:text="199.99"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="不含运费"
+                android:layout_gravity="center_horizontal"
+                android:textSize="10sp"
+                android:layout_weight="0.5"
+                android:layout_height="0dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

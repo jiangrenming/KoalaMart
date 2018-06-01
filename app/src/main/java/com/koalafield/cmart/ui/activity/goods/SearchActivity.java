@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -43,12 +44,14 @@ import butterknife.OnClick;
  * @date 2018/5/23
  */
 
-public class SearchActivity extends BaseActivity implements IHotWordsView<List<String>> {
+public class SearchActivity extends BaseActivity implements IHotWordsView<List<String>>,SearchView.OnQueryTextListener {
 
     @BindView(R.id.back)
     ImageView back;
+   /* @BindView(R.id.search_words)
+    EditText search_words;*/
     @BindView(R.id.search_words)
-    EditText search_words;
+    SearchView search_words;
     @BindView(R.id.search_cancle)
     TextView search_cancle;
     //历史记录
@@ -75,46 +78,18 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
     @Override
     public void initDatas() {
         mHistory = new HistoryService(this);
+        search_words.setIconifiedByDefault(true);
+        search_words.setFocusable(true);
+        search_words.setIconified(false);
+        search_words.setQueryHint("搜索");
+        search_words.setOnQueryTextListener(this);
+        search_words.requestFocusFromTouch();
     }
 
     @Override
     public void upDateViews() {
         hotSearchPresenter = new HotSearchPresenter(this);
         hotSearchPresenter.getData();
-        search_words.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView view, int action, KeyEvent event) {
-                if (search_words.getVisibility() == View.VISIBLE
-                        && (action == EditorInfo.IME_ACTION_DONE
-                        || action == EditorInfo.IME_ACTION_SEND
-                        || action == EditorInfo.IME_ACTION_NEXT
-                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
-                    String vaule = search_words.getText().toString().trim();
-                    if (StringUtils.isEmpty(vaule)  || vaule.length() == 0) {
-                        Toast.makeText(SearchActivity.this,"输入的数据不难为空",Toast.LENGTH_SHORT).show();
-                    } else {
-                        //将数据插入到数据库里
-                        //插入之前先查询，如果有相同的就不在插入进去
-                        HistoryContent historyContent = new HistoryContent();
-                        historyContent.setContent(vaule);
-                        try {
-                            HistoryContent content = mHistory.findContent(vaule);
-                            if (content == null){
-                                mHistory.addKeyWords(historyContent);
-                            }
-                            Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
-                            intent.putExtra("title",vaule);
-                            startActivity(intent);
-                        } catch (DuplicatedTraceException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     @Override
@@ -145,7 +120,7 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
 
     }
 
-    @OnClick(R.id.delete)
+    @OnClick({R.id.delete,R.id.back,R.id.search_cancle})
     public void searchClick(View view){
         switch (view.getId()){
             case R.id.delete:
@@ -162,6 +137,9 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
                 builder.setNegativeButton("取消", null);
                 builder.create().show();
             break;
+            case R.id.back:
+            case R.id.search_cancle:
+                finish();
             default:
                 break;
 
@@ -177,9 +155,20 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
             hot_flowLayout.setOnTagClickListener(new FlowLayout.OnTagClickListener() {
                 @Override
                 public void TagClick(String text) {
-                    Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
-                    intent.putExtra("title",text);
-                    startActivity(intent);
+                    //插入之前先查询，如果有相同的就不在插入进去
+                    HistoryContent historyContent = new HistoryContent();
+                    historyContent.setContent(text);
+                    try {
+                        HistoryContent content = mHistory.findContent(text);
+                        if (content == null){
+                            mHistory.addKeyWords(historyContent);
+                        }
+                        Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
+                        intent.putExtra("title",text);
+                        startActivity(intent);
+                    } catch (DuplicatedTraceException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
@@ -195,5 +184,35 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
     @Override
     public void onHotWordsFailure(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        if (StringUtils.isEmpty(query)  || query.length() == 0) {
+            Toast.makeText(SearchActivity.this,"输入的数据不难为空",Toast.LENGTH_SHORT).show();
+        } else {
+            //将数据插入到数据库里
+            //插入之前先查询，如果有相同的就不在插入进去
+            HistoryContent historyContent = new HistoryContent();
+            historyContent.setContent(query);
+            try {
+                HistoryContent content = mHistory.findContent(query);
+                if (content == null){
+                    mHistory.addKeyWords(historyContent);
+                }
+                Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
+                intent.putExtra("title",query);
+                startActivity(intent);
+            } catch (DuplicatedTraceException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

@@ -6,6 +6,7 @@ import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
+import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 
@@ -37,7 +38,7 @@ public class CartChangeItemPresenter implements ICartChangeItemPresenter {
 
     @Override
     public void getChangeCountData(Map<String, String> params) {
-        ApiManager.changeCartCount(params).subscribe(new SubScribeCallBack<BaseResponseBean>(new CallBack() {
+        ApiManager.changeCartCount(params).subscribe(new SubScribeCallBack<CartIdBean>(new CallBack() {
             @Override
             public void onInit() {
                 mCartChangeCountView.showLoading();
@@ -46,13 +47,11 @@ public class CartChangeItemPresenter implements ICartChangeItemPresenter {
             @Override
             public <T> void onSucess(T data) {
                 if (null != data){
-                    BaseResponseBean responseBean = (BaseResponseBean) data;
-                    if (responseBean != null && responseBean.getCode() ==200){
+                    CartIdBean responseBean = (CartIdBean) data;
+                    if (responseBean != null ){
                         mCartChangeCountView.onChangeItemSucessful(responseBean);
-                    }else if ( responseBean.getCode() == 401){
-                        mCartChangeCountView.onChangeItemFailure(String.valueOf(responseBean.getCode()));
                     }else {
-                        mCartChangeCountView.onChangeItemFailure(responseBean.getMsg());
+                        mCartChangeCountView.onChangeItemFailure("添加失败");
                     }
                 }else {
                     mCartChangeCountView.onChangeItemFailure("返回的数据为NULL");

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.koalafield.cmart.AndoridApplication;
 import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.base.bean.SpecialResponseBean;
+import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CateBrandGoodsListBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
@@ -239,7 +240,7 @@ public class ApiManager {
     /**
      * 改变购物车商品的数目，即增减删
      */
-    public  static  Flowable<BaseResponseBean> changeCartCount(Map<String,String> params){
+    public  static  Flowable<CartIdBean> changeCartCount(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.changeGoodsCounts(getHeaders(),setParams(params)))
                 .map(changeCartCount());
     }
@@ -567,11 +568,14 @@ public class ApiManager {
     /**
      * 增减购物车商品数量
      */
-    private static Function<BaseResponseBean,BaseResponseBean> changeCartCount() {
-        return new Function<BaseResponseBean, BaseResponseBean>() {
+    private static Function<SpecialResponseBean,CartIdBean> changeCartCount() {
+        return new Function<SpecialResponseBean, CartIdBean>() {
             @Override
-            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
-                return response;
+            public CartIdBean apply(SpecialResponseBean response) throws Exception {
+                if (response.getCode() == 200){
+                    return (CartIdBean) response.getData();
+                }
+                return null;
             }
         };
     }
@@ -790,264 +794,6 @@ public class ApiManager {
     private static RequestBody setParams(Map<String,String> params){
         return  RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
     }
-
-
-
-  /*  *//**
-     * 获取首页的bananer图片
-     * @return
-     *//*
-    public static Flowable<List<ProductBannerBean>> getIntegralMall(){
-        return apiSubscribe(MyApplication.apiService.getIntegralMallBananer())
-                .flatMap(getMall());
-    }
-
-
-    *//**
-     * 获取首页的分类主题
-     *//*
-    public  static  Flowable<List<UbProductMainListBean>> getHomeCategryData(Map<String,String> params){
-        return apiSubscribe(MyApplication.apiService.getHomeCategry(params))
-                .flatMap(getCategry());
-    }
-
-    *//**
-     * 获取首页推荐列表
-     *//*
-    public static Flowable<List<ProductListBean>> getHomeRecommend(Map<String,String> params){
-        return apiSubscribe(MyApplication.apiService.getHomeRecommend(setParams(params)))
-                .flatMap(getRecommend());
-    }
-
-    *//**
-     * 获取购物车列表数据
-     *//*
-    public  static  Flowable<List<ShopCartItemBean>> getCartNumber(){
-        return apiSubscribe(MyApplication.apiService.getCartShopping())
-                .flatMap(getCarts());
-
-    }
-
-    *//**
-     * 添加加盟商收藏
-     *//*
-    public  static  Flowable<Object> getAddShopers(Map<String,String> params){
-        return apiSubscribe(MyApplication.apiService.getAddShopers(setParams(params)))
-                .flatMap(addShoper());
-
-    }
-
-    *//**
-     * 加盟商下拉列表
-     *//*
-    public  static  Flowable<List<SpinnerListBean>> getSelectShop(Map<String,String> params){
-        return apiSubscribe(MyApplication.apiService.getSelectShops(setParams(params)))
-                .flatMap(selectShops());
-
-    }
-
-
-    *//**
-     * 联盟商家轮播图
-     * @return
-     *//*
-    public  static  Flowable<List<ProductBannerBean>> getUnioBananers(){
-        return apiSubscribe(MyApplication.apiService.getUnioBananers())
-                .flatMap(getUnioBananer());
-
-    }
-    *//**
-     * 联盟商家分类列表
-     *//*
-    public  static  Flowable<List<SellerCategoryBean>> getUnioCategry(){
-        return apiSubscribe(MyApplication.apiService.getUnioCategry())
-                .flatMap(getUnioCategrys());
-
-    }
-
-    *//**
-     * 联盟商家列表
-     *//*
-    public  static  Flowable<List<SellerBean>> getUnioList(Map<String,String> params){
-        return apiSubscribe(MyApplication.apiService.getUnioList(params))
-                .flatMap(getUnioLists());
-    }
-
-    *//**
-     * 联盟商家具体分类入口
-     *//*
-    public  static  Flowable<List<SellerBean>> getUnioCategryIn(Map<String,String> params){
-        return apiSubscribe(MyApplication.apiService.getUnioCategryIn(params))
-                .flatMap(getUnioLists());
-    }
-
-    *//**
-     * 附近联盟商家
-     *//*
-    public  static  Flowable<List<SellerBean>> getUnioNearByShopers(Map<String,String> params){
-        return apiSubscribe(MyApplication.apiService.getUnioNearByShopers(params))
-                .flatMap(getUnioLists());
-    }
-
-    *//***************************************post添加参数json格式转换**********************************************//*
-
-
-    private static RequestBody setParams(Map<String,String> params){
-        String userToken = GlobalInfo.userToken;
-        if(TextUtils.isEmpty(userToken)){
-            userToken = "\"\"";
-        }
-        params.put("token",userToken);
-        return  RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
-    }
-
-    *//***************************************数据转换器******************************************//*
-
-    *//**
-     * 联盟商家轮播图
-     * @return
-     *//*
-
-    private static Function<BaseResponseBean, Flowable<List<ProductBannerBean>>> getUnioBananer() {
-        return new Function<BaseResponseBean, Flowable<List<ProductBannerBean>>>() {
-            @Override
-            public Flowable<List<ProductBannerBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<ProductBannerBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-
-    }
-    *//**
-     * 联盟商家分类列表
-     *//*
-    private static Function<BaseResponseBean, Flowable<List<SellerCategoryBean>>> getUnioCategrys() {
-        return new Function<BaseResponseBean, Flowable<List<SellerCategoryBean>>>() {
-            @Override
-            public Flowable<List<SellerCategoryBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<SellerCategoryBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-    }
-
-    *//**
-     * 联盟商家列表/具体分类入口
-     *//*
-    private static Function<BaseResponseBean, Flowable<List<SellerBean>>> getUnioLists() {
-        return new Function<BaseResponseBean, Flowable<List<SellerBean>>>() {
-            @Override
-            public Flowable<List<SellerBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<SellerBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-    }
-
-
-    *//**
-     * 积分商城bananer图片的转换
-     * @return
-     *//*
-    private static Function<BaseResponseBean, Flowable<List<ProductBannerBean>>> getMall() {
-
-        return new Function<BaseResponseBean, Flowable<List<ProductBannerBean>>>() {
-            @Override
-            public Flowable<List<ProductBannerBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<ProductBannerBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-
-    }
-
-    *//**
-     * 获取首页主题分类
-     * @return
-     *//*
-
-    private static Function<BaseResponseBean, Flowable<List<UbProductMainListBean>>> getRecommend() {
-        return new Function<BaseResponseBean, Flowable<List<UbProductMainListBean>>>() {
-            @Override
-            public Flowable<List<UbProductMainListBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<UbProductMainListBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-    }
-
-    *//**
-     * 获取首页推荐商品
-     *//*
-    private static Function<BaseResponseBean, Flowable<List<ProductListBean>>> getCategry() {
-        return new Function<BaseResponseBean, Flowable<List<ProductListBean>>>() {
-            @Override
-            public Flowable<List<ProductListBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<ProductListBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-    }
-
-    *//**
-     * 添加加盟商收藏
-     *//*
-    private static Function<BaseResponseBean,Object> addShoper() {
-
-        return  new Function<BaseResponseBean, Object>() {
-            @Override
-            public Object apply(BaseResponseBean baseResponseBean) throws Exception {
-                if (null != baseResponseBean){
-                    return  baseResponseBean;
-                }
-                return  null;
-            }
-        };
-    }
-
-    *//**
-     * 加盟商下拉列表
-     *//*
-
-    private static Function<BaseResponseBean, Flowable<List<SpinnerListBean>>> selectShops() {
-
-        return new Function<BaseResponseBean, Flowable<List<SpinnerListBean>>>() {
-            @Override
-            public Flowable<List<SpinnerListBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<SpinnerListBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-    }
-    *//**
-     * 购物车数量
-     * @return
-     *//*
-    private static  Function<BaseResponseBean,Flowable<List<ShopCartItemBean>>> getCarts(){
-        return new Function<BaseResponseBean, Flowable<List<ShopCartItemBean>>>() {
-            @Override
-            public Flowable<List<ShopCartItemBean>> apply(BaseResponseBean response) throws Exception {
-                if ( null !=  response && response.getCode() == 200){
-                    return Flowable.fromArray((List<ShopCartItemBean>) response.getData());
-                }
-                return  null;
-            }
-        };
-    }*/
 
     /************************************线程转换公共部分******************************************************/
 
