@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.home;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.home.ToolsBarBean;
 import com.koalafield.cmart.ui.view.home.IHomeToolsView;
@@ -42,7 +43,7 @@ public class HomeToolsBarPresenter implements IHomeToolsBarPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 toolsView.hideLoading();
                 toolsView.onToolsBarFailure(t.getMessage());
             }

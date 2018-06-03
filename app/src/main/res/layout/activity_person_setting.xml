@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
     <include
         android:id="@+id/header"
@@ -13,11 +14,6 @@
         android:background="@color/gray_light2"
         android:layout_height="20dp"/>
 
-    <com.koalafield.cmart.widget.MyBoundScrollView
-        android:layout_below="@+id/setting_view"
-        android:layout_width="match_parent"
-        android:scrollbars="none"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -33,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textColor="@color/black"
-                    android:text="登录密码"/>
+                    android:text="修改登录密码"/>
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_alignParentRight="true"
@@ -130,7 +126,6 @@
                 android:layout_height="40dp" />
 
         </LinearLayout>
-    </com.koalafield.cmart.widget.MyBoundScrollView>
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light2"

@@ -11,6 +11,6 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IPersonNumberView<T> extends IBaseView {
 
     void onPersonNumberSucessFul(T data);
-    void onPersonNumberFailure(String message);
+    void onPersonNumberFailure(String message,int code);
 
 }

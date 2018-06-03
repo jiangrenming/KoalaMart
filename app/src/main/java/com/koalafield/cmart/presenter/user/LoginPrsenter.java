@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.ui.view.ILoginView;
@@ -45,7 +46,7 @@ public class LoginPrsenter implements ILoginPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mLoginView.hideLoading();
                 mLoginView.onFailure(t.getMessage());
             }

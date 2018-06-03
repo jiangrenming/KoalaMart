@@ -10,6 +10,6 @@ public interface ICreateOrderView<T> extends IBaseView {
 
 
     void onCreateOrderData(T data);
-    void onCreateOrderFailure(String message);
+    void onCreateOrderFailure(String message,int code);
 
 }

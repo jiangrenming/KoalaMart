@@ -69,4 +69,7 @@
     <color name="ubao_red">#de2628</color>
     <color name="btn_red">#e3215d</color>
     <color name="sc_transparent_background">#00111111</color>
+
+    <color name="listview_item_normal">#eef0ed</color>
+    <color name="listview_item_pressed">#d4d4d4</color>
 </resources>

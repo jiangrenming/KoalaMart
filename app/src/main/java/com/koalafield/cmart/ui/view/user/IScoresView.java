@@ -11,7 +11,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IScoresView<T> extends IBaseView {
 
     void onScoresSucessFul(T data);
-    void onScoresFailure(String message);
+    void onScoresFailure(String message,int code);
     void loadScoresEmptyData();
     void loadScoresNoMoreData();
     void loadScoresMoreData(T data);

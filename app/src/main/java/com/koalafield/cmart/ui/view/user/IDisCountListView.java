@@ -11,7 +11,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IDisCountListView<T> extends IBaseView {
 
     void onDisCountSucessFul(T data);
-    void onDisCountFailure(String message);
+    void onDisCountFailure(String message,int code);
     void loadDisCountEmptyData();
     void loadDisCountNoMoreData();
     void loadDisCountMoreData(T data);

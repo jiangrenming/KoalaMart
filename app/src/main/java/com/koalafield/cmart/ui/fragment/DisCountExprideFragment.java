@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.presenter.user.DisCountPresenter;
 import com.koalafield.cmart.presenter.user.IDisCountPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.view.user.IDisCountListView;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
 
@@ -83,8 +85,13 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
     }
 
     @Override
-    public void onDisCountFailure(String message) {
+    public void onDisCountFailure(String message,int code) {
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

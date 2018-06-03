@@ -27,6 +27,7 @@ import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.presenter.user.IPersonNumberPresenter;
 import com.koalafield.cmart.presenter.user.PersonNumberPresenter;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
@@ -326,15 +327,12 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void onPersonNumberFailure(String message) {
-        if (!StringUtils.isEmpty(message) && message.equals("401")){
-            //session去重新登录
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",1);
+    public void onPersonNumberFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(PersonActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
             startActivity(intent);
-            finish();
-        }else {
-            Toast.makeText(PersonActivity.this,message,Toast.LENGTH_SHORT).show();
         }
     }
 }

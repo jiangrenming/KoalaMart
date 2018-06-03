@@ -15,11 +15,11 @@ import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.dl7.recycler.listener.OnRemoveDataListener;
 import com.dl7.recycler.listener.OnRequestDataListener;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.AddressManagerAdapter;
 import com.koalafield.cmart.adapter.CommentAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.presenter.goods.GoodsCommentPresenter;
 import com.koalafield.cmart.presenter.goods.IGoodsCommentPresenter;
@@ -27,6 +27,8 @@ import com.koalafield.cmart.presenter.user.AddressPresenter;
 import com.koalafield.cmart.presenter.user.DelCountryPresenter;
 import com.koalafield.cmart.presenter.user.IAddressPresenter;
 import com.koalafield.cmart.presenter.user.IDelCountryPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.user.IAddressListView;
 import com.koalafield.cmart.ui.view.user.IDelAddressView;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
@@ -241,9 +243,14 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     }
 
     @Override
-    public void onAddressFailure(String message) {
+    public void onAddressFailure(String message,int code) {
         Log.i("异常的信息:",message);
         Toast.makeText(AddressManangerActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(AddressManangerActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -283,8 +290,13 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     }
 
     @Override
-    public void onDelAddressFailure(String message) {
+    public void onDelAddressFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(AddressManangerActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

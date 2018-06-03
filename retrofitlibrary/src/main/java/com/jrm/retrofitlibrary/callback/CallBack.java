@@ -1,5 +1,7 @@
 package com.jrm.retrofitlibrary.callback;
 
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
+
 /**
  *
  * @author jiangrenming
@@ -24,7 +26,7 @@ public interface CallBack {
      * 获取数据失败
      * @param t
      */
-     void onFailure(Throwable t);
+     void onFailure(ExceptionHandle.ResponeThrowable t);
 
     /**
      * 完成获取数据

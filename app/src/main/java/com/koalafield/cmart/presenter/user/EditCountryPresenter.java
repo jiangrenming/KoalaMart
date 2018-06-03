@@ -2,8 +2,9 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.ui.view.user.IAddAddressView;
 import com.koalafield.cmart.ui.view.user.IEditAddressView;
 
@@ -50,19 +51,19 @@ public class EditCountryPresenter implements IEditCountryPresenter{
                     if (bean != null && bean.getCode() == 200){
                         editAddressView.onEditAddressSucessFul(bean);
                     }else if (bean.getCode() == 401){
-                        editAddressView.onEditAddressFailure(String.valueOf(bean.getCode()));
+                        editAddressView.onEditAddressFailure(bean.getMsg(),bean.getCode());
                     }else {
-                        editAddressView.onEditAddressFailure(bean.getMsg());
+                        editAddressView.onEditAddressFailure(bean.getMsg(),bean.getCode());
                     }
                 }else {
-                    editAddressView.onEditAddressFailure("返回的数据为NULL");
+                    editAddressView.onEditAddressFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 editAddressView.hideLoading();
-                editAddressView.onEditAddressFailure(t.getMessage());
+                editAddressView.onEditAddressFailure(t.getMessage(),t.getCode());
             }
 
             @Override

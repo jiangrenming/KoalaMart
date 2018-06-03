@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity.use;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -13,16 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.event.SelectEvent;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.presenter.RegisterPresent;
 import com.koalafield.cmart.presenter.IRegsterPresent;
+import com.koalafield.cmart.presenter.user.IMessageCodePresenter;
+import com.koalafield.cmart.presenter.user.MessageCodePresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.PersonActivity;
 import com.koalafield.cmart.ui.view.IRegesterView;
+import com.koalafield.cmart.ui.view.user.IMessageCodeView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.RegaxUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
@@ -46,7 +51,7 @@ import butterknife.OnClick;
  * 注册界面
  */
 
-public class RegesterActivity extends BaseActivity<IRegsterPresent> implements IRegesterView<RegisterBean> {
+public class RegesterActivity extends BaseActivity<IRegsterPresent> implements IRegesterView<RegisterBean>,IMessageCodeView<BaseResponseBean> {
 
 
     @BindView(R.id.back)
@@ -67,6 +72,9 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
     TextView register_comfirm;
     @BindView(R.id.already_account)
     TextView already_account;
+    @BindView(R.id.country_id)
+    TextView country_id;
+
 
     @Override
     public int attchLayoutRes() {
@@ -175,16 +183,25 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
         presenter = new RegisterPresent(this);
     }
 
-    @OnClick({R.id.back,R.id.register_btn,R.id.register_comfirm,R.id.already_account})
+    @OnClick({R.id.back,R.id.register_btn,R.id.register_comfirm,R.id.already_account,R.id.country_id})
     public  void onButterClick(View v){
 
         switch (v.getId()){
             case R.id.back:
                finish();
-             //   StackActivityManager.getActivityManager().removeActivity(RegesterActivity.this);
                 break;
             case R.id.register_btn: //短信验证码
+                String phone = register_phone.getText().toString().trim();
+                if (StringUtils.isEmpty(phone) || !RegaxUtils.isMobilePhone(phone)){
+                    return ;
+                }
                 //调用获取验证码的接口，成功时调用timeSchedule();
+                IMessageCodePresenter messageCodePresenter = new MessageCodePresenter(this);
+                Map<String,String> country_params = new HashMap<>();
+                country_params.put("countryId",String.valueOf(0));
+                country_params.put("mobile",phone);
+                country_params.put("flag",String.valueOf(0));
+                messageCodePresenter.setParams(country_params);
                 timeSchedule();
                 break;
             case  R.id.register_comfirm:
@@ -203,6 +220,9 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
                 break;
             case R.id.already_account:
                 finish();
+                break;
+            case  R.id.country_id: //选择区号
+                startActivityForResult(new Intent(RegesterActivity.this,CountryIdActivity.class),10001);
                 break;
             default:
                 break;
@@ -223,7 +243,7 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
         if (StringUtils.isEmpty(pwd_two) ||  !RegaxUtils.isSamePwd(register_pwd.getText().toString().trim(),pwd_two)){
             return false;
         }
-        /*if (StringUtils.isEmpty(code)){  暂时不需要验证
+       /* if (StringUtils.isEmpty(code)){  //暂时不需要验证
             return false;
         }*/
         return  true;
@@ -282,5 +302,28 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
         }, 0, 1000);
         register_btn.setEnabled(false);
         register_btn.setTextColor(AndoridSysUtils.getColorValueByResId(RegesterActivity.this, R.color.white));
+    }
+
+    @Override
+    public void onMessageCodeFul(BaseResponseBean data) {
+
+    }
+
+    @Override
+    public void onMessageCodeFailure(String message) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            if (requestCode == 10001){
+                if (data != null){
+                    String countyrId = data.getStringExtra("countyrId");
+                    country_id.setText(String.valueOf(countyrId));
+                }
+            }
+        }
     }
 }

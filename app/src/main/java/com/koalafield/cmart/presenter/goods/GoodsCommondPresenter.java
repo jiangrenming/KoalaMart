@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.goods;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.goods.GoodsDetailsBean;
 import com.koalafield.cmart.bean.goods.GoodsRecoomendBean;
@@ -38,17 +39,17 @@ public class GoodsCommondPresenter implements IGoodsCommondPresenter{
                     if (goodsRecoomendBean != null && goodsRecoomendBean.size() >0){
                         mGoodsCommondView.onGoodsCommondSucessFul(goodsRecoomendBean);
                     }else {
-                        mGoodsCommondView.onGoodsCommondFailure("返回的数据为空");
+                        mGoodsCommondView.onGoodsCommondFailure("返回的数据为空",0);
                     }
                 }else {
-                    mGoodsCommondView.onGoodsCommondFailure("返回的数据为NULL");
+                    mGoodsCommondView.onGoodsCommondFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mGoodsCommondView.hideLoading();
-                mGoodsCommondView.onGoodsCommondFailure(t.getMessage());
+                mGoodsCommondView.onGoodsCommondFailure(t.getMessage(),t.getCode());
             }
 
             @Override

@@ -10,6 +10,6 @@ public interface IPriceView<T> extends IBaseView {
 
 
     void onPriceData(T data);
-    void onPriceFailure(String message);
+    void onPriceFailure(String message,int code);
 
 }

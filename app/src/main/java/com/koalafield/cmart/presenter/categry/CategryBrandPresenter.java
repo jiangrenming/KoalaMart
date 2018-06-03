@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.categry;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.categry.CateBrandGoodsListBean;
 import com.koalafield.cmart.bean.categry.GoodsListBean;
@@ -47,14 +48,14 @@ public class CategryBrandPresenter implements ICategryBrandPresenter{
                         mListView.onEmptyData();
                     }
                 }else {
-                    mListView.onCategryBrandFailure("返回的数据为NULL");
+                    mListView.onCategryBrandFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mListView.hideLoading();
-                mListView.onCategryBrandFailure(t.getMessage());
+                mListView.onCategryBrandFailure(t.getMessage(),t.getCode());
             }
 
             @Override
@@ -85,14 +86,14 @@ public class CategryBrandPresenter implements ICategryBrandPresenter{
                         mListView.loadNoMore();
                     }
                 }else {
-                    mListView.onCategryBrandFailure("返回的数据为NULL");
+                    mListView.onCategryBrandFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mListView.hideLoading();
-                mListView.onCategryBrandFailure(t.getMessage());
+                mListView.onCategryBrandFailure(t.getMessage(),t.getCode());
             }
 
             @Override

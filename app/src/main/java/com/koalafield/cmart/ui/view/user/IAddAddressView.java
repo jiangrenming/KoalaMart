@@ -11,6 +11,6 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IAddAddressView<T> extends IBaseView {
 
     void onAddAddressSucessFul(T data);
-    void onAddAddressFailure(String message);
+    void onAddAddressFailure(String message,int code);
 
 }

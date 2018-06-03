@@ -11,11 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CartItemAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.event.CartEvent;
@@ -163,16 +162,14 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
     }
 
     @Override
-    public void onFailureCart(String message) {
+    public void onFailureCart(String message,int code) {
         Log.e("查找列表失败","异常信息:"+message);
-        if (!StringUtils.isEmpty(message) && message.equals("401")){
+        Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 410){
             //session去重新登录
             Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
+            intent.putExtra("type",3);
             startActivity(intent);
-            finish();
-        }else {
-            Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -213,8 +210,13 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
     }
 
     @Override
-    public void onClearFailure(String message) {
+    public void onClearFailure(String message,int code) {
         Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent =  new Intent(CartShoppingActivity.this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -240,15 +242,13 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
     }
 
     @Override
-    public void onChangeItemFailure(String message) {
-        if (!StringUtils.isEmpty(message) && message.equals("401")){
+    public void onChangeItemFailure(String message,int code) {
+        Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
             //session去重新登录
             Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
+            intent.putExtra("type",3);
             startActivity(intent);
-            finish();
-        }else {
-            Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -2,8 +2,8 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.ui.view.user.IPersonNumberView;
 
@@ -36,20 +36,20 @@ public class PersonNumberPresenter implements IPersonNumberPresenter{
                     if (personNumber.getCode() == 200 || personNumber.getCode() == 0){
                         personNumberView.onPersonNumberSucessFul(personNumber);
                     } else  if (personNumber.getCode() == 401){
-                        personNumberView.onPersonNumberFailure(String.valueOf(personNumber.getCode()));
+                        personNumberView.onPersonNumberFailure(personNumber.getMsg(),personNumber.getCode());
                     }else {
-                        personNumberView.onPersonNumberFailure(personNumber.getMsg());
+                        personNumberView.onPersonNumberFailure(personNumber.getMsg(),personNumber.getCode());
                     }
                 }else {
-                    personNumberView.onPersonNumberFailure("返回的数据为NULL");
+                    personNumberView.onPersonNumberFailure("返回的数据为NULL",0);
 
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 personNumberView.hideLoading();
-                personNumberView.onPersonNumberFailure(t.getMessage());
+                personNumberView.onPersonNumberFailure(t.getMessage(),t.getCode());
 
             }
 

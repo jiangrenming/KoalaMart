@@ -2,8 +2,9 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.ui.view.user.IDelAddressView;
 import com.koalafield.cmart.ui.view.user.IEditAddressView;
 
@@ -48,19 +49,19 @@ public class DelCountryPresenter implements  IDelCountryPresenter{
                     if (bean != null && bean.getCode() == 200){
                         delAddressView.onDelAddressSucessFul(bean);
                     }else if (bean.getCode() == 401){
-                        delAddressView.onDelAddressFailure(String.valueOf(bean.getCode()));
+                        delAddressView.onDelAddressFailure(bean.getMsg(),bean.getCode());
                     }else {
-                        delAddressView.onDelAddressFailure(bean.getMsg());
+                        delAddressView.onDelAddressFailure(bean.getMsg(),bean.getCode());
                     }
                 }else {
-                    delAddressView.onDelAddressFailure("返回的数据为NULL");
+                    delAddressView.onDelAddressFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 delAddressView.hideLoading();
-                delAddressView.onDelAddressFailure(t.getMessage());
+                delAddressView.onDelAddressFailure(t.getMessage(),t.getCode());
             }
 
             @Override

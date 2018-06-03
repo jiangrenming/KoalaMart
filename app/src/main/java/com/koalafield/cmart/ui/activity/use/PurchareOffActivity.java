@@ -20,6 +20,7 @@ import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.presenter.cart.ICartClearPresenter;
 import com.koalafield.cmart.presenter.user.IPurcashOffPresenter;
 import com.koalafield.cmart.presenter.user.PurcashOffPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.view.user.IPurchaseOffView;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
@@ -105,8 +106,13 @@ public class PurchareOffActivity extends BaseActivity implements IPurchaseOffVie
     }
 
     @Override
-    public void onPurchaseOffFailure(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    public void onPurchaseOffFailure(String message,int code) {
+        Toast.makeText(PurchareOffActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(PurchareOffActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

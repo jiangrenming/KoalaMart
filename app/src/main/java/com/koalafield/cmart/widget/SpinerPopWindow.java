@@ -2,6 +2,7 @@ package com.koalafield.cmart.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -26,6 +27,7 @@ import com.koalafield.cmart.adapter.CategryTwoAdapter;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.presenter.categry.CategryTwoPresenter;
 import com.koalafield.cmart.presenter.categry.ICategryTwoPresenter;
+import com.koalafield.cmart.ui.activity.search.GoodsListActivity;
 import com.koalafield.cmart.ui.view.categry.ICategryTwoView;
 
 import java.util.ArrayList;
@@ -132,7 +134,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     }
 
     @Override
-    public void onSucessTwoFul(List<CategryOneBean> data) {
+    public void onSucessTwoFul(final List<CategryOneBean> data) {
         if (data != null && data.size() > 0) {
             if (null == categryTwoAdapter) {
                 categryTwoAdapter = new CategryTwoAdapter(mContext,data);
@@ -144,14 +146,20 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
             categryTwoAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
+                    if (mContext != null && isShowing()){
+                        dismiss();
+                    }
                     //跳转界面
+                    Intent intent =new Intent(mContext, GoodsListActivity.class);
+                    intent.putExtra("cateId",data.get(position).getId());
+                    mContext.startActivity(intent);
                 }
             });
         }
     }
 
     @Override
-    public void onFailure(String message) {
+    public void onFailure(String message,int code) {
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
     }
 

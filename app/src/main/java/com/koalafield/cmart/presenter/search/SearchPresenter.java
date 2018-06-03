@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.search;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.search.SearchListBean;
 import com.koalafield.cmart.ui.view.search.ISearchView;
@@ -50,7 +51,7 @@ public class SearchPresenter implements ISearchPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mSearchView.hideLoading();
                 mSearchView.onSearchFailure(t.getMessage());
             }
@@ -89,7 +90,7 @@ public class SearchPresenter implements ISearchPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mSearchView.hideLoading();
                 mSearchView.onSearchFailure(t.getMessage());
             }

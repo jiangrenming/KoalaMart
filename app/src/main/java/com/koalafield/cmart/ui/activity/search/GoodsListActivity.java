@@ -151,9 +151,9 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
                 final List<CateListBean> cateList = data.getCateList();
                 if (cateList != null && cateList.size() > 0) {
                     for (int i = 0; i < cateList.size(); i++) {
-                        if (i == 0) {
+                        if (mCateId == cateList.get(i).getId()){
                             cateList.get(i).setSelect(true);
-                        } else {
+                        }else {
                             cateList.get(i).setSelect(false);
                         }
                     }
@@ -258,7 +258,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     }
 
     @Override
-    public void onCategryBrandFailure(String message) {
+    public void onCategryBrandFailure(String message,int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -316,7 +316,12 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     }
 
     @Override
-    public void onNumberFailure(String message) {
+    public void onNumberFailure(String message,int code) {
         Toast.makeText(GoodsListActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(GoodsListActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 }

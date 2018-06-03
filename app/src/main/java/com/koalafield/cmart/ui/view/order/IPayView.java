@@ -10,6 +10,6 @@ public interface IPayView<T> extends IBaseView {
 
 
     void onSubmitList(T data);
-    void onSubmitFailure(String message);
+    void onSubmitFailure(String message,int code);
 
 }

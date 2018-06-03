@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.ui.view.user.IAddressListView;
@@ -44,14 +45,14 @@ public class AddressPresenter implements IAddressPresenter {
                         addressListView.loadAddressEmptyData();
                     }
                 }else {
-                    addressListView.onAddressFailure("返回的数据为NULL");
+                    addressListView.onAddressFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 addressListView.hideLoading();
-                addressListView.onAddressFailure(t.getMessage());
+                addressListView.onAddressFailure(t.getMessage(),t.getCode());
             }
 
             @Override
@@ -79,14 +80,14 @@ public class AddressPresenter implements IAddressPresenter {
                         addressListView.loadAddressNoMoreData();
                     }
                 }else {
-                    addressListView.onAddressFailure("返回的数据为NULL");
+                    addressListView.onAddressFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 addressListView.hideLoading();
-                addressListView.onAddressFailure(t.getMessage());
+                addressListView.onAddressFailure(t.getMessage(),t.getCode());
             }
 
             @Override

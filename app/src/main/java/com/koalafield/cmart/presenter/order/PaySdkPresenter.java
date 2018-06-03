@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.order;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.order.SdkPayBean;
 import com.koalafield.cmart.ui.view.order.IPaySdkView;
@@ -36,17 +37,17 @@ public class PaySdkPresenter implements  IPaySdkPresenter{
                     if (sdkPayBean != null){
                         sdkView.onPaySdkData(sdkPayBean);
                     }else {
-                        sdkView.onPaySdkFailure("返回数据有误");
+                        sdkView.onPaySdkFailure("返回数据有误",0);
                     }
                 }else {
-                    sdkView.onPaySdkFailure("返回数据为NULL");
+                    sdkView.onPaySdkFailure("返回数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 sdkView.hideLoading();
-                sdkView.onPaySdkFailure(t.getMessage());
+                sdkView.onPaySdkFailure(t.getMessage(),t.getCode());
             }
 
             @Override

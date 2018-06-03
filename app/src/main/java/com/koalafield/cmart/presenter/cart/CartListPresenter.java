@@ -2,8 +2,9 @@ package com.koalafield.cmart.presenter.cart;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.ui.view.cart.ICartListView;
 import com.koalafield.cmart.widget.EmptyLayout;
@@ -28,7 +29,7 @@ public class CartListPresenter implements ICartListPresenter{
 
     @Override
     public void getData() {
-        ApiManager.getCategryList().subscribe(new SubScribeCallBack<SpecialResponseBean>(new CallBack() {
+        ApiManager.getCategryList().subscribe(new SubScribeCallBack<BaseResponseBean>(new CallBack() {
             @Override
             public void onInit() {
                 cartListView.showLoading();
@@ -37,7 +38,7 @@ public class CartListPresenter implements ICartListPresenter{
             @Override
             public <T> void onSucess(T data) {
                 if (data!= null){
-                    SpecialResponseBean responseBean = (SpecialResponseBean) data;
+                    BaseResponseBean responseBean = (BaseResponseBean) data;
                     if (responseBean.getCode() == 200){
                         List<CartDataBean> cartDataBeen  = (List<CartDataBean>) responseBean.getData();
                         if (cartDataBeen !=null && cartDataBeen.size() >0){
@@ -46,24 +47,19 @@ public class CartListPresenter implements ICartListPresenter{
                             cartListView.onLoadNoData();
                         }
                     }else if (responseBean.getCode() == 401){
-                        cartListView.onFailureCart(String.valueOf(responseBean.getCode()));
+                        cartListView.onFailureCart(String.valueOf(responseBean.getCode()),0);
                     }else {
-                        cartListView.onFailureCart(responseBean.getMsg());
+                        cartListView.onFailureCart(responseBean.getMsg(),0);
                     }
                 }else {
-                    cartListView.onFailureCart("返回数据为NULL");
+                    cartListView.onFailureCart("返回数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 cartListView.hideLoading();
-                cartListView.showNetError(new EmptyLayout.OnRetryListener() {
-                    @Override
-                    public void onRetry() {
-                        getData();
-                    }
-                });
+                cartListView.onFailureCart(t.getMessage(),t.getCode());
             }
 
             @Override

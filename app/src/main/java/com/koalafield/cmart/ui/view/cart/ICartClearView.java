@@ -9,7 +9,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface ICartClearView<T> extends IBaseView {
 
     void onClearSucessful(T data);
-    void onClearFailure(String message);
+    void onClearFailure(String message,int code);
 
 
 

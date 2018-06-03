@@ -10,6 +10,6 @@ public interface IPaySdkView<T> extends IBaseView {
 
 
     void onPaySdkData(T data);
-    void onPaySdkFailure(String message);
+    void onPaySdkFailure(String message,int code);
 
 }

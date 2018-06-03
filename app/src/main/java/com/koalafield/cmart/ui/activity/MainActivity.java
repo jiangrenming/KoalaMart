@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
@@ -240,8 +242,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
 
 
     @Override
-    public void onNumberFailure(String message) {
-
+    public void onNumberFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT);
     }
 
     @Override

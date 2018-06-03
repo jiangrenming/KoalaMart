@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.base.presenter.IBasePresenter;
 import com.koalafield.cmart.bean.user.RegisterBean;
@@ -52,7 +53,7 @@ public class RegisterPresent implements IRegsterPresent {
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mRegesterView.hideLoading();
                 mRegesterView.onFailure(t.getMessage());
             }

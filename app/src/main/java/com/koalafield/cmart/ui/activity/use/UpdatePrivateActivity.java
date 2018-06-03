@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity.use;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,8 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.presenter.user.IUpdatePersonInfoPresenter;
+import com.koalafield.cmart.presenter.user.UpdatePersonInfoPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
+import com.koalafield.cmart.ui.view.user.IUpdatePersonView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,7 +31,7 @@ import butterknife.OnClick;
  * 个人资料的修改
  */
 
-public class UpdatePrivateActivity extends BaseActivity{
+public class UpdatePrivateActivity extends BaseActivity implements IUpdatePersonView<BaseResponseBean>{
 
     
     @BindView(R.id.back)
@@ -34,6 +43,8 @@ public class UpdatePrivateActivity extends BaseActivity{
     @BindView(R.id.comfirm)
     TextView comfirm;
     private  String type;
+
+    private IUpdatePersonInfoPresenter infoPresenter;
 
     @Override
     public int attchLayoutRes() {
@@ -66,8 +77,7 @@ public class UpdatePrivateActivity extends BaseActivity{
                     }
                     String value = private_name.getText().toString().trim();
                     if (!TextUtils.isEmpty(value)) {
-
-                        //调用接口
+                        skipPresenter(value);
 
                     } else {
                         Toast.makeText(UpdatePrivateActivity.this,"请输入数据",Toast.LENGTH_SHORT).show();
@@ -80,7 +90,9 @@ public class UpdatePrivateActivity extends BaseActivity{
     }
 
     @Override
-    public void upDateViews() {}
+    public void upDateViews() {
+        infoPresenter = new UpdatePersonInfoPresenter(this);
+    }
     @OnClick(R.id.comfirm)
     public  void onClick(View v){
         switch (v.getId()){
@@ -89,10 +101,52 @@ public class UpdatePrivateActivity extends BaseActivity{
                     return;
                 }
                 //接口调用
+                String value = private_name.getText().toString().trim();
+                if (!TextUtils.isEmpty(value)) {
+                    skipPresenter(value);
+                } else {
+                    Toast.makeText(UpdatePrivateActivity.this,"请输入数据",Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
         }
     }
 
+    private void skipPresenter(String value){
+        Map<String,String> mParams = new HashMap<String, String>();
+        //调用接口
+        if (type.equals("1")){
+            mParams.put("nickname",value);
+        }else if (type.equals("2")){
+            mParams.put("gender",value);
+        }else {
+            mParams.put("country",value);
+        }
+
+        infoPresenter.setParams(mParams);
+        infoPresenter.getData();
+    }
+
+    @Override
+    public void onUpDatePersonFul(BaseResponseBean data) {
+        if (data.getCode() == 200){
+            Toast.makeText(this,"修改成功",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.putExtra("type",type);
+            intent.putExtra("value",private_name.getText().toString().trim());
+            setResult(RESULT_OK,intent);
+            finish();
+        }
+    }
+
+    @Override
+    public void onUpDatePersonFailure(String message, int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(UpdatePrivateActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
+    }
 }

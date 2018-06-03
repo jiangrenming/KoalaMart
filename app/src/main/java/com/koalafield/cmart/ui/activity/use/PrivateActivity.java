@@ -101,7 +101,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     private void skipActivity(String type){
         Intent intent = new Intent(PrivateActivity.this,UpdatePrivateActivity.class);
         intent.putExtra("type",type);
-        startActivity(intent);
+        startActivityForResult(intent,1000);
     }
 
     @Override
@@ -212,6 +212,18 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
             }
         }else if (requestCode == 2){
 
+        }else if (requestCode == 1000){
+            if (data != null){
+                String type = data.getStringExtra("type");
+                String value = data.getStringExtra("value");
+                if (type .equals("1")){
+                    name_person.setText(value);
+                }else if (type .equals("2")){
+                    sex_person.setText(value);
+                }else if (type .equals("3")){
+                    person_country.setText(value);
+                }
+            }
         }
     }
 }

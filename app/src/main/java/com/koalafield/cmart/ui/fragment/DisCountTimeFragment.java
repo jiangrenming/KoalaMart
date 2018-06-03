@@ -18,7 +18,9 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.presenter.user.DisCountPresenter;
 import com.koalafield.cmart.presenter.user.IDisCountPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.order.PayActivity;
+import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.view.user.IDisCountListView;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
 import com.koalafield.cmart.widget.EmptyLayout;
@@ -98,8 +100,13 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
     }
 
     @Override
-    public void onDisCountFailure(String message) {
+    public void onDisCountFailure(String message,int code) {
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

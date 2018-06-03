@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.ScoreBean;
@@ -43,9 +44,9 @@ public class ScorePresenter implements IScorePresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 scoreView.hideLoading();
-                scoreView.onScoresFailure(t.getMessage());
+                scoreView.onScoresFailure(t.getMessage(),t.getCode());
             }
 
             @Override
@@ -75,9 +76,9 @@ public class ScorePresenter implements IScorePresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 scoreView.hideLoading();
-                scoreView.onScoresFailure(t.getMessage());
+                scoreView.onScoresFailure(t.getMessage(),t.getCode());
             }
 
             @Override

@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
 import com.koalafield.cmart.ui.view.user.ICollectionView;
@@ -47,9 +48,9 @@ public class CollectionPresenter implements  ICollectionPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mCollectionView.hideLoading();
-                mCollectionView.onCollectionFailure(t.getMessage());
+                mCollectionView.onCollectionFailure(t.getMessage(),t.getCode());
             }
 
             @Override
@@ -79,9 +80,9 @@ public class CollectionPresenter implements  ICollectionPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mCollectionView.hideLoading();
-                mCollectionView.onCollectionFailure(t.getMessage());
+                mCollectionView.onCollectionFailure(t.getMessage(),t.getCode());
             }
 
             @Override

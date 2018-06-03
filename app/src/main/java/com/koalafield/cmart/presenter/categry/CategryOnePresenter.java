@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.categry;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
 import com.koalafield.cmart.bean.categry.CategryTwoBean;
@@ -52,9 +53,9 @@ public class CategryOnePresenter implements ICategryPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mCategryView.hideLoading();
-                mCategryView.onFailure(t.getMessage());
+                mCategryView.onFailure(t.getMessage(),t.getCode());
             }
 
             @Override

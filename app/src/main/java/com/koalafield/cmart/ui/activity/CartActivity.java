@@ -13,11 +13,10 @@ import android.widget.Toast;
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnItemMoveListener;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CartItemAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.event.CartEvent;
@@ -129,16 +128,15 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     }
 
     @Override
-    public void onFailureCart(String message) {
+    public void onFailureCart(String message,int code) {
         Log.e("查找列表失败","异常信息:"+message);
-        if (!StringUtils.isEmpty(message) && message.equals("401")){
+        Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
             //session去重新登录
             Intent intent = new Intent(this,LoginActivity.class);
             intent.putExtra("type",2);
             startActivity(intent);
             finish();
-        }else {
-            Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -321,8 +319,15 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     }
 
     @Override
-    public void onClearFailure(String message) {
-        Log.e("清空购物车","清除失败信息:"+message);
+    public void onClearFailure(String message,int code) {
+        Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            //session去重新登录
+            Intent intent = new Intent(this,LoginActivity.class);
+            intent.putExtra("type",2);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -348,15 +353,14 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     }
 
     @Override
-    public void onChangeItemFailure(String message) {
-        if (!StringUtils.isEmpty(message) && message.equals("401")){
+    public void onChangeItemFailure(String message,int code) {
+        Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
             //session去重新登录
             Intent intent = new Intent(this,LoginActivity.class);
             intent.putExtra("type",2);
             startActivity(intent);
             finish();
-        }else {
-            Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
         }
     }
 }

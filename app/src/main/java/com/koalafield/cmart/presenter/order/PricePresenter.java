@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.order;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.ui.view.order.IPriceView;
@@ -37,14 +38,14 @@ public class PricePresenter implements IPricePresenter{
                             mPriceView.onPriceData(price);
                         }
                     }else {
-                        mPriceView.onPriceFailure("返回的数据为NULL");
+                        mPriceView.onPriceFailure("返回的数据为NULL",0);
                     }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mPriceView.hideLoading();
-                mPriceView.onPriceFailure(t.getMessage());
+                mPriceView.onPriceFailure(t.getMessage(),t.getCode());
             }
 
             @Override

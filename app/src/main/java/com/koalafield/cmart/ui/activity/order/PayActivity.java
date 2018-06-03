@@ -45,6 +45,7 @@ import com.koalafield.cmart.presenter.order.IPricePresenter;
 import com.koalafield.cmart.presenter.order.PayPresenter;
 import com.koalafield.cmart.presenter.order.PaySdkPresenter;
 import com.koalafield.cmart.presenter.order.PricePresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
@@ -255,13 +256,23 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
     @Override
-    public void onPaySdkFailure(String message) {
+    public void onPaySdkFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override
-    public void onCreateOrderFailure(String message) {
+    public void onCreateOrderFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     private int navigationHeight = 0;
@@ -493,9 +504,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
     @Override
-    public void onSubmitFailure(String message) {
+    public void onSubmitFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
+        if (code == 401){
+            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }    }
 
 
     private String disCountCode;
@@ -596,8 +611,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
     @Override
-    public void onPriceFailure(String message) {
+    public void onPriceFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
 

@@ -147,8 +147,8 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     }
 
     @Override
-    public void onFailure(String message) {
-        Log.i("加载异常","异常信息为:"+message);
+    public void onFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -232,8 +232,8 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     }
 
     @Override
-    public void onGoodsCategryFailure(String message) {
-        Log.i("获取商品分类数据失败:","异常信息"+message);
+    public void onGoodsCategryFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

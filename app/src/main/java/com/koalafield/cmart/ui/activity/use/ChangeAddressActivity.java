@@ -1,6 +1,7 @@
 package com.koalafield.cmart.ui.activity.use;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.InputType;
@@ -21,9 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.presenter.user.AddCountryPresenter;
 import com.koalafield.cmart.presenter.user.AddressPresenter;
@@ -216,8 +217,13 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
     }
 
     @Override
-    public void onAddAddressFailure(String message) {
+    public void onAddAddressFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(ChangeAddressActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -230,8 +236,13 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
     }
 
     @Override
-    public void onEditAddressFailure(String message) {
+    public void onEditAddressFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(ChangeAddressActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
 

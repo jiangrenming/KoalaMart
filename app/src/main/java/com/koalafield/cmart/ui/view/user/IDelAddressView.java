@@ -11,6 +11,6 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IDelAddressView<T> extends IBaseView {
 
     void onDelAddressSucessFul(T data);
-    void onDelAddressFailure(String message);
+    void onDelAddressFailure(String message,int code);
 
 }

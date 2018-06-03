@@ -4,25 +4,7 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="35dp">
-    <TextView
-        android:id="@+id/limit_time"
-        android:layout_width="0dp"
-        android:text="请在0分钟后29分钟后完成支付"
-        android:layout_weight="1"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_height="match_parent" />
-      <ImageView
-          android:id="@+id/close"
-            android:layout_width="20dp"
-            android:src="@mipmap/close"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center_vertical"
-            android:layout_height="20dp" />
-    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/pay_type"
         android:layout_width="match_parent"

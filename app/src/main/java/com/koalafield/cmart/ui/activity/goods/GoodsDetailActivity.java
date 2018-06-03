@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CommentAdapter;
 import com.koalafield.cmart.adapter.GoodsDetailCommondAdapter;
@@ -35,8 +36,6 @@ import com.koalafield.cmart.bananer.MZBannerView;
 import com.koalafield.cmart.bananer.MZHolderCreator;
 import com.koalafield.cmart.bananer.MZViewHolder;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.Point;
 import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
@@ -59,6 +58,7 @@ import com.koalafield.cmart.presenter.goods.IGoodsCommondPresenter;
 import com.koalafield.cmart.presenter.goods.IGoodsDetailPresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.order.PayActivity;
+import com.koalafield.cmart.ui.activity.search.GoodsListActivity;
 import com.koalafield.cmart.ui.activity.search.SearchListActivity;
 import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 import com.koalafield.cmart.ui.view.cart.ICartVIew;
@@ -157,11 +157,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void initDatas() {
         contentId = getIntent().getIntExtra("contentId",-1);
-        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
-        if (!StringUtils.isEmpty(tickets)){
-            ICartPresenter mPresenter = new CartPresenter(GoodsDetailActivity.this);
-            mPresenter.getData();
-        }
+
     }
 
     @Override
@@ -173,6 +169,15 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        if (!StringUtils.isEmpty(tickets)){
+            ICartPresenter mPresenter = new CartPresenter(GoodsDetailActivity.this);
+            mPresenter.getData();
+        }
+    }
 
     private  int clickType ;
     @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection,R.id.judget_more,R.id.goods_car_img,R.id.pay_buy})
@@ -577,8 +582,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     @Override
-    public void onNumberFailure(String message) {
-        Log.i("获取购物车总数量:","异常:"+message);
+    public void onNumberFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 410){
+            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     /**
@@ -659,8 +669,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     @Override
-    public void onGoodsDetailsFailure(String message) {
-        Log.i("获取商品详情:","异常:"+message);
+    public void onGoodsDetailsFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 410){
+            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     /**
@@ -692,8 +707,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     @Override
-    public void onGoodsCommondFailure(String message) {
-        Log.i("获取商品推荐:","异常:"+message);
+    public void onGoodsCommondFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 410){
+            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     //收藏商品
@@ -712,9 +732,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     @Override
-    public void onGoodsCollectionsFailure(String message) {
-        Toast.makeText(GoodsDetailActivity.this,message,Toast.LENGTH_SHORT).show();
-
+    public void onGoodsCollectionsFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 410){
+            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -732,9 +756,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     @Override
-    public void onGoodsCollectionDelFailure(String message) {
-        Toast.makeText(GoodsDetailActivity.this,message,Toast.LENGTH_SHORT).show();
-    }
+    public void onGoodsCollectionDelFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 410){
+            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }    }
 
     //添加购物车
 
@@ -758,9 +786,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     @Override
-    public void onChangeItemFailure(String message) {
-        Toast.makeText(GoodsDetailActivity.this,message,Toast.LENGTH_SHORT).show();
-
+    public void onChangeItemFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 410){
+            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

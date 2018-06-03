@@ -1,7 +1,5 @@
 package com.koalafield.cmart.bean.user;
 
-import com.koalafield.cmart.base.bean.BaseResponseBean;
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
 import java.io.Serializable;
 

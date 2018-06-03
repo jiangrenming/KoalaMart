@@ -11,7 +11,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface ICollectionView<T> extends IBaseView {
 
     void onCollectionSucessFul(T data);
-    void onCollectionFailure(String message);
+    void onCollectionFailure(String message,int code);
     void loadCollectionEmptyData();
     void loadCollectionNoMoreData();
     void loadCollectionMoreData(T data);

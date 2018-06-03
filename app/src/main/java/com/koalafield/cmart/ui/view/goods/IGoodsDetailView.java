@@ -11,6 +11,6 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IGoodsDetailView<T> extends IBaseView {
 
     void onGoodsDetailsSucessFul(T data);
-    void onGoodsDetailsFailure(String message);
+    void onGoodsDetailsFailure(String message,int code);
 
 }

@@ -55,12 +55,10 @@ public class RetrofitService{
                 .addNetworkInterceptor(sRewriteCacheControlInterceptor)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .build();
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+
         retrofit = new Retrofit.Builder()
                 .client(client)
-                .addConverterFactory(/*CustomGsonConverterFactory.create()*/GsonConverterFactory.create(gson))
+                .addConverterFactory(CustomGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(mConfig.getBaseUrl())
                 .build();

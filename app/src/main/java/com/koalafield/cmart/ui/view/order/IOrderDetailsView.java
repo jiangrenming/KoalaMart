@@ -10,6 +10,6 @@ public interface IOrderDetailsView<T> extends IBaseView {
 
 
     void onOrderDetails(T data);
-    void onOrderDetailsFailure(String message);
+    void onOrderDetailsFailure(String message,int code);
 
 }

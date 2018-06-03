@@ -11,7 +11,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IGoodsCommentView<T> extends IBaseView {
 
     void onGoodsCommentSucessFul(T data);
-    void onGoodsCommentFailure(String message);
+    void onGoodsCommentFailure(String message,int code);
     void onLoadEmptyData();
     void onLoadNoMoreData();
     void onLoadMoreData(T data);

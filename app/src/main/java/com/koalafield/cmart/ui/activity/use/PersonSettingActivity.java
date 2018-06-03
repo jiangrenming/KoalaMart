@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * 设置界面
  */
 
-public class PersonSettingActivity extends BaseActivity {
+public class PersonSettingActivity extends BaseActivity  {
 
     @BindView(R.id.login_pwd)
     RelativeLayout login_pwd;
@@ -43,6 +43,7 @@ public class PersonSettingActivity extends BaseActivity {
     @BindView(R.id.top_name)
     TextView top_name;
 
+
     @Override
     public int attchLayoutRes() {
         return R.layout.activity_person_setting;
@@ -55,7 +56,7 @@ public class PersonSettingActivity extends BaseActivity {
         if (StringUtils.isEmpty(versionName)){
             versionName = "1.1.0";
         }
-        version.setText(versionName);
+        version.setText("系统版本号："+versionName);
     }
 
     @Override

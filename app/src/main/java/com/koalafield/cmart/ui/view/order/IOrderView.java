@@ -10,7 +10,7 @@ public interface IOrderView<T> extends IBaseView {
 
 
     void onSucessOrderList(T data);
-    void onFailureOrder(String message);
+    void onFailureOrder(String message,int code);
     void loadEmptyData();
     void loadMoreData(T data);
     void loadNoMoreData();

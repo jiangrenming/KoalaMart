@@ -11,7 +11,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IPurchaseOffView<T> extends IBaseView {
 
     void onPurchaseOffSucessFul(T data);
-    void onPurchaseOffFailure(String message);
+    void onPurchaseOffFailure(String message,int code);
     void loadPurchaseOffEmptyData();
     void loadPurchaseOffNoMoreData();
     void loadPurchaseOffMoreData(T data);

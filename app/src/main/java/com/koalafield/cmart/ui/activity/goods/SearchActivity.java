@@ -182,7 +182,7 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
 
 
     @Override
-    public void onHotWordsFailure(String message) {
+    public void onHotWordsFailure(String message,int code ) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 

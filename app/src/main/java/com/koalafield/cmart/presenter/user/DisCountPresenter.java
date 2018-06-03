@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.ui.view.user.IDisCountListView;
@@ -42,14 +43,14 @@ public class DisCountPresenter implements  IDisCountPresenter{
                         disCountListView.loadDisCountEmptyData();
                     }
                 }else {
-                    disCountListView.onDisCountFailure("返回的数据为NULL");
+                    disCountListView.onDisCountFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 disCountListView.hideLoading();
-                disCountListView.onDisCountFailure(t.getMessage());
+                disCountListView.onDisCountFailure(t.getMessage(),t.getCode());
             }
 
             @Override
@@ -77,14 +78,14 @@ public class DisCountPresenter implements  IDisCountPresenter{
                         disCountListView.loadDisCountNoMoreData();
                     }
                 }else {
-                    disCountListView.onDisCountFailure("返回的数据为NULL");
+                    disCountListView.onDisCountFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 disCountListView.hideLoading();
-                disCountListView.onDisCountFailure(t.getMessage());
+                disCountListView.onDisCountFailure(t.getMessage(),t.getCode());
             }
 
             @Override

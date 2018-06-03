@@ -9,7 +9,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface ICartVIew<T> extends IBaseView {
 
     void onSucessNumberful(T data);
-    void onNumberFailure(String message);
+    void onNumberFailure(String message,int code);
 
 
 

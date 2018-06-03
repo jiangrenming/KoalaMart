@@ -55,6 +55,8 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     @BindView(R.id.wx_login)
     LinearLayout wx_login;
 
+    @BindView(R.id.forget_pwd)
+    TextView forget_pwd;
     private  int type;
 
     @Override
@@ -141,6 +143,8 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
                 break;
             case R.id.wx_login:
                 break;
+            case R.id.forget_pwd: //忘记密码
+
             default:
                 break;
         }

@@ -9,5 +9,5 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface ICategryView<T> extends IBaseView {
 
     void onSucessFul(T data);
-    void onFailure(String message);
+    void onFailure(String message,int code);
 }

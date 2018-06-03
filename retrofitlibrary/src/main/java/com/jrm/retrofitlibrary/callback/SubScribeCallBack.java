@@ -2,6 +2,8 @@ package com.jrm.retrofitlibrary.callback;
 
 import android.util.Log;
 
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
+
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
@@ -34,7 +36,8 @@ public class SubScribeCallBack<T> implements Subscriber<T>{
 
     @Override
     public void onError(Throwable t) {
-        mCallBack.onFailure(t);
+        ExceptionHandle.ResponeThrowable responeThrowable = ExceptionHandle.handleException(t);
+        mCallBack.onFailure(responeThrowable);
     }
 
     @Override

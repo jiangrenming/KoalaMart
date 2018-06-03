@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity.order.fragment;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.presenter.order.IOrderPresenter;
 import com.koalafield.cmart.presenter.order.OrderPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.view.order.IOrderView;
 import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
@@ -68,7 +70,11 @@ public class WaitJusticeFragment extends BaseFragment implements IOrderView<List
     }
 
     @Override
-    protected void updateViews() {
+    protected void updateViews() {}
+
+    @Override
+    public void onResume() {
+        super.onResume();
         presenter = new OrderPresenter(this);
         presenter.setType(getParams());
         presenter.getData();
@@ -90,9 +96,13 @@ public class WaitJusticeFragment extends BaseFragment implements IOrderView<List
     }
 
     @Override
-    public void onFailureOrder(String message) {
+    public void onFailureOrder(String message,int code) {
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
-    }
+        if (code == 401){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }    }
 
     @Override
     public void loadEmptyData() {

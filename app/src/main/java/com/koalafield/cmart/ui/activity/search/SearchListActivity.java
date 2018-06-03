@@ -48,6 +48,7 @@ import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.goods.CartShoppingActivity;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.goods.SearchActivity;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.cart.ICartVIew;
 import com.koalafield.cmart.ui.view.categry.ICategryTwoView;
 import com.koalafield.cmart.ui.view.categry.ICategryView;
@@ -231,8 +232,13 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     }
 
     @Override
-    public void onNumberFailure(String message) {
+    public void onNumberFailure(String message,int  code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(SearchListActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -318,7 +324,7 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     }
 
     @Override
-    public void onFailure(String message) {
-
+    public void onFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

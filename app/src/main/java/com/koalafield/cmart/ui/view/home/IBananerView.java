@@ -9,6 +9,6 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IBananerView<T> extends IBaseView {
 
     void onSucessFul(T data);
-    void onFailure(String message);
+    void onFailure(String message,int code);
 
 }

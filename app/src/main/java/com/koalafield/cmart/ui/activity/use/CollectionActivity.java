@@ -14,16 +14,18 @@ import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.dl7.recycler.listener.OnRemoveDataListener;
 import com.dl7.recycler.listener.OnRequestDataListener;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CollectionAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.bean.goods.GoodsCollectionsBean;
 import com.koalafield.cmart.presenter.goods.GoodsCollectionDelPresenter;
 import com.koalafield.cmart.presenter.goods.IGoodsCollectionDelPresenter;
 import com.koalafield.cmart.presenter.user.CollectionPresenter;
 import com.koalafield.cmart.presenter.user.ICollectionPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.goods.IGoodsCollectionDeleteView;
 import com.koalafield.cmart.ui.view.user.ICollectionView;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
@@ -144,8 +146,13 @@ public class CollectionActivity extends BaseActivity implements ICollectionView<
     }
 
     @Override
-    public void onCollectionFailure(String message) {
-        Log.i("收藏的异常:",message);
+    public void onCollectionFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(CollectionActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -179,7 +186,12 @@ public class CollectionActivity extends BaseActivity implements ICollectionView<
     }
 
     @Override
-    public void onGoodsCollectionDelFailure(String message) {
-
+    public void onGoodsCollectionDelFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(CollectionActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 }

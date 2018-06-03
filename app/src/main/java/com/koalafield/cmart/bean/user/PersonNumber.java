@@ -1,12 +1,13 @@
 package com.koalafield.cmart.bean.user;
 
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
+
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 
 /**
  * Created by jiangrenming on 2018/5/23.
  */
 
-public class PersonNumber extends SpecialResponseBean {
+public class PersonNumber extends BaseResponseBean {
 
 
     private  int FollowCount;

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRequestDataListener;
@@ -107,8 +108,8 @@ public class GoodsCommentActivity extends BaseActivity implements IGoodsCommentV
     }
 
     @Override
-    public void onGoodsCommentFailure(String message) {
-        Log.i("评论的异常:",message);
+    public void onGoodsCommentFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -34,7 +34,6 @@ public class PayOrderChooseAdapter extends BaseQuickAdapter<Payment> {
     @Override
     protected void convert(BaseViewHolder holder, final Payment item) {
         ImageView pay_img = holder.getView(R.id.pay_img);
-        ImageView close = holder.getView(R.id.close);
         TextView comfirm_pay = holder.getView(R.id.comfirm_pay);
         holder.setText(R.id.pay_name,item.getDisplayName());
         Glide.with(mContext).load(item.getIcon()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
@@ -62,12 +61,6 @@ public class PayOrderChooseAdapter extends BaseQuickAdapter<Payment> {
                 mPayCallBack.paySdk(item);
             }
         });
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPayCallBack.onClosePopu();
-            }
-        });
     }
 
     public  PayClickCallBack mPayCallBack;
@@ -77,6 +70,5 @@ public class PayOrderChooseAdapter extends BaseQuickAdapter<Payment> {
     public  interface  PayClickCallBack{
         void onSucess(Payment item, boolean isSelect);
         void paySdk(Payment item);
-        void onClosePopu();
     }
 }

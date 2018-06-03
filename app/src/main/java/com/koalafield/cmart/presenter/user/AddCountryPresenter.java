@@ -2,8 +2,9 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.ui.view.user.IAddAddressView;
 
 import java.util.Map;
@@ -45,19 +46,19 @@ public class AddCountryPresenter implements  IAddCountryPresenter{
                     if (bean != null && bean.getCode() == 200){
                         addAddressView.onAddAddressSucessFul(bean);
                     }else if (bean.getCode() == 401){
-                        addAddressView.onAddAddressFailure(String.valueOf(bean.getCode()));
+                        addAddressView.onAddAddressFailure(bean.getMsg(),bean.getCode());
                     }else {
-                        addAddressView.onAddAddressFailure(bean.getMsg());
+                        addAddressView.onAddAddressFailure(bean.getMsg(),0);
                     }
                 }else {
-                    addAddressView.onAddAddressFailure("返回的数据为NULL");
+                    addAddressView.onAddAddressFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 addAddressView.hideLoading();
-                addAddressView.onAddAddressFailure(t.getMessage());
+                addAddressView.onAddAddressFailure(t.getMessage(),t.getCode());
             }
 
             @Override

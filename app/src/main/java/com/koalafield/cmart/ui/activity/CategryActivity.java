@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dl7.recycler.adapter.BaseViewHolder;
@@ -120,8 +121,9 @@ public class CategryActivity extends TabBaseActivity implements ICategryView<Lis
     }
 
     @Override
-    public void onFailure(String message) {
-        Log.i("获取分类列表",message);
+    public void onFailure(String message,int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

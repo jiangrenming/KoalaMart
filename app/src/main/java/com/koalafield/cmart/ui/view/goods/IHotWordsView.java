@@ -12,6 +12,6 @@ public interface IHotWordsView<T> extends IBaseView {
 
     void onHotWordsSucessFul(T data);
     void onHotWordsNoData();
-    void onHotWordsFailure(String message);
+    void onHotWordsFailure(String message,int code);
 
 }

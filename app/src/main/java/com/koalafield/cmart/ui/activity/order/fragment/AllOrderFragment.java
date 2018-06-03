@@ -20,8 +20,10 @@ import com.koalafield.cmart.bean.order.OrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.presenter.order.IOrderPresenter;
 import com.koalafield.cmart.presenter.order.OrderPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.order.OrderDetailsActivity;
+import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.order.IOrderView;
 import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
@@ -72,11 +74,14 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
     }
 
     @Override
-    protected void updateViews() {
+    protected void updateViews() {}
+
+    @Override
+    public void onResume() {
+        super.onResume();
         presenter = new OrderPresenter(this);
         presenter.setType(getParams());
         presenter.getData();
-
     }
 
     private Map<String,String> getParams(){
@@ -104,8 +109,13 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
     }
 
     @Override
-    public void onFailureOrder(String message) {
+    public void onFailureOrder(String message,int code) {
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

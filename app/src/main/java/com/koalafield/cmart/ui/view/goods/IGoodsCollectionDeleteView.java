@@ -11,6 +11,6 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IGoodsCollectionDeleteView<T> extends IBaseView {
 
     void onGoodsCollectionDelSucessFul(T data);
-    void onGoodsCollectionDelFailure(String message);
+    void onGoodsCollectionDelFailure(String message,int code);
 
 }

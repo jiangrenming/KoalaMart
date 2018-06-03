@@ -1,6 +1,8 @@
 package com.koalafield.cmart.bean.goods;
 
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
+
+
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
  * @date 2018/5/18
  */
 
-public class GoodsDetailsBean extends SpecialResponseBean {
+public class GoodsDetailsBean extends BaseResponseBean {
 
     private List<GoodsItem> ColorList;
     private List<GoodsItem> SizeList;

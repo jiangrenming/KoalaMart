@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.order;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.ui.view.order.IPayView;
@@ -46,17 +47,17 @@ public class PayPresenter implements IPayPresenter{
                     if (payBean!= null){
                         mPayView.onSubmitList(payBean);
                     }else {
-                        mPayView.onSubmitFailure("返回的数据null");
+                        mPayView.onSubmitFailure("返回的数据null",0);
                     }
                 }else {
-                    mPayView.onSubmitFailure("返回的数据有误");
+                    mPayView.onSubmitFailure("返回的数据有误",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mPayView.hideLoading();
-                mPayView.onSubmitFailure(t.getMessage());
+                mPayView.onSubmitFailure(t.getMessage(),t.getCode());
             }
 
             @Override

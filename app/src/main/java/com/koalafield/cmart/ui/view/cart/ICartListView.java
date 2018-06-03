@@ -9,7 +9,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface ICartListView<T> extends IBaseView {
 
     void onSucessCartFul(T data);
-    void onFailureCart(String message);
+    void onFailureCart(String message,int code);
     void  onLoadNoData();
 
 }

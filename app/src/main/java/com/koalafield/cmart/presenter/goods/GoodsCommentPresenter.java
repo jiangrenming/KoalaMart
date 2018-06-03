@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.goods;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.goods.CommentDatas;
 import com.koalafield.cmart.ui.view.goods.IGoodsCommentView;
@@ -53,14 +54,14 @@ public class GoodsCommentPresenter implements IGoodsCommentPresenter{
                         mCommentView.onLoadEmptyData();
                     }
                 }else {
-                    mCommentView.onGoodsCommentFailure("返回数据为NULL");
+                    mCommentView.onGoodsCommentFailure("返回数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mCommentView.hideLoading();
-                mCommentView.onGoodsCommentFailure(t.getMessage());
+                mCommentView.onGoodsCommentFailure(t.getMessage(),t.getCode());
             }
 
             @Override
@@ -89,14 +90,14 @@ public class GoodsCommentPresenter implements IGoodsCommentPresenter{
                         mCommentView.onLoadNoMoreData();
                     }
                 }else {
-                    mCommentView.onGoodsCommentFailure("返回数据为NULL");
+                    mCommentView.onGoodsCommentFailure("返回数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mCommentView.hideLoading();
-                mCommentView.onGoodsCommentFailure(t.getMessage());
+                mCommentView.onGoodsCommentFailure(t.getMessage(),t.getCode());
             }
 
             @Override

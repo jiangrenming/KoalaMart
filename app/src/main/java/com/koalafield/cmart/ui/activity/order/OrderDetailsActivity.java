@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity.order;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import com.koalafield.cmart.presenter.order.IOrderDetailsPresenter;
 import com.koalafield.cmart.presenter.order.IPaySdkPresenter;
 import com.koalafield.cmart.presenter.order.OrderDetailsPresenter;
 import com.koalafield.cmart.presenter.order.PaySdkPresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.view.order.IOrderDetailsView;
 import com.koalafield.cmart.ui.view.order.IPaySdkView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
@@ -102,6 +104,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     LinearLayout pay_time_layout;
     @BindView(R.id.pay_style_layout)
     LinearLayout pay_style_layout;
+
 
 
     private  String billNo;
@@ -184,6 +187,16 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
 
     private void setOnPopupViewClick(View view) {
         RecyclerView payChoose = view.findViewById(R.id.choose_pay);
+        TextView limit_time = view.findViewById(R.id.limit_time);
+        ImageView close = view.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mPopuWindow != null && mPopuWindow.isShowing()){
+                    setBackgroundAlpha(1.0f);
+                }
+            }
+        });
         if (payList!= null && payList.size() > 0){
             final PayOrderChooseAdapter payAdapter = new PayOrderChooseAdapter(this,payList);
             RecyclerViewHelper.initRecyclerViewV(this,payChoose,true,payAdapter);
@@ -221,10 +234,6 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     mPresenter.getData();
                 }
 
-                @Override
-                public void onClosePopu() {
-                    setBackgroundAlpha(1);
-                }
             });
         }
 
@@ -308,8 +317,13 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     }
 
     @Override
-    public void onOrderDetailsFailure(String message) {
+    public void onOrderDetailsFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(OrderDetailsActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     private String serVerMode = "01";
@@ -324,8 +338,13 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     }
 
     @Override
-    public void onPaySdkFailure(String message) {
+    public void onPaySdkFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(OrderDetailsActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

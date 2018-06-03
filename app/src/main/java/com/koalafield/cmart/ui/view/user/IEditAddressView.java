@@ -11,6 +11,6 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface IEditAddressView<T> extends IBaseView {
 
     void onEditAddressSucessFul(T data);
-    void onEditAddressFailure(String message);
+    void onEditAddressFailure(String message,int code);
 
 }

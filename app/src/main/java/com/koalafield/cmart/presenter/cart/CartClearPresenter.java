@@ -2,9 +2,9 @@ package com.koalafield.cmart.presenter.cart;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.ui.view.cart.ICartClearView;
 
@@ -40,17 +40,17 @@ public class CartClearPresenter implements ICartClearPresenter {
                     if (clear.getCode() == 200){
                         mCartClearView.onClearSucessful(clear);
                     }else {
-                        mCartClearView.onClearFailure(clear.getMsg());
+                        mCartClearView.onClearFailure(clear.getMsg(),0);
                     }
                 }else {
-                    mCartClearView.onClearFailure("返回数据为NULL");
+                    mCartClearView.onClearFailure("返回数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mCartClearView.hideLoading();
-                mCartClearView.onClearFailure(t.getMessage());
+                mCartClearView.onClearFailure(t.getMessage(),t.getCode());
             }
 
             @Override

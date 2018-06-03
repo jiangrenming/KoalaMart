@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.user;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.ui.view.user.IAddressDetailView;
@@ -50,14 +51,14 @@ public class AddressDetaPresenter implements IAddressDetaPresenter{
                         detailView.onAddressDetailSucessFul(datas);
                     }
                 }else {
-                    detailView.onAddressDetailFailure("返回数据为null");
+                    detailView.onAddressDetailFailure("返回数据为null",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 detailView.hideLoading();
-                detailView.onAddressDetailFailure(t.getMessage());
+                detailView.onAddressDetailFailure(t.getMessage(),t.getCode());
             }
 
             @Override

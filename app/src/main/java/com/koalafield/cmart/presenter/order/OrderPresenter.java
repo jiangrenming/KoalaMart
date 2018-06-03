@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.order;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.ui.view.order.IOrderView;
@@ -46,14 +47,14 @@ public class OrderPresenter implements IOrderPresenter{
                         mOrderView.loadEmptyData();
                     }
                 }else {
-                    mOrderView.onFailureOrder("返回数据为NULL");
+                    mOrderView.onFailureOrder("返回数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mOrderView.hideLoading();
-                mOrderView.onFailureOrder(t.getMessage());
+                mOrderView.onFailureOrder(t.getMessage(),t.getCode());
             }
 
             @Override
@@ -84,14 +85,14 @@ public class OrderPresenter implements IOrderPresenter{
                         mOrderView.loadNoMoreData();
                     }
                 }else {
-                    mOrderView.onFailureOrder("返回数据为NULL");
+                    mOrderView.onFailureOrder("返回数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 mOrderView.hideLoading();
-                mOrderView.onFailureOrder(t.getMessage());
+                mOrderView.onFailureOrder(t.getMessage(),t.getCode());
             }
 
             @Override

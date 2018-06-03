@@ -1,5 +1,6 @@
 package com.koalafield.cmart.ui.activity.use;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.user.ScoreBean;
 import com.koalafield.cmart.presenter.user.IScorePresenter;
 import com.koalafield.cmart.presenter.user.ScorePresenter;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.view.user.IScoresView;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
 import java.util.List;
@@ -99,9 +101,13 @@ public class ScoresActivity extends BaseActivity implements IScoresView<List<Sco
     }
 
     @Override
-    public void onScoresFailure(String message) {
+    public void onScoresFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-
+        if (code == 401){
+            Intent intent = new Intent(ScoresActivity.this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 
     @Override

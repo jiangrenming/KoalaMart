@@ -89,6 +89,7 @@
         <activity android:name=".ui.activity.search.SearchListActivity"/>
         <activity android:name=".ui.activity.search.GoodsListActivity"/>
         <activity android:name=".ui.activity.goods.CartShoppingActivity"/>
+        <activity android:name=".ui.activity.use.CountryIdActivity"></activity>
         <activity
             android:name="com.unionpay.uppay.PayActivity"
             android:configChanges="orientation|keyboardHidden|keyboard"

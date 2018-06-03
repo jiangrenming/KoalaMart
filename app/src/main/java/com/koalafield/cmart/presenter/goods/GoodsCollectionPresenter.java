@@ -2,8 +2,9 @@ package com.koalafield.cmart.presenter.goods;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
-import com.koalafield.cmart.base.bean.BaseResponseBean;
 import com.koalafield.cmart.ui.view.goods.IGoodsCollectionView;
 
 import java.util.Map;
@@ -47,17 +48,17 @@ public class GoodsCollectionPresenter implements IGoodsCollectionPresenter{
                     if (responseBean.getCode() == 200){
                         collectionView.onGoodsCollectionsSucessFul(responseBean);
                     }else {
-                        collectionView.onGoodsCollectionsFailure(responseBean.getMsg());
+                        collectionView.onGoodsCollectionsFailure(responseBean.getMsg(),0);
                     }
                 }else {
-                    collectionView.onGoodsCollectionsFailure("返回的数据为NULL");
+                    collectionView.onGoodsCollectionsFailure("返回的数据为NULL",0);
                 }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 collectionView.hideLoading();
-                collectionView.onGoodsCollectionsFailure(t.getMessage());
+                collectionView.onGoodsCollectionsFailure(t.getMessage(),t.getCode());
             }
 
             @Override

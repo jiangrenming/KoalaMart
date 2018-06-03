@@ -11,7 +11,7 @@ import com.koalafield.cmart.base.view.IBaseView;
 public interface ICartChangeCountView<T> extends IBaseView {
 
     void onChangeItemSucessful(T data);
-    void onChangeItemFailure(String message);
+    void onChangeItemFailure(String message,int code);
 
 
 

@@ -1,6 +1,5 @@
 package com.koalafield.cmart.bean.order;
 
-import com.koalafield.cmart.base.bean.SpecialResponseBean;
 
 import java.io.Serializable;
 

@@ -2,6 +2,7 @@ package com.koalafield.cmart.presenter.cart;
 
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.CategryOneBean;
@@ -40,8 +41,9 @@ public class CartPresenter implements ICartPresenter{
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 cartVIew.hideLoading();
+                cartVIew.onNumberFailure(t.getMessage(),t.getCode());
             }
 
             @Override
