@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
@@ -14,6 +15,7 @@ import com.koalafield.cmart.bean.order.OrderBean;
 import com.koalafield.cmart.bean.order.OrderItemAttrs;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
+import com.koalafield.cmart.ui.activity.order.OrderDetailsActivity;
 
 import java.util.List;
 
@@ -47,6 +49,15 @@ public class CommonOrderAdapter extends BaseQuickAdapter<OrderListBean> {
                 .setText(R.id.order_state,item.getStatusText());
         RecyclerView item_order = holder.getView(R.id.item_order);
         OrderAdapter orderAdapter = new OrderAdapter(mContext,item.getGoodsList());
+        ImageView goods_details = holder.getView(R.id.goods_details);
+        goods_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,OrderDetailsActivity.class);
+                intent.putExtra("billNo",item.getBillNo());
+                mContext.startActivity(intent);
+            }
+        });
         RecyclerViewHelper.initRecyclerViewV(mContext,item_order,true,orderAdapter);
         orderAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override

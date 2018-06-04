@@ -89,7 +89,19 @@
         <activity android:name=".ui.activity.search.SearchListActivity"/>
         <activity android:name=".ui.activity.search.GoodsListActivity"/>
         <activity android:name=".ui.activity.goods.CartShoppingActivity"/>
-        <activity android:name=".ui.activity.use.CountryIdActivity"></activity>
+        <activity android:name=".ui.activity.use.CountryIdActivity"/>
+        <activity android:name=".ui.activity.use.ForgetPwdActivity"/>
+        <activity android:name=".ui.activity.use.UpdatePwdActivity"/>
+        <activity android:name=".ui.activity.use.AboutUsActivity"/>
+
+        <service
+            android:name="com.koalafield.cmart.service.TimeService"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.koalafield.cmart.service.TimeService" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name="com.unionpay.uppay.PayActivity"
             android:configChanges="orientation|keyboardHidden|keyboard"

@@ -29,6 +29,13 @@
             android:textColor="@color/btn_red"
             android:gravity="center_vertical"
             android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/goods_details"
+            android:layout_width="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/right"
+            android:layout_height="20dp" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

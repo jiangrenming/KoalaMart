@@ -13,6 +13,8 @@ import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.base.fragment.BaseFragment;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,5 +57,16 @@ public class AndroidTools {
         params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
         //给listview设置高度
         listView.setLayoutParams(params);
+    }
+    /**
+     * 将系统时间转换成年月日 时分秒
+     * @param time
+     * @return
+     */
+    public static String formatMillisecondAllDate(long time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(time);
+        String strDate = format.format(date);
+        return strDate;
     }
 }

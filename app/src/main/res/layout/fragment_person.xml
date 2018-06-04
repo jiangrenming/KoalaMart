@@ -375,7 +375,7 @@
                                 android:layout_height="wrap_content"
                                 android:paddingTop="5dp"
                                 android:gravity="center_horizontal"
-                                android:text="服务条款" />
+                                android:text="服务协议" />
 
                         </LinearLayout>
 

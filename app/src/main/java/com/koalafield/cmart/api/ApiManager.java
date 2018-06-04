@@ -26,6 +26,7 @@ import com.koalafield.cmart.bean.search.SearchListBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.CountryCode;
 import com.koalafield.cmart.bean.user.DisCountBean;
+import com.koalafield.cmart.bean.user.PersonInfos;
 import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
@@ -170,7 +171,13 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getCountryCode(getHeaders()))
                 .flatMap(getCountryCodes());
     }
-
+    /**
+     * 获取用户信息
+     */
+    public static Flowable<PersonInfos> getPersonInfos(){
+        return apiSubscribe(AndoridApplication.apiService.getPersonInfos(getHeaders()))
+                .map(getInfos());
+    }
     /************************************订单结算********************************/
 
     /**
@@ -200,6 +207,16 @@ public class ApiManager {
     public static Flowable<SdkPayBean> createSdkPay(Map<String,String> params){
         return apiSubscribe(AndoridApplication.apiService.paySdk(getHeaders(),setParams(params)))
                 .map(getSdkpay());
+    }
+
+    /**
+     * 确认订单
+     * @param params
+     * @return
+     */
+    public static Flowable<BaseResponseBean> getComfirmOrder(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.comfirmOrder(getHeaders(),setParams(params)))
+                .map(confirm_order());
     }
     /*********************************首页****************************************/
 
@@ -394,6 +411,34 @@ public class ApiManager {
                 Log.i("返回的数据:",response.getCode()+"");
                 if (null !=  response && response.getCode() == 200){
                     return (RegisterBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 确认订单
+     */
+    private static Function<BaseResponseBean,BaseResponseBean> confirm_order() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                return  response;
+            }
+        };
+    }
+    /**
+     * 用户信息
+     * @return
+     */
+    private static Function<BaseResponseBean,PersonInfos> getInfos() {
+        return new Function<BaseResponseBean, PersonInfos>() {
+            @Override
+            public PersonInfos apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (PersonInfos) response.getData();
                 }
                 return  null;
             }

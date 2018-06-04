@@ -14,9 +14,13 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.user.PersonInfos;
+import com.koalafield.cmart.ui.activity.LoginActivity;
+import com.koalafield.cmart.ui.view.user.IPersonInfosView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 
 import java.io.File;
@@ -31,7 +35,7 @@ import butterknife.OnClick;
  * 个人资料
  */
 
-public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDismissListener,View.OnClickListener {
+public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDismissListener,View.OnClickListener ,IPersonInfosView<PersonInfos>{
 
 
     @BindView(R.id.back)
@@ -224,6 +228,29 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
                     person_country.setText(value);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onInfosSucessFul(PersonInfos data) {
+        if (data != null){
+            name_person.setText(data.getNickname());
+            if (data.getGender().equals("male")){
+                sex_person.setText("男");
+            }else {
+                sex_person.setText("女");
+            }
+            person_country.setText(data.getCountry());
+        }
+    }
+
+    @Override
+    public void onInfosFailure(String message, int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
         }
     }
 }

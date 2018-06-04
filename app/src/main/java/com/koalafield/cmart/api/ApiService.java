@@ -23,6 +23,7 @@ import com.koalafield.cmart.bean.search.SearchListBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
 import com.koalafield.cmart.bean.user.CountryCode;
 import com.koalafield.cmart.bean.user.DisCountBean;
+import com.koalafield.cmart.bean.user.PersonInfos;
 import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
@@ -109,7 +110,9 @@ public interface ApiService {
     //修改密码
     @POST("AppApi/EditPassword")
     Flowable<BaseResponseBean> changePwd(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
-
+    //确认收货
+    @POST("AppApi/ConfirmReceive")
+    Flowable<BaseResponseBean> comfirmOrder(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
 
 
     /***************************************************Get请求*******************************************/
@@ -165,5 +168,6 @@ public interface ApiService {
     //获取国家代码
     @GET("AppApi/CountrySmsCode")
     Flowable<BaseResponseBean<List<CountryCode>>> getCountryCode(@HeaderMap Map<String,String> headrs);
-
+    @GET("AppApi/CurrentInfo")
+    Flowable<BaseResponseBean<PersonInfos>> getPersonInfos(@HeaderMap Map<String,String> headrs);
 }

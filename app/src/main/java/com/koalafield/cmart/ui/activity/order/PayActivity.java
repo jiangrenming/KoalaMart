@@ -465,13 +465,14 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         final  List<Payment>  mPayment = data.getPaymentDTOList();
         if (mPayment != null && mPayment.size() >0){
             for (int i = 0; i < mPayment.size(); i++) {
-                if (i == 0){
+             /*   if (i == 0){
                     mPayment.get(i).setSelect(true);
                 }else {
                     mPayment.get(i).setSelect(false);
-                }
+                }*/
+                mPayment.get(i).setSelect(false);
             }
-            payId = mPayment.get(0).getId();
+  //          payId = mPayment.get(0).getId();
            final PayChooseAdapter chooseAdapter = new PayChooseAdapter(this,mPayment);
             RecyclerViewHelper.initRecyclerViewV(PayActivity.this,choose_pay,true,chooseAdapter);
             chooseAdapter.setmPayCallBack(new PayChooseAdapter.PayClickCallBack() {
@@ -493,14 +494,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                           payId = mPayment.get(i).getId();
                       }
                    }
+                   //改变价格
+                   if (payId >0 && addRessId >0 && deliveryId >0){
+                       changePrice();
+                   }
                }
            });
-            //改变价格
-            if (payId >0 && addRessId >0 && deliveryId >0){
-                changePrice();
-            }
         }
-
     }
 
     @Override

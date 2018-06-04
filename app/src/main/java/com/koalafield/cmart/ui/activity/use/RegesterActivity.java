@@ -192,17 +192,18 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
                 break;
             case R.id.register_btn: //短信验证码
                 String phone = register_phone.getText().toString().trim();
-                if (StringUtils.isEmpty(phone) || !RegaxUtils.isMobilePhone(phone)){
+                String countryId = country_id.getText().toString().trim();
+                if (StringUtils.isEmpty(phone) || !RegaxUtils.isMobilePhone(phone) || StringUtils.isEmpty(countryId)){
                     return ;
                 }
                 //调用获取验证码的接口，成功时调用timeSchedule();
                 IMessageCodePresenter messageCodePresenter = new MessageCodePresenter(this);
                 Map<String,String> country_params = new HashMap<>();
-                country_params.put("countryId",String.valueOf(0));
+                country_params.put("countryId",countryId);
                 country_params.put("mobile",phone);
                 country_params.put("flag",String.valueOf(0));
                 messageCodePresenter.setParams(country_params);
-                timeSchedule();
+                messageCodePresenter.getData();
                 break;
             case  R.id.register_comfirm:
                 if (isAllRight()){  //调用接口
@@ -243,9 +244,9 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
         if (StringUtils.isEmpty(pwd_two) ||  !RegaxUtils.isSamePwd(register_pwd.getText().toString().trim(),pwd_two)){
             return false;
         }
-       /* if (StringUtils.isEmpty(code)){  //暂时不需要验证
+        if (StringUtils.isEmpty(code)){
             return false;
-        }*/
+        }
         return  true;
     }
 
@@ -258,8 +259,6 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
             if (!StringUtils.isEmpty(ticket)){
                 ShareBankPreferenceUtils.putString("tickets",ticket);
                 finish();
-          /*      StackActivityManager.getActivityManager().removeActivity(RegesterActivity.this);
-                StackActivityManager.getActivityManager().removeExceptActivity(LoginActivity.class);*/
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }
         }
@@ -276,6 +275,7 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
     private  int remainSecond = 60;
     private Timer countDownTimer;
    private Handler handler = new Handler() {
+        @Override
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public void handleMessage(android.os.Message msg) {
             register_btn.setText(remainSecond + "S");
@@ -306,12 +306,14 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
 
     @Override
     public void onMessageCodeFul(BaseResponseBean data) {
-
+        if (data != null && data.getCode()  ==200){
+            timeSchedule();
+        }
     }
 
     @Override
     public void onMessageCodeFailure(String message) {
-
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -28,6 +28,7 @@ import com.koalafield.cmart.presenter.user.IPersonNumberPresenter;
 import com.koalafield.cmart.presenter.user.PersonNumberPresenter;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.order.PayActivity;
+import com.koalafield.cmart.ui.activity.use.AboutUsActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
@@ -175,7 +176,10 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             case R.id.contact_custemer:  //联系客服
                 openPopupWindow(v);
                 break;
-            case R.id.service_infos:
+            case R.id.service_infos: //服务条款
+                Intent intent = new Intent(PersonActivity.this, AboutUsActivity.class);
+                intent.putExtra("type",1);
+                startActivity(intent);
                 break;
             case R.id.setting: //设置
                 startActivity(new Intent(this, PersonSettingActivity.class));

@@ -22,4 +22,6 @@ public class Constants {
     public static  final int WAIT_RECEIVER_ORDER =2;
     public static  final int WAIT_JUST_ORDER =4;
 
+    public static  final String IN_RUNNING ="com.koalamart_timer_running";
+    public static  final String END_RUNNING ="com.koalamart_timer_finish";
 }

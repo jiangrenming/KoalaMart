@@ -1,6 +1,9 @@
 package com.koalafield.cmart.ui.activity.order;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.OrderAdapter;
 import com.koalafield.cmart.adapter.PayChooseAdapter;
@@ -27,14 +31,20 @@ import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.OrderdetailsBean;
 import com.koalafield.cmart.bean.order.Payment;
 import com.koalafield.cmart.bean.order.SdkPayBean;
+import com.koalafield.cmart.presenter.order.ComfirmOrderPresenter;
+import com.koalafield.cmart.presenter.order.IComfirmOrderPresenter;
 import com.koalafield.cmart.presenter.order.IOrderDetailsPresenter;
 import com.koalafield.cmart.presenter.order.IPaySdkPresenter;
 import com.koalafield.cmart.presenter.order.OrderDetailsPresenter;
 import com.koalafield.cmart.presenter.order.PaySdkPresenter;
+import com.koalafield.cmart.service.TimeService;
 import com.koalafield.cmart.ui.activity.LoginActivity;
+import com.koalafield.cmart.ui.view.order.IComfirmOrderView;
 import com.koalafield.cmart.ui.view.order.IOrderDetailsView;
 import com.koalafield.cmart.ui.view.order.IPaySdkView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
+import com.koalafield.cmart.utils.AndroidTools;
+import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.StringUtils;
 import com.unionpay.UPPayAssistEx;
 
@@ -51,7 +61,8 @@ import butterknife.OnClick;
  * @date 2018/5/29
  */
 
-public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsView<OrderdetailsBean>,IPaySdkView<SdkPayBean> ,PopupWindow.OnDismissListener{
+public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsView<OrderdetailsBean>,IPaySdkView<SdkPayBean> ,
+        PopupWindow.OnDismissListener,IComfirmOrderView<BaseResponseBean>{
 
     //头部布局
     @BindView(R.id.back)
@@ -131,6 +142,52 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         detailsPresenter.getData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(mUpdateReceiver,updateIntentFilter());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 移除注册
+        unregisterReceiver(mUpdateReceiver);
+    }
+
+    // 注册广播
+    private static IntentFilter updateIntentFilter() {
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constants.IN_RUNNING);
+        intentFilter.addAction(Constants.END_RUNNING);
+        return intentFilter;
+    }
+
+    // 广播接收者
+    private final BroadcastReceiver mUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            switch (action) {
+                case Constants.IN_RUNNING:
+                    String time = intent.getStringExtra("time");
+                    if (StringUtils.isEmpty(time)){
+                        String timer = AndroidTools.formatMillisecondAllDate(Long.valueOf(time));
+                        // 正在倒计时
+                        has_time.setText("倒计时中还剩" + timer);
+                    }
+                    break;
+                case Constants.END_RUNNING:
+                    // 完成倒计时
+                    has_time.setText("交易关闭");
+                    has_time.setBackgroundColor(getResources().getColor(R.color.gray));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     @OnClick({R.id.back,R.id.once_pay})
     public void orderDetaiClck(View view){
         switch (view.getId()){
@@ -139,14 +196,22 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 break;
             case  R.id.once_pay:
                 if (once_pay.getVisibility() == View.VISIBLE){
-                    if (payList != null && payList.size() > 0){
-                        openWindow(view);
+                    if (detailsInfo.getStatus() == 2){
+                        //确认收货
+                        Map<String,String> params = new HashMap();
+                        params.put("billNo",billNo);
+                        IComfirmOrderPresenter comfirmOrderPresenter = new ComfirmOrderPresenter(this);
+                        comfirmOrderPresenter.setParams(params);
+                        comfirmOrderPresenter.getData();
                     }else {
-                        Toast.makeText(OrderDetailsActivity.this,"支付方式为空",Toast.LENGTH_SHORT).show();
-                        return;
+                        if (payList != null && payList.size() > 0){
+                            openWindow(view);
+                        }else {
+                            Toast.makeText(OrderDetailsActivity.this,"支付方式为空",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }
                 }
-
                 break;
             default:
                 break;
@@ -246,10 +311,11 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         this. getWindow().setAttributes(lp);
     }
 
+    private OrderDetailsInfo detailsInfo;
     @Override
     public void onOrderDetails(OrderdetailsBean data) {
         if (data != null){
-            OrderDetailsInfo detailsInfo = data.getDetailsInfo();
+             detailsInfo = data.getDetailsInfo();
             payList = data.getPaymentDTOList();
             if (detailsInfo != null && detailsInfo.getGoodsList() != null && detailsInfo.getGoodsList().size() >0){
                 order_num.setText(detailsInfo.getBillNo());
@@ -277,7 +343,8 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     devilery_style.setText(data.getDelivery().getDeliveryName());
                 }else if (detailsInfo.getStatus() == 2){  //待收货
                     has_time.setVisibility(View.GONE);
-                    once_pay.setVisibility(View.GONE);
+                    once_pay.setVisibility(View.VISIBLE);
+                    once_pay.setText("确认收货");
                     devilery_time_layout.setVisibility(View.VISIBLE);
                     devilery_style_layout.setVisibility(View.VISIBLE);
                     pay_style_layout.setVisibility(View.VISIBLE);
@@ -312,7 +379,9 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 order_discount.setText(String.format("%.2f",orderPrice.getCouponPrice()));
                 order_all_price.setText(String.format("%.2f",orderPrice.getTotalPrice()));
             }
-
+            Intent intent = new Intent(this,TimeService.class);
+            intent.putExtra("time",Integer.valueOf(detailsInfo.getExpirePayTimeStamp()));
+            startService(intent);
         }
     }
 
@@ -353,5 +422,18 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
             mPopuWindow.dismiss();
         }
         setBackgroundAlpha(1.0f);
+    }
+
+    @Override
+    public void onComfirmOrderList(BaseResponseBean data) {
+        if (data != null && data.getCode() == 200){
+            Toast.makeText(this,"确认收货成功",Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void onFailureComfirmOrder(String message, int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

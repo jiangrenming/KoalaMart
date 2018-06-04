@@ -123,4 +123,12 @@
         <item name="android:windowEnterAnimation">@anim/input_method_enter</item>
         <item name="android:windowExitAnimation">@anim/input_method_exit</item>
     </style>
+
+    <!--自定义dialog背景全透明无边框theme -->
+    <style name="MyDialog" parent="Theme.AppCompat.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

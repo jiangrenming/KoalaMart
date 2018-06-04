@@ -17,13 +17,6 @@
         android:alpha="0.6"
         android:background="@android:color/darker_gray"/>
 
-  <!--  <com.koalafield.cmart.widget.BottomBarLayout
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#FFFFFF"
-        android:layout_alignParentBottom="true"/>-->
-
     <com.chaychan.library.BottomBarLayout
         android:id="@+id/bbl"
         android:layout_width="match_parent"

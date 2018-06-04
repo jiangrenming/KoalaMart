@@ -19,6 +19,7 @@ import com.koalafield.cmart.bean.event.SelectEvent;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.presenter.user.ILoginPresenter;
 import com.koalafield.cmart.presenter.user.LoginPrsenter;
+import com.koalafield.cmart.ui.activity.use.ForgetPwdActivity;
 import com.koalafield.cmart.ui.activity.use.RegesterActivity;
 import com.koalafield.cmart.ui.view.ILoginView;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
@@ -144,7 +145,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
             case R.id.wx_login:
                 break;
             case R.id.forget_pwd: //忘记密码
-
+             startActivity(new Intent(LoginActivity.this, ForgetPwdActivity.class));
             default:
                 break;
         }
