@@ -1,7 +1,9 @@
 package com.koalafield.cmart.utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -64,9 +66,23 @@ public class AndroidTools {
      * @return
      */
     public static String formatMillisecondAllDate(long time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(time);
         String strDate = format.format(date);
         return strDate;
+    }
+
+
+    public static boolean isServiceRunning(Context context, String serviceName) {
+        boolean isRunning = false;
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> lists = am.getRunningServices(30);
+        for (ActivityManager.RunningServiceInfo info : lists) {//判断服务
+            if(info.service.getClassName().equals(serviceName)){
+                Log.i("Service1进程", ""+info.service.getClassName());
+                isRunning = true;
+            }
+        }
+        return isRunning;
     }
 }

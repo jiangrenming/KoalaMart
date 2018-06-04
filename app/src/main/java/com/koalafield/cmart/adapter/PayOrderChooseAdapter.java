@@ -55,12 +55,7 @@ public class PayOrderChooseAdapter extends BaseQuickAdapter<Payment> {
                 }
             }
         });
-        comfirm_pay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPayCallBack.paySdk(item);
-            }
-        });
+
     }
 
     public  PayClickCallBack mPayCallBack;
@@ -69,6 +64,5 @@ public class PayOrderChooseAdapter extends BaseQuickAdapter<Payment> {
     }
     public  interface  PayClickCallBack{
         void onSucess(Payment item, boolean isSelect);
-        void paySdk(Payment item);
     }
 }

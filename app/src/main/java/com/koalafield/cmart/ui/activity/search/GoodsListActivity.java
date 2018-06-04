@@ -129,7 +129,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
                     startActivity(new Intent(GoodsListActivity.this, CartShoppingActivity.class));
                 }else {
                     Intent intent = new Intent(GoodsListActivity.this, LoginActivity.class);
-                    intent.putExtra("type",3);
+   //                 intent.putExtra("type",3);
                     startActivity(intent);
                 }
                 break;
@@ -320,7 +320,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
         Toast.makeText(GoodsListActivity.this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(GoodsListActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }

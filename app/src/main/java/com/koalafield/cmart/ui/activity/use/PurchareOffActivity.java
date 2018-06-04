@@ -110,7 +110,7 @@ public class PurchareOffActivity extends BaseActivity implements IPurchaseOffVie
         Toast.makeText(PurchareOffActivity.this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(PurchareOffActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+  //          intent.putExtra("type",3);
             startActivity(intent);
         }
     }

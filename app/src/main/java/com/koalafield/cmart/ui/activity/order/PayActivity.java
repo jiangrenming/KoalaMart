@@ -260,7 +260,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -270,7 +270,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+     //       intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -508,7 +508,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }    }
 
@@ -615,7 +615,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }

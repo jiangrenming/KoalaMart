@@ -5,15 +5,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@color/white"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="我的"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
-
+        android:orientation="horizontal"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="我的"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="20dp"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/setting"
+            android:layout_height="20dp" />
+    </LinearLayout>
     <com.koalafield.cmart.widget.MyBoundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -432,28 +445,6 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/setting"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:background="@color/white"
-                            android:gravity="center_vertical|center_horizontal">
-
-                            <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:scaleType="fitXY"
-                                android:src="@mipmap/home" />
-                            <TextView
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:paddingTop="5dp"
-                                android:text="设置" />
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:id="@+id/share"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -474,7 +465,10 @@
                                 android:paddingTop="5dp"
                                 android:text="分享" />
                         </LinearLayout>
-
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
                         <View
                             android:layout_width="0dp"
                             android:layout_height="match_parent"

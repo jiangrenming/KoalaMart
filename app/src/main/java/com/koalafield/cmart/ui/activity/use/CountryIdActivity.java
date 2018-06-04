@@ -54,21 +54,6 @@ public class CountryIdActivity extends BaseActivity implements ICountryCodeView<
 
     @Override
     public void upDateViews() {
-        /*layoutManager = new LinearLayoutManager(this);
-        contact_list.setLayoutManager(layoutManager);
-        contact_list.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-
-        letter_view.setCharacterListener(new LetterView.CharacterClickListener() {
-            @Override
-            public void clickCharacter(String character) {
-                layoutManager.scrollToPositionWithOffset(adapter.getScrollPosition(character), 0);
-            }
-
-            @Override
-            public void clickArrow() {
-                layoutManager.scrollToPositionWithOffset(0, 0);
-            }
-        });*/
     }
 
     @Override
@@ -88,25 +73,6 @@ public class CountryIdActivity extends BaseActivity implements ICountryCodeView<
                 }
             });
 
-            /*List<String> code = new ArrayList<>();
-            for (int i = 0; i < data.size(); i++) {
-                code.add(data.get(i).getLetter());
-            }
-            letter_view.setAZ(code);
-            letter_view.postInvalidate();*/
-         //   adapter = new ContactAdapter(this, data);
-           // contact_list.setAdapter(adapter);
-            /*adapter.setItemClickListener(new ContactAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Toast.makeText(CountryIdActivity.this,data.get(position).getCountry(),Toast.LENGTH_SHORT).show();
-                    CountryCode countryCode = data.get(position);
-                    Intent intent = new Intent();
-                    intent.putExtra("countyrId",countryCode.getCodeStr());
-                    setResult(RESULT_OK,intent);
-                    finish();
-                }
-            });*/
         }
     }
 

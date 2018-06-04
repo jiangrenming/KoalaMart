@@ -22,6 +22,7 @@ import com.koalafield.cmart.presenter.user.LoginPrsenter;
 import com.koalafield.cmart.ui.activity.use.ForgetPwdActivity;
 import com.koalafield.cmart.ui.activity.use.RegesterActivity;
 import com.koalafield.cmart.ui.view.ILoginView;
+import com.koalafield.cmart.utils.RegaxUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
@@ -68,8 +69,6 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     @Override
     public void initDatas() {
         top_name.setText("手机登录");
-        account.setText("15901774559");
-        password.setText("123456");
         type = getIntent().getIntExtra("type",-1);
         account.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -81,7 +80,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
                         || action == EditorInfo.IME_ACTION_NEXT
                         || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
                     String vaule = account.getText().toString().trim();
-                    if (StringUtils.isEmpty(vaule)) {  //还未对账户格式做判断
+                    if (StringUtils.isEmpty(vaule) || !RegaxUtils.isMobilePhone(vaule)) {  //还未对账户格式做判断
                         Toast.makeText(LoginActivity.this,"账户名称格式不正确",Toast.LENGTH_SHORT).show();
                     } else {
                         setFocus(password);
@@ -103,7 +102,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
                         || action == EditorInfo.IME_ACTION_NEXT
                         || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
                     String pwd = password.getText().toString();
-                    if (StringUtils.isEmpty(pwd)) {  //还未对密码格式做判断
+                    if (StringUtils.isEmpty(pwd)|| !RegaxUtils.isPassword(pwd)) {  //还未对密码格式做判断
                         Toast.makeText(LoginActivity.this,"密码格式不正确",Toast.LENGTH_SHORT).show();
                     } else {
                         if (allRight()){  //登录接口调用
@@ -128,9 +127,9 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         switch (v.getId()){
             case R.id.back: //返回首页
                 finish();
-                if (type !=3 ){
+                /*if (type !=3 ){
                     StackActivityManager.getActivityManager().goToMain(this);
-                }
+                }*/
                 break;
             case R.id.login:
                 if (allRight()){  //登录接口调用
@@ -155,10 +154,10 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     private boolean allRight(){
         String pwd = password.getText().toString();
         String account_name = account.getText().toString().trim();
-        if (StringUtils.isEmpty(account_name)){
+        if (StringUtils.isEmpty(account_name)  || !RegaxUtils.isMobilePhone(account_name)){
             return  false;
         }
-        if (StringUtils.isEmpty(pwd)){
+        if (StringUtils.isEmpty(pwd) || !RegaxUtils.isPassword(pwd)){
             return  false;
         }
         params.put("mobile",account_name);
@@ -171,9 +170,9 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             finish();
-            if (type != 3){
+            /*if (type != 3){
                 StackActivityManager.getActivityManager().goToMain(this);
-            }
+            }*/
             return false;
         }
 
@@ -192,7 +191,9 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         String ticket = data.getTicket();
         if (!StringUtils.isEmpty(ticket)){
             ShareBankPreferenceUtils.putString("tickets",ticket);
-            if (type == 1){
+            finish();
+
+           /* if (type == 1){
                 finish();
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }else if (type ==2){
@@ -200,12 +201,12 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
                 StackActivityManager.getActivityManager().goToMain(this,3);
             }else if (type ==3){
                 finish();
-            }
+            }*/
         }
     }
 
     @Override
     public void onFailure(String message) {
-
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

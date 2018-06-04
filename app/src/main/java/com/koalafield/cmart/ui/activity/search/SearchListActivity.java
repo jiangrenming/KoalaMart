@@ -167,7 +167,7 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
                     startActivity(new Intent(SearchListActivity.this,CartShoppingActivity.class));
                 }else {
                     Intent intent = new Intent(SearchListActivity.this, LoginActivity.class);
-                    intent.putExtra("type",3);
+//                    intent.putExtra("type",3);
                     startActivity(intent);
                 }
                 break;
@@ -236,7 +236,7 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(SearchListActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }

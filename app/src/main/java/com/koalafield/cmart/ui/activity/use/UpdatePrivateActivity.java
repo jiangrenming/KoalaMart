@@ -60,9 +60,6 @@ public class UpdatePrivateActivity extends BaseActivity implements IUpdatePerson
         }else  if (type.equals("2")){
             top_name.setText("设置性别");
             private_name.setHint("请输入性别");
-        }else if (type.equals("3")){
-            top_name.setText("设置地区");
-            private_name.setHint("请输入地区");
         }
 
         private_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -120,8 +117,6 @@ public class UpdatePrivateActivity extends BaseActivity implements IUpdatePerson
             mParams.put("nickname",value);
         }else if (type.equals("2")){
             mParams.put("gender",value);
-        }else {
-            mParams.put("country",value);
         }
 
         infoPresenter.setParams(mParams);
@@ -145,7 +140,7 @@ public class UpdatePrivateActivity extends BaseActivity implements IUpdatePerson
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(UpdatePrivateActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }

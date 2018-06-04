@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.koalafield.cmart.adapter.OrderAdapter;
 import com.koalafield.cmart.adapter.PayChooseAdapter;
 import com.koalafield.cmart.adapter.PayOrderChooseAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.event.UpdateEvent;
 import com.koalafield.cmart.bean.order.OrderAdress;
 import com.koalafield.cmart.bean.order.OrderDetailsInfo;
 import com.koalafield.cmart.bean.order.OrderPrice;
@@ -47,6 +49,10 @@ import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.StringUtils;
 import com.unionpay.UPPayAssistEx;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -128,6 +134,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     @Override
     public void initDatas() {
         billNo = getIntent().getStringExtra("billNo");
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -145,14 +152,15 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mUpdateReceiver,updateIntentFilter());
+   //     registerReceiver(mUpdateReceiver,updateIntentFilter());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         // 移除注册
-        unregisterReceiver(mUpdateReceiver);
+   //     unregisterReceiver(mUpdateReceiver);
+        EventBus.getDefault().unregister(this);
     }
 
     // 注册广播
@@ -171,10 +179,10 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
             switch (action) {
                 case Constants.IN_RUNNING:
                     String time = intent.getStringExtra("time");
-                    if (StringUtils.isEmpty(time)){
+                    if (!StringUtils.isEmpty(time)){
                         String timer = AndroidTools.formatMillisecondAllDate(Long.valueOf(time));
                         // 正在倒计时
-                        has_time.setText("倒计时中还剩" + timer);
+                        has_time.setText("倒计时还剩:" + timer);
                     }
                     break;
                 case Constants.END_RUNNING:
@@ -187,7 +195,25 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
             }
         }
     };
-
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void changeTime(UpdateEvent event){
+        Log.i("获取的数据",event.mTime+"");
+        if (event != null){
+            if (event.mType.equals(Constants.IN_RUNNING)){
+                long mTime = event.mTime;
+                String timer = AndroidTools.formatMillisecondAllDate(mTime);
+                Log.i("转换的时间为：",timer);
+                // 正在倒计时
+                has_time.setText("倒计时还剩:" + timer);
+                if (limit_time != null){
+                    limit_time.setText("请在"+timer+"后完成支付");
+                }
+            }else if (event.mType.equals(Constants.END_RUNNING)){
+                has_time.setText("交易关闭");
+                has_time.setBackgroundColor(getResources().getColor(R.color.gray));
+            }
+        }
+    }
     @OnClick({R.id.back,R.id.once_pay})
     public void orderDetaiClck(View view){
         switch (view.getId()){
@@ -250,14 +276,31 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         setBackgroundAlpha(0.5f);
     }
 
+    private TextView limit_time;
     private void setOnPopupViewClick(View view) {
-        RecyclerView payChoose = view.findViewById(R.id.choose_pay);
-        TextView limit_time = view.findViewById(R.id.limit_time);
+         RecyclerView payChoose = view.findViewById(R.id.choose_pay);
+         limit_time = view.findViewById(R.id.limit_time);
         ImageView close = view.findViewById(R.id.close);
+        TextView  comfirm_pay = view.findViewById(R.id.comfirm_pay);
+        comfirm_pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopuWindow != null &&mPopuWindow.isShowing()){
+                    mPopuWindow.dismiss();
+                }
+                Map<String,String> params = new HashMap<>();
+                IPaySdkPresenter mPresenter = new PaySdkPresenter(OrderDetailsActivity.this);
+                params.put("billCode",billNo) ;
+                params.put("paymentId",String.valueOf(paymentId)) ;
+                mPresenter.setParams(params);
+                mPresenter.getData();
+            }
+        });
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mPopuWindow != null && mPopuWindow.isShowing()){
+                    mPopuWindow.dismiss();
                     setBackgroundAlpha(1.0f);
                 }
             }
@@ -284,19 +327,6 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                             paymentId = payList.get(i).getId();
                         }
                     }
-                }
-
-                @Override
-                public void paySdk(Payment item) {
-                    if (mPopuWindow != null &&mPopuWindow.isShowing()){
-                        mPopuWindow.dismiss();
-                    }
-                    Map<String,String> params = new HashMap<>();
-                    IPaySdkPresenter mPresenter = new PaySdkPresenter(OrderDetailsActivity.this);
-                    params.put("billCode",billNo) ;
-                    params.put("paymentId",String.valueOf(paymentId)) ;
-                    mPresenter.setParams(params);
-                    mPresenter.getData();
                 }
 
             });
@@ -379,9 +409,17 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 order_discount.setText(String.format("%.2f",orderPrice.getCouponPrice()));
                 order_all_price.setText(String.format("%.2f",orderPrice.getTotalPrice()));
             }
-            Intent intent = new Intent(this,TimeService.class);
-            intent.putExtra("time",Integer.valueOf(detailsInfo.getExpirePayTimeStamp()));
-            startService(intent);
+            if (!AndroidTools.isServiceRunning(this,"com.koalafield.cmart.service.TimeService")){
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        Intent intent = new Intent(OrderDetailsActivity.this,TimeService.class);
+                        intent.putExtra("time",detailsInfo.getExpirePayTimeStamp());
+                        startService(intent);
+                    }
+                }.start();
+            }
         }
     }
 
@@ -390,7 +428,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(OrderDetailsActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+  //          intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -411,7 +449,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(OrderDetailsActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }

@@ -150,7 +150,7 @@ public class CollectionActivity extends BaseActivity implements ICollectionView<
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(CollectionActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+   //         intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -190,7 +190,7 @@ public class CollectionActivity extends BaseActivity implements ICollectionView<
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(CollectionActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+   //         intent.putExtra("type",3);
             startActivity(intent);
         }
     }

@@ -99,9 +99,9 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     public void upDateViews() {
         if (type == 1){
-            webView.loadUrl(BuildConfig.POST_URL+"wechat/AboutUs");
-        }else {
             webView.loadUrl(BuildConfig.POST_URL+"wechat/Privacy");
+        }else {
+            webView.loadUrl(BuildConfig.POST_URL+"wechat/AboutUs");
         }
     }
 

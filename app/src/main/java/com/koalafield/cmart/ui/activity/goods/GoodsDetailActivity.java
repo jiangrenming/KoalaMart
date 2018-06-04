@@ -193,7 +193,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     addCartData(view);
                 }else {
                     intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
-                    intent.putExtra("type",3);
+   //                 intent.putExtra("type",3);
                     startActivity(intent);
                 }
                 break;
@@ -229,7 +229,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     }
                 }else {
                      intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
-                    intent.putExtra("type",3);
+     //               intent.putExtra("type",3);
                     startActivity(intent);
                 }
                 break;
@@ -245,7 +245,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     startActivity(new Intent(GoodsDetailActivity.this,CartShoppingActivity.class));
                 }else {
                     intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
-                    intent.putExtra("type",3);
+      //              intent.putExtra("type",3);
                     startActivity(intent);
                 }
                 break;
@@ -257,7 +257,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     addCartData(view);
                 }else {
                      intent = new Intent(GoodsDetailActivity.this, LoginActivity.class);
-                    intent.putExtra("type",3);
+       //             intent.putExtra("type",3);
                     startActivity(intent);
                 }
                 break;
@@ -586,7 +586,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 410){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -673,7 +673,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 410){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -711,7 +711,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 410){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -736,7 +736,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 410){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }
@@ -760,7 +760,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 410){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }    }
 
@@ -790,7 +790,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 410){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
+    //        intent.putExtra("type",3);
             startActivity(intent);
         }
     }

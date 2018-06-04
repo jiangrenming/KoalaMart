@@ -46,8 +46,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     RelativeLayout name;
     @BindView(R.id.sex)
     RelativeLayout sex;
-    @BindView(R.id.addres)
-    RelativeLayout addres;
+
 
     @BindView(R.id.top_name)
     TextView top_name;
@@ -57,8 +56,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     TextView name_person;
     @BindView(R.id.sex_person)
     TextView sex_person;
-    @BindView(R.id.person_country)
-    TextView person_country;
+
 
 
     private PopupWindow popupWindow;
@@ -79,7 +77,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     @Override
     public void upDateViews() {}
 
-    @OnClick({R.id.back,R.id.user_phone,R.id.name,R.id.sex,R.id.addres})
+    @OnClick({R.id.back,R.id.user_phone,R.id.name,R.id.sex})
     public  void  onButterKnifeClick(View v){
         switch (v.getId()){
             case R.id.back:
@@ -93,9 +91,6 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
                 break;
             case  R.id.sex:
                 skipActivity("2");
-                break;
-            case R.id.addres:
-                skipActivity("3");
                 break;
             default:
                 break;
@@ -223,9 +218,11 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
                 if (type .equals("1")){
                     name_person.setText(value);
                 }else if (type .equals("2")){
-                    sex_person.setText(value);
-                }else if (type .equals("3")){
-                    person_country.setText(value);
+                    if (value.equals("male")){
+                        sex_person.setText("男");
+                    }else {
+                        sex_person.setText("女");
+                    }
                 }
             }
         }
@@ -240,8 +237,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
             }else {
                 sex_person.setText("女");
             }
-            person_country.setText(data.getCountry());
-        }
+         }
     }
 
     @Override
@@ -249,7 +245,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type",3);
+   //         intent.putExtra("type",3);
             startActivity(intent);
         }
     }

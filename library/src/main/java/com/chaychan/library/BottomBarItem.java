@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -265,6 +266,15 @@ public class BottomBarItem extends LinearLayout {
         } else {
             mTvUnread.setText(String.format(Locale.CHINA, "%d+", unreadNumThreshold));
         }
+    }
+
+    public  int getUnReadNum(){
+        String count = mTvUnread.getText().toString();
+        int number = 0;
+        if (!TextUtils.isEmpty(count)){
+            number = Integer.valueOf(count);
+        }
+        return number;
     }
 
     public void setMsg(String msg) {

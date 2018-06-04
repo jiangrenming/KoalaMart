@@ -75,7 +75,7 @@ public class PersonSettingActivity extends BaseActivity  {
                 break;
             case R.id.login_pwd:
                 //修改登录密码
-                startActivity(new Intent(this,UpdatePrivateActivity.class));
+                startActivity(new Intent(this,UpdatePwdActivity.class));
                 break;
             case R.id.clear:
                 new CommonDialog(this).builder().setTitle("清理缓存").setMsg("清理缓存之后，本地数据将不存在").setNegativeButton("清理", new View.OnClickListener() {

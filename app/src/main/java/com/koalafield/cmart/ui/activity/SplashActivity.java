@@ -37,7 +37,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         boolean isFirst = ShareBankPreferenceUtils.getBoolean("isFirst", true);
         if (!isFirst){
-            startActivity(new Intent(this,MainActivity.class));
+            startActivity(new Intent(this,KoalaMartActivity.class));
             finish();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { // 沉浸状态栏
@@ -81,7 +81,7 @@ public class SplashActivity extends Activity {
         if (!mIsSkip) {
             mIsSkip = true;
             finish();
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, KoalaMartActivity.class));
             overridePendingTransition(R.anim.hold, R.anim.zoom_in_exit);
             ShareBankPreferenceUtils.putBoolean("isFirst",false);
         }
