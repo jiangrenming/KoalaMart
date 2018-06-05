@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="G:\othercompany\KoalaMart\wheel\src\main\assets"/><source path="G:\othercompany\KoalaMart\wheel\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="G:\othercompany\KoalaMart\wheel\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/jiangrenming/KoalaMart/wheel/src/main/assets"/><source path="/Users/jiangrenming/KoalaMart/wheel/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Users/jiangrenming/KoalaMart/wheel/src/release/assets"/></dataSet></merger>

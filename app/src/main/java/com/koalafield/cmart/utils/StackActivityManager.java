@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.ui.activity.KoalaMartActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 
 import java.util.Stack;
@@ -249,21 +250,25 @@ public class StackActivityManager {
      * @param context
      */
     public  void goToMain(Context context){
-        goToMain(context, 1);
+        goToMain(context, 0);
     }
 
 
     public  void goToMain(Context context, int selectIndex){
         if(context instanceof BaseActivity){
             Activity activity = ((BaseActivity)context).getParent();
-            if(activity != null && activity instanceof MainActivity){
+           /* if(activity != null && activity instanceof MainActivity){
                 ((MainActivity)activity).setSelectedIndex(selectIndex);
+                return;
+            }*/
+            if(activity != null && activity instanceof KoalaMartActivity){
+                ((KoalaMartActivity)activity).changeFragment(selectIndex);
                 return;
             }
         }
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(Constants.MAIN_SELECTED_INDEX, selectIndex + "");
-        context.startActivity(intent);
+    //    Intent intent = new Intent(context, MainActivity.class);
+    //    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+     //   intent.putExtra(Constants.MAIN_SELECTED_INDEX, selectIndex + "");
+     //   context.startActivity(intent);
     }
 }

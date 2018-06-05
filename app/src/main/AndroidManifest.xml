@@ -121,8 +121,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
         </activity>
-        <activity android:name=".wxapi.WXEntryActivity"
+        <activity android:name="com.koalafield.cmart.wxapi.WXEntryActivity"
             android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent"
             />
     </application>
 

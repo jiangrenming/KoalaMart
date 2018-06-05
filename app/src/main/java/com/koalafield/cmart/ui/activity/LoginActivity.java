@@ -162,11 +162,16 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     }
 
     private void sendAuthCode(){
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_demo_test";
-        iwxapi.sendReq(req);
-        finish();
+        if (iwxapi!= null && iwxapi.isWXAppInstalled()){
+            final SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = String.valueOf(System.currentTimeMillis());
+            iwxapi.sendReq(req);
+        }else {
+            Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
+        }
+
+      //  finish();
     }
 
     private Map<String,String> params = new ArrayMap<>();
@@ -189,6 +194,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             finish();
+            StackActivityManager.getActivityManager().goToMain(this);
             /*if (type != 3){
                 StackActivityManager.getActivityManager().goToMain(this);
             }*/

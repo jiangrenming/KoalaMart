@@ -1,11 +1,17 @@
 package com.koalafield.cmart.presenter.user;
 
+import android.content.Context;
+
 import com.jrm.retrofitlibrary.callback.CallBack;
 import com.jrm.retrofitlibrary.callback.SubScribeCallBack;
 import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.ui.view.user.IWXLoginView;
+import com.koalafield.cmart.utils.Constants;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.Map;
 
@@ -17,9 +23,42 @@ public class WXLoginPresenter implements IWXLoginPresenter{
 
     private IWXLoginView wxLoginView;
     private  Map<String, String> params;
-    public WXLoginPresenter(IWXLoginView wxLoginView){
+
+    private IWXAPI wxAPI;
+
+    public WXLoginPresenter(IWXLoginView wxLoginView, Context context){
+
         this.wxLoginView = wxLoginView;
+        if (wxAPI == null){
+            wxAPI = WXAPIFactory.createWXAPI(context, Constants.APP_ID,true);
+            wxAPI.registerApp(Constants.APP_ID);
+        }
+
     }
+
+
+    /**
+     * 微信登陆(三个步骤)
+     * 1.微信授权登陆
+     * 2.根据授权登陆code 获取该用户token
+     * 3.根据token获取用户资料
+     * @param :activity
+     */
+    public void login(){
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = String.valueOf(System.currentTimeMillis());
+        wxAPI.sendReq(req);
+    }
+
+    /**
+     * 获取微信访问token
+     */
+    public void getAccessToken(String code){
+
+    }
+
+
 
     @Override
     public void getData() {

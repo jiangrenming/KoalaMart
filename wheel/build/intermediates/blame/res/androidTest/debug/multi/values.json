@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "F:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "F:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -24,7 +24,7 @@
         ]
     },
     {
-        "outputFile": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -35,7 +35,7 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -48,7 +48,7 @@
         ]
     },
     {
-        "outputFile": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -59,7 +59,7 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -72,7 +72,7 @@
         ]
     },
     {
-        "outputFile": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -83,7 +83,7 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -96,7 +96,7 @@
         ]
     },
     {
-        "outputFile": "G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -107,7 +107,7 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -120,7 +120,7 @@
         ]
     },
     {
-        "outputFile": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/jiangrenming/KoalaMart/G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -131,7 +131,7 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/jiangrenming/KoalaMart/G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -144,7 +144,7 @@
         ]
     },
     {
-        "outputFile": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -155,7 +155,31 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "F:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/jiangrenming/KoalaMart/F:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\Users\\jiangrenming\\KoalaMart\\G:\\othercompany\\KoalaMart\\wheel\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 44,
+                        "endOffset": 95
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/Users/jiangrenming/KoalaMart/wheel/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 44,
+                    "endOffset": 95
+                },
+                "from": {
+                    "file": "/Users/jiangrenming/KoalaMart/wheel/build/intermediates/bundles/debug/res/values/values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

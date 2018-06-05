@@ -73,7 +73,7 @@ public class KoalaMartActivity extends BaseActivity implements ICartVIew<CartNum
 
     }
 
-    private void changeFragment(int currentPosition) {
+    public void changeFragment(int currentPosition) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fl_content, fragments.get(currentPosition));
         transaction.commit();
