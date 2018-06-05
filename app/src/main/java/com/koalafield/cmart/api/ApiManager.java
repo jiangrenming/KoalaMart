@@ -69,7 +69,13 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getLoginAccount(getHeaders(),setParams(params)))
                 .map(getRegister());
     }
-
+    /**
+     * 微信登陆
+     */
+    public  static  Flowable<RegisterBean> getWXLogin(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.WXLogin(getHeaders(),setParams(params)))
+                .map(getRegister());
+    }
     /**
      * 地址列表
      */

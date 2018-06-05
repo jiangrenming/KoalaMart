@@ -22,15 +22,19 @@ import com.koalafield.cmart.presenter.user.LoginPrsenter;
 import com.koalafield.cmart.ui.activity.use.ForgetPwdActivity;
 import com.koalafield.cmart.ui.activity.use.RegesterActivity;
 import com.koalafield.cmart.ui.view.ILoginView;
+import com.koalafield.cmart.ui.view.user.IWXLoginView;
+import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.RegaxUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
-
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -40,7 +44,7 @@ import butterknife.OnClick;
  * @date 2018/5/10
  */
 
-public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILoginView<RegisterBean>{
+public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILoginView<RegisterBean>,IWXLoginView<RegisterBean>{
 
     @BindView(R.id.back)
     ImageView back;
@@ -61,6 +65,8 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     TextView forget_pwd;
     private  int type;
 
+    private IWXAPI iwxapi;
+
     @Override
     public int attchLayoutRes() {
         return R.layout.activity_login;
@@ -70,6 +76,10 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public void initDatas() {
         top_name.setText("手机登录");
         type = getIntent().getIntExtra("type",-1);
+        //注册微信appid到微信平台
+        iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID,true);
+        iwxapi.registerApp(Constants.APP_ID);
+
         account.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -141,13 +151,22 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
             case  R.id.register: //注册
                 startActivity(new Intent(this, RegesterActivity.class));
                 break;
-            case R.id.wx_login:
+            case R.id.wx_login: //微信登录
+                sendAuthCode();
                 break;
             case R.id.forget_pwd: //忘记密码
              startActivity(new Intent(LoginActivity.this, ForgetPwdActivity.class));
             default:
                 break;
         }
+    }
+
+    private void sendAuthCode(){
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo_test";
+        iwxapi.sendReq(req);
+        finish();
     }
 
     private Map<String,String> params = new ArrayMap<>();
@@ -208,5 +227,15 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     @Override
     public void onFailure(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onWXSucessFul(RegisterBean data) {
+
+    }
+
+    @Override
+    public void onWXFailure(String message) {
+
     }
 }

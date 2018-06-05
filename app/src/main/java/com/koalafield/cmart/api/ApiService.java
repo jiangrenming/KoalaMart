@@ -113,7 +113,9 @@ public interface ApiService {
     //确认收货
     @POST("AppApi/ConfirmReceive")
     Flowable<BaseResponseBean> comfirmOrder(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
-
+    //微信登录
+    @POST("AppApi/WechatOauth")
+    Flowable<BaseResponseBean<RegisterBean>> WXLogin(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
 
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
