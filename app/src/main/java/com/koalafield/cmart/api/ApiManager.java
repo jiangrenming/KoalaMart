@@ -31,6 +31,8 @@ import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.bean.user.ScoreBean;
+import com.koalafield.cmart.bean.user.WXRegisterBean;
+import com.koalafield.cmart.bean.user.WeiXinToken;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
@@ -183,6 +185,14 @@ public class ApiManager {
     public static Flowable<PersonInfos> getPersonInfos(){
         return apiSubscribe(AndoridApplication.apiService.getPersonInfos(getHeaders()))
                 .map(getInfos());
+    }
+
+    /**
+     * 取消订单
+     */
+    public static Flowable<BaseResponseBean> cancle_order(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.cancleOrder(getHeaders(),setParams(params)))
+                .map(cancleOrder());
     }
     /************************************订单结算********************************/
 
@@ -406,6 +416,26 @@ public class ApiManager {
 
 
     /***************************************数据转换器******************************************/
+
+    /**
+     * 微信
+     */
+    private static Function<WeiXinToken,WeiXinToken> getWx() {
+        return new Function<WeiXinToken, WeiXinToken>() {
+            @Override
+            public WeiXinToken apply(WeiXinToken response) throws Exception {
+                return response;
+            }
+        };
+    }
+    private static Function<WXRegisterBean,WXRegisterBean> getWxUser() {
+        return new Function<WXRegisterBean, WXRegisterBean>() {
+            @Override
+            public WXRegisterBean apply(WXRegisterBean response) throws Exception {
+                return response;
+            }
+        };
+    }
     /**
      * 注册,登陆
      * @return
@@ -426,6 +456,18 @@ public class ApiManager {
      * 确认订单
      */
     private static Function<BaseResponseBean,BaseResponseBean> confirm_order() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                return  response;
+            }
+        };
+    }
+    /**
+     * 确认订单
+     */
+    private static Function<BaseResponseBean,BaseResponseBean> cancleOrder() {
         return new Function<BaseResponseBean, BaseResponseBean>() {
             @Override
             public BaseResponseBean apply(BaseResponseBean response) throws Exception {

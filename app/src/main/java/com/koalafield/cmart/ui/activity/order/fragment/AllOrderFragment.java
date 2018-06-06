@@ -96,15 +96,6 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
     public void onSucessOrderList(final List<OrderListBean> data) {
         if (data !=null && data.size() >0 ){
             orderAdapter.updateItems(data);
-           /* orderAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    OrderListBean orderListBean = data.get(position);
-                    Intent intent = new Intent(mContext,OrderDetailsActivity.class);
-                    intent.putExtra("billNo",orderListBean.getBillNo());
-                    startActivity(intent);
-                }
-            });*/
         }
     }
 
@@ -113,7 +104,7 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(mContext, LoginActivity.class);
-     //       intent.putExtra("type",3);
+            intent.putExtra("type",3);
             startActivity(intent);
         }
     }

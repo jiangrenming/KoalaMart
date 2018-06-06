@@ -1,6 +1,7 @@
 package com.koalafield.cmart.wxapi;
 
 import com.google.gson.Gson;
+import com.koalafield.cmart.bean.event.LoginEvent;
 import com.koalafield.cmart.utils.Constants;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -11,12 +12,14 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -61,26 +64,17 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 	public void onResp(BaseResp resp) {
 		Log.d("baseResp:",resp.toString());
 		Toast.makeText(this,resp.errCode,Toast.LENGTH_SHORT).show();
-		switch (resp.errCode) {
-			case BaseResp.ErrCode.ERR_OK:
-				String toJson = new Gson().toJson(resp);
-				Log.d("baseResp1:",toJson);
-				Toast.makeText(this,toJson,Toast.LENGTH_SHORT).show();
-				finish();
-				break;
-			case BaseResp.ErrCode.ERR_USER_CANCEL:
-				finish();
-				break;
-			case BaseResp.ErrCode.ERR_AUTH_DENIED:
-				finish();
-				break;
-			case BaseResp.ErrCode.ERR_UNSUPPORT:
-				finish();
-				break;
-			default:
-				finish();
-				break;
+		if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){ //分享
+			EventBus.getDefault().post(new LoginEvent(Constants.WX_SHARE,resp.errCode));
+		}else if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH){
+			SendAuth.Resp authResp = (SendAuth.Resp) resp;
+			String code = "";
+			if (authResp.errCode == BaseResp.ErrCode.ERR_OK){ //用户同意
+				code = authResp.code;
+			}
+			EventBus.getDefault().post(new LoginEvent(Constants.WX_LOGIN,authResp.errCode,code));
 		}
+		finish();
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

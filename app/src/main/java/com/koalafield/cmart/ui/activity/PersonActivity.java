@@ -42,6 +42,9 @@ import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.util.Locale;
@@ -86,7 +89,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @BindView(R.id.service_infos)
     LinearLayout service_infos;  //服务
     @BindView(R.id.setting)
-    LinearLayout set;  //设置
+    ImageView set;  //设置
     @BindView(R.id.discount_num)
     TextView discount_num;
     @BindView(R.id.collection_num)
@@ -97,7 +100,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;
-
+    private IWXAPI iwxapi;
 
     @Override
     public int attchLayoutRes() {
@@ -114,20 +117,22 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     @Override
     public void initDatas() {
+        //注册微信appid到微信平台
+        iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID,true);
+        iwxapi.registerApp(Constants.APP_ID);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+       /* String tickets = ShareBankPreferenceUtils.getString("tickets", null);
         Log.i("返回的tickes",tickets+"");
         if (StringUtils.isEmpty(tickets)) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("type",1);
             startActivity(intent);
             finish();
-        }
-
+        }*/
         IPersonNumberPresenter personNumberPresenter = new PersonNumberPresenter(this);
         personNumberPresenter.getData();
     }
@@ -142,6 +147,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void onButterClick(View v) {
         switch (v.getId()) {
             case R.id.share: //进入朋友圈分享
+                sendAuthCode();
                 break;
             case R.id.person_av: //头像进入个人资料
                 startActivity(new Intent(this, PrivateActivity.class));
@@ -188,7 +194,16 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 break;
         }
     }
-
+    private void sendAuthCode(){
+        if (iwxapi!= null && iwxapi.isWXAppInstalled()){
+            final SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = String.valueOf(System.currentTimeMillis());
+            iwxapi.sendReq(req);
+        }else {
+            Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void skipOrderActivity(int type) {
         Intent intent = new Intent(this, MartOrderActivity.class);
         intent.putExtra("type", type);

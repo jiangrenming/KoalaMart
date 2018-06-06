@@ -49,7 +49,7 @@ public class KoalaMartActivity extends BaseActivity implements ICartVIew<CartNum
     @BindView(R.id.bbl)
     BottomBarLayout mBottomBarLayout;
 
-    private List<Fragment> fragments = new ArrayList<>();
+   private List<Fragment> fragments = new ArrayList<>();
     private ICartPresenter mPresenter;
 
     @Override
@@ -59,7 +59,6 @@ public class KoalaMartActivity extends BaseActivity implements ICartVIew<CartNum
 
     @Override
     public void initDatas() {
-
         HomeFragment homeFragment = new HomeFragment();
         fragments.add(homeFragment);
         CategryFragment categryFragment = new CategryFragment();
@@ -75,7 +74,7 @@ public class KoalaMartActivity extends BaseActivity implements ICartVIew<CartNum
 
     public void changeFragment(int currentPosition) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_content, fragments.get(currentPosition));
+        transaction.replace(R.id.fl_content, fragments.get(currentPosition)).addToBackStack(null);
         transaction.commit();
     }
     @Override

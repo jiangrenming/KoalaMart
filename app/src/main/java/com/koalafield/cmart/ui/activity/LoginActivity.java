@@ -15,10 +15,13 @@ import android.widget.Toast;
 
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.event.LoginEvent;
 import com.koalafield.cmart.bean.event.SelectEvent;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.presenter.user.ILoginPresenter;
+import com.koalafield.cmart.presenter.user.IWXLoginPresenter;
 import com.koalafield.cmart.presenter.user.LoginPrsenter;
+import com.koalafield.cmart.presenter.user.WXLoginPresenter;
 import com.koalafield.cmart.ui.activity.use.ForgetPwdActivity;
 import com.koalafield.cmart.ui.activity.use.RegesterActivity;
 import com.koalafield.cmart.ui.view.ILoginView;
@@ -28,13 +31,17 @@ import com.koalafield.cmart.utils.RegaxUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import org.greenrobot.eventbus.EventBus;
-
+import java.util.HashMap;
 import java.util.Map;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -66,6 +73,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     private  int type;
 
     private IWXAPI iwxapi;
+    private IWXLoginPresenter wxPresenter;
 
     @Override
     public int attchLayoutRes() {
@@ -79,7 +87,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         //注册微信appid到微信平台
         iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID,true);
         iwxapi.registerApp(Constants.APP_ID);
-
+        wxPresenter = new WXLoginPresenter(this);
         account.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -137,9 +145,9 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         switch (v.getId()){
             case R.id.back: //返回首页
                 finish();
-                /*if (type !=3 ){
+                if (type !=3 ){
                     StackActivityManager.getActivityManager().goToMain(this);
-                }*/
+                }
                 break;
             case R.id.login:
                 if (allRight()){  //登录接口调用
@@ -152,7 +160,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
                 startActivity(new Intent(this, RegesterActivity.class));
                 break;
             case R.id.wx_login: //微信登录
-                sendAuthCode();
+              sendAuthCode();
                 break;
             case R.id.forget_pwd: //忘记密码
              startActivity(new Intent(LoginActivity.this, ForgetPwdActivity.class));
@@ -170,8 +178,6 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         }else {
             Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
         }
-
-      //  finish();
     }
 
     private Map<String,String> params = new ArrayMap<>();
@@ -194,10 +200,9 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             finish();
-            StackActivityManager.getActivityManager().goToMain(this);
-            /*if (type != 3){
+            if (type != 3){
                 StackActivityManager.getActivityManager().goToMain(this);
-            }*/
+            }
             return false;
         }
 
@@ -217,16 +222,13 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         if (!StringUtils.isEmpty(ticket)){
             ShareBankPreferenceUtils.putString("tickets",ticket);
             finish();
-
-           /* if (type == 1){
-                finish();
+            if (type == 1){
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }else if (type ==2){
-                finish();
                 StackActivityManager.getActivityManager().goToMain(this,3);
-            }else if (type ==3){
+            }else{
                 finish();
-            }*/
+            }
         }
     }
 
@@ -235,6 +237,27 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void loginEvent(LoginEvent event){
+        if (event != null){
+            int mType = event.mType;
+            if (mType == Constants.WX_LOGIN){
+                int errCode = event.userAggree;
+                if(errCode== BaseResp.ErrCode.ERR_USER_CANCEL||errCode==BaseResp.ErrCode.ERR_AUTH_DENIED){
+                    Toast.makeText(LoginActivity.this,"取消授权登录",Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    String code = event.mCode;
+                    Map<String,String> params = new HashMap<>();
+                    params.put("code",code);
+                    wxPresenter.setParams(params);
+                    wxPresenter.getData();
+                }
+            }
+        }
+    }
+
+
     @Override
     public void onWXSucessFul(RegisterBean data) {
 
@@ -242,6 +265,6 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
 
     @Override
     public void onWXFailure(String message) {
-
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

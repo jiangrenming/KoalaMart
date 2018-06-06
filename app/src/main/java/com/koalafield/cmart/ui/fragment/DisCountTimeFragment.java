@@ -104,7 +104,7 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
             Intent intent = new Intent(mContext, LoginActivity.class);
-    //        intent.putExtra("type",3);
+            intent.putExtra("type",3);
             startActivity(intent);
         }
     }

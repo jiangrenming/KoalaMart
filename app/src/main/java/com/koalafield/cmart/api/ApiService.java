@@ -28,6 +28,8 @@ import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.bean.user.ScoreBean;
+import com.koalafield.cmart.bean.user.WXRegisterBean;
+import com.koalafield.cmart.bean.user.WeiXinToken;
 
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 /**
  *
@@ -116,7 +119,9 @@ public interface ApiService {
     //微信登录
     @POST("AppApi/WechatOauth")
     Flowable<BaseResponseBean<RegisterBean>> WXLogin(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
-
+    //取消订单
+    @POST("AppApi/CancelBill")
+    Flowable<BaseResponseBean> cancleOrder(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);
@@ -172,4 +177,6 @@ public interface ApiService {
     Flowable<BaseResponseBean<List<CountryCode>>> getCountryCode(@HeaderMap Map<String,String> headrs);
     @GET("AppApi/CurrentInfo")
     Flowable<BaseResponseBean<PersonInfos>> getPersonInfos(@HeaderMap Map<String,String> headrs);
+
+
 }

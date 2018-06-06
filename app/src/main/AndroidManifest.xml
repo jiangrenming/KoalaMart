@@ -44,7 +44,8 @@
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature android:name="android.hardware.nfc.hce"/>
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
 
 
@@ -76,7 +77,7 @@
         <activity android:name=".ui.activity.CartActivity"/>
         <activity android:name=".ui.activity.CategryActivity"/>
         <activity android:name=".ui.activity.PersonActivity"/>
-        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.use.RegesterActivity"/>
         <activity android:name=".ui.activity.use.PrivateActivity"/>
         <activity android:name=".ui.activity.use.UpdatePrivateActivity"/>
@@ -121,11 +122,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
         </activity>
+        <!--微信相关-->
         <activity android:name="com.koalafield.cmart.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent"
-            />
+            android:theme="@android:style/Theme.Translucent"/>
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

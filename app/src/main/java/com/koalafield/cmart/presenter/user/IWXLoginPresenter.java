@@ -17,4 +17,5 @@ public interface IWXLoginPresenter extends IBasePresenter {
     void setParams(Map<String, String> params);
 
 
+
 }
