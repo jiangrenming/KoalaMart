@@ -247,7 +247,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         //设置PopupWindow的View点击事件
         setOnPopupViewClick(view);
         //设置背景透明度
-        setBackgroundAlpha(0.5f);
+        setBackgroundAlpha(0.3f);
     }
 
     private TextView custom_phone, custom_cancel;
@@ -260,9 +260,9 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     //设置屏幕背景透明效果
     public void setBackgroundAlpha(float alpha) {
-        WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = alpha;
-        this. getWindow().setAttributes(lp);
+        getWindow().setAttributes(lp);
     }
 
     @Override

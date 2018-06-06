@@ -180,7 +180,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     private  int clickType ;
-    @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection,R.id.judget_more,R.id.goods_car_img,R.id.pay_buy})
+    @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection,R.id.judget_more,R.id.goods_car_img,R.id.pay_buy,R.id.goods_back})
     public  void goodsClick(View view){
         String tickets = null;
         String num = null;
@@ -260,6 +260,9 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     intent.putExtra("type",3);
                     startActivity(intent);
                 }
+                break;
+            case R.id.goods_back:
+                finish();
                 break;
             default:
                 break;

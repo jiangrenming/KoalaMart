@@ -21,6 +21,7 @@ import com.koalafield.cmart.widget.IndicatorView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  *
@@ -124,6 +125,17 @@ public class MartOrderActivity extends BaseActivity {
         });
 
 
+    }
+
+    @OnClick(R.id.back)
+    public  void orderClick(View view){
+        switch (view.getId()){
+            case R.id.back:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
 }

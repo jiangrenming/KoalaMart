@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -340,7 +341,7 @@
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/home" />
                             <TextView
-                                android:layout_width="50dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="5dp"
                                 android:gravity="center_horizontal"
@@ -360,11 +361,13 @@
                                 android:layout_height="25dp"
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/address" />
+
                             <TextView
-                                android:layout_width="60dp"
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingTop="5dp"
                                 android:gravity="center_horizontal"
+                                android:paddingTop="5dp"
                                 android:text="地址管理" />
                         </LinearLayout>
 
@@ -383,7 +386,7 @@
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/home" />
                             <TextView
-                                android:layout_width="60dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="5dp"
                                 android:gravity="center_horizontal"
@@ -405,7 +408,7 @@
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/constact" />
                             <TextView
-                                android:layout_width="60dp"
+                                android:layout_width="match_parent"
                                 android:gravity="center_horizontal"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="5dp"
@@ -436,7 +439,7 @@
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/mine" />
                             <TextView
-                                android:layout_width="60dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="5dp"
                                 android:gravity="center_horizontal"
@@ -458,7 +461,7 @@
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/share" />
                             <TextView
-                                android:layout_width="50dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:paddingTop="5dp"

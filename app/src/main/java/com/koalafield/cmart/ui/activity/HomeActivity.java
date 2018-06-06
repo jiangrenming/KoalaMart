@@ -35,6 +35,7 @@ import com.koalafield.cmart.presenter.home.IHomeGoodsCategryPresenter;
 import com.koalafield.cmart.presenter.home.IHomeToolsBarPresenter;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.goods.SearchActivity;
+import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.view.home.IBananerView;
@@ -245,13 +246,13 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                 @Override
                 public void onItemClick(View view, int position) {
                     ToolsBarBean toolsBarBean = data.get(position);
+                    String tickets = ShareBankPreferenceUtils.getString("tickets", null);
                     if (toolsBarBean.getTypeName().equals("Category")){
                         Intent intent = new Intent(HomeActivity.this,CategryActivity.class);
                         startActivity(intent);
                     }else if (toolsBarBean.getTypeName().equals("CustomerServices")){
 
                     }else if (toolsBarBean.getTypeName().equals("Buyed")){
-                        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
                         if (!StringUtils.isEmpty(tickets)){
                             Intent intent = new Intent(HomeActivity.this,PurchareOffActivity.class);
                             startActivity(intent);
@@ -261,9 +262,16 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         }
 
                     }else if (toolsBarBean.getTypeName().equals("Coupon")){
-                        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
                         if (!StringUtils.isEmpty(tickets)){
                             Intent intent = new Intent(HomeActivity.this,DisCountActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }else  if ("Order".equals(toolsBarBean.getTypeName())){
+                        if (!StringUtils.isEmpty(tickets)){
+                            Intent intent = new Intent(HomeActivity.this,MartOrderActivity.class);
                             startActivity(intent);
                         }else {
                             Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
