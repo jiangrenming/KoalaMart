@@ -122,6 +122,8 @@ public interface ApiService {
     //取消订单
     @POST("AppApi/CancelBill")
     Flowable<BaseResponseBean> cancleOrder(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    @POST("AppApi/FeedBack")
+    Flowable<BaseResponseBean> getUserAdavices(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);

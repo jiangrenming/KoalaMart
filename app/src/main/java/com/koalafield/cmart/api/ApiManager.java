@@ -85,7 +85,13 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getAddress(getHeaders(),pageIndex))
                 .flatMap(getAddresses());
     }
-
+    /**
+     *用户反馈信息
+     */
+    public  static  Flowable<BaseResponseBean> addAdavices(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.getUserAdavices(getHeaders(),setParams(params)))
+                .map(addUserAdavice());
+    }
     /**
      * 新增地址列表
      */
@@ -852,6 +858,18 @@ public class ApiManager {
             }
         };
     }
+    /**
+     * 用户反馈信息
+     */
+    private static Function<BaseResponseBean,BaseResponseBean> addUserAdavice() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                return response;
+            }
+        };
+    }
+
     /**
      * 新增修改地址
      */

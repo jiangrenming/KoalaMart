@@ -36,6 +36,7 @@ import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.activity.use.PrivateActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.activity.use.ScoresActivity;
+import com.koalafield.cmart.ui.activity.use.UserResponseActivity;
 import com.koalafield.cmart.ui.view.user.IPersonNumberView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.Constants;
@@ -143,7 +144,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     }
 
     @OnClick({R.id.share, R.id.person_av, R.id.order_infos, R.id.no_pay, R.id.pay_wait, R.id.wait_self, R.id.old_buy, R.id.discount,
-            R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting,R.id.counp})
+            R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting,R.id.counp,R.id.advice})
     public void onButterClick(View v) {
         switch (v.getId()) {
             case R.id.share: //进入朋友圈分享
@@ -189,6 +190,9 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 break;
             case R.id.setting: //设置
                 startActivity(new Intent(this, PersonSettingActivity.class));
+                break;
+            case R.id.advice: //意见反馈
+                startActivity(new Intent(this, UserResponseActivity.class));
                 break;
             default:
                 break;

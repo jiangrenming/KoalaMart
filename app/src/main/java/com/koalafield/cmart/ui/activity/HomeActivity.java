@@ -36,6 +36,7 @@ import com.koalafield.cmart.presenter.home.IHomeToolsBarPresenter;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.goods.SearchActivity;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
+import com.koalafield.cmart.ui.activity.search.GoodsListActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.view.home.IBananerView;
@@ -158,7 +159,6 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
             for (int i = 0; i < data.size(); i++) {
                  String showType = data.get(i).getShowType();
                 final  GoodsCategryBean goodsCategryBean = data.get(i);
-                 int categryId = goodsCategryBean.getCategoryId();
                 if (!StringUtils.isEmpty(showType) && "ImageGoodsArray".equals(showType)){
                     goods_one_name.setText(goodsCategryBean.getName());
                     if (goodsCategryAdapter == null ){
@@ -183,6 +183,10 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         @Override
                         public void onClick(View v) {
                             //传入分类id，跳转分类列表
+                            Intent intent = new Intent(HomeActivity.this, GoodsListActivity.class);
+                            intent.putExtra("cateId", goodsCategryBean.getCategoryId());
+            //                intent.putExtra("typeBrand", 1);
+                            startActivity(intent);
                         }
                     });
                 }else if ("GoodsPiece".equals(showType)){
@@ -207,6 +211,10 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         @Override
                         public void onClick(View v) {
                             //传入分类id，跳转分类列表
+                            Intent intent = new Intent(HomeActivity.this, GoodsListActivity.class);
+                            intent.putExtra("cateId",goodsCategryBean.getCategoryId());
+         //                   intent.putExtra("typeBrand", 1);
+                            startActivity(intent);
                         }
                     });
                 }else if ("CategoryGoods".equals(showType)){
@@ -224,6 +232,15 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                             Log.i("点击的位置2:",position+"");
                             Intent intent = new Intent(HomeActivity.this, GoodsDetailActivity.class);
                             intent.putExtra("contentId",goodsCategryBean.getGoodsList().get(position).getId());
+                            startActivity(intent);
+                        }
+                    });
+                    goods_categry_three.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(HomeActivity.this, GoodsListActivity.class);
+                            intent.putExtra("cateId",goodsCategryBean.getCategoryId());
+        //                    intent.putExtra("typeBrand", 1);
                             startActivity(intent);
                         }
                     });

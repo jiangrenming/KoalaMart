@@ -86,6 +86,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     GZoomSwifrefresh swiperefresh;
 
 
+    private int typeBrand;
 
 
     @Override
@@ -96,6 +97,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     @Override
     public void initDatas() {
         mCateId = getIntent().getIntExtra("cateId", -1);
+  //      typeBrand = getIntent().getIntExtra("typeBrand",-1);
         initRefreshLayout();
         String tickets = ShareBankPreferenceUtils.getString("tickets", null);
         if (!StringUtils.isEmpty(tickets)){
