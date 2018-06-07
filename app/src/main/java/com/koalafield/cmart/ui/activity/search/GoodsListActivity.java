@@ -20,12 +20,16 @@ import com.koalafield.cmart.adapter.BrandAdapter;
 import com.koalafield.cmart.adapter.BrandCategryAdapter;
 import com.koalafield.cmart.adapter.CategryGoodsAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.cart.CartIdBean;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.categry.BrandListBean;
 import com.koalafield.cmart.bean.categry.CateBrandGoodsListBean;
 import com.koalafield.cmart.bean.categry.CateListBean;
 import com.koalafield.cmart.bean.categry.GoodsListBean;
+import com.koalafield.cmart.bean.goods.GoodsItem;
+import com.koalafield.cmart.presenter.cart.CartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.CartPresenter;
+import com.koalafield.cmart.presenter.cart.ICartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.ICartPresenter;
 import com.koalafield.cmart.presenter.categry.CategryBrandPresenter;
 import com.koalafield.cmart.presenter.categry.ICategryBrandPresenter;
@@ -33,6 +37,7 @@ import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.goods.CartShoppingActivity;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.goods.SearchActivity;
+import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 import com.koalafield.cmart.ui.view.cart.ICartVIew;
 import com.koalafield.cmart.ui.view.categry.ICategryListView;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
@@ -54,7 +59,7 @@ import retrofit2.http.PUT;
  * Created by jiangrenming on 2018/5/31.
  */
 
-public class GoodsListActivity extends BaseActivity implements ICategryListView<CateBrandGoodsListBean>,ICartVIew<CartNumberBean> {
+public class GoodsListActivity extends BaseActivity implements ICategryListView<CateBrandGoodsListBean>,ICartVIew<CartNumberBean> ,ICartChangeCountView<CartIdBean> {
 
     private ICategryBrandPresenter mPresenter;
     private int mCateId;
@@ -248,6 +253,57 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
                     mPresenter.getMoreData();
                 }
             });
+            goodsAdapter.setmChooseCartCallBack(new CategryGoodsAdapter.ChooseCartCallBack() {
+                @Override
+                public void choose(GoodsListBean item) {
+                    List<GoodsItem> mColorList = item.getColorList();
+                    List<GoodsItem> mMaterialList = item.getMaterialList();
+                    List<GoodsItem> mSizeList = item.getSizeList();
+                    List<GoodsItem> mTypeList = item.getTypeList();
+                    List<GoodsItem> mWeightList = item.getWeightList();
+                    if (item.isOpenSelection()){
+
+                    }else {
+                        ICartChangeItemPresenter presenter = new CartChangeItemPresenter(GoodsListActivity.this);
+                        Map<String,String> addCarts = new HashMap<>();
+                        addCarts.put("count",String.valueOf(1));
+                        addCarts.put("contentId",String.valueOf(item.getId()));
+
+                        if (mWeightList != null && mWeightList.size() >0){
+                            addCarts.put("weight",mWeightList.get(0).getName());
+                        }else {
+                            addCarts.put("weight",null);
+
+                        }
+                        if (mTypeList != null && mTypeList.size() >0){
+                            addCarts.put("type",mTypeList.get(0).getName());
+                        }else {
+                            addCarts.put("type",null);
+
+                        }
+                        if (mColorList != null && mColorList.size() >0){
+                            addCarts.put("color",mColorList.get(0).getName());
+                        }else {
+                            addCarts.put("color",null);
+
+                        }
+                        if (mSizeList != null && mSizeList.size() >0){
+                            addCarts.put("size",mSizeList.get(0).getName());
+                        }else {
+                            addCarts.put("size",null);
+
+                        }
+                        if (mMaterialList != null && mMaterialList.size() >0){
+                            addCarts.put("material",mMaterialList.get(0).getName());
+                        }else {
+                            addCarts.put("material",null);
+
+                        }
+                        addCarts.put("tag","0");
+                        presenter.getChangeCountData(addCarts);
+                    }
+                }
+            });
         }
     }
 
@@ -325,5 +381,15 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
             intent.putExtra("type",3);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onChangeItemSucessful(CartIdBean data) {
+
+    }
+
+    @Override
+    public void onChangeItemFailure(String message, int code) {
+
     }
 }

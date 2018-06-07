@@ -28,7 +28,7 @@ public class CategryGoodsAdapter extends BaseQuickAdapter<GoodsListBean> {
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, GoodsListBean item) {
+    protected void convert(BaseViewHolder holder, final GoodsListBean item) {
         ImageView item_img = holder.getView(R.id.item_img);
         ImageView add_cart = holder.getView(R.id.add_cart);
         Glide.with(mContext).load(item.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(item_img);
@@ -38,8 +38,19 @@ public class CategryGoodsAdapter extends BaseQuickAdapter<GoodsListBean> {
         add_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mChooseCartCallBack.choose(item);
             }
         });
+    }
+
+    public  ChooseCartCallBack mChooseCartCallBack;
+
+    public void setmChooseCartCallBack(ChooseCartCallBack chooseCartCallBack){
+        this.mChooseCartCallBack = chooseCartCallBack;
+    }
+
+    public  interface  ChooseCartCallBack{
+        void choose(GoodsListBean item);
+
     }
 }
