@@ -31,7 +31,7 @@
                 android:id="@+id/search_cart_num"
                 style="@style/bg_text_style"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="10sp"
                 tools:ignore="SmallSp"/>
         </FrameLayout>

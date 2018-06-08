@@ -70,6 +70,10 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
 
 import org.json.JSONException;
@@ -155,7 +159,10 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     @Override
     public void initDatas() {
         top_name.setText("确认订单");
-        AddressManagerBean managerBean = ShareBankPreferenceUtils.getObject("addressId", AddressManagerBean.class);
+        empty_adress.setVisibility(View.VISIBLE);
+        have_name_adress.setVisibility(View.GONE);
+        have_detail_adress.setVisibility(View.GONE);
+       /* AddressManagerBean managerBean = ShareBankPreferenceUtils.getObject("addressId", AddressManagerBean.class);
         if (managerBean != null){
             empty_adress.setVisibility(View.GONE);
             have_name_adress.setVisibility(View.VISIBLE);
@@ -167,7 +174,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             empty_adress.setVisibility(View.VISIBLE);
             have_name_adress.setVisibility(View.GONE);
             have_detail_adress.setVisibility(View.GONE);
-        }
+        }*/
 
          datas = getIntent().getStringExtra("payDatas");
         if (!StringUtils.isEmpty(datas)){
@@ -180,9 +187,12 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
 
-    @OnClick({R.id.click_address,R.id.change_address,R.id.skip_discount,R.id.change_time,R.id.comfir_order})
+    @OnClick({R.id.click_address,R.id.change_address,R.id.skip_discount,R.id.change_time,R.id.comfir_order,R.id.back})
     public  void addAddressClick(View view){
         switch (view.getId()){
+            case R.id.back:
+                finish();
+                break;
             case  R.id.click_address:
             case R.id.change_address:
                 Intent intent = new Intent(PayActivity.this, AddressManangerActivity.class);
@@ -248,11 +258,31 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     public void onPaySdkData(SdkPayBean data) {
         if (data != null){
             String transactionNo = data.getTransactionNo();
-            if (!StringUtils.isEmpty(transactionNo)){
-                UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo,serVerMode);
-                finish();
+            if (StringUtils.isEmpty(payName) && "微信支付".equals(payName)){
+                onPayWX(data);
+            }else if ("银联支付".equals(payName)){
+                if (!StringUtils.isEmpty(transactionNo)){
+                    UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo,serVerMode);
+                    finish();
+                }
+            }else {
+
             }
         }
+    }
+
+    private  void onPayWX(SdkPayBean data){
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(this, data.getAppId());
+        msgApi.registerApp(data.getAppId());
+        PayReq req = new PayReq();
+        req.appId = data.getAppId();
+        req.partnerId = data.getPartnerId();
+        req.prepayId = data.getBillCode();
+        req.packageValue = data.getPackage();
+        req.nonceStr = data.getNonceStr();
+        req.timeStamp = data.getTimeStamp();
+        req.sign = data.getPaySign();
+        msgApi.sendReq(req);
     }
 
     @Override
@@ -422,6 +452,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     private List<Delivery> mDelivery;
     private  int payId = 0;
+    private String payName ;
     @Override
     public void onSubmitList(PayBean data) {
         if (data != null){
@@ -492,6 +523,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                    for (int i = 0; i < mPayment.size(); i++) {
                       if (mPayment.get(i).isSelect()){
                           payId = mPayment.get(i).getId();
+                          payName = mPayment.get(i).getPaymentName();
                       }
                    }
                    //改变价格

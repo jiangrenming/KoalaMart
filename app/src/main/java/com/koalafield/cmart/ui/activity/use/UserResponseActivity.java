@@ -56,6 +56,7 @@ public class UserResponseActivity extends BaseActivity implements IUserAdaviceVi
 
     @Override
     public void initDatas() {
+        hideLoading();
         top_name.setText("意见反馈");
         AdvicesBean ads_one = new AdvicesBean();
         ads_one.setContent("购物体验");

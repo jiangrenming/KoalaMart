@@ -51,7 +51,7 @@ public class HistoryService extends BaseDao<HistoryContent>implements IHistorySe
         if (StringUtils.isEmpty(keys)){
             return  null;
         }
-        List<HistoryContent> content = super.query("content=?", new String[]{keys.toString()}, null);
+        List<HistoryContent> content = super.query("content=?", new String[]{keys}, null);
         return content.size() > 0 ? content.get(0) : null;
     }
 }

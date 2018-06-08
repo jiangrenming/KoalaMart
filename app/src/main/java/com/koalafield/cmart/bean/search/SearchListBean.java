@@ -20,7 +20,7 @@ public class SearchListBean implements Serializable{
     private int Count;
     private String CurrentPrice;
     private String OriginalPrice;
-    private String IsOpenSelection;
+    private boolean IsOpenSelection;
     private List<GoodsItem> ColorList;
     private List<GoodsItem> SizeList;
     private List<GoodsItem> MaterialList;
@@ -91,12 +91,12 @@ public class SearchListBean implements Serializable{
         OriginalPrice = originalPrice;
     }
 
-    public String getIsOpenSelection() {
+    public boolean isOpenSelection() {
         return IsOpenSelection;
     }
 
-    public void setIsOpenSelection(String isOpenSelection) {
-        IsOpenSelection = isOpenSelection;
+    public void setOpenSelection(boolean openSelection) {
+        IsOpenSelection = openSelection;
     }
 
     public List<GoodsItem> getColorList() {

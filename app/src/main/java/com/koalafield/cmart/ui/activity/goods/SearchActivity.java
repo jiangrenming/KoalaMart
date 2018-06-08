@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -33,6 +34,7 @@ import com.koalafield.cmart.ui.view.goods.IHotWordsView;
 import com.koalafield.cmart.utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -101,13 +103,16 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
     private void initHistoryTag() {
         List<HistoryContent> allHistory =  mHistory.findAllHistory();
         if (allHistory != null && allHistory.size() >0){
-            List<String> historyList = new ArrayList<>();
+            //list倒序排列
+            Collections.reverse(allHistory);
+            String[] strings = new String[allHistory.size()];
             for (int i = 0; i < allHistory.size(); i++) {
-                historyList.add(allHistory.get(i).getContent());
+                strings[i] = allHistory.get(i).getContent();
             }
             ll_history.setVisibility(View.VISIBLE);
-            his_flowLayout.setListData(historyList);
             his_flowLayout.setColorful(true);
+            his_flowLayout.cleanTag();
+            his_flowLayout.setData(strings);
             his_flowLayout.setOnTagClickListener(new FlowLayout.OnTagClickListener() {
                 @Override
                 public void TagClick(String text) {
@@ -149,18 +154,18 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
     @Override
     public void onHotWordsSucessFul(List<String> data) {
         if (data.size() >0){
-            hot_flowLayout.setColorful(true);
+            hot_flowLayout.setColorful(false);
             String[] array = data.toArray(new String[data.size()]);
             hot_flowLayout.setData(array);
             hot_flowLayout.setOnTagClickListener(new FlowLayout.OnTagClickListener() {
                 @Override
                 public void TagClick(String text) {
                     //插入之前先查询，如果有相同的就不在插入进去
-                    HistoryContent historyContent = new HistoryContent();
-                    historyContent.setContent(text);
                     try {
                         HistoryContent content = mHistory.findContent(text);
                         if (content == null){
+                            HistoryContent historyContent = new HistoryContent();
+                            historyContent.setContent(text);
                             mHistory.addKeyWords(historyContent);
                         }
                         Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);
@@ -194,11 +199,11 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
         } else {
             //将数据插入到数据库里
             //插入之前先查询，如果有相同的就不在插入进去
-            HistoryContent historyContent = new HistoryContent();
-            historyContent.setContent(query);
             try {
                 HistoryContent content = mHistory.findContent(query);
                 if (content == null){
+                    HistoryContent historyContent = new HistoryContent();
+                    historyContent.setContent(query);
                     mHistory.addKeyWords(historyContent);
                 }
                 Intent intent = new Intent(SearchActivity.this, SearchListActivity.class);

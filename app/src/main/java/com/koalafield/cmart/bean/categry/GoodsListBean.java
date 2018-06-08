@@ -15,7 +15,7 @@ public class GoodsListBean implements Serializable{
     private String CoverImg;
     private String ShortName;
     private String Currency;
-    private String CurrentPrice;
+    private double CurrentPrice;
     private boolean IsOpenSelection;
 
     private List<GoodsItem> ColorList;
@@ -64,11 +64,11 @@ public class GoodsListBean implements Serializable{
         Currency = currency;
     }
 
-    public String getCurrentPrice() {
+    public double getCurrentPrice() {
         return CurrentPrice;
     }
 
-    public void setCurrentPrice(String currentPrice) {
+    public void setCurrentPrice(double currentPrice) {
         CurrentPrice = currentPrice;
     }
 

@@ -11,7 +11,15 @@ public class PersonInfos implements Serializable{
     private String Phone;
     private String Nickname;
     private String Gender;
-    private String Country;
+    private String Avatar;
+
+    public String getAvatar() {
+        return Avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        Avatar = avatar;
+    }
 
     public String getPhone() {
         return Phone;
@@ -37,11 +45,4 @@ public class PersonInfos implements Serializable{
         Gender = gender;
     }
 
-    public String getCountry() {
-        return Country;
-    }
-
-    public void setCountry(String country) {
-        Country = country;
-    }
 }

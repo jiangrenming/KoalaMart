@@ -16,9 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.user.PersonInfos;
+import com.koalafield.cmart.presenter.user.IInfosPresenter;
+import com.koalafield.cmart.presenter.user.InfosPresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.view.user.IPersonInfosView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
@@ -75,7 +78,10 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     }
 
     @Override
-    public void upDateViews() {}
+    public void upDateViews() {
+        IInfosPresenter infosPresenter = new InfosPresenter(this);
+        infosPresenter.getData();
+    }
 
     @OnClick({R.id.back,R.id.user_phone,R.id.name,R.id.sex})
     public  void  onButterKnifeClick(View v){
@@ -237,6 +243,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
             }else {
                 sex_person.setText("女");
             }
+            Glide.with(this).load(data.getAvatar()).placeholder(R.mipmap.mine).error(R.mipmap.mine).into(phone_ava);
          }
     }
 

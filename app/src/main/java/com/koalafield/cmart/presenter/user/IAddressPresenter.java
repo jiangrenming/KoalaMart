@@ -10,6 +10,5 @@ import java.util.Map;
 
 public interface IAddressPresenter extends IBasePresenter {
 
-    void setPrarms(int pageIndex);
 
 }

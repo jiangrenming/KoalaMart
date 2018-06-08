@@ -10,7 +10,6 @@ import com.koalafield.cmart.ui.view.user.IAddressListView;
 import java.util.List;
 
 /**
- *
  * @author jiangrenming
  * @date 2018/5/24
  */
@@ -19,16 +18,16 @@ public class AddressPresenter implements IAddressPresenter {
 
 
     private IAddressListView addressListView;
-    private  int mPageIndex ;
+    private int mPageIndex = 0;
 
-    public AddressPresenter(IAddressListView addressListView){
+    public AddressPresenter(IAddressListView addressListView) {
         this.addressListView = addressListView;
     }
 
 
-
     @Override
     public void getData() {
+        mPageIndex = 0;
         ApiManager.getAddressList(mPageIndex).subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
             @Override
             public void onInit() {
@@ -37,22 +36,23 @@ public class AddressPresenter implements IAddressPresenter {
 
             @Override
             public <T> void onSucess(T data) {
-                if (data != null){
+                if (data != null) {
                     List<AddressManagerBean> addressManagerBean = (List<AddressManagerBean>) data;
-                    if (addressManagerBean != null && addressManagerBean.size() >0){
+                    if (addressManagerBean != null && addressManagerBean.size() > 0) {
                         addressListView.onAddressSucessFul(addressManagerBean);
-                    }else {
+                        mPageIndex++;
+                    } else {
                         addressListView.loadAddressEmptyData();
                     }
-                }else {
-                    addressListView.onAddressFailure("返回的数据为NULL",0);
+                } else {
+                    addressListView.onAddressFailure("返回的数据为NULL", 0);
                 }
             }
 
             @Override
             public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 addressListView.hideLoading();
-                addressListView.onAddressFailure(t.getMessage(),t.getCode());
+                addressListView.onAddressFailure(t.getMessage(), t.getCode());
             }
 
             @Override
@@ -72,22 +72,23 @@ public class AddressPresenter implements IAddressPresenter {
 
             @Override
             public <T> void onSucess(T data) {
-                if (data != null){
+                if (data != null) {
                     List<AddressManagerBean> addressManagerBean = (List<AddressManagerBean>) data;
-                    if (addressManagerBean != null && addressManagerBean.size() >0){
+                    if (addressManagerBean != null && addressManagerBean.size() > 0) {
                         addressListView.loadAddressMoreData(addressManagerBean);
-                    }else {
+                        mPageIndex++;
+                    } else {
                         addressListView.loadAddressNoMoreData();
                     }
-                }else {
-                    addressListView.onAddressFailure("返回的数据为NULL",0);
+                } else {
+                    addressListView.onAddressFailure("返回的数据为NULL", 0);
                 }
             }
 
             @Override
             public void onFailure(ExceptionHandle.ResponeThrowable t) {
                 addressListView.hideLoading();
-                addressListView.onAddressFailure(t.getMessage(),t.getCode());
+                addressListView.onAddressFailure(t.getMessage(), t.getCode());
             }
 
             @Override
@@ -95,10 +96,5 @@ public class AddressPresenter implements IAddressPresenter {
                 addressListView.hideLoading();
             }
         }));
-    }
-
-    @Override
-    public void setPrarms(int pageIndex) {
-        mPageIndex = pageIndex;
     }
 }

@@ -360,7 +360,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     private TitleAdpater color_adater,sizeAdapter,weightAdapter,typeAdapter,materAdapter;
     private List<GoodsItem> colorItems,sizeItems,weightItems,typeItems,matreItems;
     private List<SkuBean> skuBeanList = new ArrayList<>();
-    private  int select_count =0;
 
     private void setOnPopupViewClick(View view) {
         goods_short_name = view.findViewById(R.id.goods_short_name);
@@ -387,7 +386,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         add_goods_num.setOnClickListener(this);
         minus_pop_num.setOnClickListener(this);
         add_pop_cart.setOnClickListener(this);
-        select_count = 0;
         if (mBean != null){
             goods_short_name.setText(mBean.getName());
             Glide.with(GoodsDetailActivity.this).load(mBean.getImageList()[0]).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(goods_img);
@@ -395,7 +393,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
             curreny_price.setText(String.format("%.2f",  mBean.getCurrentPrice()));
 
             if (mBean.getColorList() != null && mBean.getColorList().size()>0){
-                select_count++;
                 item_color_layout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < mBean.getColorList().size(); i++) {
                     mBean.getColorList().get(i).setState(1);
@@ -426,7 +423,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
             }
             if (mBean.getSizeList() != null && mBean.getSizeList().size() >0){
                 item_size_layout.setVisibility(View.VISIBLE);
-                select_count++;
                 for (int i = 0; i < mBean.getSizeList().size(); i++) {
                     mBean.getSizeList().get(i).setState(1);
                 }
@@ -461,7 +457,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 for (int i = 0; i < mBean.getWeightList().size(); i++) {
                     mBean.getWeightList().get(i).setState(1);
                 }
-                select_count++;
                 weightAdapter = new TitleAdpater(GoodsDetailActivity.this,mBean.getWeightList());
                 item_weight.setAdapter(weightAdapter);
                 item_weight.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
@@ -488,7 +483,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 });
             }
             if (mBean.getMaterialList() != null && mBean.getMaterialList().size() >0){
-                select_count++;
                 item_materi_layout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < mBean.getMaterialList().size(); i++) {
                     mBean.getMaterialList().get(i).setState(1);
@@ -522,7 +516,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 });
             }
             if (mBean.getTypeList() != null && mBean.getTypeList().size() >0){
-                select_count++;
                 item_type_layout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < mBean.getTypeList().size(); i++) {
                     mBean.getTypeList().get(i).setState(1);
@@ -831,7 +824,12 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 goods_pop_num.setText(String.valueOf(minusCount-1));
                 break;
             case R.id.add_pop_cart: //添加购物车
+                int select_count =0;
+                if (skuBeanList != null && skuBeanList.size()>0){
+                    skuBeanList.clear();
+                }
                 if (mColorList != null && mColorList .size() > 0){
+                    select_count ++;
                     for (int i = 0; i < colorItems.size(); i++) {
                         if (colorItems.get(i).getState() == 0){
                             String  color_Name = colorItems.get(i).getName();
@@ -844,6 +842,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     }
                 }
                 if (mSizeList != null && mSizeList .size() > 0){
+                    select_count ++;
                     for (int i = 0; i < mSizeList.size(); i++) {
                         if (mSizeList.get(i).getState() == 0){
                             SkuBean skuBean  = new SkuBean();
@@ -855,6 +854,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     }
                 }
                 if (mWeightList != null && mWeightList .size() > 0){
+                    select_count ++;
                     for (int i = 0; i < mWeightList.size(); i++) {
                         if (mWeightList.get(i).getState() == 0){
                             SkuBean skuBean  = new SkuBean();
@@ -866,6 +866,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     }
                 }
                 if (mTypeList != null && mTypeList .size() > 0){
+                    select_count ++;
                     for (int i = 0; i < mTypeList.size(); i++) {
                         if (mTypeList.get(i).getState() == 0){
                             SkuBean skuBean  = new SkuBean();
@@ -877,6 +878,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     }
                 }
                 if (mMaterialList != null && mMaterialList .size() > 0){
+                    select_count ++;
                     for (int i = 0; i < mMaterialList.size(); i++) {
                         if (mMaterialList.get(i).getState() == 0){
                             SkuBean skuBean  = new SkuBean();

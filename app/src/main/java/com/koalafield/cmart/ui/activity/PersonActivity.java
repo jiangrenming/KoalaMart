@@ -20,11 +20,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CollectionAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.user.PersonInfos;
 import com.koalafield.cmart.bean.user.PersonNumber;
+import com.koalafield.cmart.presenter.user.IInfosPresenter;
 import com.koalafield.cmart.presenter.user.IPersonNumberPresenter;
+import com.koalafield.cmart.presenter.user.InfosPresenter;
 import com.koalafield.cmart.presenter.user.PersonNumberPresenter;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.order.PayActivity;
@@ -37,6 +41,7 @@ import com.koalafield.cmart.ui.activity.use.PrivateActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.activity.use.ScoresActivity;
 import com.koalafield.cmart.ui.activity.use.UserResponseActivity;
+import com.koalafield.cmart.ui.view.user.IPersonInfosView;
 import com.koalafield.cmart.ui.view.user.IPersonNumberView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.Constants;
@@ -57,7 +62,8 @@ import butterknife.OnClick;
  * Created by jiangrenming on 2018/5/13.
  */
 
-public class PersonActivity extends TabBaseActivity implements View.OnClickListener,PopupWindow.OnDismissListener,IPersonNumberView<PersonNumber>{
+public class PersonActivity extends TabBaseActivity implements View.OnClickListener, PopupWindow.OnDismissListener, IPersonNumberView<PersonNumber>
+        , IPersonInfosView<PersonInfos> {
 
     @BindView(R.id.share)
     LinearLayout share;  //分享
@@ -106,10 +112,10 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @Override
     public int attchLayoutRes() {
         String tickets = ShareBankPreferenceUtils.getString("tickets", null);
-        Log.i("返回的tickes",tickets+"");
+        Log.i("返回的tickes", tickets + "");
         if (StringUtils.isEmpty(tickets)) {
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type",1);
+            intent.putExtra("type", 1);
             startActivity(intent);
             finish();
         }
@@ -119,32 +125,29 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @Override
     public void initDatas() {
         //注册微信appid到微信平台
-        iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID,true);
+        iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
         iwxapi.registerApp(Constants.APP_ID);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-       /* String tickets = ShareBankPreferenceUtils.getString("tickets", null);
-        Log.i("返回的tickes",tickets+"");
-        if (StringUtils.isEmpty(tickets)) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type",1);
-            startActivity(intent);
-            finish();
-        }*/
-        IPersonNumberPresenter personNumberPresenter = new PersonNumberPresenter(this);
-        personNumberPresenter.getData();
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        Log.i("返回的tickes", tickets + "");
+        if (!StringUtils.isEmpty(tickets)) {
+            IInfosPresenter infosPresenter = new InfosPresenter(this);
+            infosPresenter.getData();
+        }
     }
 
     @Override
     public void upDateViews() {
-
+        IPersonNumberPresenter personNumberPresenter = new PersonNumberPresenter(this);
+        personNumberPresenter.getData();
     }
 
     @OnClick({R.id.share, R.id.person_av, R.id.order_infos, R.id.no_pay, R.id.pay_wait, R.id.wait_self, R.id.old_buy, R.id.discount,
-            R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting,R.id.counp,R.id.advice})
+            R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting, R.id.counp, R.id.advice})
     public void onButterClick(View v) {
         switch (v.getId()) {
             case R.id.share: //进入朋友圈分享
@@ -160,7 +163,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 skipOrderActivity(Constants.PAY_WAIT);
                 break;
             case R.id.pay_wait:
-               skipOrderActivity(Constants.WAIT_SEND);
+                skipOrderActivity(Constants.WAIT_SEND);
                 break;
             case R.id.wait_self:
                 skipOrderActivity(Constants.WAIT_RECEIVER);
@@ -185,7 +188,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 break;
             case R.id.service_infos: //服务条款
                 Intent intent = new Intent(PersonActivity.this, AboutUsActivity.class);
-                intent.putExtra("type",1);
+                intent.putExtra("type", 1);
                 startActivity(intent);
                 break;
             case R.id.setting: //设置
@@ -198,16 +201,18 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 break;
         }
     }
-    private void sendAuthCode(){
-        if (iwxapi!= null && iwxapi.isWXAppInstalled()){
+
+    private void sendAuthCode() {
+        if (iwxapi != null && iwxapi.isWXAppInstalled()) {
             final SendAuth.Req req = new SendAuth.Req();
             req.scope = "snsapi_userinfo";
             req.state = String.valueOf(System.currentTimeMillis());
             iwxapi.sendReq(req);
-        }else {
+        } else {
             Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void skipOrderActivity(int type) {
         Intent intent = new Intent(this, MartOrderActivity.class);
         intent.putExtra("type", type);
@@ -216,6 +221,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     /**
      * 调用拨号功能
+     *
      * @param phone 电话号码
      */
     private void call(String phone) {
@@ -241,7 +247,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         popupWindow.setOutsideTouchable(true);
         //设置动画
         popupWindow.setAnimationStyle(R.style.PopupWindow);
-        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)){
+        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)) {
             navigationHeight = AndoridSysUtils.getNavigationBarHeigh(this);
         }
         //设置显示的位置
@@ -255,6 +261,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     }
 
     private TextView custom_phone, custom_cancel;
+
     private void setOnPopupViewClick(View view) {
         custom_phone = (TextView) view.findViewById(R.id.custom_phone);
         custom_cancel = (TextView) view.findViewById(R.id.custom_cancel);
@@ -271,11 +278,11 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.custom_phone:
                 //拨打电话
                 String phone = custom_phone.getText().toString().trim();
-                if (!StringUtils.isEmpty(phone)){
+                if (!StringUtils.isEmpty(phone)) {
                     call(phone);
                 }
                 disPopuWindow();
@@ -288,11 +295,12 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         }
     }
 
-    private  void disPopuWindow(){
-        if (null != popupWindow && popupWindow .isShowing()){
+    private void disPopuWindow() {
+        if (null != popupWindow && popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
     }
+
     //打开系统照相机
     private void openCammer() {
         String state = Environment.getExternalStorageState();
@@ -315,7 +323,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     private void openPictures() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        startActivityForResult(intent,2);
+        startActivityForResult(intent, 2);
     }
 
 
@@ -327,35 +335,48 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     @Override
     public void onPersonNumberSucessFul(PersonNumber data) {
-        if (data != null){
+        if (data != null) {
             int followCount = data.getFollowCount();
-             if (followCount <=99){
+            if (followCount <= 99) {
                 collection_num.setText(String.valueOf(followCount));
-            }else {
+            } else {
                 collection_num.setText(String.format(Locale.CHINA, "%d+", 99));
             }
             int couponCount = data.getCouponCount();
-            if (couponCount <=99){
+            if (couponCount <= 99) {
                 discount_num.setText(String.valueOf(followCount));
-            }else {
+            } else {
                 discount_num.setText(String.format(Locale.CHINA, "%d+", 99));
             }
             int scoreCount = data.getScoreCount();
-            if (scoreCount <=99){
+            if (scoreCount <= 99) {
                 counp_num.setText(String.valueOf(scoreCount));
-            }else {
+            } else {
                 counp_num.setText(String.format(Locale.CHINA, "%d+", 99));
             }
         }
     }
 
     @Override
-    public void onPersonNumberFailure(String message,int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+    public void onPersonNumberFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             Intent intent = new Intent(PersonActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+            intent.putExtra("type", 3);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onInfosSucessFul(PersonInfos data) {
+        if (data != null) {
+            user_name.setText(data.getNickname());
+            Glide.with(this).load(data.getAvatar()).placeholder(R.mipmap.mine).error(R.mipmap.mine).into(person_av);
+        }
+    }
+
+    @Override
+    public void onInfosFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
