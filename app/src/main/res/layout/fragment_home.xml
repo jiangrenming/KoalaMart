@@ -25,17 +25,18 @@
             android:scaleType="fitXY"
             android:layout_height="25dp" />
     </LinearLayout>
-    <com.koalafield.cmart.widget.MyBoundScrollView
+    <!--<com.koalafield.cmart.widget.MyBoundScrollView
         android:background="@color/white"
         android:layout_width="match_parent"
         android:scrollbars="none"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent">-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:background="@color/white"
             android:layout_height="match_parent">
 
             <com.koalafield.cmart.bananer.MZBannerView
@@ -48,7 +49,13 @@
                 app:open_mz_mode="false">
             </com.koalafield.cmart.bananer.MZBannerView>
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tools_bar"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"/>
+
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -57,9 +64,14 @@
                     android:id="@+id/tools_bar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-            </LinearLayout>
+            </LinearLayout>-->
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/home_goods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+           <!-- <LinearLayout
                 android:id="@+id/categry_one"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -97,9 +109,9 @@
                     android:id="@+id/categry_one_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"/>
-            </LinearLayout>
+            </LinearLayout>-->
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:id="@+id/categry_two"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -116,8 +128,8 @@
                     android:layout_width="match_parent"
                     android:id="@+id/categry_two_recycler"
                     android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
+            </LinearLayout>-->
+            <!--<LinearLayout
                 android:id="@+id/categry_three"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -131,10 +143,10 @@
                     android:layout_width="match_parent"
                     android:id="@+id/categry_three_recycler"
                     android:layout_height="wrap_content"/>
-            </LinearLayout>
+            </LinearLayout>-->
 
         </LinearLayout>
         <!--<include layout="@layout/layout_common_empty"/>-->
     </FrameLayout>
-    </com.koalafield.cmart.widget.MyBoundScrollView>
+    <!--</com.koalafield.cmart.widget.MyBoundScrollView>-->
 </LinearLayout>

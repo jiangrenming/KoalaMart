@@ -18,6 +18,7 @@ import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.GoodsCategryAdapter;
 import com.koalafield.cmart.adapter.GoodsCategryThreeAdapter;
 import com.koalafield.cmart.adapter.GoodsCategryTwoAdapter;
+import com.koalafield.cmart.adapter.HomeGoodsAdapter;
 import com.koalafield.cmart.adapter.PurchareOffAdapter;
 import com.koalafield.cmart.adapter.ToolsBarAdapter;
 import com.koalafield.cmart.bananer.MZBannerView;
@@ -65,7 +66,14 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     ImageView search;
     @BindView(R.id.tools_bar)
     RecyclerView  tools_bar;
-    @BindView(R.id.goods_one_name)
+    @BindView(R.id.home_goods)
+    RecyclerView home_goods;
+
+    private HomeGoodsAdapter mAdapter;
+
+
+
+   /* @BindView(R.id.goods_one_name)
     TextView goods_one_name;
     @BindView(R.id.categry_one_more)
     TextView categry_one_more;
@@ -78,11 +86,11 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     @BindView(R.id.goods_categry_three)
     ImageView goods_categry_three;
     @BindView(R.id.categry_three_recycler)
-    RecyclerView categry_three_recycler;
+    RecyclerView categry_three_recycler;*/
 
-    private GoodsCategryAdapter goodsCategryAdapter;
-    private GoodsCategryTwoAdapter goodsCategryTwoAdapter;
-    private GoodsCategryThreeAdapter goodsCategryThree;
+ //   private GoodsCategryAdapter goodsCategryAdapter;
+ //   private GoodsCategryTwoAdapter goodsCategryTwoAdapter;
+ //   private GoodsCategryThreeAdapter goodsCategryThree;
 
     @Override
     public int attchLayoutRes() {
@@ -156,7 +164,15 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     @Override
     public void onGoodsCategrySucessFul( List<GoodsCategryBean> data) {
         if (data != null && data.size() >0){
-            for (int i = 0; i < data.size(); i++) {
+            if (mAdapter == null){
+                mAdapter = new HomeGoodsAdapter(this,data);
+                RecyclerViewHelper.initRecyclerViewV(this,home_goods,false,mAdapter);
+            }else {
+                mAdapter.cleanItems();
+                mAdapter.addItems(data);
+            }
+
+            /*for (int i = 0; i < data.size(); i++) {
                  String showType = data.get(i).getShowType();
                 final  GoodsCategryBean goodsCategryBean = data.get(i);
                 if (!StringUtils.isEmpty(showType) && "ImageGoodsArray".equals(showType)){
@@ -245,7 +261,7 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         }
                     });
                 }
-            }
+            }*/
         }
     }
 
