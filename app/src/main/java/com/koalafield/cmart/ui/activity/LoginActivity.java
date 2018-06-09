@@ -17,6 +17,7 @@ import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.event.LoginEvent;
 import com.koalafield.cmart.bean.event.SelectEvent;
+import com.koalafield.cmart.bean.event.WxEvent;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.presenter.user.ILoginPresenter;
 import com.koalafield.cmart.presenter.user.IWXLoginPresenter;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -133,6 +135,8 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
                 return false;
             }
         });
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -213,6 +217,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     protected void onDestroy() {
         super.onDestroy();
         Log.i("销毁","***************Login销毁了吗**************");
+        EventBus.getDefault().unregister(this);
         finish();
     }
 
@@ -260,7 +265,11 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
 
     @Override
     public void onWXSucessFul(RegisterBean data) {
-
+        if (data != null){
+            ShareBankPreferenceUtils.putString("tickets",data.getTicket());
+            EventBus.getDefault().post(new WxEvent(data));
+            finish();
+        }
     }
 
     @Override

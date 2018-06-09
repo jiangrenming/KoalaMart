@@ -2,6 +2,8 @@ package com.koalafield.cmart.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ import com.koalafield.cmart.ui.view.home.IHomeToolsView;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.EmptyLayout;
+import com.koalafield.cmart.widget.FullyLinearLayoutManager;
 
 import java.util.List;
 
@@ -68,29 +71,8 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
     RecyclerView  tools_bar;
     @BindView(R.id.home_goods)
     RecyclerView home_goods;
-
     private HomeGoodsAdapter mAdapter;
 
-
-
-   /* @BindView(R.id.goods_one_name)
-    TextView goods_one_name;
-    @BindView(R.id.categry_one_more)
-    TextView categry_one_more;
-    @BindView(R.id.categry_one_recycler)
-    RecyclerView categry_one_recycler;
-    @BindView(R.id.goods_categry_two)
-    TextView goods_categry_two;
-    @BindView(R.id.categry_two_recycler)
-    RecyclerView categry_two_recycler;
-    @BindView(R.id.goods_categry_three)
-    ImageView goods_categry_three;
-    @BindView(R.id.categry_three_recycler)
-    RecyclerView categry_three_recycler;*/
-
- //   private GoodsCategryAdapter goodsCategryAdapter;
- //   private GoodsCategryTwoAdapter goodsCategryTwoAdapter;
- //   private GoodsCategryThreeAdapter goodsCategryThree;
 
     @Override
     public int attchLayoutRes() {
@@ -102,18 +84,25 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
         //获取轮播图
         presenter = new HomeBananerPresenter(this);
         presenter.getData();
-
+        FullyLinearLayoutManager linearLayoutManager = new FullyLinearLayoutManager(this);
+        home_goods.setNestedScrollingEnabled(false);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //设置布局管理器
+        home_goods.setLayoutManager(linearLayoutManager);
+        home_goods.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     public void upDateViews() {
+        //获取导航栏
+        IHomeToolsBarPresenter toolsBarPresenter = new HomeToolsBarPresenter(this);
+        toolsBarPresenter.getData();
+
         //获取商品分类
         IHomeGoodsCategryPresenter goodsCategryPresenter = new HomeGoodsCategryPresenter(this);
         goodsCategryPresenter.getData();
 
-        //获取导航栏
-        IHomeToolsBarPresenter toolsBarPresenter = new HomeToolsBarPresenter(this);
-        toolsBarPresenter.getData();
+
     }
 
     @OnClick({R.id.search})
@@ -166,102 +155,12 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
         if (data != null && data.size() >0){
             if (mAdapter == null){
                 mAdapter = new HomeGoodsAdapter(this,data);
-                RecyclerViewHelper.initRecyclerViewV(this,home_goods,false,mAdapter);
+                home_goods.setAdapter(mAdapter);
+            //    RecyclerViewHelper.initRecyclerViewV(this,home_goods,false,mAdapter);
             }else {
                 mAdapter.cleanItems();
                 mAdapter.addItems(data);
             }
-
-            /*for (int i = 0; i < data.size(); i++) {
-                 String showType = data.get(i).getShowType();
-                final  GoodsCategryBean goodsCategryBean = data.get(i);
-                if (!StringUtils.isEmpty(showType) && "ImageGoodsArray".equals(showType)){
-                    goods_one_name.setText(goodsCategryBean.getName());
-                    if (goodsCategryAdapter == null ){
-                        goodsCategryAdapter = new GoodsCategryAdapter(HomeActivity.this,goodsCategryBean.getGoodsList());
-                        RecyclerViewHelper.initRecyclerViewH(HomeActivity.this,categry_one_recycler,false,goodsCategryAdapter);
-                    }else {
-                        goodsCategryAdapter.cleanItems();
-                        goodsCategryAdapter.addItems(goodsCategryBean.getGoodsList());
-                    }
-                    goodsCategryAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            //跳入详情界面
-                            Log.i("点击的位置0:",position+"");
-                            Intent intent = new Intent(HomeActivity.this, GoodsDetailActivity.class);
-                            intent.putExtra("contentId",goodsCategryBean.getGoodsList().get(position).getId());
-                            startActivity(intent);
-                        }
-                    });
-                    //更多按钮
-                    categry_one_more.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //传入分类id，跳转分类列表
-                            Intent intent = new Intent(HomeActivity.this, GoodsListActivity.class);
-                            intent.putExtra("cateId", goodsCategryBean.getCategoryId());
-            //                intent.putExtra("typeBrand", 1);
-                            startActivity(intent);
-                        }
-                    });
-                }else if ("GoodsPiece".equals(showType)){
-                    goods_categry_two.setText(goodsCategryBean.getName());
-                    if (goodsCategryTwoAdapter == null ){
-                        goodsCategryTwoAdapter = new GoodsCategryTwoAdapter(HomeActivity.this,goodsCategryBean.getGoodsList());
-                        RecyclerViewHelper.initRecyclerViewG(HomeActivity.this,categry_two_recycler,goodsCategryTwoAdapter,3);
-                    }else {
-                        goodsCategryTwoAdapter.cleanItems();
-                        goodsCategryTwoAdapter.addItems(goodsCategryBean.getGoodsList());
-                    }
-                    goodsCategryTwoAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Log.i("点击的位置1:",position+"");
-                            Intent intent = new Intent(HomeActivity.this, GoodsDetailActivity.class);
-                            intent.putExtra("contentId",goodsCategryBean.getGoodsList().get(position).getId());
-                            startActivity(intent);
-                        }
-                    });
-                    goods_categry_two.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //传入分类id，跳转分类列表
-                            Intent intent = new Intent(HomeActivity.this, GoodsListActivity.class);
-                            intent.putExtra("cateId",goodsCategryBean.getCategoryId());
-         //                   intent.putExtra("typeBrand", 1);
-                            startActivity(intent);
-                        }
-                    });
-                }else if ("CategoryGoods".equals(showType)){
-                    loadIntoUseFitWidth(HomeActivity.this,goodsCategryBean.getImg(),R.mipmap.default_img,goods_categry_three);
-                    if (goodsCategryThree == null ){
-                        goodsCategryThree = new GoodsCategryThreeAdapter(HomeActivity.this,goodsCategryBean.getGoodsList());
-                        RecyclerViewHelper.initRecyclerViewG(HomeActivity.this,categry_three_recycler,goodsCategryThree,3);
-                    }else {
-                        goodsCategryThree.cleanItems();
-                        goodsCategryThree.addItems(goodsCategryBean.getGoodsList());
-                    }
-                    goodsCategryThree.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Log.i("点击的位置2:",position+"");
-                            Intent intent = new Intent(HomeActivity.this, GoodsDetailActivity.class);
-                            intent.putExtra("contentId",goodsCategryBean.getGoodsList().get(position).getId());
-                            startActivity(intent);
-                        }
-                    });
-                    goods_categry_three.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(HomeActivity.this, GoodsListActivity.class);
-                            intent.putExtra("cateId",goodsCategryBean.getCategoryId());
-        //                    intent.putExtra("typeBrand", 1);
-                            startActivity(intent);
-                        }
-                    });
-                }
-            }*/
         }
     }
 

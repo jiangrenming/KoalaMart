@@ -129,9 +129,15 @@ public class CategryFragment extends BaseFragment implements ICategryView<List<C
     }
 
     @Override
+    public void loadNoTwoFul() {
+        categry_two.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onSucessTwoFul(final List<CategryOneBean> data) {
         Log.i("获取分类列表",data.size()+"/第一个数据:"+data.get(0).getName());
         if (data != null && data.size() > 0) {
+            categry_two.setVisibility(View.VISIBLE);
             if (null == categryTwoAdapter) {
                 categryTwoAdapter = new CategryTwoAdapter(mContext,data);
                 initRecyclerViewG(mContext, categry_two,  categryTwoAdapter,3);

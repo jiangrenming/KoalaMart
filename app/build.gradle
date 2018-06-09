@@ -22,6 +22,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "POST_URL", "${SIT_IP}"
+            buildConfigField "String", "BANK_URL", "${MODE_SERVER}"
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -29,6 +30,7 @@ android {
         }
         release {
             buildConfigField "String", "POST_URL", "${REAL_IP}"
+            buildConfigField "String", "BANK_URL", "${REAL_SERVER}"
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

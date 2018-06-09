@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
+import com.koalafield.cmart.BuildConfig;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.PayAdapter;
 import com.koalafield.cmart.adapter.PayChooseAdapter;
@@ -239,7 +240,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     /**
      * 测试环境是01，正式环境是00
      */
-    private String serVerMode = "01";
     @Override
     public void onCreateOrderData(CreateOrderBean data) {
         if (data != null){
@@ -258,14 +258,14 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     public void onPaySdkData(SdkPayBean data) {
         if (data != null){
             String transactionNo = data.getTransactionNo();
-            if (StringUtils.isEmpty(payName) && "微信支付".equals(payName)){
+            if (!StringUtils.isEmpty(payName) && "微信支付".equals(payName)){
                 onPayWX(data);
             }else if ("银联支付".equals(payName)){
                 if (!StringUtils.isEmpty(transactionNo)){
-                    UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo,serVerMode);
+                    UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo, BuildConfig.BANK_URL);
                     finish();
                 }
-            }else {
+            }else {  //货到付款
 
             }
         }
@@ -277,11 +277,14 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         PayReq req = new PayReq();
         req.appId = data.getAppId();
         req.partnerId = data.getPartnerId();
-        req.prepayId = data.getBillCode();
-        req.packageValue = data.getPackage();
+        String prepayId = data.getPackage();
+        String[] split = prepayId.split("=");
+        req.prepayId =split[1];
         req.nonceStr = data.getNonceStr();
         req.timeStamp = data.getTimeStamp();
         req.sign = data.getPaySign();
+        req.signType = data.getSignType();
+        req.packageValue = "Sign=WXPay";
         msgApi.sendReq(req);
     }
 

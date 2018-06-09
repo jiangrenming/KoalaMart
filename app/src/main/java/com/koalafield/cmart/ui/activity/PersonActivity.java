@@ -24,8 +24,11 @@ import com.bumptech.glide.Glide;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CollectionAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.event.LoginEvent;
+import com.koalafield.cmart.bean.event.WxEvent;
 import com.koalafield.cmart.bean.user.PersonInfos;
 import com.koalafield.cmart.bean.user.PersonNumber;
+import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.presenter.user.IInfosPresenter;
 import com.koalafield.cmart.presenter.user.IPersonNumberPresenter;
 import com.koalafield.cmart.presenter.user.InfosPresenter;
@@ -48,9 +51,14 @@ import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.Locale;
@@ -127,6 +135,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         //注册微信appid到微信平台
         iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
         iwxapi.registerApp(Constants.APP_ID);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -301,37 +310,10 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         }
     }
 
-    //打开系统照相机
-    private void openCammer() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File outDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            if (!outDir.exists()) {
-                outDir.mkdirs();
-            }
-            File outFile = new File(outDir, System.currentTimeMillis() + ".jpg");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outFile));
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-            startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
-        } else {
-            Log.e("CAMERA", "请确认已经插入SD卡");
-        }
-    }
-
-    //打开系统相册
-    private void openPictures() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent, 2);
-    }
-
-
     @Override
     public void onDismiss() {
         setBackgroundAlpha(1);
     }
-
 
     @Override
     public void onPersonNumberSucessFul(PersonNumber data) {
@@ -378,5 +360,41 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @Override
     public void onInfosFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void loginEvent(LoginEvent event){
+        if (event != null){
+            int mType = event.mType;
+            if (mType == Constants.WX_SHARE){
+                int errCode = event.userAggree;
+                if(errCode== BaseResp.ErrCode.ERR_USER_CANCEL||errCode==BaseResp.ErrCode.ERR_AUTH_DENIED){
+                    Toast.makeText(PersonActivity.this,"取消分享",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(PersonActivity.this,"分享成功",Toast.LENGTH_SHORT).show();
+                }
+                finish();
+            }
+        }
+    }
+
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void WxEvent(WxEvent event){
+        if (event != null){
+            RegisterBean mRegister = event.mRegister;
+            if (mRegister != null){
+                String avatar = mRegister.getAvatar();
+                String nickname = mRegister.getNickname();
+                user_name.setText(nickname);
+                Glide.with(this).load(avatar).placeholder(R.mipmap.mine).error(R.mipmap.mine).into(person_av);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

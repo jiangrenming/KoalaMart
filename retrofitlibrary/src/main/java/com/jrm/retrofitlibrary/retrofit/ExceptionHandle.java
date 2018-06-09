@@ -73,7 +73,7 @@ public class ExceptionHandle {
             return ex;
         } else {
             ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-            ex.message = "未知错误";
+            ex.message = "连接服务器超时";
             return ex;
         }
     }

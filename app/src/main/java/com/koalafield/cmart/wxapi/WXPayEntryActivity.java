@@ -1,10 +1,13 @@
 package com.koalafield.cmart.wxapi;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.koalafield.cmart.R;
 import com.koalafield.cmart.utils.Constants;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -21,8 +24,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  */
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
-    private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
 
+    private static final String TAG = "WXPayEntryActivity";
     private IWXAPI api;
 
     @Override
@@ -47,31 +50,12 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp baseResp) {
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             int code = baseResp.errCode;
-            switch(code) {
-                case 0:
-                    finish();
-                    break;
-                case -1:
-                    finish();
-                    break;
-                case -2:
-                    finish();
-                    break;
-                case -3:
-                    finish();
-                    break;
-                case -4:
-                    finish();
-                    break;
-                case -5:
-                    finish();
-                    break;
-                case -6:
-                    finish();
-                    break;
-                default:
-                    break;
+            if (code == 0){
+                Toast.makeText(this,"支付成功",Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this,"支付失败",Toast.LENGTH_SHORT).show();
             }
+            finish();
         }
     }
 }

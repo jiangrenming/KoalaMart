@@ -136,6 +136,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     @Override
     public void onSucessTwoFul(final List<CategryOneBean> data) {
         if (data != null && data.size() > 0) {
+            categry_two.setVisibility(View.VISIBLE);
             if (null == categryTwoAdapter) {
                 categryTwoAdapter = new CategryTwoAdapter(mContext,data);
                 RecyclerViewHelper.initRecyclerViewG(mContext, categry_two,categryTwoAdapter,3);
@@ -161,6 +162,11 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     @Override
     public void onFailure(String message,int code) {
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadNoTwoFul() {
+        categry_two.setVisibility(View.GONE);
     }
 
     @Override

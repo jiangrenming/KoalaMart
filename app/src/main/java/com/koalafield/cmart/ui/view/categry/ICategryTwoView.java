@@ -10,4 +10,5 @@ public interface ICategryTwoView<T> extends IBaseView{
 
     void onSucessTwoFul(T data);
     void onFailure(String message,int code);
+    void loadNoTwoFul();
 }

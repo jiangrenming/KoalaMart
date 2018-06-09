@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
+import com.koalafield.cmart.BuildConfig;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.OrderAdapter;
 import com.koalafield.cmart.adapter.PayChooseAdapter;
@@ -58,6 +59,9 @@ import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.CommonDialog;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
 
 import org.greenrobot.eventbus.EventBus;
@@ -270,6 +274,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     }
 
     private TextView limit_time;
+    private String payName;
     private void setOnPopupViewClick(View view) {
          RecyclerView payChoose = view.findViewById(R.id.choose_pay);
          limit_time = view.findViewById(R.id.limit_time);
@@ -318,6 +323,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     for (int i = 0; i < payList.size(); i++) {
                         if (payList.get(i).isSelect()){
                             paymentId = payList.get(i).getId();
+                            payName = payList.get(i).getPaymentName();
                         }
                     }
                 }
@@ -430,17 +436,38 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         }
     }
 
-    private String serVerMode = "01";
     @Override
     public void onPaySdkData(SdkPayBean data) {
         if (data != null){
             String transactionNo = data.getTransactionNo();
-            if (!StringUtils.isEmpty(transactionNo)){
-                UPPayAssistEx.startPay(OrderDetailsActivity.this,null,null,transactionNo,serVerMode);
+            if (!StringUtils.isEmpty(payName) && "微信支付".equals(payName)){
+                onPayWX(data);
+            }else if ("银联支付".equals(payName)){
+                if (!StringUtils.isEmpty(transactionNo)){
+                    UPPayAssistEx.startPay(OrderDetailsActivity.this,null,null,transactionNo, BuildConfig.BANK_URL);
+                    finish();
+                }
+            }else {  //货到付款
+
             }
         }
     }
-
+    private  void onPayWX(SdkPayBean data){
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(this, data.getAppId());
+        msgApi.registerApp(data.getAppId());
+        PayReq req = new PayReq();
+        req.appId = data.getAppId();
+        req.partnerId = data.getPartnerId();
+        String prepayId = data.getPackage();
+        String[] split = prepayId.split("=");
+        req.prepayId =split[1];
+        req.nonceStr = data.getNonceStr();
+        req.timeStamp = data.getTimeStamp();
+        req.sign = data.getPaySign();
+        req.signType = data.getSignType();
+        req.packageValue = "Sign=WXPay";
+        msgApi.sendReq(req);
+    }
     @Override
     public void onPaySdkFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();

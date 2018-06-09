@@ -44,6 +44,8 @@ public class CategryTwoPresenter implements ICategryTwoPresenter{
                     List<CategryOneBean> categryOneBeen = (List<CategryOneBean>) data;
                     if (categryOneBeen != null &&categryOneBeen.size() >0){
                         categryTwoView.onSucessTwoFul(categryOneBeen);
+                    }else {
+                        categryTwoView.loadNoTwoFul();
                     }
                 }
             }

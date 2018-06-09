@@ -377,6 +377,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
                 cancleLoading();
             }
         });
+        swiperefresh.setBottomRefreshing(false);
     }
 
     /**

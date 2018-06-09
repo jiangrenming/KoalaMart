@@ -37,8 +37,6 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int CategoryGoods = 0x00000333;
     public static final int NomralGoods = 0x00000444;
 
-       private GoodsCategryAdapter goodsCategryAdapter;
-       private GoodsCategryTwoAdapter goodsCategryTwoAdapter;
        private GoodsCategryThreeAdapter goodsCategryThree;
 
 
@@ -88,13 +86,8 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final GoodsCategryBean goodsCategryBean = mData.get(position);
         if (holder instanceof ImageArrayHolder){
             ((ImageArrayHolder) holder).name.setText(goodsCategryBean.getName());
-            if (goodsCategryAdapter == null ){
-                goodsCategryAdapter = new GoodsCategryAdapter(mContext,goodsCategryBean.getGoodsList());
-                RecyclerViewHelper.initRecyclerViewH(mContext,((ImageArrayHolder) holder).categry_one_recycler,false,goodsCategryAdapter);
-            }else {
-                goodsCategryAdapter.cleanItems();
-                goodsCategryAdapter.addItems(goodsCategryBean.getGoodsList());
-            }
+            GoodsCategryAdapter   goodsCategryAdapter = new GoodsCategryAdapter(mContext,goodsCategryBean.getGoodsList());
+            RecyclerViewHelper.initRecyclerViewH(mContext,((ImageArrayHolder) holder).categry_one_recycler,false,goodsCategryAdapter);
             goodsCategryAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int pos) {
@@ -117,13 +110,8 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
         }else if (holder instanceof  GoodsPieceHolder){
             ((GoodsPieceHolder) holder).goods_categry_two.setText(goodsCategryBean.getName());
-            if (goodsCategryTwoAdapter == null ){
-                goodsCategryTwoAdapter = new GoodsCategryTwoAdapter(mContext,goodsCategryBean.getGoodsList());
-                RecyclerViewHelper.initRecyclerViewG(mContext,((GoodsPieceHolder) holder).categry_two_recycler,goodsCategryTwoAdapter,3);
-            }else {
-                goodsCategryTwoAdapter.cleanItems();
-                goodsCategryTwoAdapter.addItems(goodsCategryBean.getGoodsList());
-            }
+            GoodsCategryTwoAdapter   goodsCategryTwoAdapter = new GoodsCategryTwoAdapter(mContext,goodsCategryBean.getGoodsList());
+            RecyclerViewHelper.initRecyclerViewG(mContext,((GoodsPieceHolder) holder).categry_two_recycler,goodsCategryTwoAdapter,3);
             goodsCategryTwoAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int pos) {
@@ -145,13 +133,8 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }else  if (holder instanceof  CategryGoodsHolder){
             Glide.with(mContext).load(goodsCategryBean.getImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
                     .into(((CategryGoodsHolder) holder).goods_categry_three);
-            if (goodsCategryThree == null ){
-                goodsCategryThree = new GoodsCategryThreeAdapter(mContext,goodsCategryBean.getGoodsList());
-                RecyclerViewHelper.initRecyclerViewG(mContext,((CategryGoodsHolder) holder).categry_three_recycler,goodsCategryThree,3);
-            }else {
-                goodsCategryThree.cleanItems();
-                goodsCategryThree.addItems(goodsCategryBean.getGoodsList());
-            }
+            GoodsCategryThreeAdapter   goodsCategryThree = new GoodsCategryThreeAdapter(mContext,goodsCategryBean.getGoodsList());
+            RecyclerViewHelper.initRecyclerViewG(mContext,((CategryGoodsHolder) holder).categry_three_recycler,goodsCategryThree,3);
             goodsCategryThree.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int pos) {
@@ -172,13 +155,8 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         }else {
             ((GoodsPieceHolder) holder).goods_categry_two.setText(goodsCategryBean.getName());
-            if (goodsCategryTwoAdapter == null ){
-                goodsCategryTwoAdapter = new GoodsCategryTwoAdapter(mContext,goodsCategryBean.getGoodsList());
-                RecyclerViewHelper.initRecyclerViewG(mContext,((GoodsPieceHolder) holder).categry_two_recycler,goodsCategryTwoAdapter,3);
-            }else {
-                goodsCategryTwoAdapter.cleanItems();
-                goodsCategryTwoAdapter.addItems(goodsCategryBean.getGoodsList());
-            }
+            GoodsCategryTwoAdapter goodsCategryTwoAdapter = new GoodsCategryTwoAdapter(mContext,goodsCategryBean.getGoodsList());
+            RecyclerViewHelper.initRecyclerViewG(mContext,((GoodsPieceHolder) holder).categry_two_recycler,goodsCategryTwoAdapter,3);
             goodsCategryTwoAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int pos) {

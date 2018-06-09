@@ -127,9 +127,15 @@ public class CategryActivity extends TabBaseActivity implements ICategryView<Lis
     }
 
     @Override
+    public void loadNoTwoFul() {
+        categry_two.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onSucessTwoFul(final List<CategryOneBean> data) {
         Log.i("获取分类列表",data.size()+"/第一个数据:"+data.get(0).getName());
         if (data != null && data.size() > 0) {
+            categry_two.setVisibility(View.VISIBLE);
             if (null == categryTwoAdapter) {
                 categryTwoAdapter = new CategryTwoAdapter(this,data);
                 initRecyclerViewG(this, categry_two,  categryTwoAdapter,3);

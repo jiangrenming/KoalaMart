@@ -1,152 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="40dp"
         android:background="@color/white"
-        android:layout_height="40dp">
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_horizontal|center_vertical"
-            android:text="跨境超市"/>
+            android:text="跨境超市" />
+
         <ImageView
             android:id="@+id/search"
             android:layout_width="25dp"
-            android:src="@mipmap/search"
+            android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:scaleType="fitXY"
-            android:layout_height="25dp" />
+            android:src="@mipmap/search" />
     </LinearLayout>
-    <!--<com.koalafield.cmart.widget.MyBoundScrollView
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        android:layout_width="match_parent"
-        android:scrollbars="none"
-        android:layout_height="match_parent">-->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:scrollbars="none">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:background="@color/white"
             android:layout_height="match_parent">
 
-            <com.koalafield.cmart.bananer.MZBannerView
-                android:id="@+id/nomral_banner"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                app:canLoop="true"
-                app:indicatorAlign="center"
-                app:middle_page_cover="false"
-                app:open_mz_mode="false">
-            </com.koalafield.cmart.bananer.MZBannerView>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/tools_bar"
+                android:layout_height="match_parent"
                 android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"/>
+                android:orientation="vertical">
 
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:layout_height="80dp">
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/tools_bar"
+                <com.koalafield.cmart.bananer.MZBannerView
+                    android:id="@+id/nomral_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>-->
+                    android:layout_height="160dp"
+                    app:canLoop="true"
+                    app:indicatorAlign="center"
+                    app:middle_page_cover="false"
+                    app:open_mz_mode="false"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/home_goods"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-           <!-- <LinearLayout
-                android:id="@+id/categry_one"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/gray_light">
+                    android:layout_height="80dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/goods_one_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="10dp"
-                        android:text="各类饮料"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:id="@+id/categry_one_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="更多"
-                        android:textColor="@color/black" />
-                </RelativeLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/tools_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:id="@+id/categry_one_recycler"
+                    android:id="@+id/home_goods"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"/>
-            </LinearLayout>-->
-
-           <!-- <LinearLayout
-                android:id="@+id/categry_two"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/goods_categry_two"
-                    android:layout_width="match_parent"
-                    android:background="@color/gray_light2"
-                    android:text="食品零食"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:textSize="18sp"
-                    android:layout_height="60dp" />
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/categry_two_recycler"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>-->
-            <!--<LinearLayout
-                android:id="@+id/categry_three"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/goods_categry_three"
-                    android:layout_width="match_parent"
-                    android:scaleType="fitXY"
-                    android:layout_height="100dp" />
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/categry_three_recycler"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>-->
-
-        </LinearLayout>
-        <!--<include layout="@layout/layout_common_empty"/>-->
-    </FrameLayout>
-    <!--</com.koalafield.cmart.widget.MyBoundScrollView>-->
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <include layout="@layout/layout_common_empty"/>
+        </FrameLayout>
+    </ScrollView>
 </LinearLayout>
