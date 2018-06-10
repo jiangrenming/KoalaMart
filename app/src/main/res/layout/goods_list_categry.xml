@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -41,8 +41,8 @@
 
             <ImageView
                 android:id="@+id/goods_car_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="20dp"
                 android:scaleType="fitXY"
@@ -53,7 +53,7 @@
                 style="@style/bg_text_style"
                 android:visibility="gone"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />
         </FrameLayout>
@@ -84,6 +84,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/brand_list"
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     android:layout_gravity="center_vertical"
                     android:layout_height="match_parent" />
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -91,7 +92,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/categry_list"
                 android:layout_width="match_parent"
-                android:background="@color/white"
+                android:background="@color/gray"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.AppBarLayout>
         <com.koalafield.cmart.zoomswifresh.GZoomSwifrefresh

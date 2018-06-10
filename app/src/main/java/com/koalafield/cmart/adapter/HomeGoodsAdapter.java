@@ -37,7 +37,6 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int CategoryGoods = 0x00000333;
     public static final int NomralGoods = 0x00000444;
 
-       private GoodsCategryThreeAdapter goodsCategryThree;
 
 
 

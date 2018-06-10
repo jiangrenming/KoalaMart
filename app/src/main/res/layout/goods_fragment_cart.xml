@@ -8,28 +8,28 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/gray"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
         <ImageView
             android:id="@+id/back"
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/back"
             android:layout_marginLeft="10dp"
-            android:layout_height="25dp" />
+            android:layout_height="20dp" />
         <TextView
             android:layout_width="match_parent"
             android:gravity="center_vertical|center_horizontal"
             android:text="购物车"
-            android:layout_height="match_parent" />
-        <TextView
-            android:id="@+id/clear_all"
-            android:layout_width="wrap_content"
-            android:text="清空购物车"
-            android:layout_alignParentRight="true"
             android:textColor="@color/black"
-            android:gravity="center_vertical"
-            android:layout_marginRight="10dp"
             android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/clear_all"
+            android:layout_width="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/delete"
+            android:layout_marginRight="10dp"
+            android:layout_height="20dp" />
     </RelativeLayout>
 
     <FrameLayout

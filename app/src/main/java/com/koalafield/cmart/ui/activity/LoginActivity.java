@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         presenter = new LoginPrsenter(this);
     }
 
-    @OnClick({R.id.back,R.id.login,R.id.register,R.id.wx_login})
+    @OnClick({R.id.back,R.id.login,R.id.register,R.id.wx_login,R.id.forget_pwd})
     public  void onClick(View v){
         switch (v.getId()){
             case R.id.back: //返回首页

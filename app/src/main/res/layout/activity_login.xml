@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
     <include
         layout="@layout/top_header"/>
@@ -25,6 +26,8 @@
             android:id="@+id/account"
             android:layout_width="0dp"
             android:layout_marginLeft="15dp"
+            android:hint="请输入手机号码"
+            android:textSize="13sp"
             android:layout_weight="1"
             android:background="@null"
             android:layout_height="match_parent" />
@@ -48,6 +51,8 @@
         <EditText
             android:id="@+id/password"
             android:layout_width="0dp"
+            android:hint="请输入密码"
+            android:textSize="13sp"
             android:layout_marginLeft="15dp"
             android:inputType="textPassword"
             android:layout_weight="1"

@@ -43,7 +43,7 @@ public class GoodsDetailCommondAdapter extends BaseQuickAdapter<GoodsRecoomendBe
             old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             old_price.setText(String.format("%.2f", item.getOriginalPrice()));
         }
-        holder.setText(R.id.goods_commond_name,item.getName()).setText(R.id._curreny,item.getCurrency()+":").setText(R.id.current_price,String.format("%.2f", item.getCurrentPrice()));
+        holder.setText(R.id.goods_commond_name,item.getName()).setText(R.id._curreny,item.getCurrency()+" ").setText(R.id.current_price,String.format("%.2f", item.getCurrentPrice()));
         Glide.with(mContext).load(item.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(goods_commond_img);
     }
 

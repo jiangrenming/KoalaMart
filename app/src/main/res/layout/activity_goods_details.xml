@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/gray_light"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
         <ImageView
             android:id="@+id/goods_back"
             android:layout_width="20dp"
@@ -87,6 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp">
                         <TextView
                             android:id="@+id/goods_detail_txt"
@@ -106,13 +107,14 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:text="销量:10"
-                            android:textColor="@color/gray_light2" />
+                            android:textColor="@color/gray_light3" />
                     </RelativeLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="wrap_content"
@@ -217,23 +219,29 @@
             android:layout_width="0dp"
             android:layout_weight="1.5"
             android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/goods_car_img"
-                android:layout_width="20dp"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:scaleType="fitXY"
-                android:src="@mipmap/buy"
-                android:layout_height="20dp" />
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/goods_cart_num"
-                style="@style/bg_text_style"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
-                android:textSize="10sp"
-                tools:ignore="SmallSp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/goods_car_img"
+                    android:layout_width="20dp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/buy"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:layout_toRightOf="@+id/goods_car_img"
+                    android:id="@+id/goods_cart_num"
+                    style="@style/bg_text_style"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginLeft="-5dp"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"/>
+            </RelativeLayout>
         </FrameLayout>
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="0dp"
             android:layout_weight="2.5"
             android:gravity="center_horizontal"
@@ -263,11 +271,11 @@
                     android:layout_gravity="center_vertical"
                     android:scaleType="fitXY"
                     android:src="@mipmap/add" />
-        </LinearLayout>
+        </LinearLayout>-->
         <LinearLayout
             android:id="@+id/pay_buy"
             android:layout_width="0dp"
-            android:layout_weight="2.5"
+            android:layout_weight="1.5"
             android:background="@color/progress_yellow"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
@@ -282,8 +290,8 @@
         <LinearLayout
             android:id="@+id/pay_goods"
             android:layout_width="0dp"
-            android:layout_weight="2.5"
-            android:background="@color/btn_red"
+            android:layout_weight="1.5"
+            android:background="@color/red"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:layout_height="match_parent">

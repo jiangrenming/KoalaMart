@@ -2,6 +2,7 @@ package com.koalafield.cmart.ui.activity.goods;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -50,8 +51,6 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
 
     @BindView(R.id.back)
     ImageView back;
-   /* @BindView(R.id.search_words)
-    EditText search_words;*/
     @BindView(R.id.search_words)
     SearchView search_words;
     @BindView(R.id.search_cancle)
@@ -86,6 +85,7 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
         search_words.setQueryHint("搜索");
         search_words.setOnQueryTextListener(this);
         search_words.requestFocusFromTouch();
+
     }
 
     @Override

@@ -7,9 +7,9 @@
     <TextView
         android:id="@+id/categryOne_name"
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="center_horizontal|center_vertical"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="各种饮料"/>
 
 

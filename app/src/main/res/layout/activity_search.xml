@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
@@ -31,9 +31,11 @@
         <TextView
             android:id="@+id/search_cancle"
             android:layout_width="wrap_content"
+            android:textSize="16sp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:gravity="center_vertical"
+            android:textColor="@color/blue"
             android:text="取消" />
     </LinearLayout>
 
@@ -64,12 +66,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/hot_vertical_bar"
                 android:gravity="left"
                 android:text="热门搜索"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textColor="@color/gray_light3"
+                android:textSize="15sp"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/hot_vertical_bar"
+                android:layout_toEndOf="@+id/hot_vertical_bar" />
         </RelativeLayout>
 
         <com.flowlayouttag.FlowLayout
@@ -102,8 +105,8 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/his_vertical_bar"
                 android:gravity="left"
-                android:text="历史搜索"
-                android:textColor="@color/black"
+                android:text="搜索历史"
+                android:textColor="@color/gray_light3"
                 android:textSize="15sp" />
             <ImageView
                 android:id="@+id/delete"

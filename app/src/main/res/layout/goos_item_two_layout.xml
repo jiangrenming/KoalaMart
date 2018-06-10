@@ -2,20 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/goods_item_two_img"
-        android:layout_width="80dp"
+        android:layout_width="90dp"
         android:src="@mipmap/mine"
         android:layout_gravity="center_horizontal"
         android:scaleType="fitXY"
-        android:layout_height="80dp" />
+        android:layout_height="90dp" />
     <TextView
         android:id="@+id/goods_item_two_name"
-        android:layout_width="80dp"
+        android:layout_width="90dp"
         android:text="可乐的还是大赛上事大厦会死啊"
         android:lines="2"
-        android:textSize="14sp"
+        android:textSize="13sp"
+        android:textColor="@color/text_black"
         android:paddingLeft="2dp"
         android:layout_gravity="center_horizontal"
         android:ellipsize="end"
@@ -26,10 +29,11 @@
     <TextView
         android:id="@+id/goods_item_two_price"
         android:layout_width="wrap_content"
-        android:text="AUD:80.00"
+        android:text="AUD 80.00"
         android:layout_gravity="center_horizontal"
         android:ellipsize="end"
         android:paddingTop="5dp"
+        android:textColor="@color/btn_red"
         android:gravity="center_horizontal"
         android:layout_height="wrap_content" />
 

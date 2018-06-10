@@ -34,7 +34,7 @@ public class BrandCategryAdapter extends BaseQuickAdapter<BrandListBean> {
         TextView brand_name_item = holder.getView(R.id.brand_name_item);
         holder.setText(R.id.brand_name_item,item.getName());
         if (item.isSelect()){
-            brand_name_item.setBackgroundResource(R.color.btn_red);
+            brand_name_item.setBackgroundResource(R.color.red);
             brand_name_item.setTextColor(Color.WHITE);
         }else {
             brand_name_item.setBackgroundResource(R.color.white);

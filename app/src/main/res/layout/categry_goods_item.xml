@@ -30,6 +30,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="AUD 0.00"
+            android:textColor="@color/btn_red"
+            android:gravity="center_vertical|center_horizontal"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:lines="2"
@@ -40,6 +42,7 @@
             android:id="@+id/add_cart"
             android:layout_width="15dp"
             android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
             android:src="@mipmap/add"
             android:layout_height="15dp" />
     </LinearLayout>

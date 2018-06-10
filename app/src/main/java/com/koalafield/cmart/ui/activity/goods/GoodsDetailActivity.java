@@ -118,12 +118,12 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     //底部布局
     @BindView(R.id.goods_collection)
     ImageView goods_collection;
-    @BindView(R.id.goods_minus)
+    /*@BindView(R.id.goods_minus)
     ImageView goods_minus;
     @BindView(R.id.goods_number)
     EditText goods_number;
     @BindView(R.id.goods_add)
-    ImageView goods_add;
+    ImageView goods_add;*/
     @BindView(R.id.pay_goods)
     LinearLayout pay_goods;
     @BindView(R.id.goods_car_img)
@@ -180,7 +180,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     private  int clickType ;
-    @OnClick({R.id.pay_goods,R.id.goods_minus,R.id.goods_add,R.id.goods_collection,R.id.judget_more,R.id.goods_car_img,R.id.pay_buy,R.id.goods_back})
+    @OnClick({R.id.pay_goods,/*R.id.goods_minus,R.id.goods_add,*/R.id.goods_collection,R.id.judget_more,R.id.goods_car_img,R.id.pay_buy,R.id.goods_back})
     public  void goodsClick(View view){
         String tickets = null;
         String num = null;
@@ -197,7 +197,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     startActivity(intent);
                 }
                 break;
-            case R.id.goods_minus:
+            /*case R.id.goods_minus:
                  num = goods_number.getText().toString();
                 if (!StringUtils.isEmpty(num)){
                     if (Integer.valueOf(num) <= 1){
@@ -212,7 +212,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 if (!StringUtils.isEmpty(num)){
                     goods_number.setText(String.valueOf(Integer.valueOf(num)+1));
                 }
-                break;
+                break;*/
             case R.id.goods_collection:
                  tickets = ShareBankPreferenceUtils.getString("tickets", null);
                 if (!StringUtils.isEmpty(tickets)){
@@ -269,16 +269,17 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
         }
     }
 
+    private int selectType = 0;
     private void addCartData(View view) {
         if (openSelection){
             openPopupWindow(view);
+            selectType = 1;
         }else {
+            selectType = 2;
             ICartChangeItemPresenter presenter = new CartChangeItemPresenter(this);
-            String goods_num = goods_number.getText().toString();
+          //  String goods_num = goods_number.getText().toString();
             Map<String,String> addCarts = new HashMap<>();
-            if (!StringUtils.isEmpty(goods_num)){
-                addCarts.put("count",goods_num);
-            }
+            addCarts.put("count",String.valueOf(1));
             addCarts.put("contentId",String.valueOf(contentId));
 
             if (mWeightList != null && mWeightList.size() >0){
@@ -769,7 +770,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
             popupWindow.dismiss();
         }
         goods_cart_num.setVisibility(View.VISIBLE);
-        goods_cart_num.setText(String.valueOf(Integer.valueOf(goods_cart_num.getText().toString())+Integer.valueOf(goods_number.getText().toString())));
+        if (selectType == 2){
+            goods_cart_num.setText(String.valueOf(Integer.valueOf(goods_cart_num.getText().toString())+1));
+
+        }else {
+            goods_cart_num.setText(String.valueOf(Integer.valueOf(goods_cart_num.getText().toString())+Integer.valueOf(goods_pop_num.getText().toString())));
+
+        }
         int[] loc = new int[2];
         pay_goods.getLocationInWindow(loc);
         playAnimation(loc);

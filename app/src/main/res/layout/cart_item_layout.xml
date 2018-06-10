@@ -103,7 +103,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:text="AUD:" />
+                            android:textColor="@color/btn_red"
+                            android:text="AUD " />
 
                         <TextView
                             android:id="@+id/goods_cart_amount"
@@ -111,6 +112,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
+                            android:textColor="@color/btn_red"
                             android:text="198.88" />
 
                         <LinearLayout

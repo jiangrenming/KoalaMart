@@ -33,7 +33,7 @@ public class CategryGoodsAdapter extends BaseQuickAdapter<GoodsListBean> {
         ImageView add_cart = holder.getView(R.id.add_cart);
         Glide.with(mContext).load(item.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(item_img);
         holder.setText(R.id.categry_two_name,item.getName())
-                .setText(R.id.price,item.getCurrency()+":"+String.format("%.2f",  item.getCurrentPrice()));
+                .setText(R.id.price,item.getCurrency()+" "+String.format("%.2f",  item.getCurrentPrice()));
 
         add_cart.setOnClickListener(new View.OnClickListener() {
             @Override

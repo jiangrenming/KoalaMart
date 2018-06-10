@@ -44,7 +44,7 @@ public class CommonOrderAdapter extends BaseQuickAdapter<OrderListBean> {
         holder.setText(R.id.order_number,item.getBillNo())
                 .setText(R.id.order_time,item.getCreatedTime())
                 .setText(R.id.order_all_count,String.valueOf(item.getTotalCount()))
-                .setText(R.id.trans_tax,item.getCurrency()+":"+item.getDeliveryFree())
+                .setText(R.id.trans_tax,item.getCurrency()+" "+item.getDeliveryFree())
                 .setText(R.id.order_curreny,item.getCurrency()).setText(R.id.order_allprice,String.format("%.2f",item.getTotalPrice()))
                 .setText(R.id.order_state,item.getStatusText());
         RecyclerView item_order = holder.getView(R.id.item_order);

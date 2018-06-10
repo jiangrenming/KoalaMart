@@ -48,7 +48,7 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
         CartItemAdapter.CartItemCallBack,ICartClearView<BaseResponseBean>,ICartChangeCountView<CartIdBean> {
 
     @BindView(R.id.clear_all)
-    TextView clear_all;
+    ImageView clear_all;
     @BindView(R.id.cart_top_layout)
     FrameLayout cart_top_layout;
     @BindView(R.id.goods_item)
@@ -93,7 +93,7 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
         presenter = new CartListPresenter(CartShoppingActivity.this);
         presenter.getData();
     }
-    @OnClick({R.id.clear_all,R.id.select,R.id.pay_goods})
+    @OnClick({R.id.clear_all,R.id.select,R.id.pay_goods,R.id.back})
     public  void onDeleteAll(View v){
         switch (v.getId()){
             case R.id.clear_all: //全部清空

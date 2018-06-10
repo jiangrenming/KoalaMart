@@ -53,7 +53,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         CartItemAdapter.CartItemCallBack,ICartClearView<BaseResponseBean>,ICartChangeCountView<CartIdBean> {
 
     @BindView(R.id.clear_all)
-    TextView clear_all;
+    ImageView clear_all;
     @BindView(R.id.cart_top_layout)
     FrameLayout cart_top_layout;
     @BindView(R.id.goods_item)
