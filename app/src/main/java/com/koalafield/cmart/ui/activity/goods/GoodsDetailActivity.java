@@ -197,22 +197,6 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     startActivity(intent);
                 }
                 break;
-            /*case R.id.goods_minus:
-                 num = goods_number.getText().toString();
-                if (!StringUtils.isEmpty(num)){
-                    if (Integer.valueOf(num) <= 1){
-                        Toast.makeText(GoodsDetailActivity.this,"商品数量已为最少，无法继续减少",Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    goods_number.setText(String.valueOf(Integer.valueOf(num)-1));
-                }
-                break;
-            case  R.id.goods_add:
-                 num = goods_number.getText().toString();
-                if (!StringUtils.isEmpty(num)){
-                    goods_number.setText(String.valueOf(Integer.valueOf(num)+1));
-                }
-                break;*/
             case R.id.goods_collection:
                  tickets = ShareBankPreferenceUtils.getString("tickets", null);
                 if (!StringUtils.isEmpty(tickets)){
@@ -581,7 +565,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onNumberFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 410){
+        if (code == 401){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);
@@ -668,11 +652,11 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onGoodsDetailsFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 410){
+        /*if (code == 401){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);
-        }
+        }*/
     }
 
     /**
@@ -706,11 +690,11 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onGoodsCommondFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 410){
+       /* if (code == 410){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);
-        }
+        }*/
     }
 
     //收藏商品
@@ -731,7 +715,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onGoodsCollectionsFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 410){
+        if (code == 401){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);
@@ -755,7 +739,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onGoodsCollectionDelFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 410){
+        if (code == 401){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);
@@ -791,7 +775,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onChangeItemFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 410){
+        if (code == 401){
             Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);

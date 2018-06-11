@@ -46,6 +46,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.http.FieldMap;
 
 /**
  *
@@ -75,7 +76,7 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     private  int type;
 
     private IWXAPI iwxapi;
-    private IWXLoginPresenter wxPresenter;
+  //  private IWXLoginPresenter wxPresenter;
 
     @Override
     public int attchLayoutRes() {
@@ -89,7 +90,6 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         //注册微信appid到微信平台
         iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID,true);
         iwxapi.registerApp(Constants.APP_ID);
-        wxPresenter = new WXLoginPresenter(this);
         account.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -226,12 +226,17 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
         String ticket = data.getTicket();
         if (!StringUtils.isEmpty(ticket)){
             ShareBankPreferenceUtils.putString("tickets",ticket);
-            finish();
             if (type == 1){
+                finish();
                 StackActivityManager.getActivityManager().goToMain(this,4);
             }else if (type ==2){
+                finish();
                 StackActivityManager.getActivityManager().goToMain(this,3);
-            }else{
+            }/*else  if (type == 4){
+                Intent intent = new Intent();
+                setResult(RESULT_OK,intent);
+                finish();
+            }*/else {
                 finish();
             }
         }
@@ -246,18 +251,15 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public  void loginEvent(LoginEvent event){
         if (event != null){
             int mType = event.mType;
+            Log.d("mType==",mType+"");
             if (mType == Constants.WX_LOGIN){
-                int errCode = event.userAggree;
-                if(errCode== BaseResp.ErrCode.ERR_USER_CANCEL||errCode==BaseResp.ErrCode.ERR_AUTH_DENIED){
-                    Toast.makeText(LoginActivity.this,"取消授权登录",Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    String code = event.mCode;
-                    Map<String,String> params = new HashMap<>();
-                    params.put("code",code);
-                    wxPresenter.setParams(params);
-                    wxPresenter.getData();
-                }
+                String code = event.mCode;
+                Log.d("code==",code);
+                Map<String,String> params = new HashMap<>();
+                params.put("code",code);
+                IWXLoginPresenter wxPresenter = new WXLoginPresenter(this);
+                wxPresenter.setParams(params);
+                wxPresenter.getData();
             }
         }
     }
@@ -266,9 +268,11 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     @Override
     public void onWXSucessFul(RegisterBean data) {
         if (data != null){
+            params.put("Ticket==",data.getTicket());
             ShareBankPreferenceUtils.putString("tickets",data.getTicket());
-            EventBus.getDefault().post(new WxEvent(data));
             finish();
+            StackActivityManager.getActivityManager().goToMain(this,4);
+            EventBus.getDefault().post(new WxEvent(data));
         }
     }
 

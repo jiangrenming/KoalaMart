@@ -46,6 +46,7 @@ public class WXLoginPresenter implements IWXLoginPresenter{
                 if (null != data){
                     RegisterBean registerBean = (RegisterBean) data;
                     if (null != registerBean){
+                        params.put("Ticket=",registerBean.getTicket());
                         wxLoginView.onWXSucessFul(registerBean);
                     }else {
                         wxLoginView.onWXFailure("返回的数据null");

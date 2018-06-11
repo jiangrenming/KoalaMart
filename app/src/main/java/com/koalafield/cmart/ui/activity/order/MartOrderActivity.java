@@ -19,6 +19,7 @@ import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.widget.IndicatorView;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -138,4 +139,21 @@ public class MartOrderActivity extends BaseActivity {
         }
     }
 
+  /*  @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            if (requestCode == 10000){
+                initTabColor(0);
+            }else if (requestCode == 10001){
+                initTabColor(1);
+            }else if (requestCode == 10002){
+                initTabColor(2);
+            }else if (requestCode == 10003){
+                initTabColor(3);
+            }else {
+                initTabColor(4);
+            }
+        }
+    }*/
 }

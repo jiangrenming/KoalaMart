@@ -62,19 +62,31 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 
 	@Override
 	public void onResp(BaseResp resp) {
-		Log.d("baseResp:",resp.toString());
-		Toast.makeText(this,resp.errCode,Toast.LENGTH_SHORT).show();
-		if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){ //分享
-			EventBus.getDefault().post(new LoginEvent(Constants.WX_SHARE,resp.errCode));
-		}else if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH){
-			SendAuth.Resp authResp = (SendAuth.Resp) resp;
-			String code = "";
-			if (authResp.errCode == BaseResp.ErrCode.ERR_OK){ //用户同意
-				code = authResp.code;
-			}
-			EventBus.getDefault().post(new LoginEvent(Constants.WX_LOGIN,authResp.errCode,code));
+		Log.d("errCode=",resp.errCode+"/"+"type="+resp.getType());
+		switch (resp.errCode){
+			case BaseResp.ErrCode.ERR_OK:
+				if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){ //分享
+					EventBus.getDefault().post(new LoginEvent(Constants.WX_SHARE,resp.errCode));
+					finish();
+				}else if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH){
+					SendAuth.Resp authResp = (SendAuth.Resp) resp;
+					String code = authResp.code;
+					Log.d("errCode==",resp.errCode+"");
+					EventBus.getDefault().post(new LoginEvent(Constants.WX_LOGIN,code));
+					finish();
+				}
+				break;
+			case BaseResp.ErrCode.ERR_AUTH_DENIED:
+				Toast.makeText(this,"拒绝授权登录",Toast.LENGTH_SHORT).show();
+				finish();
+				break;
+			case BaseResp.ErrCode.ERR_USER_CANCEL:
+				Toast.makeText(this,"取消登录",Toast.LENGTH_SHORT).show();
+				finish();
+				break;
+			default:
+				break;
 		}
-		finish();
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

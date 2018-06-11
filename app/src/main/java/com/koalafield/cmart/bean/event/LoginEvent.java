@@ -14,9 +14,8 @@ public class LoginEvent {
         this.mType = type;
         this.userAggree = userAggree;
     }
-    public LoginEvent(int type, int userAggree,String code) {
+    public LoginEvent(int type,String code) {
         this.mType = type;
-        this.userAggree = userAggree;
         this.mCode =code;
     }
 }

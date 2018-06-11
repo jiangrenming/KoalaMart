@@ -98,12 +98,13 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
 
     @Override
     public void onFailureOrder(String message,int code) {
-        Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+      Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+       /* if (code == 401){
             Intent intent = new Intent(mContext, LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);
-        }
+            Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     @Override

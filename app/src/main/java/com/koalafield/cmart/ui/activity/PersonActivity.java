@@ -360,12 +360,18 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @Override
     public void onInfosFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
+            Intent intent = new Intent(PersonActivity.this, LoginActivity.class);
+            intent.putExtra("type", 3);
+            startActivity(intent);
+        }
     }
 
 
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void loginEvent(LoginEvent event){
         if (event != null){
+            Log.i("微信分享成功",event.mType+"");
             int mType = event.mType;
             if (mType == Constants.WX_SHARE){
                 int errCode = event.userAggree;
@@ -374,7 +380,6 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 }else{
                     Toast.makeText(PersonActivity.this,"分享成功",Toast.LENGTH_SHORT).show();
                 }
-                finish();
             }
         }
     }
@@ -382,6 +387,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void WxEvent(WxEvent event){
         if (event != null){
+            Log.i("微信登录成功",event.mRegister.getNickname());
             RegisterBean mRegister = event.mRegister;
             if (mRegister != null){
                 String avatar = mRegister.getAvatar();

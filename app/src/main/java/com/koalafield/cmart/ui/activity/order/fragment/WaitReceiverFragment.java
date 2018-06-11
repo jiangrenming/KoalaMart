@@ -101,11 +101,11 @@ public class WaitReceiverFragment extends BaseFragment implements IOrderView<Lis
     @Override
     public void onFailureOrder(String message,int code) {
         Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+       /* if (code == 401){
             Intent intent = new Intent(mContext, LoginActivity.class);
             intent.putExtra("type",3);
             startActivity(intent);
-        }
+        }*/
     }
 
     @Override
