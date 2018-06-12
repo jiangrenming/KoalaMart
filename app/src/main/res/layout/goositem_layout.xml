@@ -29,9 +29,9 @@
         android:layout_width="wrap_content"
         android:text="AUD 80.00"
         android:textColor="@color/btn_red"
+        android:paddingTop="3dp"
         android:layout_gravity="center_horizontal"
         android:ellipsize="end"
-        android:paddingTop="10dp"
         android:gravity="center_horizontal"
         android:layout_height="wrap_content" />
 

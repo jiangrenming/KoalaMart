@@ -27,12 +27,15 @@ import com.koalafield.cmart.presenter.cart.ICartChangeItemPresenter;
 import com.koalafield.cmart.presenter.cart.ICartClearPresenter;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.order.PayActivity;
+import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.view.cart.ICartChangeCountView;
 import com.koalafield.cmart.ui.view.cart.ICartClearView;
 import com.koalafield.cmart.ui.view.cart.ICartListView;
 import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
+import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
+import com.koalafield.cmart.widget.CommonDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -159,8 +162,18 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         switch (v.getId()){
             case R.id.clear_all: //全部清空
                 if (clear_all.isClickable()){
-                    cartClearPresenter = new CartClearPresenter(this);
-                    cartClearPresenter.getData();
+                    new CommonDialog(this).builder().setTitle("清空购物车").setMsg("确定清空购物车吗？").setNegativeButton("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            cartClearPresenter = new CartClearPresenter(CartActivity.this);
+                            cartClearPresenter.getData();
+                        }
+                    }).setPositiveButton("取消", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    }).show();
                 }
                 break;
             case R.id.select:  //是否全选

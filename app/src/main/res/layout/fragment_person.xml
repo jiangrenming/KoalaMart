@@ -49,8 +49,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
                     android:background="@drawable/person_head_bg"
                     android:orientation="vertical">
 
@@ -58,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:layout_marginLeft="25dp"
+                        android:layout_marginLeft="30dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -75,6 +75,8 @@
                             android:layout_height="35dp"
                             android:gravity="bottom"
                             android:paddingLeft="20dp"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
                             android:text="17621216837" />
                     </LinearLayout>
 
@@ -182,12 +184,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical|right"
-                        android:text="查看我的订单"
+                        android:text="查看全部"
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:scaleType="fitXY"
                         android:src="@mipmap/right" />
@@ -294,7 +296,7 @@
                 <View
                     android:id="@+id/diliver_two"
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="7dp"
                     android:layout_below="@+id/order_state"
                     android:background="@color/gray_light" />
 
