@@ -36,7 +36,6 @@ public class PayAdapter extends BaseQuickAdapter<ShoppingCart> {
         holder.setText(R.id.yanse,item.getColor() == null ? "颜色:": "颜色:"+(item.getColor()))
                 .setText(R.id.chicun,item.getSize() == null ?"尺寸:": "尺寸:"+item.getSize())
                 .setText(R.id.goods_name,item.getCommodity().getName())
-                .setText(R.id.pay_curreny,item.getCommodity().getCurrency())
                 .setText(R.id.pay_price,item.getCommodity().getCurrentPrice())
                 .setText(R.id.zhongliang,item.getWeight()== null ? "重量" :"重量:"+item.getWeight())
                 .setText(R.id.leixing,item.getType()== null ? "类型:" : "类型:"+item.getType())

@@ -8,6 +8,7 @@
     <color name="hint_color">#BBBBBB</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="bg_white">#80FFFFFF</color>
     <color name="text_black">#333333</color>
     <color name="text_black_light">#666666</color>
     <color name="text_gray">#999999</color>

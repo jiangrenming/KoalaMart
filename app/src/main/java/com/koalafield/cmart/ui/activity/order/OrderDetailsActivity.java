@@ -355,11 +355,13 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 if (detailsInfo.getStatus() == 0){  //待付款
                     has_time.setVisibility(View.VISIBLE);
                     cancle_order.setVisibility(View.VISIBLE);
-                    devilery_time_layout.setVisibility(View.GONE);
-                    devilery_style_layout.setVisibility(View.GONE);
+                    devilery_time_layout.setVisibility(View.VISIBLE);
+                    devilery_style_layout.setVisibility(View.VISIBLE);
                     pay_style_layout.setVisibility(View.GONE);
                     pay_time_layout.setVisibility(View.GONE);
                     once_pay.setVisibility(View.VISIBLE);
+                    devilery_time.setText(detailsInfo.getBookDeliveryTime());
+                    devilery_style.setText(data.getDelivery().getDeliveryName());
                 }else if (detailsInfo.getStatus() == 1){  //代发货
                     has_time.setVisibility(View.GONE);
                     cancle_order.setVisibility(View.GONE);
@@ -408,9 +410,9 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
             }
             OrderPrice orderPrice = data.getOrderPrice();
             if (orderPrice != null){
-                order_tax.setText(String.format("%.2f",orderPrice.getDeliveryPrice()));
-                order_discount.setText(String.format("%.2f",orderPrice.getCouponPrice()));
-                order_all_price.setText(String.format("%.2f",orderPrice.getTotalPrice()));
+                order_tax.setText("AUD "+String.format("%.2f",orderPrice.getDeliveryPrice()));
+                order_discount.setText("AUD "+String.format("%.2f",orderPrice.getCouponPrice()));
+                order_all_price.setText("AUD "+String.format("%.2f",orderPrice.getTotalPrice()));
             }
             if (!AndroidTools.isServiceRunning(this,"com.koalafield.cmart.service.TimeService")){
                 new Thread(){

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -24,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textColor="@color/black"
             android:gravity="center_vertical|center_horizontal"
             android:text="订单详情"
             android:textSize="16sp" />
@@ -35,8 +37,8 @@
             android:layout_marginRight="10dp"
             android:gravity="center_vertical|center_horizontal"
             android:text="取消订单"
-            android:textColor="@color/btn_red"
-            android:textSize="15sp" />
+            android:textColor="@color/text_black_light"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
@@ -129,7 +131,7 @@
                                 android:ellipsize="end"
                                 android:gravity="center_vertical"
                                 android:text="上海市上海市长宁区凯旋路339号龙之梦雅士大厦"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/gray" />
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -142,7 +144,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="5dp"
                     android:background="@color/gray_light" />
 
                 <LinearLayout
@@ -162,8 +164,8 @@
                         android:text="商品清单" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:scaleType="fitXY"
                         android:src="@mipmap/right" />
@@ -210,13 +212,13 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="运费:"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/text_black_light" />
 
                         <TextView
                             android:id="@+id/order_tax"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="AUD:0.00"
+                            android:text="AUD 0.00"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -232,13 +234,13 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="优惠券:"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/text_black_light" />
 
                         <TextView
                             android:id="@+id/order_discount"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="AUD:-0.00"
+                            android:text="AUD -0.00"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -254,14 +256,14 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="总计:"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/text_black_light" />
 
                         <TextView
                             android:id="@+id/order_all_price"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="AUD:0.00"
-                            android:textColor="@color/black" />
+                            android:text="AUD 0.00"
+                            android:textColor="@color/btn_red" />
                     </LinearLayout>
 
                     <LinearLayout

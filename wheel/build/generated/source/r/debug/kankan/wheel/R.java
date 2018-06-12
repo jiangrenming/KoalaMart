@@ -11,7 +11,9 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static int gray_light=0x7f030000;
+        public static int bg_white=0x7f030000;
+        public static int gray_light=0x7f030001;
+        public static int white=0x7f030002;
     }
     public static final class drawable {
         public static int wheel_bg=0x7f020000;

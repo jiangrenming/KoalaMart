@@ -12,6 +12,6 @@
 	  android:text="中国"
 	  android:gravity="center_horizontal"
 	  android:textSize="18sp"
-	  android:textColor="#F000"
+	  android:textColor="#696969"
 	  android:textStyle="bold"/>
 </LinearLayout>

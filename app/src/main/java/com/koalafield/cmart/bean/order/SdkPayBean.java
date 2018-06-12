@@ -21,6 +21,15 @@ public class SdkPayBean implements Serializable {
     private String Package;
     private String SignType;
     private String PaySign;
+    private String PrepayId;
+
+    public String getPrepayId() {
+        return PrepayId;
+    }
+
+    public void setPrepayId(String prepayId) {
+        PrepayId = prepayId;
+    }
 
     public String getBillCode() {
         return BillCode;

@@ -3,6 +3,8 @@ package com.koalafield.cmart.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -53,6 +55,9 @@ import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -160,7 +165,8 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void onButterClick(View v) {
         switch (v.getId()) {
             case R.id.share: //进入朋友圈分享
-                sendAuthCode();
+             //   sendAuthCode();
+                openSharePopupWindow(v);
                 break;
             case R.id.person_av: //头像进入个人资料
                 startActivity(new Intent(this, PrivateActivity.class));
@@ -211,6 +217,38 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 分享的弹出窗
+     * @param v
+     */
+    private void openSharePopupWindow(View v) {
+        //防止重复按按钮
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
+        }
+        //设置PopupWindow的View
+        View view = LayoutInflater.from(this).inflate(R.layout.customer_layout, null);
+        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        //设置背景
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击弹窗外退出
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        //设置动画
+        popupWindow.setAnimationStyle(R.style.PopupWindow);
+        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)) {
+            navigationHeight = AndoridSysUtils.getNavigationBarHeigh(this);
+        }
+        //设置显示的位置
+        popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, navigationHeight);
+        //设置消失监听
+        popupWindow.setOnDismissListener(this);
+        //设置PopupWindow的View点击事件
+        setOnPopupViewClick(view);
+        //设置背景透明度
+        setBackgroundAlpha(0.3f);
+    }
+
     private void sendAuthCode() {
         if (iwxapi != null && iwxapi.isWXAppInstalled()) {
             final SendAuth.Req req = new SendAuth.Req();
@@ -218,6 +256,30 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             req.state = String.valueOf(System.currentTimeMillis());
             iwxapi.sendReq(req);
         } else {
+            Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 分享朋友圈和朋友
+     * @param friendsCircle
+     */
+    public void share(boolean friendsCircle){
+
+        if (iwxapi != null && iwxapi.isWXAppInstalled()){
+            WXWebpageObject webpage = new WXWebpageObject();
+            webpage.webpageUrl = "http://cmart.koalafield.com/Wechat/ShareApp";//分享url
+            WXMediaMessage msg = new WXMediaMessage(webpage);
+            msg.title = "Cmart跨境超市";
+            msg.description = "掌上超市，方便无限";
+            Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.weixinshare);
+            msg.setThumbImage(thumb);
+            SendMessageToWX.Req req = new SendMessageToWX.Req();
+            req.transaction = String.valueOf(System.currentTimeMillis());
+            req.message = msg;
+            req.scene = friendsCircle ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+            iwxapi.sendReq(req);
+        }else {
             Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
         }
     }
@@ -387,7 +449,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void WxEvent(WxEvent event){
         if (event != null){
-            Log.i("微信登录成功",event.mRegister.getNickname());
+            Log.i("微信登录成功",event.mRegister.getNickname()+"头像数据:"+event.mRegister.getAvatar());
             RegisterBean mRegister = event.mRegister;
             if (mRegister != null){
                 String avatar = mRegister.getAvatar();

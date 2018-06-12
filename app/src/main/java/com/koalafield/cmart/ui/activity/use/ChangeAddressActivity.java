@@ -388,7 +388,8 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
         CountryAdapter countryAdapter = new CountryAdapter(this);
         city.setViewAdapter(countryAdapter);
         city.setVisibleItems(5);
-        city.setWheelBackground(R.color.gray_light7);
+        city.setWheelBackground(R.color.bg_white);
+ //       city.setWheelForeground(R.color.gray);
         ib_confirm.setOnClickListener(this);
         ib_cancle.setOnClickListener(this);
         city.addChangingListener(new OnWheelChangedListener() {

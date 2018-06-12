@@ -258,6 +258,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     public void onPaySdkData(SdkPayBean data) {
         if (data != null){
             String transactionNo = data.getTransactionNo();
+            Log.i("微信支付",payName+"/"+data.getPackage());
             if (!StringUtils.isEmpty(payName) && "微信支付".equals(payName)){
                 onPayWX(data);
             }else if ("银联支付".equals(payName)){
@@ -277,14 +278,12 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         PayReq req = new PayReq();
         req.appId = data.getAppId();
         req.partnerId = data.getPartnerId();
-        String prepayId = data.getPackage();
-        String[] split = prepayId.split("=");
-        req.prepayId =split[1];
+        req.prepayId =data.getPrepayId();
         req.nonceStr = data.getNonceStr();
         req.timeStamp = data.getTimeStamp();
         req.sign = data.getPaySign();
         req.signType = data.getSignType();
-        req.packageValue = "Sign=WXPay";
+        req.packageValue = data.getPackage();
         msgApi.sendReq(req);
     }
 
