@@ -13,6 +13,4 @@ public interface IAddressListView<T> extends IBaseView {
     void onAddressSucessFul(T data);
     void onAddressFailure(String message,int code);
     void loadAddressEmptyData();
-    void loadAddressNoMoreData();
-    void loadAddressMoreData(T data);
 }

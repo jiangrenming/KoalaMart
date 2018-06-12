@@ -54,8 +54,7 @@ import io.reactivex.internal.queue.MpscLinkedQueue;
 
 public class AddressManangerActivity extends BaseActivity implements IAddressListView<List<AddressManagerBean>>, IDelAddressView<BaseResponseBean> {
 
-    @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout swipe_refresh;
+
     @BindView(R.id.rv_news_list)
     RecyclerView rv_news_list;
     @BindView(R.id.add_address)
@@ -78,12 +77,10 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     @Override
     public void initDatas() {
         top_name.setText("收货地址");
-        initSwipeRefresh();
     }
 
     @Override
-    public void upDateViews() {
-    }
+    public void upDateViews() {}
 
     @Override
     protected void onResume() {
@@ -105,47 +102,6 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
                 break;
             default:
                 break;
-        }
-    }
-
-
-    @Override
-    public void showLoading() {
-        super.showLoading();
-        if (mEmptyLayout != null) {
-            SwipeRefreshHelper.enableRefresh(swipe_refresh, false);
-        }
-    }
-
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-        if (mEmptyLayout != null) {
-            SwipeRefreshHelper.enableRefresh(swipe_refresh, true);
-            SwipeRefreshHelper.controlRefresh(swipe_refresh, false);
-        }
-    }
-
-    @Override
-    public void showNetError(EmptyLayout.OnRetryListener onRetryListener) {
-        super.showNetError(onRetryListener);
-        if (mEmptyLayout != null) {
-            SwipeRefreshHelper.enableRefresh(swipe_refresh, false);
-        }
-    }
-
-    /**
-     * 初始化下拉刷新
-     */
-    private void initSwipeRefresh() {
-        if (swipe_refresh != null) {
-            SwipeRefreshHelper.init(swipe_refresh, new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    onResume();
-                    SwipeRefreshHelper.controlRefresh(swipe_refresh, false);
-                }
-            });
         }
     }
 
@@ -175,12 +131,6 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
                 addressManagerAdapter.cleanItems();
                 addressManagerAdapter.addItems(data);
             }
-            addressManagerAdapter.setRequestDataListener(new OnRequestDataListener() {
-                @Override
-                public void onLoadMore() {
-                    addressPresenter.getMoreData();
-                }
-            });
             //地址的变化
             addressManagerAdapter.SelectAddressCallBack(new AddressManagerAdapter.SelectAddressCallBack() {
                 /*@Override
@@ -252,22 +202,8 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
 
     @Override
     public void loadAddressEmptyData() {
-        SwipeRefreshHelper.controlRefresh(swipe_refresh, false);
         hideLoading();
-        swipe_refresh.setVisibility(View.GONE);
         empty_address.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void loadAddressNoMoreData() {
-        addressManagerAdapter.loadComplete();
-        addressManagerAdapter.noMoreData();
-    }
-
-    @Override
-    public void loadAddressMoreData(List<AddressManagerBean> data) {
-        addressManagerAdapter.loadComplete();
-        addressManagerAdapter.addItems(data);
     }
 
     @Override
@@ -276,9 +212,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
             if (data.getCode() == 200) {
                 addressManagerAdapter.updateItems(addresses);
                 if (addresses != null && addresses.size() == 0) {
-                    SwipeRefreshHelper.controlRefresh(swipe_refresh, false);
                     hideLoading();
-                    swipe_refresh.setVisibility(View.GONE);
                     empty_address.setVisibility(View.VISIBLE);
                 }
             }
@@ -300,9 +234,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 10000) {
-                SwipeRefreshHelper.controlRefresh(swipe_refresh, true);
                 showLoading();
-                swipe_refresh.setVisibility(View.VISIBLE);
                 empty_address.setVisibility(View.GONE);
             }
         }

@@ -18,7 +18,6 @@ public class AddressPresenter implements IAddressPresenter {
 
 
     private IAddressListView addressListView;
-    private int mPageIndex = 0;
 
     public AddressPresenter(IAddressListView addressListView) {
         this.addressListView = addressListView;
@@ -27,8 +26,7 @@ public class AddressPresenter implements IAddressPresenter {
 
     @Override
     public void getData() {
-        mPageIndex = 0;
-        ApiManager.getAddressList(mPageIndex).subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
+        ApiManager.getAddressList().subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
             @Override
             public void onInit() {
                 addressListView.showLoading();
@@ -40,7 +38,6 @@ public class AddressPresenter implements IAddressPresenter {
                     List<AddressManagerBean> addressManagerBean = (List<AddressManagerBean>) data;
                     if (addressManagerBean != null && addressManagerBean.size() > 0) {
                         addressListView.onAddressSucessFul(addressManagerBean);
-                        mPageIndex++;
                     } else {
                         addressListView.loadAddressEmptyData();
                     }
@@ -64,37 +61,5 @@ public class AddressPresenter implements IAddressPresenter {
 
     @Override
     public void getMoreData() {
-        ApiManager.getAddressList(mPageIndex).subscribe(new SubScribeCallBack<List<AddressManagerBean>>(new CallBack() {
-            @Override
-            public void onInit() {
-                addressListView.showLoading();
-            }
-
-            @Override
-            public <T> void onSucess(T data) {
-                if (data != null) {
-                    List<AddressManagerBean> addressManagerBean = (List<AddressManagerBean>) data;
-                    if (addressManagerBean != null && addressManagerBean.size() > 0) {
-                        addressListView.loadAddressMoreData(addressManagerBean);
-                        mPageIndex++;
-                    } else {
-                        addressListView.loadAddressNoMoreData();
-                    }
-                } else {
-                    addressListView.onAddressFailure("返回的数据为NULL", 0);
-                }
-            }
-
-            @Override
-            public void onFailure(ExceptionHandle.ResponeThrowable t) {
-                addressListView.hideLoading();
-                addressListView.onAddressFailure(t.getMessage(), t.getCode());
-            }
-
-            @Override
-            public void onCompleted() {
-                addressListView.hideLoading();
-            }
-        }));
     }
 }

@@ -81,8 +81,8 @@ public class ApiManager {
     /**
      * 地址列表
      */
-    public  static  Flowable<List<AddressManagerBean>> getAddressList(int pageIndex){
-        return apiSubscribe(AndoridApplication.apiService.getAddress(getHeaders(),pageIndex))
+    public  static  Flowable<List<AddressManagerBean>> getAddressList(){
+        return apiSubscribe(AndoridApplication.apiService.getAddress(getHeaders()))
                 .flatMap(getAddresses());
     }
     /**

@@ -157,8 +157,8 @@ public interface ApiService {
     @GET("AppApi/CustomerInfoCount")
     Flowable<BaseResponseBean<PersonNumber>> getPersionNumbers(@HeaderMap Map<String,String> headrs);
     //用户地址列表
-    @GET("AppApi/AddressList/{pageIndex}")
-    Flowable<BaseResponseBean<List<AddressManagerBean>>> getAddress(@HeaderMap Map<String,String> headrs, @Path("pageIndex") int pageIndex);
+    @GET("AppApi/AddressList")
+    Flowable<BaseResponseBean<List<AddressManagerBean>>> getAddress(@HeaderMap Map<String,String> headrs);
     //获取当前用户的优惠券
     @GET("AppApi/MyCoupon")
     Flowable<BaseResponseBean<List<DisCountBean>>> getDisCountsData(@HeaderMap Map<String,String> headrs, @QueryMap Map<String,String> params);

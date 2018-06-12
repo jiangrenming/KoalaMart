@@ -3,11 +3,10 @@
     android:id="@+id/city_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E9E9E9"
     android:orientation="vertical" >
    <RelativeLayout
        android:layout_width="match_parent"
-       android:background="#C7C7C7"
+       android:background="@color/gray"
        android:paddingLeft="10dp"
        android:paddingRight="10dp"
        android:gravity="center_vertical"
@@ -18,7 +17,7 @@
            android:gravity="center_vertical"
            android:background="@color/transparent"
            android:layout_gravity="start"
-           android:textColor="#696969"
+           android:textColor="@color/black"
            android:textSize="16sp"
            android:text="取消"
            android:layout_height="match_parent" />
@@ -35,7 +34,7 @@
            android:id="@+id/ib_confirm"
            android:layout_alignParentRight="true"
            android:contentDescription="@null"
-            android:textColor="#696969"
+            android:textColor="@color/black"
             android:gravity="center_vertical"
            android:layout_width="wrap_content"
            android:background="@color/transparent"
@@ -48,19 +47,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-        <!--<kankan.wheel.widget.WheelView
-            android:id="@+id/country"
-            android:layout_width="0dp"
-            android:layout_weight="1.2"
-            android:layout_height="wrap_content">
-        </kankan.wheel.widget.WheelView>-->
         <kankan.wheel.widget.WheelView
             android:id="@+id/id_province"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content">
         </kankan.wheel.widget.WheelView>
-
     </LinearLayout>
-
 </LinearLayout>
