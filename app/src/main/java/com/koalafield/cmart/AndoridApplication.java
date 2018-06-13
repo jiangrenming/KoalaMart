@@ -6,8 +6,6 @@ import android.content.Context;
 import com.jrm.retrofitlibrary.retrofit.RetrofitBuilder;
 import com.jrm.retrofitlibrary.retrofit.RetrofitService;
 import com.koalafield.cmart.api.ApiService;
-import com.orhanobut.logger.Logger;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  *
@@ -30,10 +28,10 @@ public class AndoridApplication extends Application{
 
     private void initConfig() {
 
-        if (BuildConfig.DEBUG) {
+       /* if (BuildConfig.DEBUG) {
             LeakCanary.install(this);
             Logger.init("LogTAG");
-        }
+        }*/
     }
 
     private void initData() {

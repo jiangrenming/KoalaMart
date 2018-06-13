@@ -13,6 +13,15 @@ public class HomeBanaerBean implements Serializable {
     private String Img;
     private String Name;
     private String TypeName;
+    private String Url;
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
+    }
 
     public int getDataId() {
         return DataId;

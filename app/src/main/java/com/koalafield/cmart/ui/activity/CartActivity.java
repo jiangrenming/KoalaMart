@@ -345,7 +345,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
 
     @Override
     public void onChangeItemSucessful(CartIdBean responseBean) {
-        Toast.makeText(CartActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
+   //     Toast.makeText(CartActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
         cartItemAdapter.updateItems(mCartBean);
         if (mCartBean == null  || mCartBean.size() == 0){
             empty_cart.setVisibility(View.VISIBLE);

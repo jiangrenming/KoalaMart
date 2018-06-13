@@ -69,6 +69,12 @@ public class PurchareOffActivity extends BaseActivity implements IPurchaseOffVie
     public void upDateViews() {
          purcashOffPresenter = new PurcashOffPresenter(this);
          purcashOffPresenter.getData();
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

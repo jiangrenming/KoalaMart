@@ -40,6 +40,8 @@ import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.goods.SearchActivity;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
 import com.koalafield.cmart.ui.activity.search.GoodsListActivity;
+import com.koalafield.cmart.ui.activity.use.AboutUsActivity;
+import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.view.home.IBananerView;
@@ -129,10 +131,18 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
             banner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
                 @Override
                 public void onPageClick(View view, int position) {
-                    int dataId = data.get(position).getDataId();
-                    Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
-                    intent.putExtra("contentId",dataId);
-                    startActivity(intent);
+                    String typeName = data.get(position).getTypeName();
+                    if (!StringUtils.isEmpty(typeName) && "URL".equalsIgnoreCase(typeName)){
+                        Intent intent = new Intent(HomeActivity.this, AboutUsActivity.class);
+                        intent.putExtra("type",3);
+                        intent.putExtra("url",data.get(position).getUrl());
+                        startActivity(intent);
+                    }else {
+                        int dataId = data.get(position).getDataId();
+                        Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
+                        intent.putExtra("contentId",dataId);
+                        startActivity(intent);
+                    }
                 }
             });
 
@@ -204,6 +214,17 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                     }else  if ("Order".equals(toolsBarBean.getTypeName())){
                         if (!StringUtils.isEmpty(tickets)){
                             Intent intent = new Intent(HomeActivity.this,MartOrderActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }else  if ("AllCategory".equals(toolsBarBean.getTypeName())){
+                        Intent intent = new Intent(HomeActivity.this,CategryActivity.class);
+                        startActivity(intent);
+                    }else if ("FollowList".equals(toolsBarBean.getTypeName())){
+                        if (!StringUtils.isEmpty(tickets)){
+                            Intent intent = new Intent(HomeActivity.this,CollectionActivity.class);
                             startActivity(intent);
                         }else {
                             Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();

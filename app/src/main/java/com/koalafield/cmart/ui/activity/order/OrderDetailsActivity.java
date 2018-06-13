@@ -411,7 +411,12 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
             OrderPrice orderPrice = data.getOrderPrice();
             if (orderPrice != null){
                 order_tax.setText("AUD "+String.format("%.2f",orderPrice.getDeliveryPrice()));
-                order_discount.setText("AUD "+String.format("%.2f",orderPrice.getCouponPrice()));
+                if (orderPrice.getCouponPrice() == 0 || orderPrice.getCouponPrice() == 0.00){
+                    order_discount.setVisibility(View.GONE);
+                }else {
+                    order_discount.setVisibility(View.VISIBLE);
+                    order_discount.setText("AUD "+String.format("%.2f",orderPrice.getCouponPrice()));
+                }
                 order_all_price.setText("AUD "+String.format("%.2f",orderPrice.getTotalPrice()));
             }
             if (!AndroidTools.isServiceRunning(this,"com.koalafield.cmart.service.TimeService")){
@@ -442,14 +447,14 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void onPaySdkData(SdkPayBean data) {
         if (data != null){
             String transactionNo = data.getTransactionNo();
-            if (!StringUtils.isEmpty(payName) && "微信支付".equals(payName)){
+            if (!StringUtils.isEmpty(payName) && "WECHAT".equals(payName)){
                 onPayWX(data);
-            }else if ("银联支付".equals(payName)){
+            }else if ("UnionPay".equals(payName)){
                 if (!StringUtils.isEmpty(transactionNo)){
                     UPPayAssistEx.startPay(OrderDetailsActivity.this,null,null,transactionNo, BuildConfig.BANK_URL);
                     finish();
                 }
-            }else {  //货到付款
+            }else if ("CashOnDelivery".equals(payName)){  //货到付款
 
             }
         }
@@ -460,14 +465,12 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         PayReq req = new PayReq();
         req.appId = data.getAppId();
         req.partnerId = data.getPartnerId();
-        String prepayId = data.getPackage();
-        String[] split = prepayId.split("=");
-        req.prepayId =split[1];
+        req.prepayId = data.getPrepayId();
         req.nonceStr = data.getNonceStr();
         req.timeStamp = data.getTimeStamp();
         req.sign = data.getPaySign();
         req.signType = data.getSignType();
-        req.packageValue = "Sign=WXPay";
+        req.packageValue = data.getPackage();
         msgApi.sendReq(req);
     }
     @Override

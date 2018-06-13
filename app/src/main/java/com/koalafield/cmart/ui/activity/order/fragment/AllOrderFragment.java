@@ -62,7 +62,7 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
     @Override
     protected void initViews() {
         orderAdapter = new CommonOrderAdapter(mContext);
-        RecyclerViewHelper.initRecyclerViewV(mContext,order_recyclerView,true,orderAdapter);
+        RecyclerViewHelper.initRecyclerViewV(mContext,order_recyclerView,false,orderAdapter);
         orderAdapter.setRequestDataListener(new OnRequestDataListener() {
             @Override
             public void onLoadMore() {

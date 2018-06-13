@@ -244,13 +244,21 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     public void onCreateOrderData(CreateOrderBean data) {
         if (data != null){
             String orderNo = data.getOrderNo();
-            if (!StringUtils.isEmpty(orderNo)){
-                Map<String,String> params = new HashMap<>();
-                IPaySdkPresenter mPresenter = new PaySdkPresenter(this);
-                params.put("billCode",orderNo) ;
-                params.put("paymentId",String.valueOf(payId)) ;
-                mPresenter.setParams(params);
-                mPresenter.getData();
+            if(!StringUtils.isEmpty(payName) && payName.equals("CashOnDelivery")){
+                //货到付款直接跳转到详情
+                Intent intent = new Intent(PayActivity.this,OrderDetailsActivity.class);
+                intent.putExtra("billNo",orderNo);
+                startActivity(intent);
+                finish();
+            }else {
+                if (!StringUtils.isEmpty(orderNo)){
+                    Map<String,String> params = new HashMap<>();
+                    IPaySdkPresenter mPresenter = new PaySdkPresenter(this);
+                    params.put("billCode",orderNo) ;
+                    params.put("paymentId",String.valueOf(payId)) ;
+                    mPresenter.setParams(params);
+                    mPresenter.getData();
+                }
             }
         }
     }
@@ -259,15 +267,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         if (data != null){
             String transactionNo = data.getTransactionNo();
             Log.i("微信支付",payName+"/"+data.getPackage());
-            if (!StringUtils.isEmpty(payName) && "微信支付".equals(payName)){
+            if (!StringUtils.isEmpty(payName) && "WECHAT".equals(payName)){
                 onPayWX(data);
-            }else if ("银联支付".equals(payName)){
+            }else if ("UnionPay".equals(payName)){
                 if (!StringUtils.isEmpty(transactionNo)){
                     UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo, BuildConfig.BANK_URL);
                     finish();
                 }
-            }else {  //货到付款
-
             }
         }
     }
@@ -285,6 +291,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         req.signType = data.getSignType();
         req.packageValue = data.getPackage();
         msgApi.sendReq(req);
+        finish();
     }
 
     @Override

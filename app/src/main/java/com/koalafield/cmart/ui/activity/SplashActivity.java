@@ -35,11 +35,6 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        boolean isFirst = ShareBankPreferenceUtils.getBoolean("isFirst", true);
-        if (!isFirst){
-            startActivity(new Intent(this,MainActivity.class));
-            finish();
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { // 沉浸状态栏
             Window window = getWindow();
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -64,7 +59,7 @@ public class SplashActivity extends Activity {
 
 
     public void upDateViews() {
-         countdown(5).subscribe(new Consumer<Integer>() {
+         countdown(3).subscribe(new Consumer<Integer>() {
              @Override
              public void accept(Integer integer) throws Exception {
                  mTagSkip.setText("跳过 " + integer);

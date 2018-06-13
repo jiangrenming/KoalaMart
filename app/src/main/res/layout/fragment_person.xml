@@ -351,7 +351,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:scaleType="fitXY"
-                                android:src="@mipmap/home" />
+                                android:src="@mipmap/buyerd" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -398,7 +398,7 @@
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:scaleType="fitXY"
-                                android:src="@mipmap/home" />
+                                android:src="@mipmap/service_layer" />
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

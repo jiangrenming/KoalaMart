@@ -34,7 +34,8 @@
                     android:orientation="horizontal"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    >
 
                     <TextView
                         android:layout_width="0dp"
@@ -48,9 +49,14 @@
                         android:id="@+id/click_address"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:drawableRight="@mipmap/right"
                         android:gravity="center_vertical"
-                        android:text="点击添加收获地址" />
+                        android:text="选择收获地址" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/right"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -153,7 +159,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@color/gray"
+                    android:background="@color/gray_light"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="配送时间" />
@@ -190,7 +196,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@color/gray"
+                    android:background="@color/gray_light"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="支付方式" />
@@ -279,6 +285,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:textColor="@color/red"
                         android:text="AUD " />
 
                     <TextView
@@ -286,6 +293,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:textColor="@color/red"
                         android:text="1.00" />
                 </LinearLayout>
 
@@ -308,9 +316,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:textColor="@color/red"
                         android:text="AUD " />
 
                     <TextView
+                        android:textColor="@color/red"
                         android:id="@+id/tax_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

@@ -34,6 +34,7 @@ public class AboutUsActivity extends BaseActivity {
 
     private ProgressAlertDialog dialog;
     private  int type ;
+    private String url;
 
     @Override
     public int attchLayoutRes() {
@@ -45,6 +46,8 @@ public class AboutUsActivity extends BaseActivity {
          type = getIntent().getIntExtra("type", -1);
         if (type == 1){
             top_name.setText("服务条款");
+        }else if (type == 3){
+            url = getIntent().getStringExtra("url");
         }else {
             top_name.setText("关于我们");
         }
@@ -93,13 +96,23 @@ public class AboutUsActivity extends BaseActivity {
                 }
             }
         });
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                if (type == 3){
+                    top_name.setText(title);
+                }
+            }
+        });
     }
 
     @Override
     public void upDateViews() {
         if (type == 1){
             webView.loadUrl(BuildConfig.POST_URL+"wechat/Privacy");
+        }else if (type == 3){
+            webView.loadUrl(url);
         }else {
             webView.loadUrl(BuildConfig.POST_URL+"wechat/AboutUs");
         }

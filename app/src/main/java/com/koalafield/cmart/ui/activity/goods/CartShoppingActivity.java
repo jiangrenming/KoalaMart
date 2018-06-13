@@ -232,7 +232,7 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
 
     @Override
     public void onChangeItemSucessful(CartIdBean responseBean) {
-        Toast.makeText(CartShoppingActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
+      // Toast.makeText(CartShoppingActivity.this,"增或减成功",Toast.LENGTH_SHORT).show();
         cartItemAdapter.updateItems(mCartBean);
         if (mCartBean == null  || mCartBean.size() == 0){
             empty_cart.setVisibility(View.VISIBLE);

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/splash"/>
+        android:src="@mipmap/start_app"/>
 
     <com.dl7.tag.TagView
         android:id="@+id/tag_skip"
@@ -20,7 +20,7 @@
         android:layout_marginTop="30dp"
         android:text="跳过 3"
         app:tag_auto_check="false"
-        app:tag_bg_color="@color/colorPrimaryDark"
+        app:tag_bg_color="@color/transparent"
         app:tag_border_color="@color/white"
         app:tag_mode="normal"
         app:tag_press_feedback="true"

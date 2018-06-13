@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by jiangrenming on 2018/5/24.
@@ -59,7 +60,7 @@ public class DisCountActivity extends BaseActivity {
 
     @Override
     public void initDatas() {
-        top_name.setText("我的优惠卷");
+        top_name.setText("优惠券");
         fragmentsList = new ArrayList<>();
         fragmentsList.add(new DisCountTimeFragment());
         fragmentsList.add(new DisCountExprideFragment());
@@ -71,6 +72,14 @@ public class DisCountActivity extends BaseActivity {
     @Override
     public void upDateViews() {}
 
+    @OnClick(R.id.back)
+    public  void bakcClick(View view){
+        switch (view.getId()){
+            case R.id.back:
+                finish();
+                break;
+        }
+    }
 
     private void initViewPager() {
         discount_viewpager.setAdapter(new OrderViewPagerAdapter(getSupportFragmentManager(),fragmentsList));

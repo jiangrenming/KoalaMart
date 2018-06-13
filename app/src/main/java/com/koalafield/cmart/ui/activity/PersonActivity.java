@@ -227,7 +227,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             return;
         }
         //设置PopupWindow的View
-        View view = LayoutInflater.from(this).inflate(R.layout.customer_layout, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.share_item, null);
         popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         //设置背景
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -244,21 +244,23 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         //设置消失监听
         popupWindow.setOnDismissListener(this);
         //设置PopupWindow的View点击事件
-        setOnPopupViewClick(view);
+        setOnSharePopupViewClick(view);
         //设置背景透明度
-        setBackgroundAlpha(0.3f);
+        setBackgroundAlpha(0.5f);
     }
 
-    private void sendAuthCode() {
-        if (iwxapi != null && iwxapi.isWXAppInstalled()) {
-            final SendAuth.Req req = new SendAuth.Req();
-            req.scope = "snsapi_userinfo";
-            req.state = String.valueOf(System.currentTimeMillis());
-            iwxapi.sendReq(req);
-        } else {
-            Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
-        }
+    private LinearLayout  share_friend,share_cicle;
+
+    private void setOnSharePopupViewClick(View view) {
+
+        share_friend = view.findViewById(R.id.wx_friend);
+        share_cicle = view.findViewById(R.id.wx_circle);
+
+        share_friend.setOnClickListener(this);
+        share_cicle.setOnClickListener(this);
+
     }
+
 
     /**
      * 分享朋友圈和朋友
@@ -267,6 +269,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void share(boolean friendsCircle){
 
         if (iwxapi != null && iwxapi.isWXAppInstalled()){
+            Log.i("微信分享",friendsCircle+"");
             WXWebpageObject webpage = new WXWebpageObject();
             webpage.webpageUrl = "http://cmart.koalafield.com/Wechat/ShareApp";//分享url
             WXMediaMessage msg = new WXMediaMessage(webpage);
@@ -361,6 +364,12 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             case R.id.custom_cancel:
                 disPopuWindow();
                 break;
+            case R.id.wx_circle:
+                share(true);
+                break;
+            case  R.id.wx_friend:
+                share(false);
+                break;
             default:
                 break;
         }
@@ -442,6 +451,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 }else{
                     Toast.makeText(PersonActivity.this,"分享成功",Toast.LENGTH_SHORT).show();
                 }
+                disPopuWindow();
             }
         }
     }

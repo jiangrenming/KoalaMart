@@ -613,7 +613,7 @@ public class WheelView extends View {
 			drawCenterRect(canvas);
 		}
 
-		if (drawShadows) drawShadows(canvas);
+	//	if (drawShadows) drawShadows(canvas);
 	}
 
 	/**
@@ -754,7 +754,7 @@ public class WheelView extends View {
 
 	/**
 	 * Scroll the wheel
-	 * @param itemsToSkip items to scroll
+	 * @param :itemsToSkip items to scroll
 	 * @param time scrolling duration
 	 */
 	public void scroll(int itemsToScroll, int time) {

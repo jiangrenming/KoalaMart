@@ -61,6 +61,12 @@ public class ScoresActivity extends BaseActivity implements IScoresView<List<Sco
     public void upDateViews() {
         scroePresenter = new ScorePresenter(this);
         scroePresenter.getData();
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 

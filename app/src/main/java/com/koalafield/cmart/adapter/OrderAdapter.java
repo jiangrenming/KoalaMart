@@ -1,6 +1,8 @@
 package com.koalafield.cmart.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -8,6 +10,7 @@ import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.bean.order.OrderItemAttrs;
+import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 
 import java.util.List;
 
@@ -27,7 +30,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderItemAttrs> {
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, OrderItemAttrs item) {
+    protected void convert(BaseViewHolder holder, final OrderItemAttrs item) {
         holder.setText(R.id.yanse,item.getColor() == null ? "颜色:": "颜色:"+(item.getColor()))
                 .setText(R.id.chicun,item.getSize() == null ?"尺寸:": "尺寸:"+item.getSize())
                 .setText(R.id.goods_name,item.getSubject())
@@ -38,5 +41,13 @@ public class OrderAdapter extends BaseQuickAdapter<OrderItemAttrs> {
                 .setText(R.id.pay_count,String.valueOf("x"+item.getCount()));
         ImageView pay_img = holder.getView(R.id.pay_img);
         Glide.with(mContext).load(item.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
+        pay_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, GoodsDetailActivity.class);
+                intent.putExtra("contentId",item.getContentId());
+                mContext.startActivity(intent);
+            }
+        });
     }
 }

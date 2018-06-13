@@ -49,22 +49,12 @@ public class CommonOrderAdapter extends BaseQuickAdapter<OrderListBean> {
                 .setText(R.id.order_state,item.getStatusText());
         RecyclerView item_order = holder.getView(R.id.item_order);
         OrderAdapter orderAdapter = new OrderAdapter(mContext,item.getGoodsList());
-        ImageView goods_details = holder.getView(R.id.goods_details);
-        goods_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext,OrderDetailsActivity.class);
-                intent.putExtra("billNo",item.getBillNo());
-                mContext.startActivity(intent);
-            }
-        });
         RecyclerViewHelper.initRecyclerViewV(mContext,item_order,true,orderAdapter);
         orderAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                OrderItemAttrs orderItemAttrs = item.getGoodsList().get(position);
-                Intent intent = new Intent(mContext, GoodsDetailActivity.class);
-                intent.putExtra("contentId",orderItemAttrs.getContentId());
+                Intent intent = new Intent(mContext,OrderDetailsActivity.class);
+                intent.putExtra("billNo",item.getBillNo());
                 mContext.startActivity(intent);
             }
         });

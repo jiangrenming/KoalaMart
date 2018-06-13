@@ -83,6 +83,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
     @BindView(R.id.add_address)
     TextView add_address;
     private int addressType;
+    private AddressManagerBean item;
 
     @Override
     public int attchLayoutRes() {
@@ -98,7 +99,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
         } else {  //编辑
             top_name.setText("编辑地址");
             add_address.setText("编辑收货地址");
-            AddressManagerBean item = (AddressManagerBean) getIntent().getSerializableExtra("address");
+            item = (AddressManagerBean) getIntent().getSerializableExtra("address");
             if (item != null) {
                 castact_name.setText(item.getContactname());
                 castact_phone.setText(item.getContactphone());
@@ -279,6 +280,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                             IAddCountryPresenter add = new AddCountryPresenter(ChangeAddressActivity.this);
                             add.getParamsData(params);
                         } else {
+                            params.put("id", String.valueOf(item.getId()));
                             IEditCountryPresenter edit = new EditCountryPresenter(ChangeAddressActivity.this);
                             edit.getParamsData(params);
                         }
@@ -388,7 +390,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
         CountryAdapter countryAdapter = new CountryAdapter(this);
         city.setViewAdapter(countryAdapter);
         city.setVisibleItems(5);
-        city.setWheelBackground(R.color.bg_white);
+       // city.setWheelBackground(R.color.bg_white);
  //       city.setWheelForeground(R.color.gray);
         ib_confirm.setOnClickListener(this);
         ib_cancle.setOnClickListener(this);

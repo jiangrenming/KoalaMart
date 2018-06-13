@@ -90,7 +90,7 @@ public class UpdatePrivateActivity extends BaseActivity implements IUpdatePerson
     public void upDateViews() {
         infoPresenter = new UpdatePersonInfoPresenter(this);
     }
-    @OnClick(R.id.comfirm)
+    @OnClick({R.id.comfirm,R.id.back})
     public  void onClick(View v){
         switch (v.getId()){
             case R.id.comfirm:
@@ -104,6 +104,9 @@ public class UpdatePrivateActivity extends BaseActivity implements IUpdatePerson
                 } else {
                     Toast.makeText(UpdatePrivateActivity.this,"请输入数据",Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.back:
+                finish();
                 break;
             default:
                 break;

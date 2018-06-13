@@ -363,6 +363,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     public void loadNoMore() {
         goodsAdapter.loadComplete();
         goodsAdapter.noMoreData();
+        swiperefresh.setBottomRefreshing(false);
     }
 
     /**

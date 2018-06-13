@@ -48,7 +48,7 @@ public class AddressManagerAdapter extends BaseQuickAdapter<AddressManagerBean> 
         LinearLayout iv_address_trash = holder.getView(R.id.iv_address_trash); //删除
         holder.setText(R.id.address_name, item.getContactname())
                 .setText(R.id.address_phone, item.getContactphone())
-                .setText(R.id.address_detail, item.getCountry()+item.getCity()+item.getAddress());
+                .setText(R.id.address_detail, item.getCountry()+" "+item.getCity()+" "+item.getAddress());
         final boolean selected = item.isSelected();
         /*if (selected){
             iv_select.setImageResource(R.mipmap.select);
