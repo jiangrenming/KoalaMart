@@ -132,16 +132,18 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                 @Override
                 public void onPageClick(View view, int position) {
                     String typeName = data.get(position).getTypeName();
-                    if (!StringUtils.isEmpty(typeName) && "URL".equalsIgnoreCase(typeName)){
-                        Intent intent = new Intent(HomeActivity.this, AboutUsActivity.class);
-                        intent.putExtra("type",3);
-                        intent.putExtra("url",data.get(position).getUrl());
-                        startActivity(intent);
-                    }else {
-                        int dataId = data.get(position).getDataId();
-                        Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
-                        intent.putExtra("contentId",dataId);
-                        startActivity(intent);
+                    if (!StringUtils.isEmpty(typeName) && ("URL".equalsIgnoreCase(typeName) || "Goods".equalsIgnoreCase(typeName))){
+                        if ("URL".equalsIgnoreCase(typeName)){
+                            Intent intent = new Intent(HomeActivity.this, AboutUsActivity.class);
+                            intent.putExtra("type",3);
+                            intent.putExtra("url",data.get(position).getUrl());
+                            startActivity(intent);
+                        }else {
+                            int dataId = data.get(position).getDataId();
+                            Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
+                            intent.putExtra("contentId",dataId);
+                            startActivity(intent);
+                        }
                     }
                 }
             });
