@@ -7,27 +7,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
         android:layout_height="40dp">
-        <TextView
-            android:id="@+id/search_title"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_height="match_parent" />
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="15dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/back"
+                android:layout_gravity="center_vertical"
+                android:layout_height="15dp" />
+            <TextView
+                android:id="@+id/search_title"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@color/black"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/goods_car_img"
-                android:layout_width="25dp"
+                android:layout_width="20dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="15dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/buy"
-                android:layout_height="25dp" />
+                android:layout_height="20dp" />
             <TextView
-                android:visibility="gone"
                 android:id="@+id/search_cart_num"
                 style="@style/bg_text_style"
                 android:layout_gravity="center_vertical"
@@ -36,42 +52,51 @@
                 tools:ignore="SmallSp"/>
         </FrameLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="35dp">
+        android:layout_height="35dp"
+        android:orientation="horizontal">
+
         <View
             android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.2" />
+
         <TextView
             android:id="@+id/all_categry"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="查看全部分类"
+            android:layout_height="match_parent"
+            android:layout_weight="1.00"
+            android:textColor="@color/text_black_light"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_height="match_parent" />
+            android:text="查看全部分类" />
+
         <TextView
             android:id="@+id/currentPrice"
             android:layout_width="wrap_content"
-            android:text="价格"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_height="match_parent" />
+            android:text="价格" />
+
         <View
             android:layout_width="0dp"
-            android:layout_weight="0.3"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.3" />
+
         <TextView
             android:id="@+id/currentSale"
             android:layout_width="wrap_content"
-            android:text="销量"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_height="match_parent" />
+            android:text="销量" />
+
         <View
             android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
     </LinearLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:orientation="vertical"
         android:id="@+id/search_swipe_refresh"

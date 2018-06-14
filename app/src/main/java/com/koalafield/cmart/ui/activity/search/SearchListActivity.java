@@ -119,6 +119,8 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     LinearLayout empty_search;
     @BindView(R.id.goods_car_img)
     ImageView goods_car_img;
+    @BindView(R.id.back)
+    ImageView back;
 
     private ISearchPresenter mSearchList;
     private String title;
@@ -166,6 +168,11 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     public  void changeClick(View view){
         switch (view.getId()){
             case R.id.all_categry:
+                if (pop == null){
+                    all_categry.setTextColor(getResources().getColor(R.color.btn_red));
+                }else {
+                    all_categry.setTextColor(getResources().getColor(R.color.text_black_light));
+                }
                 Map<String,String> params = new HashMap<>();
                 ICategryPresenter  categryPresenter= new CategryOnePresenter(this);
                 params.put("id","");
@@ -188,6 +195,9 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
                     intent.putExtra("type",3);
                     startActivity(intent);
                 }
+                break;
+            case R.id.back:
+                finish();
                 break;
             default:
                 break;
@@ -225,13 +235,13 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
             currentPrice.setCompoundDrawablePadding(8);
             currentPrice.setTextColor(Color.parseColor("#e02b4d"));
             currentSale.setCompoundDrawables(null, null, null, null);
-            currentSale.setTextColor(getResources().getColor(R.color.black));
+            currentSale.setTextColor(getResources().getColor(R.color.text_black_light));
         }else {
             currentSale.setCompoundDrawables(null, null, drawable, null);
             currentSale.setCompoundDrawablePadding(8);
             currentSale.setTextColor(Color.parseColor("#e02b4d"));
             currentPrice.setCompoundDrawables(null, null, null, null);
-            currentPrice.setTextColor(getResources().getColor(R.color.black));
+            currentPrice.setTextColor(getResources().getColor(R.color.text_black_light));
         }
     }
     @Override
@@ -396,6 +406,18 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
         if (data != null && data.size() >0){
             pop = new SpinerPopWindow<CategryOneBean>(this,data);
             pop.showPopupWindow(all_categry);
+            pop.setSelectCategryTitle(new SpinerPopWindow.SelectCategryTitle() {
+                @Override
+                public void select(String name) {
+                    if (pop != null && pop.isShowing()){
+                        pop.dismiss();
+                    }
+                    if (!StringUtils.isEmpty(name)){
+                        title = name;
+                        upDateViews();
+                    }
+                }
+            });
         }
     }
 

@@ -72,8 +72,8 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
         //设置背景
         ColorDrawable dw = new ColorDrawable(0x60000000);
         setBackgroundDrawable(dw);
-        setOutsideTouchable(true);
-        setFocusable(true);
+        setOutsideTouchable(false);
+        setFocusable(false);
         categry_one =  view.findViewById(R.id.categry_one);
         categry_two =  view.findViewById(R.id.categry_two);
         categry_img = view.findViewById(R.id.categry_img);
@@ -150,10 +150,13 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
                     if (mContext != null && isShowing()){
                         dismiss();
                     }
+                    if (mSelectTitle != null){
+                        mSelectTitle.select(data.get(position).getName());
+                    }
                     //跳转界面
-                    Intent intent =new Intent(mContext, GoodsListActivity.class);
+                   /* Intent intent =new Intent(mContext, GoodsListActivity.class);
                     intent.putExtra("cateId",data.get(position).getId());
-                    mContext.startActivity(intent);
+                    mContext.startActivity(intent);*/
                 }
             });
         }
@@ -216,5 +219,12 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     @Override
     public void showNetError(EmptyLayout.OnRetryListener onRetryListener) {
 
+    }
+    public SelectCategryTitle mSelectTitle;
+    public  interface  SelectCategryTitle{
+        void select(String title );
+    }
+    public  void setSelectCategryTitle(SelectCategryTitle selectTitle){
+        this.mSelectTitle = selectTitle;
     }
 }
