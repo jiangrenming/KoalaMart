@@ -15,6 +15,7 @@ import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.cart.CartNumberBean;
 import com.koalafield.cmart.bean.event.CartEvent;
+import com.koalafield.cmart.bean.event.SkipEvent;
 import com.koalafield.cmart.presenter.cart.CartListPresenter;
 import com.koalafield.cmart.presenter.cart.CartPresenter;
 import com.koalafield.cmart.presenter.cart.ICartListPresenter;
@@ -239,7 +240,12 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
             }
         }
     }
-
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void skipPages(SkipEvent event){
+        if (event != null){
+            setSelectedIndex(event.selectPosition);
+        }
+    }
 
     @Override
     public void onNumberFailure(String message,int code) {

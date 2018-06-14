@@ -17,7 +17,7 @@
         android:alpha="0.6"
         android:background="@android:color/darker_gray"/>
 
-    <com.chaychan.library.BottomBarLayout
+   <!-- <com.chaychan.library.BottomBarLayout
         android:id="@+id/bbl"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -86,6 +86,6 @@
             app:touchDrawable="@drawable/selector_bg"
             />
 
-    </com.chaychan.library.BottomBarLayout>
+    </com.chaychan.library.BottomBarLayout>-->
 
 </LinearLayout>

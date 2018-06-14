@@ -34,7 +34,6 @@
     <!--8.0安装需要的权限-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -47,9 +46,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
-
-
-
     <application
         android:name=".AndoridApplication"
         android:allowBackup="true"
@@ -57,13 +53,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity android:name=".ui.activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|fontScale"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -72,18 +68,14 @@
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|fontScale"
             android:theme="@style/SplashTheme">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>-->
         </activity>
+
         <activity android:name=".ui.activity.MainActivity"
             android:launchMode="singleInstance" />
-        <activity android:name=".ui.activity.KoalaMartActivity"
+       <!-- <activity android:name=".ui.activity.KoalaMartActivity"
             android:launchMode="singleInstance"
             />
-
+-->
         <activity android:name=".ui.activity.HomeActivity"/>
         <activity android:name=".ui.activity.CartActivity"/>
         <activity android:name=".ui.activity.CategryActivity"/>

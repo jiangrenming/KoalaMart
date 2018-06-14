@@ -27,6 +27,7 @@ import com.koalafield.cmart.bananer.MZBannerView;
 import com.koalafield.cmart.bananer.MZHolderCreator;
 import com.koalafield.cmart.bananer.MZViewHolder;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.event.SkipEvent;
 import com.koalafield.cmart.bean.home.GoodsCategryBean;
 import com.koalafield.cmart.bean.home.HomeBanaerBean;
 import com.koalafield.cmart.bean.home.ToolsBarBean;
@@ -51,6 +52,8 @@ import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.EmptyLayout;
 import com.koalafield.cmart.widget.FullyLinearLayoutManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -132,16 +135,21 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                 @Override
                 public void onPageClick(View view, int position) {
                     String typeName = data.get(position).getTypeName();
-                    if (!StringUtils.isEmpty(typeName) && ("URL".equalsIgnoreCase(typeName) || "Goods".equalsIgnoreCase(typeName))){
+                    if (!StringUtils.isEmpty(typeName) && ("URL".equalsIgnoreCase(typeName) || "Goods".equalsIgnoreCase(typeName) || "Category".equalsIgnoreCase(typeName))){
                         if ("URL".equalsIgnoreCase(typeName)){
                             Intent intent = new Intent(HomeActivity.this, AboutUsActivity.class);
                             intent.putExtra("type",3);
                             intent.putExtra("url",data.get(position).getUrl());
                             startActivity(intent);
-                        }else {
+                        }else if ("Goods".equalsIgnoreCase(typeName)){
                             int dataId = data.get(position).getDataId();
                             Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
                             intent.putExtra("contentId",dataId);
+                            startActivity(intent);
+                        }else {  //待改
+                            int dataId = data.get(position).getDataId();
+                            Intent intent = new Intent(HomeActivity.this,GoodsListActivity.class);
+                            intent.putExtra("cateId",dataId);
                             startActivity(intent);
                         }
                     }
@@ -192,7 +200,8 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                     ToolsBarBean toolsBarBean = data.get(position);
                     String tickets = ShareBankPreferenceUtils.getString("tickets", null);
                     if (toolsBarBean.getTypeName().equals("Category")){
-                        Intent intent = new Intent(HomeActivity.this,CategryActivity.class);
+                        Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
+                        intent.putExtra("contentId",toolsBarBean.getDataId());
                         startActivity(intent);
                     }else if (toolsBarBean.getTypeName().equals("CustomerServices")){
 
@@ -200,6 +209,7 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                         if (!StringUtils.isEmpty(tickets)){
                             Intent intent = new Intent(HomeActivity.this,PurchareOffActivity.class);
                             startActivity(intent);
+
                         }else {
                             Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
                             return;
@@ -222,8 +232,7 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                             return;
                         }
                     }else  if ("AllCategory".equals(toolsBarBean.getTypeName())){
-                        Intent intent = new Intent(HomeActivity.this,CategryActivity.class);
-                        startActivity(intent);
+                        EventBus.getDefault().post(new SkipEvent(2));
                     }else if ("FollowList".equals(toolsBarBean.getTypeName())){
                         if (!StringUtils.isEmpty(tickets)){
                             Intent intent = new Intent(HomeActivity.this,CollectionActivity.class);

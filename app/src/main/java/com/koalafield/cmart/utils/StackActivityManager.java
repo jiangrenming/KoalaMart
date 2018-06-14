@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.ui.activity.KoalaMartActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 
 import java.util.Stack;

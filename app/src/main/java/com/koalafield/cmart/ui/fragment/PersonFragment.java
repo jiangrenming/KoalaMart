@@ -26,7 +26,6 @@ import com.koalafield.cmart.base.fragment.BaseFragment;
 import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.presenter.user.IPersonNumberPresenter;
 import com.koalafield.cmart.presenter.user.PersonNumberPresenter;
-import com.koalafield.cmart.ui.activity.KoalaMartActivity;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.PersonActivity;
@@ -246,11 +245,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
     //设置屏幕背景透明效果
     public void setBackgroundAlpha(float alpha) {
-        if (mContext instanceof  KoalaMartActivity){
+        /*if (mContext instanceof  KoalaMartActivity){
             WindowManager.LayoutParams lp = ((KoalaMartActivity)mContext).getWindow().getAttributes();
             lp.alpha = alpha;
             ((KoalaMartActivity)mContext).getWindow().setAttributes(lp);
-        }
+        }*/
     }
 
     @Override

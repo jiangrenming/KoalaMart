@@ -1,3 +1,4 @@
+/*
 package com.koalafield.cmart.ui.activity;
 
 import android.support.v4.app.Fragment;
@@ -36,11 +37,13 @@ import butterknife.BindView;
 
 import static com.koalafield.cmart.R.id.tv_cart_num;
 
+*/
 /**
  *
  * @author jiangrenming
  * @date 2018/6/4
- */
+ *//*
+
 
 public class KoalaMartActivity extends BaseActivity implements ICartVIew<CartNumberBean> {
 
@@ -113,10 +116,12 @@ public class KoalaMartActivity extends BaseActivity implements ICartVIew<CartNum
         }
     }
 
-    /**
+    */
+/**
      * 接收购物车数量的变动
      * @param event
-     */
+     *//*
+
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void getCartNUmber(CartEvent event){
         if (event != null){
@@ -163,3 +168,4 @@ public class KoalaMartActivity extends BaseActivity implements ICartVIew<CartNum
         EventBus.getDefault().unregister(this);
     }
 }
+*/
