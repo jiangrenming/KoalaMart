@@ -168,11 +168,11 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     public  void changeClick(View view){
         switch (view.getId()){
             case R.id.all_categry:
-                if (pop == null){
+                /*if (pop == null){
                     all_categry.setTextColor(getResources().getColor(R.color.btn_red));
                 }else {
                     all_categry.setTextColor(getResources().getColor(R.color.text_black_light));
-                }
+                }*/
                 Map<String,String> params = new HashMap<>();
                 ICategryPresenter  categryPresenter= new CategryOnePresenter(this);
                 params.put("id","");
@@ -409,17 +409,19 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
             pop.setSelectCategryTitle(new SpinerPopWindow.SelectCategryTitle() {
                 @Override
                 public void select(String name) {
-                    if (pop != null && pop.isShowing()){
-                        pop.dismiss();
-                    }
                     if (!StringUtils.isEmpty(name)){
                         title = name;
+                        search_title.setText(title);
+                        SwipeRefreshHelper.enableRefresh(search_swipe_refresh, true);
+                        search_swipe_refresh.setVisibility(View.VISIBLE);
+                        empty_search.setVisibility(View.GONE);
                         upDateViews();
                     }
                 }
             });
         }
     }
+
 
     @Override
     public void onFailure(String message,int code) {

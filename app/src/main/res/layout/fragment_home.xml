@@ -58,17 +58,25 @@
                     android:layout_height="80dp"
                     android:background="@color/white"
                     android:orientation="horizontal">
-
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:descendantFocusability="blocksDescendants">
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/tools_bar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+                    </RelativeLayout>
                 </LinearLayout>
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants">
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/home_goods"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+                </RelativeLayout>
             </LinearLayout>
             <include layout="@layout/layout_common_empty"/>
         </FrameLayout>

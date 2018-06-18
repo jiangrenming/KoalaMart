@@ -20,7 +20,6 @@
             android:layout_height="match_parent"/>
         <include layout="@layout/layout_common_empty"/>
     </FrameLayout>
-        <include layout="@layout/layout_common_empty"/>
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout
         android:id="@+id/empty_order"

@@ -1,9 +1,11 @@
 package com.koalafield.cmart.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
@@ -12,28 +14,21 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.TipPagerAdapter;
-import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.base.bean.TipsBean;
+import com.koalafield.cmart.utils.PermissionsUtil;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.koalafield.cmart.R.id.imageView;
-import static com.koalafield.cmart.R.id.ll_container;
-import static com.koalafield.cmart.R.id.tag_skip;
 
 /**
  * Created by jiangrenming on 2018/6/13.
  */
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends Activity  implements PermissionsUtil.IPermissionsCallback{
 
     @BindView(R.id.vp_tip)
     ViewPager vp_tip;
@@ -41,9 +36,23 @@ public class WelcomeActivity extends Activity {
     LinearLayout ll_container;
 
     private int  mCurrentIndex = 0 ; //当前小圆点的位置
-
     private int [] images = {R.mipmap.welcome,R.mipmap.welcome1,R.mipmap.welcome2,R.mipmap.welcome3};
     private  List<ImageView> imageList = new ArrayList<>();
+
+    private PermissionsUtil permissionsUtil;
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.MODIFY_AUDIO_SETTINGS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ANSWER_PHONE_CALLS,
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+            Manifest.permission.READ_PHONE_STATE
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +70,16 @@ public class WelcomeActivity extends Activity {
         setContentView(R.layout.activity_welcome_layout);
         ButterKnife.bind(this);
         initDatas();
+        getPermissoin();
+    }
+
+    private void getPermissoin() {
+        permissionsUtil = PermissionsUtil
+                .with(this)
+                .requestCode(1)
+                .isDebug(true)//开启log
+                .permissions(PERMISSIONS)
+                .request();
     }
 
     public void initDatas() {
@@ -139,9 +158,31 @@ public class WelcomeActivity extends Activity {
         finish();
     }
 
-        public int getNoHasVirtualKey() {
+    public int getNoHasVirtualKey() {
             int height = getWindowManager().getDefaultDisplay().getHeight();
             return height;
-        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //需要调用onRequestPermissionsResult
+        permissionsUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //监听跳转到权限设置界面后再回到应用
+        permissionsUtil.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, String... permission){
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, String... permission) {
+    }
 
 }

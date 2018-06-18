@@ -3,7 +3,7 @@
     package="kankan.wheel" >
 
     <uses-sdk
-        android:minSdkVersion="5"
-        android:targetSdkVersion="7" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="26" />
 
 </manifest>

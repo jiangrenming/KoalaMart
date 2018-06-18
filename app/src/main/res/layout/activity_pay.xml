@@ -14,6 +14,8 @@
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/id_appbarlayout"
+            app:elevation="0dp"
+            android:fadingEdge="none"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -152,6 +154,8 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/goods_pay"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp" />
@@ -230,7 +234,7 @@
                             android:id="@+id/actual_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="实际付款：AUD 1.00"
+                            android:text="实际付款：AUD  1.00"
                             android:textColor="@color/btn_red" />
                     </LinearLayout>
 
@@ -247,7 +251,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:text="约合RMB:¥ 1.00" />
+                            android:textColor="@color/black"
+                            android:text="约合RMB:¥  1.00" />
                     </LinearLayout>
 
                     <TextView
@@ -340,7 +345,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="优惠劵：" />
+                        android:text="优惠券：" />
 
                     <TextView
                         android:id="@+id/discount_content"

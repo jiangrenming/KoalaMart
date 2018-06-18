@@ -74,6 +74,8 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
     TextView already_account;
     @BindView(R.id.country_id)
     TextView country_id;
+    @BindView(R.id.register_invacation_code)
+    EditText register_invacation_code;
 
 
     @Override
@@ -116,6 +118,29 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
                     String pwd = register_code.getText().toString().trim();
                     if (StringUtils.isEmpty(pwd)) {  //还未对密码格式做判断
                         Toast.makeText(RegesterActivity.this,"验证码为空",Toast.LENGTH_SHORT).show();
+                    } else {
+                        setFocus(register_invacation_code);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        register_invacation_code.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView view, int action,
+                                          KeyEvent event) {
+                if (register_invacation_code.getVisibility() == View.VISIBLE
+                        && (action == EditorInfo.IME_ACTION_DONE
+                        || action == EditorInfo.IME_ACTION_SEND
+                        || action == EditorInfo.IME_ACTION_NEXT
+                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
+                    String pwd = register_invacation_code.getText().toString().trim();
+                    if (StringUtils.isEmpty(pwd)) {  //还未对密码格式做判断
+                        Toast.makeText(RegesterActivity.this,"邀请码为空",Toast.LENGTH_SHORT).show();
                     } else {
                         setFocus(register_pwd);
                     }
@@ -167,6 +192,7 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
                            params.put("mobile",register_phone.getText().toString().trim());
                            params.put("password",register_pwd.getText().toString().trim());
                            params.put("code",register_code.getText().toString().trim());
+                           params.put("inviteCode",register_invacation_code.getText().toString().trim());
                            presenter.setParams(params);
                            presenter.getData();
                        }
@@ -212,6 +238,7 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
                     params.put("mobile",register_phone.getText().toString().trim());
                     params.put("password",register_pwd.getText().toString().trim());
                     params.put("code",register_code.getText().toString().trim());
+                    params.put("inviteCode",register_invacation_code.getText().toString().trim());
                     presenter.setParams(params);
                     presenter.getData();
                 }else {
@@ -235,7 +262,11 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
         String pwd_one = register_pwd.getText().toString().trim();
         String code = register_code.getText().toString().trim();
         String phone = register_phone.getText().toString().trim();
+        String invacation_code = register_invacation_code.getText().toString().trim();
         if (StringUtils.isEmpty(phone) || !RegaxUtils.isMobilePhone(phone)){
+            return false;
+        }
+        if (StringUtils.isEmpty(invacation_code)){
             return false;
         }
         if (StringUtils.isEmpty(pwd_one) ||  !RegaxUtils.isPassword(pwd_one)){

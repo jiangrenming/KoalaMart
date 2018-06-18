@@ -74,4 +74,9 @@
     <color name="listview_item_normal">#eef0ed</color>
     <color name="listview_item_pressed">#d4d4d4</color>
     <color name="blue">#5CACEE</color>
+
+    <color name="edit">#c8c8c8</color>
+
+
+    <color name="edit_e">#eeeeee</color>
 </resources>

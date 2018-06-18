@@ -211,12 +211,11 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
+        if (requestCode == 1 || requestCode == 2){
             if ( null != data){
+               //上传头像
 
             }
-        }else if (requestCode == 2){
-
         }else if (requestCode == 1000){
             if (data != null){
                 String type = data.getStringExtra("type");

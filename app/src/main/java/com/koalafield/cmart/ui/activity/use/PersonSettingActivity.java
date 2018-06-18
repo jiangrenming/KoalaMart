@@ -37,8 +37,6 @@ public class PersonSettingActivity extends BaseActivity  {
     RelativeLayout login_pwd;
     @BindView(R.id.clear)
     RelativeLayout clear;
-    @BindView(R.id.about_us)
-    RelativeLayout about_us;
     @BindView(R.id.login_out)
     TextView login_out;
     @BindView(R.id.version)
@@ -67,7 +65,7 @@ public class PersonSettingActivity extends BaseActivity  {
     @Override
     public void upDateViews() {}
 
-    @OnClick({R.id.back,R.id.login_pwd,R.id.clear,R.id.about_us,R.id.login_out})
+    @OnClick({R.id.back,R.id.login_pwd,R.id.clear,R.id.login_out})
     public  void onSettingClick(View v){
         switch (v.getId()){
             case R.id.back:
@@ -82,6 +80,7 @@ public class PersonSettingActivity extends BaseActivity  {
                     @Override
                     public void onClick(View v) {
                         ShareBankPreferenceUtils.clearData("tickets");
+                        ShareBankPreferenceUtils.clearData("isFirst");
                         IHistoryService service = new HistoryService(PersonSettingActivity.this);
                         List<HistoryContent> allHistory = service.findAllHistory();
                         if (allHistory != null && allHistory.size() >0){
@@ -94,11 +93,7 @@ public class PersonSettingActivity extends BaseActivity  {
                     }
                 }).show();
                 break;
-            case R.id.about_us:
-                Intent intent = new Intent(PersonSettingActivity.this, AboutUsActivity.class);
-                intent.putExtra("type",2);
-                startActivity(intent);
-                break;
+
             case R.id.login_out:  //退出登录
                 new CommonDialog(this).builder().setTitle("退出").setMsg("退出后将删除数据").setNegativeButton("退出", new View.OnClickListener() {
                     @Override

@@ -3,8 +3,8 @@
     package="kankan.wheel.test" >
 
     <uses-sdk
-        android:minSdkVersion="5"
-        android:targetSdkVersion="7" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="26" />
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"

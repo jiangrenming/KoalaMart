@@ -66,6 +66,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -116,6 +117,12 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     TextView collection_num;
     @BindView(R.id.counp_num)
     TextView counp_num;
+    @BindView(R.id.about_us)
+    LinearLayout about_us;
+
+    @BindView(R.id.emoply)
+    LinearLayout emoply;
+
 
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
@@ -161,7 +168,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     }
 
     @OnClick({R.id.share, R.id.person_av, R.id.order_infos, R.id.no_pay, R.id.pay_wait, R.id.wait_self, R.id.old_buy, R.id.discount,
-            R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting, R.id.counp, R.id.advice})
+            R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting, R.id.counp, R.id.advice,R.id.emoply,R.id.about_us})
     public void onButterClick(View v) {
         switch (v.getId()) {
             case R.id.share: //进入朋友圈分享
@@ -211,6 +218,16 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 break;
             case R.id.advice: //意见反馈
                 startActivity(new Intent(this, UserResponseActivity.class));
+                break;
+            case  R.id.about_us: //关于我们
+                Intent about = new Intent(PersonActivity.this, AboutUsActivity.class);
+                about.putExtra("type",2);
+                startActivity(about);
+                break;
+            case  R.id.emoply: //招聘信息
+                Intent employ = new Intent(PersonActivity.this, AboutUsActivity.class);
+                employ.putExtra("type",4);
+                startActivity(employ);
                 break;
             default:
                 break;

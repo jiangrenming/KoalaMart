@@ -39,5 +39,10 @@ public class CategryTwoAdapter extends BaseQuickAdapter<CategryOneBean> {
         Glide.with(mContext).load(item.getImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(img);
     }
 
+    private  boolean mVisiable = true;
+
+    public  void setInVisVable(boolean visiable){
+        mVisiable = visiable;
+    }
 
 }

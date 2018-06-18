@@ -201,7 +201,7 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                     String tickets = ShareBankPreferenceUtils.getString("tickets", null);
                     if (toolsBarBean.getTypeName().equals("Category")){
                         Intent intent = new Intent(HomeActivity.this,GoodsListActivity.class);
-                        intent.putExtra("cateId",toolsBarBean.getDataId());
+                        intent.putExtra("cateId",StringUtils.isEmpty(toolsBarBean.getDataId()) ? 0: Integer.valueOf(toolsBarBean.getDataId()));
                         startActivity(intent);
                     }else if (toolsBarBean.getTypeName().equals("CustomerServices")){
 

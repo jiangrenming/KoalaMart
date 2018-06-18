@@ -40,17 +40,21 @@ import java.util.Map;
  * 自定义PopupWindow 实现下拉列表效果
  */
 
-public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<List<CategryOneBean>> {
+public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<List<CategryOneBean>>,PopupWindow.OnDismissListener {
 
     private List<T> datas;
     private Context mContext;
     private LayoutInflater mInflater;
     private RecyclerView categry_one;
     private RecyclerView categry_two;
+    private  RecyclerView three;
     private Activity mActivity;
     private ImageView categry_img;
 
+
+
     public SpinerPopWindow(Context context, List<T> list){
+        super(context,null,R.style.dialog);
         this.mContext=context;
         this.datas = list;
          mInflater = LayoutInflater.from(mContext);
@@ -68,14 +72,16 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
         WindowManager windowManager = mActivity.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         setWidth(display.getWidth());
-        setHeight(display.getHeight());
+        setHeight((display.getHeight())/2);
         //设置背景
         ColorDrawable dw = new ColorDrawable(0x60000000);
         setBackgroundDrawable(dw);
-        setOutsideTouchable(false);
-        setFocusable(false);
+        setOutsideTouchable(true);
+        setFocusable(true);
+        setOnDismissListener(this);
         categry_one =  view.findViewById(R.id.categry_one);
         categry_two =  view.findViewById(R.id.categry_two);
+        three = view.findViewById(R.id.categry_three);
         categry_img = view.findViewById(R.id.categry_img);
         initOneData();
     }
@@ -136,6 +142,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     @Override
     public void onSucessTwoFul(final List<CategryOneBean> data) {
         if (data != null && data.size() > 0) {
+            three.setVisibility(View.GONE);
             categry_two.setVisibility(View.VISIBLE);
             if (null == categryTwoAdapter) {
                 categryTwoAdapter = new CategryTwoAdapter(mContext,data);
@@ -149,14 +156,12 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
                 public void onItemClick(View view, int position) {
                     if (mContext != null && isShowing()){
                         dismiss();
+                        // 设置背景颜色变暗
+                        WindowManager.LayoutParams lp = ((Activity)mContext).getWindow().getAttributes();
+                        lp.alpha = 1;
+                        ((Activity)mContext).getWindow().setAttributes(lp);
                     }
-                    if (mSelectTitle != null){
-                        mSelectTitle.select(data.get(position).getName());
-                    }
-                    //跳转界面
-                   /* Intent intent =new Intent(mContext, GoodsListActivity.class);
-                    intent.putExtra("cateId",data.get(position).getId());
-                    mContext.startActivity(intent);*/
+                    mSelectTitle.select(data.get(position).getName());
                 }
             });
         }
@@ -170,6 +175,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     @Override
     public void loadNoTwoFul() {
         categry_two.setVisibility(View.GONE);
+        three.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -191,6 +197,8 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
             int h = anchor.getResources().getDisplayMetrics().heightPixels - rect.bottom;
             setHeight(h);
         }
+        // 设置背景颜色变暗
+        setBackgroundAlpha(0.7f);
         super.showAsDropDown(anchor, xoff, yoff);
     }
 
@@ -221,6 +229,20 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
 
     }
     public SelectCategryTitle mSelectTitle;
+
+    @Override
+    public void onDismiss() {
+        // 设置背景颜色变暗
+        setBackgroundAlpha(1);
+        dismiss();
+    }
+    //设置屏幕背景透明效果
+    public void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = ((Activity)mContext).getWindow().getAttributes();
+        lp.alpha = alpha;
+        ((Activity)mContext). getWindow().setAttributes(lp);
+    }
+
     public  interface  SelectCategryTitle{
         void select(String title );
     }

@@ -349,6 +349,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             RecyclerView timer_type = view.findViewById(R.id.timer_type);
             RecyclerView time_select = view.findViewById(R.id.time_select);
             final RecyclerView time_categry = view.findViewById(R.id.time_categry);
+             ImageView close = view.findViewById(R.id.close);
 
             final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
             RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,3);
@@ -360,6 +361,16 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             setTimer(time_select);
 
             deliveryId = mDelivery.get(0).getId();
+
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setBackgroundAlpha(1);
+                    disPopuWindow();
+                }
+            });
+
             typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -392,7 +403,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     TimeInterval timeInterval = timeIntervalList.get(position);
                     disPopuWindow();
                     select_time.setText(date+" "+timeInterval.getStartTime()+"-"+timeInterval.getEndTime());
-                    if (payId >0 && addRessId >0 && deliveryId  >0){
+                    if (deliveryId  >0){
                         changePrice();
                     }
                 }
@@ -536,7 +547,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                       }
                    }
                    //改变价格
-                   if (payId >0 && addRessId >0 && deliveryId >0){
+                   if (payId >0){
                        changePrice();
                    }
                }
@@ -570,9 +581,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     address_phone.setText(addressManagerBean.getContactphone());
                     address_details.setText(addressManagerBean.getCountry()+" "+addressManagerBean.getCity()+addressManagerBean.getAddress());
                     addRessId = addressManagerBean.getId();
-                    if (payId >0 && addRessId >0 && deliveryId  >0){
-                        changePrice();
-                    }
                 }
             }else if (requestCode == 10001){  //优惠卷
                 DisCountBean discount = (DisCountBean) data.getSerializableExtra("counpon");
@@ -645,10 +653,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     @Override
     public void onPriceData(OrderPrice data) {
-        actual_amount.setText("实际付款："+String.format("%.2f",data.getTotalPriceAfterDiscount()));
-        rmb_amount.setText("约合RMB:¥"+String.format("%.2f", data.getTotalPriceAfterDiscount()*data.getRate()));
-        order_curreny.setText("AUD");
+        actual_amount.setText("实际付款："+"AUD "+String.format("%.2f",data.getTotalPriceAfterDiscount()));
+        rmb_amount.setText("约合RMB:¥ "+String.format("%.2f", data.getTotalPriceAfterDiscount()*data.getRate()));
+        order_curreny.setText("AUD ");
         order_total_amount.setText(String.format("%.2f",data.getTotalPrice()));
+        order_tax_curreny.setText("AUD ");
+        tax_amount.setText(String.format("%.2f",data.getDeliveryPrice()));
+
     }
 
     @Override

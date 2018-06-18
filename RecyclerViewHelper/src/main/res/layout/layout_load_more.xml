@@ -25,5 +25,5 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/loading_desc"
-        android:textSize="18sp"/>
+        android:textSize="14sp"/>
 </LinearLayout>

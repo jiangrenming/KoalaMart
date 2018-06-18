@@ -404,6 +404,14 @@ public class ApiManager {
         //设置头部
         String lat = ""; //经度
         String let = "";  //w纬度
+        String longitude = ShareBankPreferenceUtils.getString("Longitude", null);
+        String latitude = ShareBankPreferenceUtils.getString("Latitude", null);
+        if (!StringUtils.isEmpty(longitude)){
+            lat = longitude;
+        }
+        if (!StringUtils.isEmpty(latitude)){
+            let = latitude;
+        }
         String uniqueId = AndoridSysUtils.getUniqueId(AndoridApplication.getContext()); //唯一标识符
         String version = AndoridSysUtils.getVersion(AndoridApplication.getContext(), AndoridApplication.getContext().getPackageName()); //版本号
         String deviceType ="2"; //设备类型

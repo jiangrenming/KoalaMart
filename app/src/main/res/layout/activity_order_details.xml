@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:scaleType="fitXY"
@@ -67,6 +67,8 @@
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/id_appbarlayout"
+                app:elevation="0dp"
+                android:fadingEdge="none"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

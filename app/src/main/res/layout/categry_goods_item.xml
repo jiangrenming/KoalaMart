@@ -17,12 +17,13 @@
         android:layout_centerHorizontal="true"
         android:text="可乐"
         android:ellipsize="end"
+        android:lines="2"
         android:paddingTop="10dp"
         android:gravity="center_horizontal"
         android:layout_height="wrap_content" />
     <LinearLayout
-        android:layout_below="@+id/categry_two_name"
         android:layout_width="100dp"
+        android:layout_below="@+id/categry_two_name"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content">
         <TextView

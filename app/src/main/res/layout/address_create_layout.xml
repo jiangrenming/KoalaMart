@@ -118,13 +118,42 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:hint="选择所在区域"
+            android:hint="选择所在城市"
             android:layout_height="match_parent" />
         <ImageView
             android:layout_width="20dp"
             android:src="@mipmap/right"
             android:scaleType="fitXY"
             android:layout_height="20dp" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:layout_height="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="所在区域"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/area"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:hint="请输入所在区域"
+            android:textSize="13sp"
+            android:background="@null"
+            android:layout_height="match_parent"/>
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"

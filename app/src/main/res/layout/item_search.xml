@@ -14,49 +14,57 @@
             android:layout_height="80dp"
             android:layout_margin="10dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/default_img"/>
-        <LinearLayout
-            android:layout_toRightOf="@+id/search_img"
+            android:src="@mipmap/default_img" />
+
+        <TextView
+            android:id="@+id/search_name"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/search_img"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:lines="2"
+            android:text="" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp"
+            android:layout_alignBottom="@+id/search_img"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/search_name"
-                android:layout_width="match_parent"
-                android:text=""
-                android:lines="2"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:layout_height="wrap_content" />
+            android:layout_toRightOf="@+id/search_img"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/search_curreny"
                     android:layout_width="wrap_content"
-                    android:text="AUD"
-                    android:textColor="@color/btn_red"
+                    android:layout_height="25dp"
                     android:gravity="center_vertical"
-                    android:layout_height="25dp" />
+                    android:text="AUD"
+                    android:textColor="@color/btn_red" />
+
                 <TextView
                     android:id="@+id/search_price"
                     android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
                     android:paddingLeft="5dp"
                     android:text="12.88"
-                    android:textColor="@color/btn_red"
-                    android:layout_weight="1"
-                    android:layout_height="25dp" />
+                    android:textColor="@color/btn_red" />
+
                 <ImageView
                     android:id="@+id/search_add"
                     android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/buy"
-                    android:layout_height="25dp" />
+                    android:src="@mipmap/buy" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

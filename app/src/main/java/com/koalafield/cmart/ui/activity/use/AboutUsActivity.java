@@ -48,8 +48,10 @@ public class AboutUsActivity extends BaseActivity {
             top_name.setText("服务条款");
         }else if (type == 3){
             url = getIntent().getStringExtra("url");
-        }else {
+        }else if (type == 2){
             top_name.setText("关于我们");
+        }else {
+            top_name.setText("招聘信息");
         }
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
@@ -113,8 +115,10 @@ public class AboutUsActivity extends BaseActivity {
             webView.loadUrl(BuildConfig.POST_URL+"wechat/Privacy");
         }else if (type == 3){
             webView.loadUrl(url);
-        }else {
+        }else if (type ==2){
             webView.loadUrl(BuildConfig.POST_URL+"wechat/AboutUs");
+        }else {
+            webView.loadUrl(BuildConfig.POST_URL+"Wechat/Recruitment");
         }
     }
 

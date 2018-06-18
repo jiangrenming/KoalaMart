@@ -127,6 +127,7 @@
                 android:textSize="13sp"
                 android:gravity="bottom"
                 android:text="共1件"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
     </LinearLayout>
