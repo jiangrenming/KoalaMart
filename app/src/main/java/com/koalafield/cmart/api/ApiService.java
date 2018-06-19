@@ -29,6 +29,7 @@ import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.bean.user.ScoreBean;
+import com.koalafield.cmart.bean.user.ShareBean;
 import com.koalafield.cmart.bean.user.WXRegisterBean;
 import com.koalafield.cmart.bean.user.WeiXinToken;
 
@@ -187,6 +188,8 @@ public interface ApiService {
     Flowable<BaseResponseBean<List<CountryCode>>> getCountryCode(@HeaderMap Map<String,String> headrs);
     @GET("AppApi/CurrentInfo")
     Flowable<BaseResponseBean<PersonInfos>> getPersonInfos(@HeaderMap Map<String,String> headrs);
-
+    //获取分享数据
+    @GET("AppApi/SharePageData")
+    Flowable<BaseResponseBean<ShareBean>> getShareInfos(@HeaderMap Map<String,String> headrs);
 
 }

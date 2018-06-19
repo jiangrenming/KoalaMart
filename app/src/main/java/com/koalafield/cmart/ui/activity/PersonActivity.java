@@ -128,6 +128,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     private int navigationHeight = 0;
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;
     private IWXAPI iwxapi;
+    private String inviteCode;
 
     @Override
     public int attchLayoutRes() {
@@ -441,6 +442,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void onInfosSucessFul(PersonInfos data) {
         if (data != null) {
             user_name.setText(data.getNickname());
+            inviteCode = data.getInviteCode();
             Glide.with(this).load(data.getAvatar()).placeholder(R.mipmap.mine).error(R.mipmap.mine).into(person_av);
         }
     }

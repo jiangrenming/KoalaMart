@@ -345,11 +345,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     private String date;
     private  int deliveryId = 0;
     private List<TimeInterval> timeIntervalList;
+    private TextView time_quick;
     private void setOnPopupViewClick(View view) {
             RecyclerView timer_type = view.findViewById(R.id.timer_type);
             RecyclerView time_select = view.findViewById(R.id.time_select);
             final RecyclerView time_categry = view.findViewById(R.id.time_categry);
-             ImageView close = view.findViewById(R.id.close);
+            ImageView close = view.findViewById(R.id.close);
+            time_quick = view.findViewById(R.id.time_quick);
 
             final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
             RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,3);
@@ -384,6 +386,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                         }
                     }
                     typeAdapter.updateItems(mDelivery);
+
 
                     List<Rule> ruleList = delivery.getRuleList();
                     if (ruleList != null && ruleList.size()>0){
@@ -494,7 +497,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             actual_amount.setText("实际付款："+String.format("%.2f",data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
             rmb_amount.setText("约合RMB:¥"+String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()*data.getOrderPriceDTO().getRate()));
             order_curreny.setText("AUD");
-            order_total_amount.setText(String.format("%.2f",data.getOrderPriceDTO().getTotalPrice()));
+            order_total_amount.setText(String.format("%.2f",data.getOrderPriceDTO().getTotalGrabPrice()));
             tax_amount.setText(String.format("%.2f",data.getOrderPriceDTO().getDeliveryPrice()));
            /* if (data.isAllowUseScore()){
                 score_count.setVisibility(View.VISIBLE);

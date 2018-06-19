@@ -32,6 +32,7 @@ import com.koalafield.cmart.bean.user.PersonNumber;
 import com.koalafield.cmart.bean.user.PurchaseOffBean;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.bean.user.ScoreBean;
+import com.koalafield.cmart.bean.user.ShareBean;
 import com.koalafield.cmart.bean.user.WXRegisterBean;
 import com.koalafield.cmart.bean.user.WeiXinToken;
 import com.koalafield.cmart.utils.AndoridSysUtils;
@@ -293,6 +294,13 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getSearchList(getHeaders(),params))
                 .flatMap(getsearchs());
     }
+    /**
+     * 获取分享数据
+     */
+    public static Flowable<ShareBean> getShareInfos(){
+        return apiSubscribe(AndoridApplication.apiService.getShareInfos(getHeaders()))
+                .map(getShare());
+    }
     /******************************分类列表*******************************/
     /**
      * 获取分类列表一级分类
@@ -474,6 +482,22 @@ public class ApiManager {
                 Log.i("返回的数据:",response.getCode()+"");
                 if (null !=  response && response.getCode() == 200){
                     return (RegisterBean) response.getData();
+                }
+                return  null;
+            }
+        };
+    }
+    /**
+     * 获取分享数据
+     * @return
+     */
+    private static Function<BaseResponseBean,ShareBean> getShare() {
+        return new Function<BaseResponseBean, ShareBean>() {
+            @Override
+            public ShareBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (ShareBean) response.getData();
                 }
                 return  null;
             }

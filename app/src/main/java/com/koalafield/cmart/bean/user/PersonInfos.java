@@ -12,6 +12,15 @@ public class PersonInfos implements Serializable{
     private String Nickname;
     private String Gender;
     private String Avatar;
+    private String InviteCode;
+
+    public String getInviteCode() {
+        return InviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        InviteCode = inviteCode;
+    }
 
     public String getAvatar() {
         return Avatar;

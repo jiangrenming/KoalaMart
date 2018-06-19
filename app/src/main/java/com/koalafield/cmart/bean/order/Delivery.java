@@ -12,8 +12,17 @@ public class Delivery implements Serializable{
     private int Id;
     private String Icon;
     private String DeliveryName;
+    private String HintText;
     private List<Rule> RuleList;
     private  boolean isTypeSelect;
+
+    public String getHintText() {
+        return HintText;
+    }
+
+    public void setHintText(String hintText) {
+        HintText = hintText;
+    }
 
     public boolean isTypeSelect() {
         return isTypeSelect;

@@ -69,6 +69,14 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:scrollbars="none" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/time_quick"
+            android:layout_width="match_parent"
+            android:text="下单后配送两小时送货"
+            android:paddingTop="20dp"
+            android:gravity="center_horizontal"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <View
