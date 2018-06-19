@@ -18,13 +18,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.koalafield.cmart.R;
+import com.koalafield.cmart.api.ApiManager;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.user.AvtorBean;
 import com.koalafield.cmart.bean.user.PersonInfos;
+import com.koalafield.cmart.photo.PhotoCallback;
+import com.koalafield.cmart.presenter.user.AvtorPresenter;
+import com.koalafield.cmart.presenter.user.IAvtorPresenter;
 import com.koalafield.cmart.presenter.user.IInfosPresenter;
 import com.koalafield.cmart.presenter.user.InfosPresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
+import com.koalafield.cmart.ui.view.user.IAvtorView;
 import com.koalafield.cmart.ui.view.user.IPersonInfosView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
+import com.koalafield.cmart.utils.PhotoSelectUtils;
+import com.koalafield.cmart.utils.RealPathFromUriUtils;
+import com.koalafield.cmart.utils.StringUtils;
 
 import java.io.File;
 
@@ -38,7 +47,8 @@ import butterknife.OnClick;
  * 个人资料
  */
 
-public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDismissListener,View.OnClickListener ,IPersonInfosView<PersonInfos>{
+public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDismissListener,View.OnClickListener ,
+        IPersonInfosView<PersonInfos>,IAvtorView<AvtorBean> , PhotoCallback {
 
 
     @BindView(R.id.back)
@@ -49,8 +59,6 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     RelativeLayout name;
     @BindView(R.id.sex)
     RelativeLayout sex;
-
-
     @BindView(R.id.top_name)
     TextView top_name;
     @BindView(R.id.phone_ava)
@@ -66,6 +74,10 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     private int navigationHeight = 0;
 
     private static  final  int PHOTO_REQUEST_TAKEPHOTO = 1;
+
+
+    private PhotoSelectUtils api;
+
 
     @Override
     public int attchLayoutRes() {
@@ -90,7 +102,9 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
                 finish();
                 break;
             case R.id.user_phone: //头像，底部弹窗
-                openPopupWindow(v);
+//                openPopupWindow(v);
+                api = new PhotoSelectUtils(this,false,this);
+                api.getPhoto();
                 break;
             case R.id.name:
                 skipActivity("1");
@@ -211,12 +225,7 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 || requestCode == 2){
-            if ( null != data){
-               //上传头像
-
-            }
-        }else if (requestCode == 1000){
+     if (requestCode == 1000){
             if (data != null){
                 String type = data.getStringExtra("type");
                 String value = data.getStringExtra("value");
@@ -230,6 +239,8 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
                     }
                 }
             }
+        }else {
+            api.onResult(requestCode,resultCode,data);
         }
     }
 
@@ -254,5 +265,38 @@ public class PrivateActivity extends BaseActivity implements  PopupWindow.OnDism
             intent.putExtra("type",3);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onSucessFul(AvtorBean data) {
+        String avatar = data.getAvatar();
+        if (!StringUtils.isEmpty(avatar)){
+            Glide.with(this).load(avatar).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(phone_ava);
+        }
+    }
+
+    @Override
+    public void onFailure(String message, int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onSuccess(String filePath, int requestId) {
+        Log.i("filePath=",filePath+"/requestId="+requestId);
+        if (!StringUtils.isEmpty(filePath)){
+            IAvtorPresenter avtor = new AvtorPresenter(this);
+            avtor.setParams(filePath);
+            avtor.getData();
+        }
+    }
+
+    @Override
+    public void onFail(String message, int requestId) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

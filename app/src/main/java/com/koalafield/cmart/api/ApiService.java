@@ -21,6 +21,7 @@ import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.SdkPayBean;
 import com.koalafield.cmart.bean.search.SearchListBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
+import com.koalafield.cmart.bean.user.AvtorBean;
 import com.koalafield.cmart.bean.user.CountryCode;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonInfos;
@@ -35,11 +36,14 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -124,6 +128,10 @@ public interface ApiService {
     Flowable<BaseResponseBean> cancleOrder(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
     @POST("AppApi/FeedBack")
     Flowable<BaseResponseBean> getUserAdavices(@HeaderMap Map<String,String> headrs, @Body RequestBody body);
+    //修改头像，表单格式上传
+    @Multipart
+    @POST("AppApi/ChangeAvtor")
+    Flowable<BaseResponseBean<AvtorBean>> changeUserAvtor(@HeaderMap Map<String,String> headrs,@Part List<MultipartBody.Part> partList);
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);

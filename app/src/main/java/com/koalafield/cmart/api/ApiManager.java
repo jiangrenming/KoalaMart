@@ -24,6 +24,7 @@ import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.SdkPayBean;
 import com.koalafield.cmart.bean.search.SearchListBean;
 import com.koalafield.cmart.bean.user.AddressManagerBean;
+import com.koalafield.cmart.bean.user.AvtorBean;
 import com.koalafield.cmart.bean.user.CountryCode;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.bean.user.PersonInfos;
@@ -37,6 +38,7 @@ import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -200,6 +203,16 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.cancleOrder(getHeaders(),setParams(params)))
                 .map(cancleOrder());
     }
+
+    /**
+     * 上传头像
+     */
+    public  static  Flowable<AvtorBean> changeAvtor(String path){
+        return apiSubscribe(AndoridApplication.apiService.changeUserAvtor(getHeaders(),setAvtors(path)))
+                .map(getAvtor());
+    }
+
+
     /************************************订单结算********************************/
 
     /**
@@ -923,13 +936,17 @@ public class ApiManager {
         };
     }
     /**
-     * 修改密码
+     * 上传头像
      */
-    private static Function<BaseResponseBean,BaseResponseBean> changePwd() {
-        return new Function<BaseResponseBean, BaseResponseBean>() {
+    private static Function<BaseResponseBean,AvtorBean> getAvtor() {
+        return new Function<BaseResponseBean, AvtorBean>() {
             @Override
-            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
-                return response;
+            public AvtorBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                if (null !=  response && response.getCode() == 200){
+                    return (AvtorBean) response.getData();
+                }
+                return  null;
             }
         };
     }
@@ -1003,10 +1020,37 @@ public class ApiManager {
             }
         };
     }
+
+    /**
+     * 上传图片
+     */
+    private static Function<BaseResponseBean,BaseResponseBean> changePwd() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                return response;
+            }
+        };
+    }
     /***************************************post添加参数json格式转换**********************************************/
     private static RequestBody setParams(Map<String,String> params){
         return  RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(params));
     }
+    /*****************************************post单个上传图片********************************************************************/
+
+    private static List<MultipartBody.Part> setAvtors(String path) {
+        File file = new File(path);//filePath 图片地址
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);//表单类型
+        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        builder.addFormDataPart("avtor", file.getName(), imageBody);//imgfile 后台接收图片流的参数名
+        List<MultipartBody.Part> parts = builder.build().parts();
+        return  parts;
+    }
+/*****************************************post多个上传图片********************************************************************/
+
+
+
 
     /************************************线程转换公共部分******************************************************/
 
