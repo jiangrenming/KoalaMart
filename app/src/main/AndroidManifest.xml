@@ -123,6 +123,7 @@
         <activity android:name=".ui.activity.use.ForgetPwdActivity"/>
         <activity android:name=".ui.activity.use.UpdatePwdActivity"/>
         <activity android:name=".ui.activity.use.AboutUsActivity"/>
+        <activity android:name=".ui.activity.use.ShareActivity"/>
 
 
         <service

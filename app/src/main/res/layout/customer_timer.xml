@@ -23,7 +23,7 @@
                 android:textSize="16sp"
                 android:layout_height="wrap_content" />
             <ImageView
-                android:id="@+id/colse"
+                android:id="@+id/deviley_colse"
                 android:layout_width="20dp"
                 android:scaleType="fitXY"
                 android:layout_marginTop="5dp"
@@ -74,6 +74,8 @@
             android:id="@+id/time_quick"
             android:layout_width="match_parent"
             android:text="下单后配送两小时送货"
+            android:textColor="@color/black"
+            android:background="@color/white"
             android:paddingTop="20dp"
             android:gravity="center_horizontal"
             android:layout_height="match_parent" />

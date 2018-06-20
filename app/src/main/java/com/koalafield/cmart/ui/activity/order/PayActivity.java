@@ -350,7 +350,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             RecyclerView timer_type = view.findViewById(R.id.timer_type);
             RecyclerView time_select = view.findViewById(R.id.time_select);
             final RecyclerView time_categry = view.findViewById(R.id.time_categry);
-            ImageView close = view.findViewById(R.id.close);
+            ImageView deviley_colse = view.findViewById(R.id.deviley_colse);
             time_quick = view.findViewById(R.id.time_quick);
 
             final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
@@ -359,13 +359,10 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
             final TimeRuleAdapter ruleAdapter = new TimeRuleAdapter(this,timeIntervalList);
             RecyclerViewHelper.initRecyclerViewV(this,time_categry,true,ruleAdapter);
-
             setTimer(time_select);
-
             deliveryId = mDelivery.get(0).getId();
 
-
-            close.setOnClickListener(new View.OnClickListener() {
+             deviley_colse.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     setBackgroundAlpha(1);
@@ -376,8 +373,8 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Delivery delivery = mDelivery.get(position);
-                     deliveryId = delivery.getId();
+                     Delivery delivery = mDelivery.get(position);
+                    deliveryId = delivery.getId();
                     for (int i = 0; i < mDelivery.size(); i++) {
                         if (deliveryId == mDelivery.get(i).getId()){
                             mDelivery.get(i).setTypeSelect(true);
@@ -387,12 +384,20 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     }
                     typeAdapter.updateItems(mDelivery);
 
-
                     List<Rule> ruleList = delivery.getRuleList();
                     if (ruleList != null && ruleList.size()>0){
-                        timeIntervalList = ruleList.get(0).getTimeIntervalList();
-                        if (ruleAdapter  != null){
-                            ruleAdapter.updateItems(timeIntervalList);
+                        String hintText = ruleList.get(0).getHintText();
+                        if (StringUtils.isEmpty(hintText)){
+                            time_categry.setVisibility(View.VISIBLE);
+                            time_quick.setVisibility(View.GONE);
+                            timeIntervalList = ruleList.get(0).getTimeIntervalList();
+                            if (ruleAdapter  != null){
+                                ruleAdapter.updateItems(timeIntervalList);
+                            }
+                        }else {
+                            time_categry.setVisibility(View.GONE);
+                            time_quick.setVisibility(View.VISIBLE);
+                            time_quick.setText(hintText);
                         }
                     }else {
                         ruleAdapter.cleanItems();
@@ -406,7 +411,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     TimeInterval timeInterval = timeIntervalList.get(position);
                     disPopuWindow();
                     select_time.setText(date+" "+timeInterval.getStartTime()+"-"+timeInterval.getEndTime());
-                    if (deliveryId  >0){
+                    if (deliveryId  >0 && addRessId > 0){
                         changePrice();
                     }
                 }
@@ -550,7 +555,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                       }
                    }
                    //改变价格
-                   if (payId >0){
+                   if (payId >0  && addRessId > 0){
                        changePrice();
                    }
                }
@@ -674,7 +679,4 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             startActivity(intent);
         }
     }
-
-
-
 }

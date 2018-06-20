@@ -15,6 +15,14 @@ public class Rule implements Serializable{
     private  String Cost;
     private String Weight;
     private List<TimeInterval> TimeIntervalList;
+    private String HintText;
+    public String getHintText() {
+        return HintText;
+    }
+
+    public void setHintText(String hintText) {
+        HintText = hintText;
+    }
 
     public String getCountry() {
         return Country;

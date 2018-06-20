@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_header" />
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_height="0.5dp"/>
+    <ImageView
+        android:id="@+id/share_img"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/default_img" />
+
+    <TextView
+        android:id="@+id/share_txt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_horizontal|bottom"
+        android:lines="3"
+        android:textColor="@color/black"
+        android:text=""/>
+
+   <!-- <TextView
+        android:id="@+id/share_txt2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:lines="2"
+        android:text="" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/share_infos"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/wx_friend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/wx_friend" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:text="朋友分享" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wx_circle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@mipmap/wx_cicrl" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:text="朋友圈分享" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
+</LinearLayout>

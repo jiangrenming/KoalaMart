@@ -3,12 +3,8 @@ package com.koalafield.cmart.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,12 +17,8 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.koalafield.cmart.R;
-import com.koalafield.cmart.adapter.CollectionAdapter;
-import com.koalafield.cmart.base.activity.BaseActivity;
-import com.koalafield.cmart.bean.event.LoginEvent;
 import com.koalafield.cmart.bean.event.WxEvent;
 import com.koalafield.cmart.bean.user.PersonInfos;
 import com.koalafield.cmart.bean.user.PersonNumber;
@@ -36,7 +28,6 @@ import com.koalafield.cmart.presenter.user.IPersonNumberPresenter;
 import com.koalafield.cmart.presenter.user.InfosPresenter;
 import com.koalafield.cmart.presenter.user.PersonNumberPresenter;
 import com.koalafield.cmart.ui.activity.order.MartOrderActivity;
-import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.activity.use.AboutUsActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.CollectionActivity;
@@ -45,30 +36,18 @@ import com.koalafield.cmart.ui.activity.use.PersonSettingActivity;
 import com.koalafield.cmart.ui.activity.use.PrivateActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
 import com.koalafield.cmart.ui.activity.use.ScoresActivity;
+import com.koalafield.cmart.ui.activity.use.ShareActivity;
 import com.koalafield.cmart.ui.activity.use.UserResponseActivity;
 import com.koalafield.cmart.ui.view.user.IPersonInfosView;
 import com.koalafield.cmart.ui.view.user.IPersonNumberView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
-import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.StringUtils;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.File;
-import java.util.List;
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -126,8 +105,6 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     private PopupWindow popupWindow;
     private int navigationHeight = 0;
-    private static final int PHOTO_REQUEST_TAKEPHOTO = 1;
-    private IWXAPI iwxapi;
     private String inviteCode;
 
     @Override
@@ -145,9 +122,6 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     @Override
     public void initDatas() {
-        //注册微信appid到微信平台
-        iwxapi = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
-        iwxapi.registerApp(Constants.APP_ID);
         EventBus.getDefault().register(this);
     }
 
@@ -171,10 +145,12 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     @OnClick({R.id.share, R.id.person_av, R.id.order_infos, R.id.no_pay, R.id.pay_wait, R.id.wait_self, R.id.old_buy, R.id.discount,
             R.id.collection, R.id.address_manager, R.id.contact_custemer, R.id.service_infos, R.id.setting, R.id.counp, R.id.advice,R.id.emoply,R.id.about_us})
     public void onButterClick(View v) {
+        Intent intent =null;
         switch (v.getId()) {
             case R.id.share: //进入朋友圈分享
-             //   sendAuthCode();
-                openSharePopupWindow(v);
+                intent = new Intent(this, ShareActivity.class);
+                intent.putExtra("code",inviteCode);
+                startActivity(intent);
                 break;
             case R.id.person_av: //头像进入个人资料
                 startActivity(new Intent(this, PrivateActivity.class));
@@ -210,7 +186,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 openPopupWindow(v);
                 break;
             case R.id.service_infos: //服务条款
-                Intent intent = new Intent(PersonActivity.this, AboutUsActivity.class);
+                 intent = new Intent(PersonActivity.this, AboutUsActivity.class);
                 intent.putExtra("type", 1);
                 startActivity(intent);
                 break;
@@ -232,76 +208,6 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
                 break;
             default:
                 break;
-        }
-    }
-
-    /**
-     * 分享的弹出窗
-     * @param v
-     */
-    private void openSharePopupWindow(View v) {
-        //防止重复按按钮
-        if (popupWindow != null && popupWindow.isShowing()) {
-            return;
-        }
-        //设置PopupWindow的View
-        View view = LayoutInflater.from(this).inflate(R.layout.share_item, null);
-        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //设置背景
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //设置点击弹窗外退出
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        //设置动画
-        popupWindow.setAnimationStyle(R.style.PopupWindow);
-        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)) {
-            navigationHeight = AndoridSysUtils.getNavigationBarHeigh(this);
-        }
-        //设置显示的位置
-        popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, navigationHeight);
-        //设置消失监听
-        popupWindow.setOnDismissListener(this);
-        //设置PopupWindow的View点击事件
-        setOnSharePopupViewClick(view);
-        //设置背景透明度
-        setBackgroundAlpha(0.5f);
-    }
-
-    private LinearLayout  share_friend,share_cicle;
-
-    private void setOnSharePopupViewClick(View view) {
-
-        share_friend = view.findViewById(R.id.wx_friend);
-        share_cicle = view.findViewById(R.id.wx_circle);
-
-        share_friend.setOnClickListener(this);
-        share_cicle.setOnClickListener(this);
-
-    }
-
-
-    /**
-     * 分享朋友圈和朋友
-     * @param friendsCircle
-     */
-    public void share(boolean friendsCircle){
-
-        if (iwxapi != null && iwxapi.isWXAppInstalled()){
-            Log.i("微信分享",friendsCircle+"");
-            WXWebpageObject webpage = new WXWebpageObject();
-            webpage.webpageUrl = "http://cmart.koalafield.com/Wechat/ShareApp";//分享url
-            WXMediaMessage msg = new WXMediaMessage(webpage);
-            msg.title = "Cmart跨境超市";
-            msg.description = "掌上超市，方便无限";
-            Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.weixinshare);
-            msg.setThumbImage(thumb);
-            SendMessageToWX.Req req = new SendMessageToWX.Req();
-            req.transaction = String.valueOf(System.currentTimeMillis());
-            req.message = msg;
-            req.scene = friendsCircle ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-            iwxapi.sendReq(req);
-        }else {
-            Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -382,12 +288,6 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
             case R.id.custom_cancel:
                 disPopuWindow();
                 break;
-            case R.id.wx_circle:
-                share(true);
-                break;
-            case  R.id.wx_friend:
-                share(false);
-                break;
             default:
                 break;
         }
@@ -457,23 +357,6 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         }
     }
 
-
-    @Subscribe(threadMode  = ThreadMode.MAIN)
-    public  void loginEvent(LoginEvent event){
-        if (event != null){
-            Log.i("微信分享成功",event.mType+"");
-            int mType = event.mType;
-            if (mType == Constants.WX_SHARE){
-                int errCode = event.userAggree;
-                if(errCode== BaseResp.ErrCode.ERR_USER_CANCEL||errCode==BaseResp.ErrCode.ERR_AUTH_DENIED){
-                    Toast.makeText(PersonActivity.this,"取消分享",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(PersonActivity.this,"分享成功",Toast.LENGTH_SHORT).show();
-                }
-                disPopuWindow();
-            }
-        }
-    }
 
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void WxEvent(WxEvent event){
