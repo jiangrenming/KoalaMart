@@ -64,6 +64,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -154,7 +155,7 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/goods_pay"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -170,7 +171,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal"
                     android:paddingLeft="15dp"
                     android:paddingRight="10dp">
@@ -180,6 +181,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:textSize="13sp"
                         android:gravity="center_vertical"
                         android:text="请选择配送时间" />
 
@@ -189,6 +191,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="修改"
+                        android:textSize="13sp"
                         android:textColor="@color/btn_red" />
                 </LinearLayout>
 
@@ -235,7 +238,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="实际付款：AUD  1.00"
-                            android:textColor="@color/btn_red" />
+                            android:textColor="@color/red" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -250,8 +253,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textSize="12sp"
                             android:gravity="right"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gray_light3"
                             android:text="约合RMB:¥  1.00" />
                     </LinearLayout>
 
@@ -261,6 +265,7 @@
                         android:layout_height="35dp"
                         android:layout_marginTop="10dp"
                         android:background="@color/btn_red"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="提交订单"
                         android:textColor="@color/white" />
@@ -268,7 +273,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="20dp"
                     android:background="@color/gray" />
 
                 <LinearLayout
@@ -285,13 +290,13 @@
                         android:gravity="center_vertical"
                         android:text="商品金额：" />
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/order_curreny"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:textColor="@color/red"
-                        android:text="AUD " />
+                        android:text="AUD " />-->
 
                     <TextView
                         android:id="@+id/order_total_amount"
@@ -299,7 +304,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:textColor="@color/red"
-                        android:text="1.00" />
+                        android:text="AUD 1.00" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -316,13 +321,13 @@
                         android:gravity="center_vertical"
                         android:text="订单邮费：" />
 
-                    <TextView
+                   <!-- <TextView
                         android:id="@+id/order_tax_curreny"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:textColor="@color/red"
-                        android:text="AUD " />
+                        android:text="AUD " />-->
 
                     <TextView
                         android:textColor="@color/red"
@@ -330,7 +335,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="0.00" />
+                        android:text="AUD 0.00" />
                 </LinearLayout>
 
                 <LinearLayout

@@ -34,7 +34,7 @@ public class TimerTypeAdapter extends BaseQuickAdapter<Delivery> {
         type_time.setText(item.getDeliveryName());
         if (item.isTypeSelect()){
             time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            type_time.setTextColor(mContext.getResources().getColor(R.color.btn_red));
+            type_time.setTextColor(mContext.getResources().getColor(R.color.deviery));
         }else {
             time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
             type_time.setTextColor(mContext.getResources().getColor(R.color.black));

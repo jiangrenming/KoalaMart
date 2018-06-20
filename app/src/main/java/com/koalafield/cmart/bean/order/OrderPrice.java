@@ -16,7 +16,33 @@ public class OrderPrice implements Serializable{
     private  double TotalGrabPrice;
     private double  TotalPriceAfterDiscount;
     private  double TotalPrice;
+    private String Currency;
+    private double TotalGoodsPrice;
+    private  double ScoreDiscountPrice;
 
+    public String getCurrency() {
+        return Currency;
+    }
+
+    public void setCurrency(String currency) {
+        Currency = currency;
+    }
+
+    public double getTotalGoodsPrice() {
+        return TotalGoodsPrice;
+    }
+
+    public void setTotalGoodsPrice(double totalGoodsPrice) {
+        TotalGoodsPrice = totalGoodsPrice;
+    }
+
+    public double getScoreDiscountPrice() {
+        return ScoreDiscountPrice;
+    }
+
+    public void setScoreDiscountPrice(double scoreDiscountPrice) {
+        ScoreDiscountPrice = scoreDiscountPrice;
+    }
 
     public double getRate() {
         return Rate;
