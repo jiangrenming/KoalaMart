@@ -52,19 +52,22 @@ public class CameraCore{
 
     //调用系统拍照
     protected Intent startTakePhoto(Uri uri){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//"android.media.action.IMAGE_CAPTURE"
+ //      Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//"android.media.action.IMAGE_CAPTURE"
         /***
          * 需要说明一下，以下操作使用照相机拍照，拍照后的图片会存放在相册中的
          * 这里使用的这种方式有一个好处就是获取的图片是拍照后的原图
          * 如果不实用ContentValues存放照片路径的话，拍照后获取的图片为缩略图不清晰
          */
-        ContentValues values = new ContentValues();
+       /* ContentValues values = new ContentValues();
         photoURL = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoURL);
-   //     this.photoURL = uri;
-//        Intent intent = new Intent();
-  //      intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);//设置Action为拍照
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURL);//将拍取的照片保存到指定URI
+       intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoURL);*/
+        this.photoURL = uri;
+        Intent intent = new Intent();
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);//设置Action为拍照
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURL);//将拍取的照片保存到指定URI
+        Log.i("存储的地址:",photoURL.toString());
         return intent;
     }
 

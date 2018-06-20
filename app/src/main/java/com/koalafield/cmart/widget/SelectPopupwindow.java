@@ -94,6 +94,7 @@ public class SelectPopupwindow extends PopupWindow implements View.OnClickListen
     @Override
     public void onClick(View v) {
         String filePath = photoDir+System.currentTimeMillis()+".jpg";
+        Log.i("创建的地址:",filePath);
         switch (v.getId()){
             case R.id.tv_pick_zone:
                 if (isCrop)

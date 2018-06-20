@@ -29,13 +29,8 @@ public class CameraProxy{
      */
     public void getPhotoFromCamera(String filePath){
         File outputImg = new File(filePath);
-        if (outputImg.exists()){
-            outputImg.delete();
-        }
-        try {
-            outputImg.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!outputImg.exists()) {
+            outputImg.mkdirs();
         }
         Uri uri = Uri.fromFile(outputImg);
         Log.i("获取的图片路径",uri.toString());
