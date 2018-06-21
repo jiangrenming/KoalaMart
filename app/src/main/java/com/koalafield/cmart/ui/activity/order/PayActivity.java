@@ -84,8 +84,8 @@ import org.json.JSONObject;
  * Created by jiangrenming on 2018/5/27.
  */
 
-public class PayActivity extends BaseActivity implements IPayView<PayBean>,PopupWindow.OnDismissListener,View.OnClickListener,
-        IPriceView<OrderPrice>,ICreateOrderView<CreateOrderBean>,IPaySdkView<SdkPayBean>{
+public class PayActivity extends BaseActivity implements IPayView<PayBean>, PopupWindow.OnDismissListener, View.OnClickListener,
+        IPriceView<OrderPrice>, ICreateOrderView<CreateOrderBean>, IPaySdkView<SdkPayBean> {
 
 
     //头部地区
@@ -95,15 +95,15 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     ImageView back;
     //地址区
     @BindView(R.id.empty_adress)
-    LinearLayout  empty_adress;
+    LinearLayout empty_adress;
     @BindView(R.id.have_name_adress)
-    LinearLayout  have_name_adress;
+    LinearLayout have_name_adress;
     @BindView(R.id.address_name)
     TextView address_name;
     @BindView(R.id.address_phone)
     TextView address_phone;
     @BindView(R.id.have_detail_adress)
-    LinearLayout  have_detail_adress;
+    LinearLayout have_detail_adress;
     @BindView(R.id.address_details)
     TextView address_details;
     @BindView(R.id.change_address)
@@ -128,7 +128,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     @BindView(R.id.rmb_amount)
     TextView rmb_amount;
     @BindView(R.id.comfir_order)
-    TextView  comfir_order;
+    TextView comfir_order;
 
     //打折区
 
@@ -137,8 +137,8 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     @BindView(R.id.tax_amount)
     TextView tax_amount;
-  /*  @BindView(R.id.score_count)
-    TextView score_count;*/
+    /*  @BindView(R.id.score_count)
+      TextView score_count;*/
     @BindView(R.id.discount_content)
     TextView discount_content;
     @BindView(R.id.skip_discount)
@@ -161,71 +161,58 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         empty_adress.setVisibility(View.VISIBLE);
         have_name_adress.setVisibility(View.GONE);
         have_detail_adress.setVisibility(View.GONE);
-       /* AddressManagerBean managerBean = ShareBankPreferenceUtils.getObject("addressId", AddressManagerBean.class);
-        if (managerBean != null){
-            empty_adress.setVisibility(View.GONE);
-            have_name_adress.setVisibility(View.VISIBLE);
-            have_detail_adress.setVisibility(View.VISIBLE);
-            address_name.setText(managerBean.getContactname());
-            address_phone.setText(managerBean.getContactphone());
-            address_details.setText(managerBean.getCountry()+managerBean.getCity()+managerBean.getAddress());
-        }else {
-            empty_adress.setVisibility(View.VISIBLE);
-            have_name_adress.setVisibility(View.GONE);
-            have_detail_adress.setVisibility(View.GONE);
-        }*/
 
-         datas = getIntent().getStringExtra("payDatas");
-        if (!StringUtils.isEmpty(datas)){
+        datas = getIntent().getStringExtra("payDatas");
+        if (!StringUtils.isEmpty(datas)) {
             IPayPresenter payPresenter = new PayPresenter(this);
-            Map<String,String> params = new HashMap<>();
-            params.put("scIds",datas);
+            Map<String, String> params = new HashMap<>();
+            params.put("scIds", datas);
             payPresenter.setParams(params);
         }
 
     }
 
 
-    @OnClick({R.id.click_address,R.id.change_address,R.id.skip_discount,R.id.change_time,R.id.comfir_order,R.id.back})
-    public  void addAddressClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.click_address, R.id.change_address, R.id.skip_discount, R.id.change_time, R.id.comfir_order, R.id.back})
+    public void addAddressClick(View view) {
+        switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
-            case  R.id.click_address:
+            case R.id.click_address:
             case R.id.change_address:
                 Intent intent = new Intent(PayActivity.this, AddressManangerActivity.class);
-                startActivityForResult(intent,10000);
+                startActivityForResult(intent, 10000);
                 break;
             case R.id.skip_discount: //满减
-               startActivityForResult(new Intent(PayActivity.this, DisCountActivity.class),10001);
+                startActivityForResult(new Intent(PayActivity.this, DisCountActivity.class), 10001);
                 break;
             case R.id.change_time: //配送时间
                 openWindow(view);
                 break;
             case R.id.comfir_order: //提交订单
-                if (addRessId <= 0){
-                    Toast.makeText(PayActivity.this,"请选择地址",Toast.LENGTH_SHORT).show();
+                if (addRessId <= 0) {
+                    Toast.makeText(PayActivity.this, "请选择地址", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (deliveryId <= 0){
-                    Toast.makeText(PayActivity.this,"请选择配送时间",Toast.LENGTH_SHORT).show();
+                if (deliveryId <= 0) {
+                    Toast.makeText(PayActivity.this, "请选择配送时间", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (payId <= 0){
-                    Toast.makeText(PayActivity.this,"请选择支付方式",Toast.LENGTH_SHORT).show();
+                if (payId <= 0) {
+                    Toast.makeText(PayActivity.this, "请选择支付方式", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //创建订单
-                Map<String,String> params = new HashMap<>();
-                params.put("scIds",datas);
-                params.put("deliveryId",String.valueOf(deliveryId));
-                params.put("addressId",String.valueOf(addRessId));
-                params.put("paymentId",String.valueOf(payId));
-                params.put("couponCode ",disCountCode);
-                params.put("bookTime","");
-                params.put("remark","");
-                params.put("isUserScore","false");
+                Map<String, String> params = new HashMap<>();
+                params.put("scIds", datas);
+                params.put("deliveryId", String.valueOf(deliveryId));
+                params.put("addressId", String.valueOf(addRessId));
+                params.put("paymentId", String.valueOf(payId));
+                params.put("couponCode ", disCountCode);
+                params.put("bookTime", select_time.getText().toString().trim());
+                params.put("remark", "");
+                params.put("isUserScore", "false");
                 ICreateOrderPresenter orderPresenter = new CreateOrderPresenter(this);
                 orderPresenter.setParams(params);
                 orderPresenter.getData();
@@ -240,49 +227,50 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
      */
     @Override
     public void onCreateOrderData(CreateOrderBean data) {
-        if (data != null){
+        if (data != null) {
             String orderNo = data.getOrderNo();
-            if(!StringUtils.isEmpty(payName) && payName.equals("CashOnDelivery")){
+            if (!StringUtils.isEmpty(payName) && payName.equals("CashOnDelivery")) {
                 //货到付款直接跳转到详情
-                Intent intent = new Intent(PayActivity.this,OrderDetailsActivity.class);
-                intent.putExtra("billNo",orderNo);
+                Intent intent = new Intent(PayActivity.this, OrderDetailsActivity.class);
+                intent.putExtra("billNo", orderNo);
                 startActivity(intent);
                 finish();
-            }else {
-                if (!StringUtils.isEmpty(orderNo)){
-                    Map<String,String> params = new HashMap<>();
+            } else {
+                if (!StringUtils.isEmpty(orderNo)) {
+                    Map<String, String> params = new HashMap<>();
                     IPaySdkPresenter mPresenter = new PaySdkPresenter(this);
-                    params.put("billCode",orderNo) ;
-                    params.put("paymentId",String.valueOf(payId)) ;
+                    params.put("billCode", orderNo);
+                    params.put("paymentId", String.valueOf(payId));
                     mPresenter.setParams(params);
                     mPresenter.getData();
                 }
             }
         }
     }
+
     @Override
     public void onPaySdkData(SdkPayBean data) {
-        if (data != null){
+        if (data != null) {
             String transactionNo = data.getTransactionNo();
-            Log.i("微信支付",payName+"/"+data.getPackage());
-            if (!StringUtils.isEmpty(payName) && "WECHAT".equals(payName)){
+            Log.i("微信支付", payName + "/" + data.getPackage());
+            if (!StringUtils.isEmpty(payName) && "WECHAT".equals(payName)) {
                 onPayWX(data);
-            }else if ("UnionPay".equals(payName)){
-                if (!StringUtils.isEmpty(transactionNo)){
-                    UPPayAssistEx.startPay(PayActivity.this,null,null,transactionNo, BuildConfig.BANK_URL);
+            } else if ("UnionPay".equals(payName)) {
+                if (!StringUtils.isEmpty(transactionNo)) {
+                    UPPayAssistEx.startPay(PayActivity.this, null, null, transactionNo, BuildConfig.BANK_URL);
                     finish();
                 }
             }
         }
     }
 
-    private  void onPayWX(SdkPayBean data){
+    private void onPayWX(SdkPayBean data) {
         IWXAPI msgApi = WXAPIFactory.createWXAPI(this, data.getAppId());
         msgApi.registerApp(data.getAppId());
         PayReq req = new PayReq();
         req.appId = data.getAppId();
         req.partnerId = data.getPartnerId();
-        req.prepayId =data.getPrepayId();
+        req.prepayId = data.getPrepayId();
         req.nonceStr = data.getNonceStr();
         req.timeStamp = data.getTimeStamp();
         req.sign = data.getPaySign();
@@ -293,32 +281,33 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
     @Override
-    public void onPaySdkFailure(String message,int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+    public void onPaySdkFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+            intent.putExtra("type", 3);
             startActivity(intent);
         }
     }
 
     @Override
-    public void onCreateOrderFailure(String message,int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+    public void onCreateOrderFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+            intent.putExtra("type", 3);
             startActivity(intent);
         }
     }
 
     private int navigationHeight = 0;
+
     private void openWindow(View v) {
         //防止重复按按钮
         if (mPopuWindow != null && mPopuWindow.isShowing()) {
             return;
         }
-        View view =  LayoutInflater.from(this).inflate(R.layout.customer_timer, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.customer_timer, null);
         mPopuWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         //设置背景
         mPopuWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -327,7 +316,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         mPopuWindow.setOutsideTouchable(true);
         //设置动画
         mPopuWindow.setAnimationStyle(R.style.PopupWindow);
-        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)){
+        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)) {
             navigationHeight = AndoridSysUtils.getNavigationBarHeigh(this);
         }
         //设置显示的位置
@@ -341,118 +330,135 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
     }
 
     private String date;
-    private  int deliveryId = 0;
+    private int deliveryId = 0;
     private List<TimeInterval> timeIntervalList;
-    private   TimeInterval timeInterval;
+    private TimeInterval timeInterval;
     private TextView time_quick;
     private String hintText;
+    private  TimeRuleAdapter ruleAdapter;
+
     private void setOnPopupViewClick(View view) {
-            RecyclerView timer_type = view.findViewById(R.id.timer_type);
-            final RecyclerView time_select = view.findViewById(R.id.time_select);
-            final RecyclerView time_categry = view.findViewById(R.id.time_categry);
-            time_quick = view.findViewById(R.id.time_quick);
-            TextView cancle_dievery = view.findViewById(R.id.cancle_dievery);
-            TextView comfirm_dievery = view.findViewById(R.id.comfirm_dievery);
-            final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this,mDelivery);
-            RecyclerViewHelper.initRecyclerViewG(this,timer_type,false,typeAdapter,3);
+        RecyclerView timer_type = view.findViewById(R.id.timer_type);
+        final RecyclerView time_select = view.findViewById(R.id.time_select);
+        final RecyclerView time_categry = view.findViewById(R.id.time_categry);
+        time_quick = view.findViewById(R.id.time_quick);
+        TextView cancle_dievery = view.findViewById(R.id.cancle_dievery);
+        TextView comfirm_dievery = view.findViewById(R.id.comfirm_dievery);
+        final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this, mDelivery);
+        RecyclerViewHelper.initRecyclerViewG(this, timer_type, false, typeAdapter, 3);
 
-            timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
-            final TimeRuleAdapter ruleAdapter = new TimeRuleAdapter(this,timeIntervalList);
-            RecyclerViewHelper.initRecyclerViewV(this,time_categry,true,ruleAdapter);
-            setTimer(time_select);
-            deliveryId = mDelivery.get(0).getId();
+        for (int i = 0; i <mDelivery.size(); i++) {
+           if (mDelivery.get(i).isTypeSelect()){
+               List<Rule> ruleList = mDelivery.get(i).getRuleList();
+               String hintText = ruleList.get(0).getHintText();
+               if (!StringUtils.isEmpty(hintText)){
+                   time_select.setVisibility(View.GONE);
+                   time_categry.setVisibility(View.GONE);
+                   time_quick.setVisibility(View.VISIBLE);
+                   time_quick.setText(hintText);
+               }else {
+                   time_categry.setVisibility(View.VISIBLE);
+                   time_select.setVisibility(View.VISIBLE);
+                   time_quick.setVisibility(View.GONE);
+                   timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
+                   deliveryId = mDelivery.get(0).getId();
+                    ruleAdapter = new TimeRuleAdapter(this, timeIntervalList);
+                   RecyclerViewHelper.initRecyclerViewV(this, time_categry, true, ruleAdapter);
+               }
+           }
+        }
+        setTimer(time_select);
+        cancle_dievery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBackgroundAlpha(1);
+                disPopuWindow();
+            }
+        });
 
-            cancle_dievery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    setBackgroundAlpha(1);
+        comfirm_dievery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (StringUtils.isEmpty(hintText)) {
+                    if (null == timeInterval) {
+                        Toast.makeText(PayActivity.this, "请选择配送时间", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } else {
                     disPopuWindow();
+                    select_time.setText(hintText);
                 }
-            });
+            }
+        });
 
-            comfirm_dievery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (StringUtils.isEmpty(hintText)){
-                        if (null == timeInterval){
-                            Toast.makeText(PayActivity.this,"请选择配送时间",Toast.LENGTH_SHORT).show();
-                            return;
+
+        typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Delivery delivery = mDelivery.get(position);
+                deliveryId = delivery.getId();
+                for (int i = 0; i < mDelivery.size(); i++) {
+                    if (deliveryId == mDelivery.get(i).getId()) {
+                        mDelivery.get(i).setTypeSelect(true);
+                    } else {
+                        mDelivery.get(i).setTypeSelect(false);
+                    }
+                }
+                typeAdapter.updateItems(mDelivery);
+
+                List<Rule> ruleList = delivery.getRuleList();
+                if (ruleList != null && ruleList.size() > 0) {
+                    hintText = ruleList.get(0).getHintText();
+                    if (StringUtils.isEmpty(hintText)) {
+                        time_categry.setVisibility(View.VISIBLE);
+                        time_select.setVisibility(View.VISIBLE);
+                        time_quick.setVisibility(View.GONE);
+                        timeIntervalList = ruleList.get(0).getTimeIntervalList();
+                        if (ruleAdapter != null) {
+                            ruleAdapter.updateItems(timeIntervalList);
                         }
-                    }else {
-                        disPopuWindow();
-                        select_time.setText(hintText);
+                    } else {
+                        time_select.setVisibility(View.GONE);
+                        time_categry.setVisibility(View.GONE);
+                        time_quick.setVisibility(View.VISIBLE);
+                        time_quick.setText(hintText);
                     }
+                } else {
+                    ruleAdapter.cleanItems();
                 }
-            });
+            }
+        });
 
-
-            typeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                     Delivery delivery = mDelivery.get(position);
-                    deliveryId = delivery.getId();
-                    for (int i = 0; i < mDelivery.size(); i++) {
-                        if (deliveryId == mDelivery.get(i).getId()){
-                            mDelivery.get(i).setTypeSelect(true);
-                        }else {
-                            mDelivery.get(i).setTypeSelect(false);
-                        }
-                    }
-                    typeAdapter.updateItems(mDelivery);
-
-                    List<Rule> ruleList = delivery.getRuleList();
-                    if (ruleList != null && ruleList.size()>0){
-                         hintText = ruleList.get(0).getHintText();
-                        if (StringUtils.isEmpty(hintText)){
-                            time_categry.setVisibility(View.VISIBLE);
-                            time_select.setVisibility(View.VISIBLE);
-                            time_quick.setVisibility(View.GONE);
-                            timeIntervalList = ruleList.get(0).getTimeIntervalList();
-                            if (ruleAdapter  != null){
-                                ruleAdapter.updateItems(timeIntervalList);
-                            }
-                        }else {
-                            time_select.setVisibility(View.GONE);
-                            time_categry.setVisibility(View.GONE);
-                            time_quick.setVisibility(View.VISIBLE);
-                            time_quick.setText(hintText);
-                        }
-                    }else {
-                        ruleAdapter.cleanItems();
-                    }
+        ruleAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                timeInterval = timeIntervalList.get(position);
+                disPopuWindow();
+                select_time.setText(date + " " + timeInterval.getStartTime() + "-" + timeInterval.getEndTime());
+                if (deliveryId > 0 && addRessId > 0) {
+                    changePrice();
                 }
-            });
-
-            ruleAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    timeInterval = timeIntervalList.get(position);
-                    disPopuWindow();
-                    select_time.setText(date+" "+timeInterval.getStartTime()+"-"+timeInterval.getEndTime());
-                    if (deliveryId  >0 && addRessId > 0){
-                        changePrice();
-                    }
-                }
-            });
+            }
+        });
 
     }
 
-    private  void setTimer(RecyclerView time_select){
+    private void setTimer(RecyclerView time_select) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         String year = String.valueOf(cal.get(Calendar.YEAR));
-        int month = cal.get(Calendar.MONTH)+1;
+        int month = cal.get(Calendar.MONTH) + 1;
         int day = cal.get(Calendar.DATE);
-        final List<TimerBean> timers= new ArrayList<>();
+        final List<TimerBean> timers = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            TimerBean timerBean =new TimerBean();
-            if (i == 0){
+            TimerBean timerBean = new TimerBean();
+            if (i == 0) {
                 timerBean.setSelect(true);
-            }else {
+            } else {
                 timerBean.setSelect(false);
             }
             day++;
-            if (day > 30 || day > 31){
+            if (day > 30 || day > 31) {
                 day = 1;
                 month++;
             }
@@ -460,17 +466,17 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
             timers.add(timerBean);
         }
         date = timers.get(0).getDate();
-        final TimerAdapter timeAdapter = new TimerAdapter(this,timers);
-        RecyclerViewHelper.initRecyclerViewV(this,time_select,false,timeAdapter);
+        final TimerAdapter timeAdapter = new TimerAdapter(this, timers);
+        RecyclerViewHelper.initRecyclerViewV(this, time_select, false, timeAdapter);
         timeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 TimerBean timerBean = timers.get(position);
                 date = timerBean.getDate();
                 for (int i = 0; i < timers.size(); i++) {
-                    if (timers.get(i).getDate() == timerBean.getDate()){
+                    if (timers.get(i).getDate() == timerBean.getDate()) {
                         timers.get(i).setSelect(true);
-                    }else {
+                    } else {
                         timers.get(i).setSelect(false);
                     }
                 }
@@ -482,33 +488,36 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
 
         }
     }
+
     //设置屏幕背景透明效果
     public void setBackgroundAlpha(float alpha) {
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.alpha = alpha;
-        this. getWindow().setAttributes(lp);
+        this.getWindow().setAttributes(lp);
     }
 
     @Override
-    public void upDateViews() {}
+    public void upDateViews() {
+    }
 
     private List<Delivery> mDelivery;
-    private  int payId = 0;
-    private String payName ;
+    private int payId = 0;
+    private String payName;
+
     @Override
     public void onSubmitList(PayBean data) {
-        if (data != null){
-            int allCount  =0 ;
+        if (data != null) {
+            int allCount = 0;
             List<ShoppingCart> shoppingCartDTOList = data.getShoppingCartDTOList();
-            if (shoppingCartDTOList != null && shoppingCartDTOList.size() > 0){
-                if (mPayAdapter == null){
-                    mPayAdapter = new PayAdapter(this,shoppingCartDTOList);
-                    RecyclerViewHelper.initRecyclerViewV(this,goods_pay,true,mPayAdapter);
-                }else {
+            if (shoppingCartDTOList != null && shoppingCartDTOList.size() > 0) {
+                if (mPayAdapter == null) {
+                    mPayAdapter = new PayAdapter(this, shoppingCartDTOList);
+                    RecyclerViewHelper.initRecyclerViewV(this, goods_pay, true, mPayAdapter);
+                } else {
                     mPayAdapter.cleanItems();
                     mPayAdapter.addItems(shoppingCartDTOList);
                 }
@@ -516,11 +525,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                     allCount += shoppingCartDTOList.get(i).getCount();
                 }
             }
-            count_goods.setText("共"+allCount+"件");
-            actual_amount.setText("实际付款："+data.getOrderPriceDTO().getCurrency()+" "+String.format("%.2f",data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
-            rmb_amount.setText("约合RMB:¥"+String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()*data.getOrderPriceDTO().getRate()));
-            order_total_amount.setText(data.getOrderPriceDTO().getCurrency()+" "+String.format("%.2f",data.getOrderPriceDTO().getTotalGoodsPrice()));
-            tax_amount.setText(String.format("%.2f",data.getOrderPriceDTO().getDeliveryPrice()));
+            count_goods.setText("共" + allCount + "件");
+            actual_amount.setText("实际付款：" + data.getOrderPriceDTO().getCurrency() + " " + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
+            rmb_amount.setText("约合RMB:¥" + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount() * data.getOrderPriceDTO().getRate()));
+            order_total_amount.setText(data.getOrderPriceDTO().getCurrency() + " " + String.format("%.2f", data.getOrderPriceDTO().getTotalGoodsPrice()));
+            tax_amount.setText(String.format("%.2f", data.getOrderPriceDTO().getDeliveryPrice()));
            /* if (data.isAllowUseScore()){
                 score_count.setVisibility(View.VISIBLE);
                 score_count.setText(String.valueOf(data.getAvailableScore()));
@@ -528,87 +537,89 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 score_count.setVisibility(View.GONE);
             }*/
             mDelivery = data.getDeliveryListDTO();
-            if (mDelivery != null && mDelivery.size() >0){
+            if (mDelivery != null && mDelivery.size() > 0) {
                 for (int i = 0; i < mDelivery.size(); i++) {
-                    if (i == 0){
+                    if (i == 0) {
                         mDelivery.get(i).setTypeSelect(true);
-                    }else {
+                    } else {
                         mDelivery.get(i).setTypeSelect(false);
                     }
                 }
             }
         }
-        final  List<Payment>  mPayment = data.getPaymentDTOList();
-        if (mPayment != null && mPayment.size() >0){
+        final List<Payment> mPayment = data.getPaymentDTOList();
+        if (mPayment != null && mPayment.size() > 0) {
             for (int i = 0; i < mPayment.size(); i++) {
 
                 mPayment.get(i).setSelect(false);
             }
-           final PayChooseAdapter chooseAdapter = new PayChooseAdapter(this,mPayment);
-            RecyclerViewHelper.initRecyclerViewV(PayActivity.this,choose_pay,true,chooseAdapter);
+            final PayChooseAdapter chooseAdapter = new PayChooseAdapter(this, mPayment);
+            RecyclerViewHelper.initRecyclerViewV(PayActivity.this, choose_pay, true, chooseAdapter);
             chooseAdapter.setmPayCallBack(new PayChooseAdapter.PayClickCallBack() {
-               @Override
-               public void onSucess(Payment item, boolean isSelect) {
-                   for (int i = 0; i < mPayment.size(); i++) {
-                       Payment payment = mPayment.get(i);
-                       if (payment.getId() == item.getId()){
-                           payment.setSelect(isSelect);
-                       }else {
-                           if (payment.isSelect()){
-                               payment.setSelect(false);
-                           }
-                       }
-                   }
-                   chooseAdapter.updateItems(mPayment);
-                   for (int i = 0; i < mPayment.size(); i++) {
-                      if (mPayment.get(i).isSelect()){
-                          payId = mPayment.get(i).getId();
-                          payName = mPayment.get(i).getPaymentName();
-                      }
-                   }
-                   //改变价格
-                   if (payId >0  && addRessId > 0){
-                       changePrice();
-                   }
-               }
-           });
+                @Override
+                public void onSucess(Payment item, boolean isSelect) {
+                    for (int i = 0; i < mPayment.size(); i++) {
+                        Payment payment = mPayment.get(i);
+                        if (payment.getId() == item.getId()) {
+                            payment.setSelect(isSelect);
+                        } else {
+                            if (payment.isSelect()) {
+                                payment.setSelect(false);
+                            }
+                        }
+                    }
+                    chooseAdapter.updateItems(mPayment);
+                    for (int i = 0; i < mPayment.size(); i++) {
+                        if (mPayment.get(i).isSelect()) {
+                            payId = mPayment.get(i).getId();
+                            payName = mPayment.get(i).getPaymentName();
+                        }
+                    }
+                    //改变价格
+                    if (payId > 0 && addRessId > 0) {
+                        changePrice();
+                    }
+                }
+            });
         }
     }
 
     @Override
-    public void onSubmitFailure(String message,int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+    public void onSubmitFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+            intent.putExtra("type", 3);
             startActivity(intent);
-        }    }
+        }
+    }
 
 
     private String disCountCode;
-    private  int addRessId = 0;
+    private int addRessId = 0;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
-            if (requestCode == 10000){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 10000) {
                 AddressManagerBean addressManagerBean = (AddressManagerBean) data.getSerializableExtra("address");
-                if (addressManagerBean  != null){
+                if (addressManagerBean != null) {
                     empty_adress.setVisibility(View.GONE);
                     have_name_adress.setVisibility(View.VISIBLE);
                     have_detail_adress.setVisibility(View.VISIBLE);
                     address_name.setText(addressManagerBean.getContactname());
                     address_phone.setText(addressManagerBean.getContactphone());
-                    address_details.setText(addressManagerBean.getCountry()+" "+addressManagerBean.getCity()+addressManagerBean.getAddress());
+                    address_details.setText(addressManagerBean.getCountry() + " " + addressManagerBean.getCity() + addressManagerBean.getAddress());
                     addRessId = addressManagerBean.getId();
                 }
-            }else if (requestCode == 10001){  //优惠卷
+            } else if (requestCode == 10001) {  //优惠卷
                 DisCountBean discount = (DisCountBean) data.getSerializableExtra("counpon");
-                if (discount != null){
+                if (discount != null) {
                     discount_content.setText(String.valueOf(discount.getAmount()));
                     disCountCode = discount.getCode();
                 }
-            }else {
+            } else {
                 if (data == null) {
                     return;
                 }
@@ -639,7 +650,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
                 } else if (str.equalsIgnoreCase("cancel")) {
                     msg = "用户取消了支付";
                 }
-                Toast.makeText(PayActivity.this,msg,Toast.LENGTH_SHORT).show();
+                Toast.makeText(PayActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -648,12 +659,12 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
      * 变更价格
      */
     private void changePrice() {
-        Map<String,String> params = new HashMap<>();
-        params.put("scIds",datas);
-        params.put("deliveryId",String.valueOf(deliveryId));
-        params.put("addressId",String.valueOf(addRessId));
-        params.put("paymentId",String.valueOf(payId));
-        params.put("couponCode",disCountCode);
+        Map<String, String> params = new HashMap<>();
+        params.put("scIds", datas);
+        params.put("deliveryId", String.valueOf(deliveryId));
+        params.put("addressId", String.valueOf(addRessId));
+        params.put("paymentId", String.valueOf(payId));
+        params.put("couponCode", disCountCode);
         mPricePresenter = new PricePresenter(this);
         mPricePresenter.setParams(params);
         mPricePresenter.getData();
@@ -664,8 +675,9 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
         disPopuWindow();
         setBackgroundAlpha(1);
     }
-    private  void disPopuWindow(){
-        if (null != mPopuWindow && mPopuWindow .isShowing()){
+
+    private void disPopuWindow() {
+        if (null != mPopuWindow && mPopuWindow.isShowing()) {
             mPopuWindow.dismiss();
         }
     }
@@ -673,19 +685,19 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>,Popup
 
     @Override
     public void onPriceData(OrderPrice data) {
-        actual_amount.setText("实际付款："+data.getCurrency()+" "+String.format("%.2f",data.getTotalPriceAfterDiscount()));
-        rmb_amount.setText("约合RMB:¥ "+String.format("%.2f", data.getTotalPriceAfterDiscount()*data.getRate()));
-        order_total_amount.setText(data.getCurrency()+" "+String.format("%.2f",data.getTotalGoodsPrice()));
-        tax_amount.setText(data.getCurrency()+" "+String.format("%.2f",data.getDeliveryPrice()));
+        actual_amount.setText("实际付款：" + data.getCurrency() + " " + String.format("%.2f", data.getTotalPriceAfterDiscount()));
+        rmb_amount.setText("约合RMB:¥ " + String.format("%.2f", data.getTotalPriceAfterDiscount() * data.getRate()));
+        order_total_amount.setText(data.getCurrency() + " " + String.format("%.2f", data.getTotalGoodsPrice()));
+        tax_amount.setText(data.getCurrency() + " " + String.format("%.2f", data.getDeliveryPrice()));
 
     }
 
     @Override
-    public void onPriceFailure(String message,int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+    public void onPriceFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
+            intent.putExtra("type", 3);
             startActivity(intent);
         }
     }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_white"
     android:orientation="vertical">
 
     <include layout="@layout/top_header" />
@@ -30,13 +31,14 @@
                 app:layout_scrollFlags="scroll">
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/empty_adress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:visibility="gone"
+                    android:background="@color/bg_white"
                     >
 
                     <TextView
@@ -45,6 +47,7 @@
                         android:layout_weight="1"
                         android:drawableLeft="@mipmap/address"
                         android:gravity="center_vertical"
+                        android:textColor="@color/black"
                         android:text="收货地址" />
 
                     <TextView
@@ -52,6 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
+                        android:textColor="@color/black"
                         android:text="选择收获地址" />
                     <ImageView
                         android:layout_width="20dp"
@@ -64,9 +68,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
+                    android:background="@color/bg_white"
                     android:orientation="vertical">
-
                     <LinearLayout
                         android:id="@+id/have_name_adress"
                         android:layout_width="match_parent"

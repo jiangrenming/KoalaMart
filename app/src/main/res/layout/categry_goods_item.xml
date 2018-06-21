@@ -5,24 +5,25 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/item_img"
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:src="@mipmap/mine"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
-        android:layout_height="100dp" />
+        android:layout_height="110dp" />
     <TextView
         android:layout_below="@+id/item_img"
         android:id="@+id/categry_two_name"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_centerHorizontal="true"
         android:text="可乐"
+        android:textColor="@color/black"
         android:ellipsize="end"
         android:lines="2"
         android:paddingTop="10dp"
         android:gravity="center_horizontal"
         android:layout_height="wrap_content" />
     <LinearLayout
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:layout_below="@+id/categry_two_name"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content">
@@ -31,8 +32,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="AUD 0.00"
-            android:textColor="@color/btn_red"
-            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/red"
+            android:gravity="center_vertical|left"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:lines="2"

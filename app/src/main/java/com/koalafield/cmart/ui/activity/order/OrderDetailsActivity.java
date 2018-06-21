@@ -188,8 +188,11 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     limit_time.setText("请在"+timer+"后完成支付");
                 }
             }else if (event.mType.equals(Constants.END_RUNNING)){
-                has_time.setText("交易关闭");
+                has_time.setText("订单已过期");
+                has_time.setTextColor(getResources().getColor(R.color.black));
                 has_time.setBackgroundColor(getResources().getColor(R.color.gray));
+                cancle_order.setVisibility(View.GONE);
+                once_pay.setVisibility(View.GONE);
             }
         }
     }

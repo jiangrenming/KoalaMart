@@ -117,7 +117,6 @@
                 android:layout_width="wrap_content"
                 android:text="("
                 android:textColor="@color/white"
-                android:background="@color/btn_red"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_height="match_parent" />
             <TextView
@@ -125,14 +124,12 @@
                 android:layout_width="wrap_content"
                 android:text="999"
                 android:textColor="@color/white"
-                android:background="@color/btn_red"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_height="match_parent" />
             <TextView
                 android:layout_width="wrap_content"
                 android:text=")"
                 android:textColor="@color/white"
-                android:background="@color/btn_red"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_height="match_parent" />
         </LinearLayout>
