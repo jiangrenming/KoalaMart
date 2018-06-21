@@ -29,6 +29,7 @@ import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.TimerBean;
 import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.Delivery;
+import com.koalafield.cmart.bean.order.LeftTimer;
 import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.PayBean;
 import com.koalafield.cmart.bean.order.Payment;
@@ -336,12 +337,15 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     private TextView time_quick;
     private String hintText;
     private  TimeRuleAdapter ruleAdapter;
+    private RecyclerView time_categry;
+    private List<Rule> ruleList;
 
     private void setOnPopupViewClick(View view) {
-        RecyclerView timer_type = view.findViewById(R.id.timer_type);
-        final RecyclerView time_select = view.findViewById(R.id.time_select);
-        final RecyclerView time_categry = view.findViewById(R.id.time_categry);
-        time_quick = view.findViewById(R.id.time_quick);
+
+        RecyclerView timer_type = view.findViewById(R.id.timer_type); //横排配送方式
+        final RecyclerView time_select = view.findViewById(R.id.time_select);  //左侧时间表
+         time_categry = view.findViewById(R.id.time_categry);  //右侧时间表
+        time_quick = view.findViewById(R.id.time_quick);  //特殊配送方式
         TextView cancle_dievery = view.findViewById(R.id.cancle_dievery);
         TextView comfirm_dievery = view.findViewById(R.id.comfirm_dievery);
         final TimerTypeAdapter typeAdapter = new TimerTypeAdapter(this, mDelivery);
@@ -349,25 +353,38 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
         for (int i = 0; i <mDelivery.size(); i++) {
            if (mDelivery.get(i).isTypeSelect()){
-               List<Rule> ruleList = mDelivery.get(i).getRuleList();
-               String hintText = ruleList.get(0).getHintText();
-               if (!StringUtils.isEmpty(hintText)){
-                   time_select.setVisibility(View.GONE);
-                   time_categry.setVisibility(View.GONE);
-                   time_quick.setVisibility(View.VISIBLE);
-                   time_quick.setText(hintText);
-               }else {
-                   time_categry.setVisibility(View.VISIBLE);
-                   time_select.setVisibility(View.VISIBLE);
-                   time_quick.setVisibility(View.GONE);
-                   timeIntervalList = mDelivery.get(0).getRuleList().get(0).getTimeIntervalList();
-                   deliveryId = mDelivery.get(0).getId();
-                    ruleAdapter = new TimeRuleAdapter(this, timeIntervalList);
-                   RecyclerViewHelper.initRecyclerViewV(this, time_categry, true, ruleAdapter);
+               ruleList = mDelivery.get(i).getRuleList();
+               deliveryId = mDelivery.get(i).getId();
+               for (int j = 0; j < ruleList.size(); j++) {
+                   String hintText = ruleList.get(j).getHintText();
+                   if (StringUtils.isEmpty(hintText)) {
+                       time_categry.setVisibility(View.VISIBLE);
+                       time_select.setVisibility(View.VISIBLE);
+                       time_quick.setVisibility(View.GONE);
+                      /* List<LeftTimer> availableChooseDateTime = ruleList.get(j).getAvailableChooseDateTime();
+                       for (int k = 0; k < availableChooseDateTime.size(); k++) {
+                           if (availableChooseDateTime.get(k).isSelect()){
+                               ruleAdapter = new TimeRuleAdapter(this, availableChooseDateTime.get(k).getTimeList());
+                               RecyclerViewHelper.initRecyclerViewV(this, time_categry, true, ruleAdapter);
+                           }
+                       }*/
+                   } else {
+                       time_select.setVisibility(View.GONE);
+                       time_categry.setVisibility(View.GONE);
+                       time_quick.setVisibility(View.VISIBLE);
+                       time_quick.setText(hintText);
+                   }
                }
            }
         }
-        setTimer(time_select);
+
+       //默认的数据
+  //      deliveryId = mDelivery.get(0).getId();
+  //      List<Rule> ruleList = mDelivery.get(0).getRuleList();
+
+        //左侧时间表
+        setTimer(time_select,ruleList);
+
         cancle_dievery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -408,81 +425,101 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
                 List<Rule> ruleList = delivery.getRuleList();
                 if (ruleList != null && ruleList.size() > 0) {
-                    hintText = ruleList.get(0).getHintText();
-                    if (StringUtils.isEmpty(hintText)) {
-                        time_categry.setVisibility(View.VISIBLE);
-                        time_select.setVisibility(View.VISIBLE);
-                        time_quick.setVisibility(View.GONE);
-                        timeIntervalList = ruleList.get(0).getTimeIntervalList();
-                        if (ruleAdapter != null) {
-                            ruleAdapter.updateItems(timeIntervalList);
+                    for (int i = 0; i < ruleList.size(); i++) {
+                        String hintText = ruleList.get(i).getHintText();
+                        if (StringUtils.isEmpty(hintText)) {
+                            time_categry.setVisibility(View.VISIBLE);
+                            time_select.setVisibility(View.VISIBLE);
+                            time_quick.setVisibility(View.GONE);
+                            List<LeftTimer> availableChooseDateTime = ruleList.get(i).getAvailableChooseDateTime();
+                            if (timeAdapter != null){
+                                availableChooseDateTime.get(0).setSelect(true);
+                                timeAdapter.updateItems(availableChooseDateTime);
+                                for (int j = 0; j < availableChooseDateTime.size(); j++) {
+                                    if (availableChooseDateTime.get(j).isSelect()){
+                                        if (ruleAdapter != null){
+                                            ruleAdapter.updateItems(availableChooseDateTime.get(j).getTimeList());
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            time_select.setVisibility(View.GONE);
+                            time_categry.setVisibility(View.GONE);
+                            time_quick.setVisibility(View.VISIBLE);
+                            time_quick.setText(hintText);
                         }
-                    } else {
-                        time_select.setVisibility(View.GONE);
-                        time_categry.setVisibility(View.GONE);
-                        time_quick.setVisibility(View.VISIBLE);
-                        time_quick.setText(hintText);
                     }
+
                 } else {
                     ruleAdapter.cleanItems();
                 }
             }
         });
+    }
+
+    /**
+     * 左侧/右侧的时间
+     * @param time_select
+     * @param ruleList
+     */
+    private TimerAdapter timeAdapter;
+    private void setTimer(RecyclerView time_select,List<Rule> ruleList) {
+
+
+        for (int i = 0; i < ruleList.size(); i++) {
+            List<LeftTimer> availableChooseDateTime = ruleList.get(i).getAvailableChooseDateTime();
+            for (int j = 0; j < availableChooseDateTime.size(); j++) {
+                if (j == 0){
+                    availableChooseDateTime.get(j).setSelect(true);
+                }else {
+                    availableChooseDateTime.get(j).setSelect(false);
+                }
+            }
+        }
+
+        //左侧的时间
+        final List<LeftTimer> availableChooseDateTime = ruleList.get(0).getAvailableChooseDateTime();
+        timeAdapter = new TimerAdapter(this, availableChooseDateTime);
+        RecyclerViewHelper.initRecyclerViewV(this, time_select, false, timeAdapter);
+        date = availableChooseDateTime.get(0).getDateStr();
+
+        timeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                LeftTimer leftTimer = availableChooseDateTime.get(position);
+                date = leftTimer.getDateStr();
+                for (int i = 0; i < availableChooseDateTime.size(); i++) {
+                    if (availableChooseDateTime.get(i).getDateStr().equals(leftTimer.getDateStr())) {
+                        availableChooseDateTime.get(i).setSelect(true);
+                        List<TimeInterval> timeList = availableChooseDateTime.get(i).getTimeList();
+                        if (ruleAdapter != null){
+                            ruleAdapter.updateItems(timeList);
+                        }
+                    } else {
+                        availableChooseDateTime.get(i).setSelect(false);
+                    }
+                }
+                timeAdapter.updateItems(availableChooseDateTime);
+            }
+        });
+
+
+        //右侧的时间
+        final List<TimeInterval> timeList = availableChooseDateTime.get(0).getTimeList();
+        ruleAdapter = new TimeRuleAdapter(this, timeList);
+        RecyclerViewHelper.initRecyclerViewV(this, time_categry, true, ruleAdapter);
 
         ruleAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                timeInterval = timeIntervalList.get(position);
+                timeInterval = timeList.get(position);
                 disPopuWindow();
                 select_time.setText(date + " " + timeInterval.getStartTime() + "-" + timeInterval.getEndTime());
                 if (deliveryId > 0 && addRessId > 0) {
                     changePrice();
                 }
             }
-        });
-
-    }
-
-    private void setTimer(RecyclerView time_select) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        String year = String.valueOf(cal.get(Calendar.YEAR));
-        int month = cal.get(Calendar.MONTH) + 1;
-        int day = cal.get(Calendar.DATE);
-        final List<TimerBean> timers = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            TimerBean timerBean = new TimerBean();
-            if (i == 0) {
-                timerBean.setSelect(true);
-            } else {
-                timerBean.setSelect(false);
-            }
-            day++;
-            if (day > 30 || day > 31) {
-                day = 1;
-                month++;
-            }
-            timerBean.setDate(year + "-" + month + "-" + day);
-            timers.add(timerBean);
-        }
-        date = timers.get(0).getDate();
-        final TimerAdapter timeAdapter = new TimerAdapter(this, timers);
-        RecyclerViewHelper.initRecyclerViewV(this, time_select, false, timeAdapter);
-        timeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                TimerBean timerBean = timers.get(position);
-                date = timerBean.getDate();
-                for (int i = 0; i < timers.size(); i++) {
-                    if (timers.get(i).getDate() == timerBean.getDate()) {
-                        timers.get(i).setSelect(true);
-                    } else {
-                        timers.get(i).setSelect(false);
-                    }
-                }
-                timeAdapter.updateItems(timers);
-            }
-
         });
     }
 

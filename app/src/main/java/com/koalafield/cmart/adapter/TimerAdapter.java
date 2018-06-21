@@ -8,6 +8,7 @@ import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.bean.TimerBean;
+import com.koalafield.cmart.bean.order.LeftTimer;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ import java.util.List;
  * Created by jiangrenming on 2018/5/27.
  */
 
-public class TimerAdapter extends BaseQuickAdapter<TimerBean>{
-    public TimerAdapter(Context context, List<TimerBean> data) {
+public class TimerAdapter extends BaseQuickAdapter<LeftTimer>{
+    public TimerAdapter(Context context, List<LeftTimer> data) {
         super(context, data);
     }
 
@@ -30,10 +31,10 @@ public class TimerAdapter extends BaseQuickAdapter<TimerBean>{
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, TimerBean item) {
+    protected void convert(BaseViewHolder holder, LeftTimer item) {
         TextView name = holder.getView(R.id.select_time_item);
         LinearLayout layout = holder.getView(R.id.time_item);
-        name.setText(item.getDate());
+        name.setText(item.getDateStr());
         if (item.isSelect()){
             layout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
             name.setTextColor(mContext.getResources().getColor(R.color.btn_red));

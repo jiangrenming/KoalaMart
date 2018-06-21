@@ -14,8 +14,11 @@ public class Rule implements Serializable{
     private String State;
     private  String Cost;
     private String Weight;
-    private List<TimeInterval> TimeIntervalList;
+    private List<LeftTimer> AvailableChooseDateTime;
     private String HintText;
+
+
+
     public String getHintText() {
         return HintText;
     }
@@ -56,11 +59,11 @@ public class Rule implements Serializable{
         Weight = weight;
     }
 
-    public List<TimeInterval> getTimeIntervalList() {
-        return TimeIntervalList;
+    public List<LeftTimer> getAvailableChooseDateTime() {
+        return AvailableChooseDateTime;
     }
 
-    public void setTimeIntervalList(List<TimeInterval> timeIntervalList) {
-        TimeIntervalList = timeIntervalList;
+    public void setAvailableChooseDateTime(List<LeftTimer> availableChooseDateTime) {
+        AvailableChooseDateTime = availableChooseDateTime;
     }
 }

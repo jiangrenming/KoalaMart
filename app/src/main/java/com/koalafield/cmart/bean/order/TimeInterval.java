@@ -10,7 +10,7 @@ public class TimeInterval implements Serializable{
 
     private String StartTime;
     private String EndTime;
-    private  String Raise;
+    private  String Price;
 
     public String getStartTime() {
         return StartTime;
@@ -28,11 +28,11 @@ public class TimeInterval implements Serializable{
         EndTime = endTime;
     }
 
-    public String getRaise() {
-        return Raise;
+    public String getPrice() {
+        return Price;
     }
 
-    public void setRaise(String raise) {
-        Raise = raise;
+    public void setPrice(String price) {
+        Price = price;
     }
 }
