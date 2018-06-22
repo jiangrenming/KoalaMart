@@ -332,18 +332,17 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
     private String date;
     private int deliveryId = 0;
-    private List<TimeInterval> timeIntervalList;
     private TimeInterval timeInterval;
     private TextView time_quick;
     private String hintText;
     private  TimeRuleAdapter ruleAdapter;
-    private RecyclerView time_categry;
+    private RecyclerView time_categry,time_select;
     private List<Rule> ruleList;
 
     private void setOnPopupViewClick(View view) {
 
         RecyclerView timer_type = view.findViewById(R.id.timer_type); //横排配送方式
-        final RecyclerView time_select = view.findViewById(R.id.time_select);  //左侧时间表
+        time_select = view.findViewById(R.id.time_select);  //左侧时间表
          time_categry = view.findViewById(R.id.time_categry);  //右侧时间表
         time_quick = view.findViewById(R.id.time_quick);  //特殊配送方式
         TextView cancle_dievery = view.findViewById(R.id.cancle_dievery);
@@ -356,18 +355,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                ruleList = mDelivery.get(i).getRuleList();
                deliveryId = mDelivery.get(i).getId();
                for (int j = 0; j < ruleList.size(); j++) {
-                   String hintText = ruleList.get(j).getHintText();
+                    hintText = ruleList.get(j).getHintText();
                    if (StringUtils.isEmpty(hintText)) {
                        time_categry.setVisibility(View.VISIBLE);
                        time_select.setVisibility(View.VISIBLE);
                        time_quick.setVisibility(View.GONE);
-                      /* List<LeftTimer> availableChooseDateTime = ruleList.get(j).getAvailableChooseDateTime();
-                       for (int k = 0; k < availableChooseDateTime.size(); k++) {
-                           if (availableChooseDateTime.get(k).isSelect()){
-                               ruleAdapter = new TimeRuleAdapter(this, availableChooseDateTime.get(k).getTimeList());
-                               RecyclerViewHelper.initRecyclerViewV(this, time_categry, true, ruleAdapter);
-                           }
-                       }*/
                    } else {
                        time_select.setVisibility(View.GONE);
                        time_categry.setVisibility(View.GONE);
@@ -377,10 +369,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                }
            }
         }
-
-       //默认的数据
-  //      deliveryId = mDelivery.get(0).getId();
-  //      List<Rule> ruleList = mDelivery.get(0).getRuleList();
 
         //左侧时间表
         setTimer(time_select,ruleList);
@@ -422,40 +410,52 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                     }
                 }
                 typeAdapter.updateItems(mDelivery);
-
-                List<Rule> ruleList = delivery.getRuleList();
-                if (ruleList != null && ruleList.size() > 0) {
-                    for (int i = 0; i < ruleList.size(); i++) {
-                        String hintText = ruleList.get(i).getHintText();
-                        if (StringUtils.isEmpty(hintText)) {
-                            time_categry.setVisibility(View.VISIBLE);
-                            time_select.setVisibility(View.VISIBLE);
-                            time_quick.setVisibility(View.GONE);
-                            List<LeftTimer> availableChooseDateTime = ruleList.get(i).getAvailableChooseDateTime();
-                            if (timeAdapter != null){
-                                availableChooseDateTime.get(0).setSelect(true);
-                                timeAdapter.updateItems(availableChooseDateTime);
-                                for (int j = 0; j < availableChooseDateTime.size(); j++) {
-                                    if (availableChooseDateTime.get(j).isSelect()){
-                                        if (ruleAdapter != null){
-                                            ruleAdapter.updateItems(availableChooseDateTime.get(j).getTimeList());
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            time_select.setVisibility(View.GONE);
-                            time_categry.setVisibility(View.GONE);
-                            time_quick.setVisibility(View.VISIBLE);
-                            time_quick.setText(hintText);
-                        }
-                    }
-
-                } else {
-                    ruleAdapter.cleanItems();
-                }
+                upDate(delivery);
             }
         });
+    }
+
+    private  void upDate ( Delivery delivery){
+
+        List<Rule> ruleList = delivery.getRuleList();
+        if (ruleList != null && ruleList.size() >0){
+            for (int i = 0; i < ruleList.size(); i++) {
+                 hintText = ruleList.get(i).getHintText();
+                if (StringUtils.isEmpty(hintText)){
+                    time_categry.setVisibility(View.VISIBLE);
+                    time_select.setVisibility(View.VISIBLE);
+                    time_quick.setVisibility(View.GONE);
+                    List<LeftTimer> availableChooseDateTime = ruleList.get(i).getAvailableChooseDateTime();
+                    for (int j = 0; j < availableChooseDateTime.size(); j++) {
+                        if (j == 0){
+                            availableChooseDateTime.get(j).setSelect(true);
+                        }else {
+                            availableChooseDateTime.get(j).setSelect(false);
+                        }
+                    }
+                }else {
+                    time_select.setVisibility(View.GONE);
+                    time_categry.setVisibility(View.GONE);
+                    time_quick.setVisibility(View.VISIBLE);
+                    time_quick.setText(hintText);
+                }
+            }
+            if (time_categry.getVisibility() == View.VISIBLE && time_select.getVisibility() == View.VISIBLE){
+
+                availableChooseDateTime = ruleList.get(0).getAvailableChooseDateTime();
+                if (timeAdapter != null){
+
+                    timeAdapter.updateItems(availableChooseDateTime);
+                }
+                timeList = availableChooseDateTime.get(0).getTimeList();
+                date = availableChooseDateTime.get(0).getDateStr();
+                if (ruleAdapter != null){
+                   ruleAdapter.updateItems(timeList);
+                }
+            }
+        }else {
+            ruleAdapter.cleanItems();
+        }
     }
 
     /**
@@ -464,6 +464,9 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
      * @param ruleList
      */
     private TimerAdapter timeAdapter;
+    private    List<LeftTimer> availableChooseDateTime;
+    private    List<TimeInterval> timeList;
+
     private void setTimer(RecyclerView time_select,List<Rule> ruleList) {
 
 
@@ -479,10 +482,15 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         }
 
         //左侧的时间
-        final List<LeftTimer> availableChooseDateTime = ruleList.get(0).getAvailableChooseDateTime();
+        availableChooseDateTime = ruleList.get(0).getAvailableChooseDateTime();
         timeAdapter = new TimerAdapter(this, availableChooseDateTime);
         RecyclerViewHelper.initRecyclerViewV(this, time_select, false, timeAdapter);
         date = availableChooseDateTime.get(0).getDateStr();
+
+        //右侧的时间
+         timeList = availableChooseDateTime.get(0).getTimeList();
+        ruleAdapter = new TimeRuleAdapter(this, timeList);
+        RecyclerViewHelper.initRecyclerViewV(this, time_categry, false, ruleAdapter);
 
         timeAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -490,25 +498,25 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 LeftTimer leftTimer = availableChooseDateTime.get(position);
                 date = leftTimer.getDateStr();
                 for (int i = 0; i < availableChooseDateTime.size(); i++) {
-                    if (availableChooseDateTime.get(i).getDateStr().equals(leftTimer.getDateStr())) {
+                    if (availableChooseDateTime.get(i).getDateStr().equals(date)) {
                         availableChooseDateTime.get(i).setSelect(true);
-                        List<TimeInterval> timeList = availableChooseDateTime.get(i).getTimeList();
-                        if (ruleAdapter != null){
-                            ruleAdapter.updateItems(timeList);
-                        }
                     } else {
                         availableChooseDateTime.get(i).setSelect(false);
                     }
                 }
-                timeAdapter.updateItems(availableChooseDateTime);
+                if (timeAdapter != null){
+                    timeAdapter.updateItems(availableChooseDateTime);
+                }
+                for (int i = 0; i <availableChooseDateTime.size() ; i++) {
+                    if (availableChooseDateTime.get(i).isSelect()){
+                        List<TimeInterval> timeIntervals = availableChooseDateTime.get(i).getTimeList();
+                        if (ruleAdapter!= null){
+                            ruleAdapter.updateItems(timeIntervals);
+                        }
+                    }
+                }
             }
         });
-
-
-        //右侧的时间
-        final List<TimeInterval> timeList = availableChooseDateTime.get(0).getTimeList();
-        ruleAdapter = new TimeRuleAdapter(this, timeList);
-        RecyclerViewHelper.initRecyclerViewV(this, time_categry, true, ruleAdapter);
 
         ruleAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -525,9 +533,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
 
-        }
     }
 
     //设置屏幕背景透明效果

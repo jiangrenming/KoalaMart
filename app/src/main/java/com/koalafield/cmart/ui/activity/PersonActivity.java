@@ -219,7 +219,6 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
 
     /**
      * 调用拨号功能
-     *
      * @param phone 电话号码
      */
     private void call(String phone) {

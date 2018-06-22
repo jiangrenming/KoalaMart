@@ -69,16 +69,7 @@ public class PrivateActivity extends BaseActivity implements IPersonInfosView<Pe
     @BindView(R.id.sex_person)
     TextView sex_person;
 
-
-
-    private PopupWindow popupWindow;
-    private int navigationHeight = 0;
-
-    private static  final  int PHOTO_REQUEST_TAKEPHOTO = 1;
-
-
     private PhotoSelectUtils api;
-
 
     @Override
     public int attchLayoutRes() {

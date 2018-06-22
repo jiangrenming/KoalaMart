@@ -29,11 +29,10 @@ public class CameraProxy{
      */
     public void getPhotoFromCamera(String filePath){
         File outputImg = new File(filePath);
-        if (!outputImg.exists()) {
-            outputImg.mkdirs();
+        if (!outputImg.getParentFile().exists()) {
+            outputImg.getParentFile().mkdirs();
         }
         Uri uri = Uri.fromFile(outputImg);
-        Log.i("获取的图片路径",uri.toString());
         cameraCore.getPhotoFromCamera(uri);
     }
 
@@ -43,13 +42,8 @@ public class CameraProxy{
      */
     public void getPhotoFromCameraCrop(String filePath){
         File outputImg = new File(filePath);
-        if (outputImg.exists()){
-            outputImg.delete();
-        }
-        try {
-            outputImg.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!outputImg.getParentFile().exists()) {
+            outputImg.getParentFile().mkdirs();
         }
         Uri uri = Uri.fromFile(outputImg);
         cameraCore.getPhotoFromCameraCrop(uri);

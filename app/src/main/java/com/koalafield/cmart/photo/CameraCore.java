@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -49,25 +50,45 @@ public class CameraCore{
     public void setPhotoUri(Uri uri){
         this.photoURL = uri;
     }
+    /**
+     * 调取拍照
+     * @param uri
+     * @return
+     */
+    protected Intent startTake_Photo(Uri uri){
 
-    //调用系统拍照
-    protected Intent startTakePhoto(Uri uri){
- //      Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//"android.media.action.IMAGE_CAPTURE"
-        /***
-         * 需要说明一下，以下操作使用照相机拍照，拍照后的图片会存放在相册中的
-         * 这里使用的这种方式有一个好处就是获取的图片是拍照后的原图
-         * 如果不实用ContentValues存放照片路径的话，拍照后获取的图片为缩略图不清晰
-         */
-       /* ContentValues values = new ContentValues();
-        photoURL = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-       intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoURL);*/
-        this.photoURL = uri;
+        if (Build.VERSION.SDK_INT >= 23) {
+            this.photoURL = TUriParse.convertFileUriToFileProviderUri(mActivity, uri);
+        } else {
+            this.photoURL = uri;
+        }
+        Intent captureIntent = getCaptureIntent(photoURL);
+        return  captureIntent;
+    }
+
+    /**
+     * 拍照并裁剪
+     */
+    protected Intent startTakePhone_Crop(Uri uri){
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            this.photoURL = TUriParse.getTempUri(mActivity);
+        } else {
+            this.photoURL = uri;
+        }
+        Intent captureIntent = getCaptureIntent(photoURL);
+        return  captureIntent;
+    }
+
+    /**
+     * 获取拍照的Intent
+     * @return
+     */
+    public static Intent getCaptureIntent(Uri outPutUri) {
         Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);//设置Action为拍照
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURL);//将拍取的照片保存到指定URI
-        Log.i("存储的地址:",photoURL.toString());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);//将拍取的照片保存到指定URI
         return intent;
     }
 
@@ -99,26 +120,28 @@ public class CameraCore{
         return intent;
     }
 
+    //拍照不裁剪
     public void getPhotoFromCamera(Uri uri) {
-        mActivity.startActivityForResult(startTakePhoto(uri),REQUEST_TAKE_PHOTO_CODE);
+        mActivity.startActivityForResult(startTake_Photo(uri),REQUEST_TAKE_PHOTO_CODE);
     }
 
+    //拍照裁剪
     public void getPhotoFromCameraCrop(Uri uri) {
-        mActivity.startActivityForResult(startTakePhoto(uri),REQUEST_TAKE_PHOTO_CROP_CODE);
+        mActivity.startActivityForResult(startTakePhone_Crop(uri),REQUEST_TAKE_PHOTO_CROP_CODE);
     }
 
+    //相册选择不裁剪
     public void getPhotoFromAlbum(Uri uri) {
         mActivity.startActivityForResult(startTakePicture(uri),REQUEST_TAKE_PICTRUE_CODE);
     }
 
+    //相册选择裁剪
     public void getPhotoFromAlbumCrop(Uri uri) {
         mActivity.startActivityForResult(startTakePicture(uri),REQUEST_TAKE_PICTRUE_CROP_CODE);
     }
 
     public void onResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            Log.i("获取图片的地址",photoURL.getPath());
-            Log.i("获取图片的code=",requestCode+"");
             if (requestCode == REQUEST_TAKE_PICTRUE_CODE){
                 //获取系统返回的照片的Uri
                 photoURL = data.getData();
