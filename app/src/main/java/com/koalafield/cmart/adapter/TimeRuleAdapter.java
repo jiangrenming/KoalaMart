@@ -44,7 +44,7 @@ public class TimeRuleAdapter extends BaseQuickAdapter<TimeInterval> {
             time_start_price.setVisibility(View.GONE);
         }else {
             time_start_price.setVisibility(View.VISIBLE);
-            time_start_price.setText("AUD "+item.getPrice());
+            time_start_price.setText(item.getShowText());
         }
         holder.setText(R.id.time_start_rule, sb.toString());
     }

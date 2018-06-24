@@ -164,7 +164,7 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     }
 
     private  String ordercolumn = "CurrentPrice";
-    @OnClick({R.id.all_categry,R.id.currentPrice,R.id.currentSale,R.id.goods_car_img})
+    @OnClick({R.id.all_categry,R.id.currentPrice,R.id.currentSale,R.id.goods_car_img,R.id.back})
     public  void changeClick(View view){
         switch (view.getId()){
             case R.id.all_categry:

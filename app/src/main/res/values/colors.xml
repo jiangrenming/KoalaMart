@@ -24,11 +24,16 @@
     <color name="text_yellow_refund">#ffa800</color>
     <color name="text_green">#00FF7E</color>
     <color name="text_red2">#e4524b</color>
-    <color name="gray">#d4d4d4</color>
-    <color name="gray_light">#ebebeb</color>
+
+    <color name="gray_one">#d4d4d4</color>
+    <color name="gray_two">#ebebeb</color>
+    <color name="gray_three">#666666</color>
+
+    <color name="gray">#f5f5f5</color>
+    <color name="gray_light">#f5f5f5</color>
     <color name="gray_tip">#a1a1a1</color>
-    <color name="gray_light2">#ebebeb</color>
-    <color name="gray_light3">#666666</color>
+    <color name="gray_light2">#f5f5f5</color>
+    <color name="gray_light3">#f5f5f5</color>
     <color name="gray_light4">#aaaaaa</color>
     <color name="gray_light5">#999999</color>
     <color name="gray_light6">#f1f1f1</color>

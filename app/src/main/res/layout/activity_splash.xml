@@ -5,12 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/start_app"/>
-
     <com.dl7.tag.TagView
         android:id="@+id/tag_skip"
         android:layout_width="80dp"
@@ -26,5 +20,12 @@
         app:tag_press_feedback="true"
         app:tag_shape="arc"
         app:tag_text_color="@color/white"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/start_app" />
 
 </FrameLayout>

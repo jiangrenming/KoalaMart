@@ -17,7 +17,7 @@
             android:id="@+id/rv_news_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <include layout="@layout/layout_common_empty"/>
+       <!-- <include layout="@layout/layout_common_empty"/>-->
     </FrameLayout>
 
     <LinearLayout

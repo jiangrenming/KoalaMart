@@ -17,7 +17,7 @@
                 android:id="@+id/comment_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <include layout="@layout/layout_common_empty"/>
+            <!--<include layout="@layout/layout_common_empty"/>-->
         </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout

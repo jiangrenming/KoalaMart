@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_white"
     android:orientation="vertical">
 
-    <include layout="@layout/top_header" />
-
-    <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,15 +14,26 @@
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/id_appbarlayout"
-            app:elevation="0dp"
-            android:fadingEdge="none"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fadingEdge="none"
+            app:elevation="0dp">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textSize="13sp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="已选商品"
+                android:textColor="@color/black" />
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_tool_bar_test_ctl"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="65dp"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="64dp"
@@ -31,112 +41,115 @@
                 app:layout_scrollFlags="scroll">
 
                 <LinearLayout
-                    android:visibility="gone"
-                    android:id="@+id/empty_adress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:background="@color/bg_white"
-                    >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableLeft="@mipmap/address"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:text="收货地址" />
-
-                    <TextView
-                        android:id="@+id/click_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:text="选择收获地址" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:scaleType="fitXY"
-                        android:src="@mipmap/right"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="20dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/bg_white"
                     android:orientation="vertical">
+
                     <LinearLayout
-                        android:id="@+id/have_name_adress"
+                        android:id="@+id/empty_adress"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:layout_height="60dp"
+                        android:background="@color/white"
                         android:orientation="horizontal"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp">
 
                         <TextView
-                            android:id="@+id/address_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="张三"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/address_phone"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="17621216837"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/have_detail_adress"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp">
-
-                        <TextView
-                            android:id="@+id/address_details"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:drawableLeft="@mipmap/address"
-                            android:drawablePadding="15dp"
                             android:gravity="center_vertical"
-                            android:text="上海市上海市长宁区凯旋路339号龙之梦雅士大厦"
+                            android:text="收货地址"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/click_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="选择收获地址"
                             android:textColor="@color/black" />
 
                         <ImageView
-                            android:id="@+id/change_address"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
                             android:scaleType="fitXY"
                             android:src="@mipmap/right" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/name_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:id="@+id/have_name_adress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <TextView
+                                android:id="@+id/address_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="张三"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/address_phone"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:text="17621216837"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/have_detail_adress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <TextView
+                                android:id="@+id/address_details"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:drawableLeft="@mipmap/address"
+                                android:drawablePadding="15dp"
+                                android:gravity="center_vertical"
+                                android:text="上海市上海市长宁区凯旋路339号龙之梦雅士大厦"
+                                android:textColor="@color/black" />
+
+                            <ImageView
+                                android:id="@+id/change_address"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/right" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@mipmap/underline" />
                 </LinearLayout>
             </android.support.design.widget.CollapsingToolbarLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="已选商品"
-                android:textColor="@color/black" />
 
             <View
                 android:layout_width="match_parent"
@@ -158,17 +171,18 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/goods_pay"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
                     android:paddingLeft="20dp" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="35dp"
                     android:background="@color/gray_light"
                     android:gravity="center_vertical"
+                    android:textSize="13sp"
                     android:paddingLeft="10dp"
                     android:text="配送时间" />
 
@@ -184,9 +198,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="13sp"
                         android:gravity="center_vertical"
-                        android:text="请选择配送时间" />
+                        android:text="请选择配送时间"
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/change_time"
@@ -194,8 +208,8 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="修改"
-                        android:textSize="13sp"
-                        android:textColor="@color/btn_red" />
+                        android:textColor="@color/btn_red"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <View
@@ -205,15 +219,18 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="35dp"
                     android:background="@color/gray_light"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
+                    android:textSize="13sp"
                     android:text="支付方式" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/choose_pay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="90dp"
@@ -256,19 +273,19 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="12sp"
                             android:gravity="right"
+                            android:text="约合RMB:¥  1.00"
                             android:textColor="@color/gray_light3"
-                            android:text="约合RMB:¥  1.00" />
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/comfir_order"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
                         android:background="@color/btn_red"
-                        android:layout_marginBottom="10dp"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="提交订单"
                         android:textColor="@color/white" />
@@ -276,7 +293,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="10dp"
                     android:background="@color/gray" />
 
                 <LinearLayout
@@ -306,8 +323,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:textColor="@color/red"
-                        android:text="AUD 1.00" />
+                        android:text="AUD 1.00"
+                        android:textColor="@color/red" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -324,7 +341,7 @@
                         android:gravity="center_vertical"
                         android:text="订单邮费：" />
 
-                   <!-- <TextView
+                    <!-- <TextView
                         android:id="@+id/order_tax_curreny"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -333,12 +350,12 @@
                         android:text="AUD " />-->
 
                     <TextView
-                        android:textColor="@color/red"
                         android:id="@+id/tax_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="AUD 0.00" />
+                        android:text="AUD 0.00"
+                        android:textColor="@color/red" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -363,7 +380,6 @@
                         android:text="请选择优惠券" />
 
                     <ImageView
-                        android:id="@+id/skip_discount"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
@@ -373,6 +389,9 @@
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
+
+    <include layout="@layout/top_header" />
+
     <!--<com.koalafield.cmart.widget.MyBoundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

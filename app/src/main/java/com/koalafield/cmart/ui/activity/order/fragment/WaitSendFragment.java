@@ -52,12 +52,7 @@ public class WaitSendFragment extends BaseFragment implements IOrderView<List<Or
 
     @Override
     protected void initViews() {
-        SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateViews();
-                SwipeRefreshHelper.controlRefresh(mSwipeRefresh,false);            }
-        });
+
         orderAdapter = new CommonOrderAdapter(mContext);
         RecyclerViewHelper.initRecyclerViewV(mContext,order_recyclerView,true,orderAdapter);
         orderAdapter.setRequestDataListener(new OnRequestDataListener() {
@@ -70,15 +65,19 @@ public class WaitSendFragment extends BaseFragment implements IOrderView<List<Or
     }
 
     @Override
-    protected void updateViews() {}
+    protected void updateViews() {
+        presenter = new OrderPresenter(this);
+        presenter.setType(getParams());
+        presenter.getData();
+    }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         presenter = new OrderPresenter(this);
         presenter.setType(getParams());
         presenter.getData();
-    }
+    }*/
 
     private Map<String,String> getParams(){
 
@@ -109,7 +108,6 @@ public class WaitSendFragment extends BaseFragment implements IOrderView<List<Or
     public void loadEmptyData() {
         mSwipeRefresh.setVisibility(View.GONE);
         empty_order.setVisibility(View.VISIBLE);
-        order_type.setText("暂无发货的订单");
     }
 
     @Override

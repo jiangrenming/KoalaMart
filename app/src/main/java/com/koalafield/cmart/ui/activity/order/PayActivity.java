@@ -27,6 +27,7 @@ import com.koalafield.cmart.adapter.TimerAdapter;
 import com.koalafield.cmart.adapter.TimerTypeAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.TimerBean;
+import com.koalafield.cmart.bean.event.DisCountEvent;
 import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.Delivery;
 import com.koalafield.cmart.bean.order.LeftTimer;
@@ -78,6 +79,9 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -109,6 +113,8 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     TextView address_details;
     @BindView(R.id.change_address)
     ImageView change_address;
+    @BindView(R.id.name_address)
+    LinearLayout name_address;
 
 
     //商品区
@@ -142,8 +148,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
       TextView score_count;*/
     @BindView(R.id.discount_content)
     TextView discount_content;
-    @BindView(R.id.skip_discount)
-    ImageView skip_discount;
+
     @BindView(R.id.choose_pay)
     RecyclerView choose_pay;
     private PayAdapter mPayAdapter;
@@ -159,10 +164,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     @Override
     public void initDatas() {
         top_name.setText("确认订单");
-        empty_adress.setVisibility(View.VISIBLE);
-        have_name_adress.setVisibility(View.GONE);
-        have_detail_adress.setVisibility(View.GONE);
-
         datas = getIntent().getStringExtra("payDatas");
         if (!StringUtils.isEmpty(datas)) {
             IPayPresenter payPresenter = new PayPresenter(this);
@@ -170,11 +171,12 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             params.put("scIds", datas);
             payPresenter.setParams(params);
         }
+        EventBus.getDefault().register(this);
 
     }
 
 
-    @OnClick({R.id.click_address, R.id.change_address, R.id.skip_discount, R.id.change_time, R.id.comfir_order, R.id.back})
+    @OnClick({R.id.click_address, R.id.change_address, R.id.change_time, R.id.comfir_order, R.id.back,R.id.discount_content})
     public void addAddressClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -184,9 +186,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             case R.id.change_address:
                 Intent intent = new Intent(PayActivity.this, AddressManangerActivity.class);
                 startActivityForResult(intent, 10000);
-                break;
-            case R.id.skip_discount: //满减
-                startActivityForResult(new Intent(PayActivity.this, DisCountActivity.class), 10001);
                 break;
             case R.id.change_time: //配送时间
                 openWindow(view);
@@ -217,6 +216,10 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 ICreateOrderPresenter orderPresenter = new CreateOrderPresenter(this);
                 orderPresenter.setParams(params);
                 orderPresenter.getData();
+                break;
+            case R.id.discount_content:
+                Intent intent1 = new Intent(this,DisCountActivity.class);
+                startActivity(intent1);
                 break;
             default:
                 break;
@@ -333,6 +336,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     private String date;
     private int deliveryId = 0;
     private TimeInterval timeInterval;
+    private String timeId;
     private TextView time_quick;
     private String hintText;
     private  TimeRuleAdapter ruleAdapter;
@@ -522,8 +526,15 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             @Override
             public void onItemClick(View view, int position) {
                 timeInterval = timeList.get(position);
+                timeId = timeInterval.getTimeId();
+                Log.i("选择的时间为：",timeId);
                 disPopuWindow();
-                select_time.setText(date + " " + timeInterval.getStartTime() + "-" + timeInterval.getEndTime());
+                if (StringUtils.isEmpty(timeInterval.getEndTime())){
+                    select_time.setText(date + " " + timeInterval.getStartTime());
+
+                }else {
+                    select_time.setText(date + " " + timeInterval.getStartTime() + "-" + timeInterval.getEndTime());
+                }
                 if (deliveryId > 0 && addRessId > 0) {
                     changePrice();
                 }
@@ -572,7 +583,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             actual_amount.setText("实际付款：" + data.getOrderPriceDTO().getCurrency() + " " + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
             rmb_amount.setText("约合RMB:¥" + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount() * data.getOrderPriceDTO().getRate()));
             order_total_amount.setText(data.getOrderPriceDTO().getCurrency() + " " + String.format("%.2f", data.getOrderPriceDTO().getTotalGoodsPrice()));
-            tax_amount.setText(String.format("%.2f", data.getOrderPriceDTO().getDeliveryPrice()));
+            tax_amount.setText(data.getOrderPriceDTO().getCurrency() + " " +String.format("%.2f", data.getOrderPriceDTO().getDeliveryPrice()));
            /* if (data.isAllowUseScore()){
                 score_count.setVisibility(View.VISIBLE);
                 score_count.setText(String.valueOf(data.getAvailableScore()));
@@ -649,18 +660,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 AddressManagerBean addressManagerBean = (AddressManagerBean) data.getSerializableExtra("address");
                 if (addressManagerBean != null) {
                     empty_adress.setVisibility(View.GONE);
-                    have_name_adress.setVisibility(View.VISIBLE);
-                    have_detail_adress.setVisibility(View.VISIBLE);
+                    name_address.setVisibility(View.VISIBLE);
                     address_name.setText(addressManagerBean.getContactname());
                     address_phone.setText(addressManagerBean.getContactphone());
                     address_details.setText(addressManagerBean.getCountry() + " " + addressManagerBean.getCity() + addressManagerBean.getAddress());
                     addRessId = addressManagerBean.getId();
-                }
-            } else if (requestCode == 10001) {  //优惠卷
-                DisCountBean discount = (DisCountBean) data.getSerializableExtra("counpon");
-                if (discount != null) {
-                    discount_content.setText(String.valueOf(discount.getAmount()));
-                    disCountCode = discount.getCode();
                 }
             } else {
                 if (data == null) {
@@ -708,6 +712,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         params.put("addressId", String.valueOf(addRessId));
         params.put("paymentId", String.valueOf(payId));
         params.put("couponCode", disCountCode);
+        params.put("timeId", StringUtils.isEmpty(timeId) ? "" :timeId);
         mPricePresenter = new PricePresenter(this);
         mPricePresenter.setParams(params);
         mPricePresenter.getData();
@@ -743,5 +748,20 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             intent.putExtra("type", 3);
             startActivity(intent);
         }
+    }
+
+    //接收优惠卷
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void DisCountEvent(DisCountEvent event){
+        if (event != null){
+            discount_content.setText(String.valueOf(event.mDisCountBean.getAmount()));
+            disCountCode = event.mDisCountBean.getCode();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -126,7 +126,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
             //     addressManagerAdapter.updateItems(data);
             if (addressManagerAdapter == null) {
                 addressManagerAdapter = new AddressManagerAdapter(this, data);
-                RecyclerViewHelper.initRecyclerViewV(this, rv_news_list, true, addressManagerAdapter);
+                RecyclerViewHelper.initRecyclerViewV(this, rv_news_list, false, addressManagerAdapter);
             } else {
                 addressManagerAdapter.cleanItems();
                 addressManagerAdapter.addItems(data);

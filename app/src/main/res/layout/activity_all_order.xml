@@ -10,7 +10,16 @@
         android:layout_width="match_parent"
         android:scrollbars="none"
         android:layout_height="match_parent">
-    <FrameLayout
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/order_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+   <!-- <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,8 +27,8 @@
             android:id="@+id/order_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-        <include layout="@layout/layout_common_empty"/>
-    </FrameLayout>
+      &lt;!&ndash;  <include layout="@layout/layout_common_empty"/>&ndash;&gt;
+    </FrameLayout>-->
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout
         android:id="@+id/empty_order"

@@ -84,34 +84,38 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment im
 
     @Override
     public void showLoading() {
-        if (mEmptyLayout != null) {
+        SwipeRefreshHelper.enableRefresh(mSwipeRefresh, false);
+        /*if (mEmptyLayout != null) {
             mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_LOADING);
             SwipeRefreshHelper.enableRefresh(mSwipeRefresh, false);
-        }
+        }*/
     }
 
     @Override
     public void hideLoading() {
-        if (mEmptyLayout != null) {
+        SwipeRefreshHelper.enableRefresh(mSwipeRefresh, true);
+        SwipeRefreshHelper.controlRefresh(mSwipeRefresh, false);
+        /*if (mEmptyLayout != null) {
             mEmptyLayout.hide();
             SwipeRefreshHelper.enableRefresh(mSwipeRefresh, true);
             SwipeRefreshHelper.controlRefresh(mSwipeRefresh, false);
-        }
+        }*/
     }
 
     @Override
     public void showNetError(final EmptyLayout.OnRetryListener onRetryListener) {
-        if (mEmptyLayout != null) {
+        SwipeRefreshHelper.enableRefresh(mSwipeRefresh, false);
+       /* if (mEmptyLayout != null) {
             mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_NO_NET);
             mEmptyLayout.setRetryListener(onRetryListener);
             SwipeRefreshHelper.enableRefresh(mSwipeRefresh, false);
-        }
+        }*/
     }
 
     /**
      * 初始化下拉刷新
      */
-    private void initSwipeRefresh() {
+    public void initSwipeRefresh() {
         if (mSwipeRefresh != null) {
             SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
                 @Override

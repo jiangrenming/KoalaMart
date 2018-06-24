@@ -232,15 +232,17 @@
                     android:scaleType="fitXY"
                     android:src="@mipmap/buy"
                     android:layout_height="20dp" />
+
                 <TextView
-                    android:layout_toRightOf="@+id/goods_car_img"
                     android:id="@+id/goods_cart_num"
                     style="@style/bg_text_style"
-                    android:layout_marginTop="-5dp"
-                    android:layout_marginLeft="-5dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:layout_toRightOf="@+id/goods_car_img"
                     android:textSize="10sp"
-                    tools:ignore="SmallSp"/>
+                    android:visibility="gone"
+                    tools:ignore="SmallSp" />
             </RelativeLayout>
         </FrameLayout>
         <!--<LinearLayout

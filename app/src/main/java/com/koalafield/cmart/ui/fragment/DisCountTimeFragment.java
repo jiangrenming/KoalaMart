@@ -15,6 +15,7 @@ import com.dl7.recycler.listener.OnRequestDataListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.DisCountAdapter;
 import com.koalafield.cmart.base.fragment.BaseFragment;
+import com.koalafield.cmart.bean.event.DisCountEvent;
 import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.presenter.user.DisCountPresenter;
 import com.koalafield.cmart.presenter.user.IDisCountPresenter;
@@ -24,6 +25,8 @@ import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.view.user.IDisCountListView;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
 import com.koalafield.cmart.widget.EmptyLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +56,7 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
 
     @Override
     protected void initViews() {
-        initSwipeRefresh();
+     //   initSwipeRefresh();
         disCountAdapter = new DisCountAdapter(mContext);
         RecyclerViewHelper.initRecyclerViewV(mContext,time_discount,true,disCountAdapter);
         disCountAdapter.setRequestDataListener(new OnRequestDataListener() {
@@ -92,9 +95,13 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
             @Override
             public void onItemClick(View view, int position) {
                 DisCountBean disCountBean = data.get(position);
-                Intent intent = new Intent();
-                intent.putExtra("counpon",disCountBean);
-                getActivity().setResult(Activity.RESULT_OK,intent);
+                if (disCountBean  != null){
+                    EventBus.getDefault().post(new DisCountEvent(disCountBean));
+                }
+                getActivity().finish();
+               // Intent intent = new Intent();
+               // intent.putExtra("counpon",disCountBean);
+               // getActivity().setResult(Activity.RESULT_OK,intent);
             }
         });
     }
@@ -133,7 +140,7 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
     /**
      * 初始化下拉刷新
      */
-    private void initSwipeRefresh() {
+    /*private void initSwipeRefresh() {
         if (discount_refresh != null) {
             SwipeRefreshHelper.init(discount_refresh, new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -144,5 +151,5 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
                 }
             });
         }
-    }
+    }*/
 }

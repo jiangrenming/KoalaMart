@@ -38,7 +38,7 @@ public class BrandCategryAdapter extends BaseQuickAdapter<BrandListBean> {
             brand_name_item.setTextColor(Color.WHITE);
         }else {
             brand_name_item.setBackgroundResource(R.color.white);
-            brand_name_item.setTextColor(mContext.getResources().getColor(R.color.gray_light3));
+            brand_name_item.setTextColor(mContext.getResources().getColor(R.color.gray_three));
         }
     }
 

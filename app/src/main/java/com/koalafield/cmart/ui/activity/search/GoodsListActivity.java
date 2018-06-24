@@ -177,6 +177,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     @Override
     public void onCategryBrandSucessFul(CateBrandGoodsListBean data) {
         if (data != null) {
+            //商品分类
             if (isClickCategry) {
                 final List<CateListBean> cateList = data.getCateList();
                 if (cateList != null && cateList.size() > 0) {
@@ -211,7 +212,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
                     collapsing_tool_bar_test_ctl.setVisibility(View.GONE);
                 }
             }
-            //品牌下分类
+            //品牌分类
             if (isClickBrand) {
                 final List<BrandListBean> brandList = data.getBrandList();
                 if (brandList != null && brandList.size() > 0) {

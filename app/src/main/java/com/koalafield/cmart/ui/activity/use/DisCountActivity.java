@@ -122,7 +122,7 @@ public class DisCountActivity extends BaseActivity {
         }
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK ){
@@ -132,5 +132,5 @@ public class DisCountActivity extends BaseActivity {
             setResult(RESULT_OK ,intent);
             finish();
         }
-    }
+    }*/
 }

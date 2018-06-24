@@ -1,6 +1,7 @@
 package com.koalafield.cmart.adapter;
 
 import android.content.Context;
+import android.text.TextPaint;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,11 +34,15 @@ public class TimerTypeAdapter extends BaseQuickAdapter<Delivery> {
         TextView type_time = holder.getView(R.id.type_time);
         type_time.setText(item.getDeliveryName());
         if (item.isTypeSelect()){
-            time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            type_time.setTextColor(mContext.getResources().getColor(R.color.deviery));
+            time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
+            type_time.setTextColor(mContext.getResources().getColor(R.color.black));
+            TextPaint tp = type_time.getPaint();
+            tp.setFakeBoldText(true);
         }else {
             time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
             type_time.setTextColor(mContext.getResources().getColor(R.color.black));
+            TextPaint tp = type_time.getPaint();
+            tp.setFakeBoldText(false);
         }
     }
 }

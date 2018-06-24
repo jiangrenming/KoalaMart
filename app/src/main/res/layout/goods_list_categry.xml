@@ -53,6 +53,7 @@
             <TextView
                 android:id="@+id/search_cart_num"
                 style="@style/bg_text_style"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:textSize="8sp"
@@ -116,7 +117,7 @@
                         android:id="@+id/goods_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                    <include layout="@layout/layout_common_empty"/>
+                    <!--<include layout="@layout/layout_common_empty"/>-->
                 </FrameLayout>
             </com.koalafield.cmart.zoomswifresh.GZoomSwifrefresh>
     </android.support.design.widget.CoordinatorLayout>

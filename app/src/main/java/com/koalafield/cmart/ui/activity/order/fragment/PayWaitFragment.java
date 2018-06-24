@@ -54,12 +54,12 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
 
     @Override
     protected void initViews() {
-        SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
+        /*SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 updateViews();
                 SwipeRefreshHelper.controlRefresh(mSwipeRefresh,false);            }
-        });
+        });*/
         orderAdapter = new CommonOrderAdapter(mContext);
         RecyclerViewHelper.initRecyclerViewV(mContext,order_recyclerView,true,orderAdapter);
         orderAdapter.setRequestDataListener(new OnRequestDataListener() {
@@ -72,15 +72,20 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
     }
 
     @Override
-    protected void updateViews() {}
+    protected void updateViews() {
+     //   onResume();
+        presenter = new OrderPresenter(this);
+        presenter.setType(getParams());
+        presenter.getData();
+    }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         presenter = new OrderPresenter(this);
         presenter.setType(getParams());
         presenter.getData();
-    }
+    }*/
 
     private Map<String,String> getParams(){
 
@@ -111,7 +116,6 @@ public class PayWaitFragment extends BaseFragment implements IOrderView<List<Ord
     public void loadEmptyData() {
         mSwipeRefresh.setVisibility(View.GONE);
         empty_order.setVisibility(View.VISIBLE);
-        order_type.setText("暂无未支付的订单");
     }
 
     @Override

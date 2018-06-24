@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text="热门搜索"
-                android:textColor="@color/gray_light3"
+                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/hot_vertical_bar"
@@ -106,7 +106,7 @@
                 android:layout_toRightOf="@+id/his_vertical_bar"
                 android:gravity="left"
                 android:text="搜索历史"
-                android:textColor="@color/gray_light3"
+                android:textColor="@color/black"
                 android:textSize="15sp" />
             <ImageView
                 android:id="@+id/delete"

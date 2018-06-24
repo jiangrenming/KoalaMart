@@ -39,7 +39,7 @@
             android:id="@+id/address_view"
             android:layout_width="match_parent"
             android:background="@color/gray_light2"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_below="@+id/address_detail"
             android:layout_height="0.5dp"/>
 
@@ -98,6 +98,6 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:background="@color/gray"
-        android:layout_height="5dp"/>
+        android:background="@color/time"
+        android:layout_height="2dp"/>
 </LinearLayout>

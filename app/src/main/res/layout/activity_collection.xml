@@ -14,9 +14,10 @@
             android:layout_height="match_parent">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/collection_list"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <include layout="@layout/layout_common_empty"/>
+            <!--<include layout="@layout/layout_common_empty"/>-->
         </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout

@@ -78,7 +78,7 @@
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:id="@+id/collapsing_tool_bar_test_ctl"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="65dp"
                     android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
                     app:expandedTitleMarginEnd="64dp"
@@ -88,6 +88,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/white"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -144,13 +145,18 @@
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/right" />
                         </LinearLayout>
+
                     </LinearLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
 
                 <View
                     android:layout_width="match_parent"
+                    android:background="@mipmap/underline"
+                    android:layout_height="1dp"/>
+               <!-- <View
+                    android:layout_width="match_parent"
                     android:layout_height="5dp"
-                    android:background="@color/gray_light" />
+                    android:background="@color/gray_light" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

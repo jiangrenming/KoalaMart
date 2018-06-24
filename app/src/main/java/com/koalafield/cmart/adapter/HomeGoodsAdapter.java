@@ -109,6 +109,8 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
         }else if (holder instanceof  GoodsPieceHolder){
             ((GoodsPieceHolder) holder).goods_categry_two.setText(goodsCategryBean.getName());
+            ((GoodsPieceHolder) holder).add_more.setText("查看更多"+goodsCategryBean.getName()+" >>");
+
             GoodsCategryTwoAdapter   goodsCategryTwoAdapter = new GoodsCategryTwoAdapter(mContext,goodsCategryBean.getGoodsList());
             RecyclerViewHelper.initRecyclerViewG(mContext,((GoodsPieceHolder) holder).categry_two_recycler,goodsCategryTwoAdapter,3);
             goodsCategryTwoAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
@@ -121,6 +123,15 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
             ((GoodsPieceHolder) holder).goods_categry_two.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //传入分类id，跳转分类列表
+                    Intent intent = new Intent(mContext, GoodsListActivity.class);
+                    intent.putExtra("cateId",mData.get(position).getCategoryId());
+                    mContext.startActivity(intent);
+                }
+            });
+            ((GoodsPieceHolder) holder).add_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //传入分类id，跳转分类列表
@@ -198,11 +209,13 @@ public class HomeGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         TextView goods_categry_two;
         RecyclerView categry_two_recycler;
+        TextView add_more;
 
         GoodsPieceHolder(View view) {
             super(view);
             goods_categry_two = view.findViewById(R.id.goods_categry_two);
             categry_two_recycler = view.findViewById(R.id.categry_two_recycler);
+            add_more = view.findViewById(R.id.add_more);
         }
     }
 

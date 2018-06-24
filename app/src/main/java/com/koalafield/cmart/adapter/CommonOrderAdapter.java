@@ -50,7 +50,7 @@ public class CommonOrderAdapter extends BaseQuickAdapter<OrderListBean> {
                 .setText(R.id.order_state,item.getStatusText());
         RecyclerView item_order = holder.getView(R.id.item_order);
         OrderAdapter orderAdapter = new OrderAdapter(mContext,item.getGoodsList());
-        RecyclerViewHelper.initRecyclerViewV(mContext,item_order,true,orderAdapter);
+        RecyclerViewHelper.initRecyclerViewV(mContext,item_order,false,orderAdapter);
         orderAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

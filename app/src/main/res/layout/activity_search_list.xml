@@ -46,6 +46,7 @@
             <TextView
                 android:id="@+id/search_cart_num"
                 style="@style/bg_text_style"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:textSize="10sp"
@@ -105,12 +106,12 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:background="@color/white"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/search_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <include layout="@layout/layout_common_empty"/>
+           <!-- <include layout="@layout/layout_common_empty"/>-->
         </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout

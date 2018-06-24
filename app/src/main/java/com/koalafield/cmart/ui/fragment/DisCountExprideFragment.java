@@ -49,7 +49,7 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
 
     @Override
     protected void initViews() {
-        initSwipeRefresh();
+   //     initSwipeRefresh();
         disCountAdapter = new DisCountAdapter(mContext);
         RecyclerViewHelper.initRecyclerViewV(mContext,time_discount,true,disCountAdapter);
         disCountAdapter.setRequestDataListener(new OnRequestDataListener() {
@@ -117,7 +117,7 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
     /**
      * 初始化下拉刷新
      */
-    private void initSwipeRefresh() {
+  /*  private void initSwipeRefresh() {
         if (discount_refresh != null) {
             SwipeRefreshHelper.init(discount_refresh, new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -128,5 +128,5 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
                 }
             });
         }
-    }
+    }*/
 }

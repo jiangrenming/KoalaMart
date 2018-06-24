@@ -193,6 +193,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 has_time.setBackgroundColor(getResources().getColor(R.color.gray));
                 cancle_order.setVisibility(View.GONE);
                 once_pay.setVisibility(View.GONE);
+                statue_txt.setVisibility(View.GONE);
             }
         }
     }

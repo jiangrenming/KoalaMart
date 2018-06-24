@@ -11,24 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
-import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
 import com.dl7.recycler.listener.OnRequestDataListener;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.CommonOrderAdapter;
 import com.koalafield.cmart.base.fragment.BaseFragment;
-import com.koalafield.cmart.bean.order.OrderBean;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.presenter.order.IOrderPresenter;
 import com.koalafield.cmart.presenter.order.OrderPresenter;
-import com.koalafield.cmart.ui.activity.LoginActivity;
-import com.koalafield.cmart.ui.activity.MainActivity;
-import com.koalafield.cmart.ui.activity.order.OrderDetailsActivity;
-import com.koalafield.cmart.ui.activity.order.PayActivity;
 import com.koalafield.cmart.ui.view.order.IOrderView;
 import com.koalafield.cmart.utils.Constants;
-import com.koalafield.cmart.utils.SwipeRefreshHelper;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +52,7 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
 
     @Override
     protected void initViews() {
+
         orderAdapter = new CommonOrderAdapter(mContext);
         RecyclerViewHelper.initRecyclerViewV(mContext,order_recyclerView,false,orderAdapter);
         orderAdapter.setRequestDataListener(new OnRequestDataListener() {
@@ -74,15 +66,19 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
     }
 
     @Override
-    protected void updateViews() {}
+    protected void updateViews() {
+        presenter = new OrderPresenter(this);
+        presenter.setType(getParams());
+        presenter.getData();
+    }
 
-    @Override
+   /* @Override
     public void onResume() {
         super.onResume();
         presenter = new OrderPresenter(this);
         presenter.setType(getParams());
         presenter.getData();
-    }
+    }*/
 
     private Map<String,String> getParams(){
         Map<String,String> params = new HashMap<>();
