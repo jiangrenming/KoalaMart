@@ -173,10 +173,15 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
                 }else {
                     all_categry.setTextColor(getResources().getColor(R.color.text_black_light));
                 }*/
-                Map<String,String> params = new HashMap<>();
-                ICategryPresenter  categryPresenter= new CategryOnePresenter(this);
-                params.put("id","");
-                categryPresenter.getCategryData(params);
+                if (allowNext()){
+                    Map<String,String> params = new HashMap<>();
+                    ICategryPresenter  categryPresenter= new CategryOnePresenter(this);
+                    params.put("id","");
+                    categryPresenter.getCategryData(params);
+                }else {
+                    Toast.makeText(this,"重复点击的时间间隔太短",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
             case R.id.currentPrice:
                 setDrawable(1);

@@ -88,7 +88,7 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
         long currentTime = System.currentTimeMillis();
         long temClickTime = lastClickTime;
         lastClickTime = currentTime;
-        return (currentTime - temClickTime) > 400;
+        return (currentTime - temClickTime) > 800;
     }
 
     /**
@@ -100,6 +100,5 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
         view.setFocusableInTouchMode(true);
         view.requestFocus();
     }
-
 
 }

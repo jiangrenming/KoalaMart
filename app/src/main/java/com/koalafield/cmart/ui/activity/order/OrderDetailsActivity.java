@@ -207,11 +207,16 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 if (once_pay.getVisibility() == View.VISIBLE){
                     if (detailsInfo.getStatus() == 2){
                         //确认收货
-                        Map<String,String> params = new HashMap();
-                        params.put("billNo",billNo);
-                        IComfirmOrderPresenter comfirmOrderPresenter = new ComfirmOrderPresenter(this);
-                        comfirmOrderPresenter.setParams(params);
-                        comfirmOrderPresenter.getData();
+                        if (allowNext()){
+                            Map<String,String> params = new HashMap();
+                            params.put("billNo",billNo);
+                            IComfirmOrderPresenter comfirmOrderPresenter = new ComfirmOrderPresenter(this);
+                            comfirmOrderPresenter.setParams(params);
+                            comfirmOrderPresenter.getData();
+                        }else {
+                            Toast.makeText(this,"重复点击的时间间隔太短",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }else {
                         if (payList != null && payList.size() > 0){
                             openWindow(view);
@@ -290,12 +295,17 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 if (mPopuWindow != null &&mPopuWindow.isShowing()){
                     mPopuWindow.dismiss();
                 }
-                Map<String,String> params = new HashMap<>();
-                IPaySdkPresenter mPresenter = new PaySdkPresenter(OrderDetailsActivity.this);
-                params.put("billCode",billNo) ;
-                params.put("paymentId",String.valueOf(paymentId)) ;
-                mPresenter.setParams(params);
-                mPresenter.getData();
+                if (allowNext()){
+                    Map<String,String> params = new HashMap<>();
+                    IPaySdkPresenter mPresenter = new PaySdkPresenter(OrderDetailsActivity.this);
+                    params.put("billCode",billNo) ;
+                    params.put("paymentId",String.valueOf(paymentId)) ;
+                    mPresenter.setParams(params);
+                    mPresenter.getData();
+                }else {
+                    Toast.makeText(OrderDetailsActivity.this,"重复点击的时间间隔太短",Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
         close.setOnClickListener(new View.OnClickListener() {

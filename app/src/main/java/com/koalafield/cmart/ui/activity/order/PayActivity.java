@@ -203,19 +203,25 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                     Toast.makeText(PayActivity.this, "请选择支付方式", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //创建订单
-                Map<String, String> params = new HashMap<>();
-                params.put("scIds", datas);
-                params.put("deliveryId", String.valueOf(deliveryId));
-                params.put("addressId", String.valueOf(addRessId));
-                params.put("paymentId", String.valueOf(payId));
-                params.put("couponCode ", disCountCode);
-                params.put("bookTime", select_time.getText().toString().trim());
-                params.put("remark", "");
-                params.put("isUserScore", "false");
-                ICreateOrderPresenter orderPresenter = new CreateOrderPresenter(this);
-                orderPresenter.setParams(params);
-                orderPresenter.getData();
+                if (allowNext()){
+                    //创建订单
+                    Map<String, String> params = new HashMap<>();
+                    params.put("scIds", datas);
+                    params.put("deliveryId", String.valueOf(deliveryId));
+                    params.put("addressId", String.valueOf(addRessId));
+                    params.put("paymentId", String.valueOf(payId));
+                    params.put("couponCode ", disCountCode);
+                    params.put("bookTime", select_time.getText().toString().trim());
+                    params.put("remark", "");
+                    params.put("isUserScore", "false");
+                    ICreateOrderPresenter orderPresenter = new CreateOrderPresenter(this);
+                    orderPresenter.setParams(params);
+                    orderPresenter.getData();
+                }else {
+                    Toast.makeText(this,"重复点击的时间间隔太短",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 break;
             case R.id.discount_content:
                 Intent intent1 = new Intent(this,DisCountActivity.class);

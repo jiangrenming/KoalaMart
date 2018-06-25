@@ -52,7 +52,6 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     private ImageView categry_img;
 
 
-
     public SpinerPopWindow(Context context, List<T> list){
         super(context,null,R.style.dialog);
         this.mContext=context;
@@ -73,6 +72,8 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
         Display display = windowManager.getDefaultDisplay();
         setWidth(display.getWidth());
         setHeight((display.getHeight())/2);
+        // 设置背景颜色变暗
+        setBackgroundAlpha(0.7f);
         //设置背景
         ColorDrawable dw = new ColorDrawable(0x60000000);
         setBackgroundDrawable(dw);
@@ -157,9 +158,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
                     if (mContext != null && isShowing()){
                         dismiss();
                         // 设置背景颜色变暗
-                        WindowManager.LayoutParams lp = ((Activity)mContext).getWindow().getAttributes();
-                        lp.alpha = 1;
-                        ((Activity)mContext).getWindow().setAttributes(lp);
+                        setBackgroundAlpha(1);
                     }
                     mSelectTitle.select(data.get(position).getName());
                 }
@@ -198,7 +197,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
             setHeight(h);
         }
         // 设置背景颜色变暗
-        setBackgroundAlpha(0.7f);
+    //    setBackgroundAlpha(0.7f);
         super.showAsDropDown(anchor, xoff, yoff);
     }
 

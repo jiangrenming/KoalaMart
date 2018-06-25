@@ -26,7 +26,7 @@ android {
         debug {
             buildConfigField "String", "POST_URL", "${SIT_IP}"
             buildConfigField "String", "BANK_URL", "${MODE_SERVER}"
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     //        signingConfig signingConfigs.myConfig

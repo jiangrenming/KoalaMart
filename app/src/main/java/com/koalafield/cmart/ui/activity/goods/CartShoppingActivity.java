@@ -129,18 +129,24 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
                 }
                 break;
             case R.id.pay_goods: //结算
-                StringBuilder sb  = new StringBuilder();
-                if (mCartBean != null && mCartBean.size() >0 ){
-                    for (int i = 0; i < mCartBean.size(); i++) {
-                        if (mCartBean.get(i).isSelect()){
-                            sb.append(mCartBean.get(i).getId()).append(",");
-                        }
+
+                    if (allowNext()){
+                        StringBuilder sb  = new StringBuilder();
+                        if (mCartBean != null && mCartBean.size() >0 ){
+                            for (int i = 0; i < mCartBean.size(); i++) {
+                                if (mCartBean.get(i).isSelect()){
+                                    sb.append(mCartBean.get(i).getId()).append(",");
+                                }
+                            }
+                            String data = sb.substring(0, sb.length() - 1);
+                            Log.i("数据为：",data);
+                            Intent payIntent = new Intent(CartShoppingActivity.this, PayActivity.class);
+                            payIntent.putExtra("payDatas",data);
+                            startActivity(payIntent);
+                    }else {
+                        Toast.makeText(this,"重复点击太快",Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                    String data = sb.substring(0, sb.length() - 1);
-                    Log.i("数据为：",data);
-                    Intent payIntent = new Intent(CartShoppingActivity.this, PayActivity.class);
-                    payIntent.putExtra("payDatas",data);
-                    startActivity(payIntent);
                 }
                 break;
             case R.id.back:
