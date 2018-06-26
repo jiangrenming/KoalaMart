@@ -541,7 +541,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 }else {
                     select_time.setText(date + " " + timeInterval.getStartTime() + "-" + timeInterval.getEndTime());
                 }
-                if (deliveryId > 0 ) {
+                if (deliveryId > 0 && payId >0) {
                     changePrice();
                 }
             }
@@ -636,7 +636,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                         }
                     }
                     //改变价格
-                    if (payId > 0 ) {
+                    if (payId > 0 && deliveryId > 0) {
                         changePrice();
                     }
                 }
@@ -718,7 +718,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         params.put("addressId", String.valueOf(addRessId));
         params.put("paymentId", String.valueOf(payId));
         params.put("couponCode", disCountCode);
-        params.put("timeId", StringUtils.isEmpty(timeId) ? "" :timeId);
+        params.put("timeId", StringUtils.isEmpty(timeId) ? "0" :timeId);
         mPricePresenter = new PricePresenter(this);
         mPricePresenter.setParams(params);
         mPricePresenter.getData();
@@ -762,7 +762,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         if (event != null){
             discount_content.setText("满"+String.format("%.2f",  event.mDisCountBean.getMinBillUseTotalPrice())+"减"+String.format("%.2f",  event.mDisCountBean.getAmount()));
             disCountCode = event.mDisCountBean.getCode();
-            if (!StringUtils.isEmpty(disCountCode)){
+            if (payId > 0 && deliveryId > 0){
                 changePrice();
             }
         }

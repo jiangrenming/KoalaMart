@@ -18,15 +18,19 @@ import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.event.SelectEvent;
+import com.koalafield.cmart.bean.user.CountryCode;
 import com.koalafield.cmart.bean.user.RegisterBean;
 import com.koalafield.cmart.presenter.RegisterPresent;
 import com.koalafield.cmart.presenter.IRegsterPresent;
+import com.koalafield.cmart.presenter.user.CountryCodePresenter;
+import com.koalafield.cmart.presenter.user.ICountryCodePresenter;
 import com.koalafield.cmart.presenter.user.IMessageCodePresenter;
 import com.koalafield.cmart.presenter.user.MessageCodePresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.PersonActivity;
 import com.koalafield.cmart.ui.view.IRegesterView;
+import com.koalafield.cmart.ui.view.user.ICountryCodeView;
 import com.koalafield.cmart.ui.view.user.IMessageCodeView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
 import com.koalafield.cmart.utils.RegaxUtils;
@@ -37,6 +41,7 @@ import com.koalafield.cmart.utils.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,7 +56,8 @@ import butterknife.OnClick;
  * 注册界面
  */
 
-public class RegesterActivity extends BaseActivity<IRegsterPresent> implements IRegesterView<RegisterBean>,IMessageCodeView<BaseResponseBean> {
+public class RegesterActivity extends BaseActivity<IRegsterPresent> implements IRegesterView<RegisterBean>,
+        IMessageCodeView<BaseResponseBean>, ICountryCodeView<List<CountryCode>> {
 
 
     @BindView(R.id.back)
@@ -202,6 +208,8 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
                 return false;
             }
         });
+        ICountryCodePresenter presenter = new CountryCodePresenter(this);
+        presenter.getData();
     }
 
     @Override
@@ -314,7 +322,7 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
             if (remainSecond <= 0) {
                 register_btn.setEnabled(true);
                 register_btn.setText("获取验证码");
-                register_btn.setTextColor(AndoridSysUtils.getColorValueByResId(RegesterActivity.this, R.color.white));
+                register_btn.setTextColor(AndoridSysUtils.getColorValueByResId(RegesterActivity.this, R.color.blue));
                 register_btn.setBackgroundDrawable(getDrawable(R.drawable.register_code));
                 countDownTimer.cancel();// 取消
                 remainSecond = 60;
@@ -332,7 +340,7 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
             }
         }, 0, 1000);
         register_btn.setEnabled(false);
-        register_btn.setTextColor(AndoridSysUtils.getColorValueByResId(RegesterActivity.this, R.color.white));
+        register_btn.setTextColor(AndoridSysUtils.getColorValueByResId(RegesterActivity.this, R.color.blue));
     }
 
     @Override
@@ -354,9 +362,20 @@ public class RegesterActivity extends BaseActivity<IRegsterPresent> implements I
             if (requestCode == 10001){
                 if (data != null){
                     String countyrId = data.getStringExtra("countyrId");
-                    country_id.setText(String.valueOf(countyrId));
+                    country_id.setText(countyrId);
                 }
             }
         }
     }
+
+    @Override
+    public void onCountryCodeFul(List<CountryCode> data) {
+        if (data != null && data.size() >0){
+            String codeStr = data.get(0).CodeStr;
+            country_id.setText(codeStr);
+        }
+    }
+
+    @Override
+    public void onCountryCodeFailure(String message) {}
 }

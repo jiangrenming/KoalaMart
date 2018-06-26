@@ -79,8 +79,9 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         new FrontViewToMove(frontView, mListView,200);
         holder.setText(R.id.goods_cart_name,commodity.getName())
                 .setText(R.id.goods_cart_curreny,commodity.getCurrency()+":")
-                .setText(R.id.goods_cart_amount,commodity.getCurrentPrice())
+                .setText(R.id.goods_cart_amount, commodity.getCurrentPrice())
                 .setText(R.id.goods_cart_number,String.valueOf(item.getCount()));
+
 
         if (StringUtils.isEmpty(item.getColor()) && StringUtils.isEmpty(item.getSize())){
             color_size.setVisibility(View.GONE);
@@ -106,20 +107,20 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         }
         if (!StringUtils.isEmpty(item.getWeight())){
             goods_cart_weight.setVisibility(View.VISIBLE);
-            goods_cart_weight.setText(item.getWeight());
+            goods_cart_weight.setText("重量："+item.getWeight());
         }else {
             goods_cart_weight.setVisibility(View.GONE);
         }
 
         if (!StringUtils.isEmpty(item.getType())){
             goods_cart_type.setVisibility(View.VISIBLE);
-            goods_cart_type.setText(item.getType());
+            goods_cart_type.setText("类型："+item.getType());
         }else {
             goods_cart_type.setVisibility(View.GONE);
         }
         if (!StringUtils.isEmpty(item.getMaterial())){
             goods_cart_mater.setVisibility(View.VISIBLE);
-            goods_cart_mater.setText(item.getMaterial());
+            goods_cart_mater.setText("风格："+item.getMaterial());
         }else {
             goods_cart_mater.setVisibility(View.GONE);
         }

@@ -19,16 +19,7 @@
             android:fadingEdge="none"
             app:elevation="0dp">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:textSize="13sp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="已选商品"
-                android:textColor="@color/black" />
+
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_tool_bar_test_ctl"
@@ -151,10 +142,21 @@
                 </LinearLayout>
             </android.support.design.widget.CollapsingToolbarLayout>
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textSize="13sp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="已选商品"
+                android:textColor="@color/black" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/gray" />
+
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView

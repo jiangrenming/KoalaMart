@@ -3,6 +3,8 @@ package com.koalafield.cmart.ui.activity.order.fragment;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,11 +22,15 @@ import com.koalafield.cmart.presenter.order.IOrderPresenter;
 import com.koalafield.cmart.presenter.order.OrderPresenter;
 import com.koalafield.cmart.ui.view.order.IOrderView;
 import com.koalafield.cmart.utils.Constants;
+import com.koalafield.cmart.widget.FixedRecyclerView;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+
+import static com.koalafield.cmart.R.id.swipe_refresh;
 
 /**
  *
@@ -62,7 +68,18 @@ public class AllOrderFragment extends BaseFragment implements IOrderView<List<Or
                 presenter.getMoreData();
             }
         });
+        order_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int topRowVerticalPosition = (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+                mSwipeRefresh.setEnabled(topRowVerticalPosition >= 0);
+            }
+        });
     }
 
     @Override

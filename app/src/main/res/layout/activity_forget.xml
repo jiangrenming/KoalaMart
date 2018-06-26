@@ -2,8 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
+
     <include layout="@layout/top_header"/>
+
     <View
         android:layout_width="match_parent"
         android:background="@color/gray"
@@ -17,8 +20,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:scaleType="fitXY"
             android:src="@mipmap/phone" />
         <TextView
@@ -39,7 +42,6 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/gray"
             android:layout_height="match_parent"/>
 
         <EditText
@@ -66,10 +68,10 @@
         android:gravity="center_vertical"
         android:layout_height="50dp">
         <ImageView
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:scaleType="fitXY"
             android:src="@mipmap/unpwd"
-            android:layout_height="30dp" />
+            android:layout_height="25dp" />
         <EditText
             android:id="@+id/forget_code"
             android:layout_width="0dp"
@@ -86,7 +88,7 @@
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:gravity="center_vertical|center_horizontal"
-            android:textColor="@color/white"
+            android:textColor="@color/blue"
             android:layout_marginRight="15dp"
             android:background="@drawable/register_code"
             android:textSize="14sp"
@@ -102,24 +104,30 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_height="50dp">
+
+        <EditText
+            android:id="@+id/new_pwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入新密码(6-18位数字或字母)"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
         <ImageView
             android:layout_width="30dp"
             android:scaleType="fitXY"
             android:src="@mipmap/pwd"
             android:layout_height="30dp" />
-        <EditText
-            android:id="@+id/new_pwd"
-            android:layout_width="0dp"
-            android:layout_marginLeft="15dp"
-            android:hint="请输入新密码(6-18位数字或字母)"
-            android:inputType="textPassword"
-            android:textSize="12sp"
-            android:paddingLeft="10dp"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            android:background="@null"
-            android:layout_height="match_parent" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_light2"
+        android:layout_height="10dp"/>
     <TextView
         android:id="@+id/forget_comfirm"
         android:layout_width="match_parent"
@@ -127,8 +135,9 @@
         android:layout_marginTop="25dp"
         android:layout_marginRight="15dp"
         android:layout_height="40dp"
-        android:background="@drawable/register_comfirm"
+        android:background="@color/btn_red"
         android:gravity="center_horizontal|center_vertical"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:text="确定重置"/>
 </LinearLayout>

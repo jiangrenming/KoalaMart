@@ -34,11 +34,9 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
 
     @BindView(R.id.time_discount)
     RecyclerView time_discount;
-    @BindView(R.id.discount_refresh)
-    SwipeRefreshLayout discount_refresh;
+
     @BindView(R.id.empty_discount)
     LinearLayout empty_discount;
-    private  int pageIndex  = 0;
     private DisCountAdapter disCountAdapter;
     private IDisCountPresenter countPresenter;
 
@@ -49,14 +47,12 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
 
     @Override
     protected void initViews() {
-   //     initSwipeRefresh();
         disCountAdapter = new DisCountAdapter(mContext);
         RecyclerViewHelper.initRecyclerViewV(mContext,time_discount,true,disCountAdapter);
         disCountAdapter.setRequestDataListener(new OnRequestDataListener() {
             @Override
             public void onLoadMore() {
                 Map<String,String> params = new HashMap<>();
-                params.put("pageIndex",String.valueOf(pageIndex));
                 params.put("enabled",String.valueOf(0));
                 countPresenter.getMoreData();
             }
@@ -67,7 +63,6 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
     protected void updateViews() {
         countPresenter = new DisCountPresenter(this);
         Map<String,String> params = new HashMap<>();
-        params.put("pageIndex",String.valueOf(pageIndex));
         params.put("enabled",String.valueOf(0));
         countPresenter.setParams(params);
         countPresenter.getData();
@@ -79,7 +74,6 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
             Log.i("返回的数据:",data.get(i).toString());
         }
         if (data != null &&data.size() >0){
-            pageIndex++;
             disCountAdapter.updateItems(data);
         }
     }
@@ -96,9 +90,9 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
 
     @Override
     public void loadDisCountEmptyData() {
-        SwipeRefreshHelper.controlRefresh(discount_refresh,false);
+        SwipeRefreshHelper.controlRefresh(mSwipeRefresh,false);
         hideLoading();
-        discount_refresh.setVisibility(View.GONE);
+        mSwipeRefresh.setVisibility(View.GONE);
         empty_discount.setVisibility(View.VISIBLE);
     }
 
@@ -112,21 +106,5 @@ public class DisCountExprideFragment extends BaseFragment  implements IDisCountL
     public void loadDisCountMoreData(List<DisCountBean> data) {
         disCountAdapter.loadComplete();
         disCountAdapter.addItems(data);
-        pageIndex++;
     }
-    /**
-     * 初始化下拉刷新
-     */
-  /*  private void initSwipeRefresh() {
-        if (discount_refresh != null) {
-            SwipeRefreshHelper.init(discount_refresh, new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    pageIndex = 0;
-                    updateViews();
-                    SwipeRefreshHelper.controlRefresh(discount_refresh,false);
-                }
-            });
-        }
-    }*/
 }

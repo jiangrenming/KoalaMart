@@ -357,7 +357,7 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
     @Override
     public void skipGoodsDeatils(CartDataBean item) {
         Intent intent = new Intent(CartShoppingActivity.this,GoodsDetailActivity.class);
-        intent.putExtra("contentId",item.getId());
+        intent.putExtra("contentId",item.getContentId());
         startActivity(intent);
     }
 }
