@@ -14,21 +14,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
+            <com.koalafield.cmart.widget.FixedRecyclerView
                 android:id="@+id/order_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </RelativeLayout>
-   <!-- <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/order_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-      &lt;!&ndash;  <include layout="@layout/layout_common_empty"/>&ndash;&gt;
-    </FrameLayout>-->
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout
         android:id="@+id/empty_order"

@@ -541,7 +541,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 }else {
                     select_time.setText(date + " " + timeInterval.getStartTime() + "-" + timeInterval.getEndTime());
                 }
-                if (deliveryId > 0 && addRessId > 0) {
+                if (deliveryId > 0 ) {
                     changePrice();
                 }
             }
@@ -636,7 +636,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                         }
                     }
                     //改变价格
-                    if (payId > 0 && addRessId > 0) {
+                    if (payId > 0 ) {
                         changePrice();
                     }
                 }
@@ -760,8 +760,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void DisCountEvent(DisCountEvent event){
         if (event != null){
-            discount_content.setText(String.valueOf(event.mDisCountBean.getAmount()));
+            discount_content.setText("满"+String.format("%.2f",  event.mDisCountBean.getMinBillUseTotalPrice())+"减"+String.format("%.2f",  event.mDisCountBean.getAmount()));
             disCountCode = event.mDisCountBean.getCode();
+            if (!StringUtils.isEmpty(disCountCode)){
+                changePrice();
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.koalafield.cmart.adapter;
 
 import android.content.Context;
+import android.text.TextPaint;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,11 +37,15 @@ public class TimerAdapter extends BaseQuickAdapter<LeftTimer>{
         LinearLayout layout = holder.getView(R.id.time_item);
         name.setText(item.getDateStr());
         if (item.isSelect()){
-            layout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            name.setTextColor(mContext.getResources().getColor(R.color.btn_red));
+            layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
+            name.setTextColor(mContext.getResources().getColor(R.color.black));
+            TextPaint tp = name.getPaint();
+            tp.setFakeBoldText(true);
         }else {
             layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
             name.setTextColor(mContext.getResources().getColor(R.color.black));
+            TextPaint tp = name.getPaint();
+            tp.setFakeBoldText(false);
         }
     }
 }

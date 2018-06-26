@@ -307,19 +307,19 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void onPersonNumberSucessFul(PersonNumber data) {
         if (data != null) {
             int followCount = data.getFollowCount();
-            if (followCount <= 99) {
+            if (followCount <= 99 && followCount >=0) {
                 collection_num.setText(String.valueOf(followCount));
             } else {
                 collection_num.setText(String.format(Locale.CHINA, "%d+", 99));
             }
             int couponCount = data.getCouponCount();
-            if (couponCount <= 99) {
-                discount_num.setText(String.valueOf(followCount));
+            if (couponCount <= 99 && couponCount >=0) {
+                discount_num.setText(String.valueOf(couponCount));
             } else {
                 discount_num.setText(String.format(Locale.CHINA, "%d+", 99));
             }
             int scoreCount = data.getScoreCount();
-            if (scoreCount <= 99) {
+            if (scoreCount <= 99 && scoreCount >=0) {
                 counp_num.setText(String.valueOf(scoreCount));
             } else {
                 counp_num.setText(String.format(Locale.CHINA, "%d+", 99));

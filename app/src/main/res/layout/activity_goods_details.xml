@@ -83,8 +83,8 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/black"
                         android:lines="2"
-                        android:text="shidahsiasasu很大UI啥对啥uih" />
-    
+                        android:text="" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -101,8 +101,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/goods_detail_txt"
-                            android:text="AUD 2.89"
-                            android:textColor="@color/btn_red" />
+                            android:text="AUD 0.00"
+                            android:textColor="@color/red" />
                         <TextView
                             android:id="@+id/goods_detail_sale"
                             android:layout_width="wrap_content"
@@ -121,18 +121,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="折合人民币:" />
+                            android:text="折合人民币: " />
                         <TextView
                             android:id="@+id/goods_detail_CYN_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CYN 2.89"
-                            android:textColor="@color/btn_red" />
+                            android:text="CYN 0.00"
+                            android:textColor="@color/red" />
                     </LinearLayout>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="15dp"
                     android:background="@color/gray_light" />
                 <TextView
                     android:layout_width="match_parent"
@@ -201,6 +202,7 @@
         </FrameLayout>
     </com.koalafield.cmart.widget.MyBoundScrollView>
     <LinearLayout
+        android:id="@+id/collections"
         android:layout_width="match_parent"
         android:background="@color/gray_light"
         android:layout_height="50dp"
@@ -222,6 +224,7 @@
             android:layout_weight="1.5"
             android:layout_height="match_parent">
             <RelativeLayout
+                android:id="@+id/shopping_cart"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical|center_horizontal"
                 android:layout_height="match_parent">
@@ -245,37 +248,6 @@
                     tools:ignore="SmallSp" />
             </RelativeLayout>
         </FrameLayout>
-        <!--<LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2.5"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/goods_minus"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/minus" />
-                <EditText
-                    android:id="@+id/goods_number"
-                    android:layout_width="25dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@null"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="1" />
-                <ImageView
-                    android:id="@+id/goods_add"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/add" />
-        </LinearLayout>-->
         <LinearLayout
             android:id="@+id/pay_buy"
             android:layout_width="0dp"

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,13 +68,12 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     private void initPopup(){
         View view = mInflater.inflate(R.layout.popuwindow_categry, null);
         setContentView(view);
-        //设置PopupWindow宽高
-        WindowManager windowManager = mActivity.getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        setWidth(display.getWidth());
-        setHeight((display.getHeight())/2);
         // 设置背景颜色变暗
-        setBackgroundAlpha(0.7f);
+ //       setBackgroundAlpha(0.7f);
+        int screenWith=mActivity.getWindowManager().getDefaultDisplay().getWidth();
+        int screenHeight=mActivity.getWindowManager().getDefaultDisplay().getHeight();
+        this.setWidth(screenWith);
+        this.setHeight(screenHeight/2);
         //设置背景
         ColorDrawable dw = new ColorDrawable(0x60000000);
         setBackgroundDrawable(dw);
@@ -158,7 +158,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
                     if (mContext != null && isShowing()){
                         dismiss();
                         // 设置背景颜色变暗
-                        setBackgroundAlpha(1);
+                //        setBackgroundAlpha(1);
                     }
                     mSelectTitle.select(data.get(position).getName());
                 }
@@ -196,8 +196,6 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
             int h = anchor.getResources().getDisplayMetrics().heightPixels - rect.bottom;
             setHeight(h);
         }
-        // 设置背景颜色变暗
-    //    setBackgroundAlpha(0.7f);
         super.showAsDropDown(anchor, xoff, yoff);
     }
 
@@ -232,7 +230,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     @Override
     public void onDismiss() {
         // 设置背景颜色变暗
-        setBackgroundAlpha(1);
+   //     setBackgroundAlpha(1);
         dismiss();
     }
     //设置屏幕背景透明效果

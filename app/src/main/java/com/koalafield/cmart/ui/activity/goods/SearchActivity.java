@@ -17,9 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dl7.recycler.helper.RecyclerViewHelper;
-import com.flowlayouttag.FlowLayout;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.HotWordsAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
@@ -33,6 +31,7 @@ import com.koalafield.cmart.ui.activity.search.SearchListActivity;
 import com.koalafield.cmart.ui.activity.use.ChangeAddressActivity;
 import com.koalafield.cmart.ui.view.goods.IHotWordsView;
 import com.koalafield.cmart.utils.StringUtils;
+import com.koalafield.cmart.widget.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -154,9 +153,7 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
     @Override
     public void onHotWordsSucessFul(List<String> data) {
         if (data.size() >0){
-            hot_flowLayout.setColorful(false);
-            String[] array = data.toArray(new String[data.size()]);
-            hot_flowLayout.setData(array);
+            hot_flowLayout.setListData(data);
             hot_flowLayout.setOnTagClickListener(new FlowLayout.OnTagClickListener() {
                 @Override
                 public void TagClick(String text) {

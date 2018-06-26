@@ -275,7 +275,7 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="约合RMB:¥  1.00"
-                            android:textColor="@color/gray_light3"
+                            android:textColor="@color/gray_three"
                             android:textSize="12sp" />
                     </LinearLayout>
 

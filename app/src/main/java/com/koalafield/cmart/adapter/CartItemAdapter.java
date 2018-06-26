@@ -20,6 +20,7 @@ import com.koalafield.cmart.bean.cart.CartItemBean;
 import com.koalafield.cmart.bean.event.CartEvent;
 import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.StringUtils;
+import com.koalafield.cmart.widget.EmptyLayout;
 import com.koalafield.cmart.widget.FrontViewToMove;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,6 +56,7 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
 
     @Override
     protected void convert(BaseViewHolder holder, final CartDataBean item) {
+
         CartItemBean commodity = item.getCommodity();
         final ImageView iv_select = holder.getView(R.id.iv_select);
         ImageView goods_cart_minus = holder.getView(R.id.goods_cart_minus);
@@ -62,6 +64,13 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         final TextView goods_cart_number = holder.getView(R.id.goods_cart_number);
         TextView goods_cart_color = holder.getView(R.id.goods_cart_color);
         TextView goods_cart_size = holder.getView(R.id.goods_cart_size);
+        LinearLayout type_weight_matre = holder.getView(R.id.type_weight_matre);
+
+        LinearLayout color_size = holder.getView(R.id.color_size);
+        TextView goods_cart_type = holder.getView(R.id.goods_cart_type);
+        TextView goods_cart_weight = holder.getView(R.id.goods_cart_weight);
+        TextView goods_cart_mater = holder.getView(R.id.goods_cart_mater);
+
         Log.i("商品的数据:","数量="+item.getCount());
         TextView delete_item = holder.getView(R.id.btn_delete);
         ImageView img = holder.getView(R.id.goods_cart_img);
@@ -72,12 +81,49 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
                 .setText(R.id.goods_cart_curreny,commodity.getCurrency()+":")
                 .setText(R.id.goods_cart_amount,commodity.getCurrentPrice())
                 .setText(R.id.goods_cart_number,String.valueOf(item.getCount()));
+
+        if (StringUtils.isEmpty(item.getColor()) && StringUtils.isEmpty(item.getSize())){
+            color_size.setVisibility(View.GONE);
+        }else {
+            color_size.setVisibility(View.VISIBLE);
+        }
          if (!StringUtils.isEmpty(item.getColor())){
+             goods_cart_color.setVisibility(View.VISIBLE);
              goods_cart_color.setText("颜色:"+item.getColor());
+         }else {
+             goods_cart_color.setVisibility(View.GONE);
          }
         if (!StringUtils.isEmpty(item.getSize())){
+            goods_cart_size.setVisibility(View.VISIBLE);
             goods_cart_size.setText("尺寸:"+item.getSize());
+        }else {
+            goods_cart_size.setVisibility(View.VISIBLE);
         }
+        if (StringUtils.isEmpty(item.getType()) && StringUtils.isEmpty(item.getWeight()) && StringUtils.isEmpty(item.getMaterial())){
+            type_weight_matre.setVisibility(View.GONE);
+        }else {
+            type_weight_matre.setVisibility(View.VISIBLE);
+        }
+        if (!StringUtils.isEmpty(item.getWeight())){
+            goods_cart_weight.setVisibility(View.VISIBLE);
+            goods_cart_weight.setText(item.getWeight());
+        }else {
+            goods_cart_weight.setVisibility(View.GONE);
+        }
+
+        if (!StringUtils.isEmpty(item.getType())){
+            goods_cart_type.setVisibility(View.VISIBLE);
+            goods_cart_type.setText(item.getType());
+        }else {
+            goods_cart_type.setVisibility(View.GONE);
+        }
+        if (!StringUtils.isEmpty(item.getMaterial())){
+            goods_cart_mater.setVisibility(View.VISIBLE);
+            goods_cart_mater.setText(item.getMaterial());
+        }else {
+            goods_cart_mater.setVisibility(View.GONE);
+        }
+
         Glide.with(mContext).load(commodity.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(img);
         if (item.isSelect()){
             iv_select.setImageResource(R.mipmap.select);

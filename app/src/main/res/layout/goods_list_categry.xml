@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -30,8 +30,8 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/edit_bg"
-            android:hint="搜索您想搜索的东西"
             android:gravity="center_vertical"
+            android:hint="搜索您想搜索的东西"
             android:imeOptions="actionSearch"
             android:paddingLeft="2dp"
             android:textSize="12sp" />
@@ -53,28 +53,28 @@
             <TextView
                 android:id="@+id/search_cart_num"
                 style="@style/bg_text_style"
-                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:textSize="8sp"
+                android:visibility="gone"
                 tools:ignore="SmallSp" />
         </FrameLayout>
     </LinearLayout>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/scrollview"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:background="#ffffff">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/id_appbarlayout"
             android:layout_width="match_parent"
-            android:fitsSystemWindows="true"
-            app:elevation="0dp"
+            android:layout_height="wrap_content"
             android:fadingEdge="none"
-            android:layout_height="wrap_content">
+            android:fitsSystemWindows="true"
+            app:elevation="0dp">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_tool_bar_test_ctl"
@@ -89,37 +89,40 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/brand_list"
                     android:layout_width="match_parent"
-                    android:background="@color/white"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="match_parent" />
+                    android:background="@color/white" />
             </android.support.design.widget.CollapsingToolbarLayout>
             <!--填充置顶的布局-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/categry_list"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
             <View
                 android:layout_width="match_parent"
-                android:background="@color/edit_e"
-                android:layout_height="0.5dp"/>
+                android:layout_height="0.5dp"
+                android:background="@color/edit_e" />
         </android.support.design.widget.AppBarLayout>
+
         <com.koalafield.cmart.zoomswifresh.GZoomSwifrefresh
+            android:id="@+id/swiperefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
                 android:layout_width="match_parent"
-               android:layout_marginTop="10dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_height="wrap_content"
-                android:id="@+id/swiperefresh">
-                <FrameLayout
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/goods_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/goods_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    <!--<include layout="@layout/layout_common_empty"/>-->
-                </FrameLayout>
-            </com.koalafield.cmart.zoomswifresh.GZoomSwifrefresh>
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </com.koalafield.cmart.zoomswifresh.GZoomSwifrefresh>
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

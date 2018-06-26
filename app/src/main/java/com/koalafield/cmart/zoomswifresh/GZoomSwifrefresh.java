@@ -546,8 +546,7 @@ public class GZoomSwifrefresh extends ViewGroup implements NestedScrollingParent
     }
 
 
-    public void setOnBottomRefreshListenrer(OnBottomRefreshListener listener)
-    {
+    public void setOnBottomRefreshListenrer(OnBottomRefreshListener listener){
         mListenerBottom = listener;
     }
 

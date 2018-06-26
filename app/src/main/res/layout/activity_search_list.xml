@@ -73,9 +73,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.00"
-            android:textColor="@color/text_black_light"
             android:gravity="center_horizontal|center_vertical"
-            android:text="查看全部分类" />
+            android:text="查看全部分类"
+            android:textColor="@color/text_black_light" />
 
         <TextView
             android:id="@+id/currentPrice"

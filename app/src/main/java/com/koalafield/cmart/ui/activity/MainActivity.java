@@ -213,7 +213,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener,IC
                         tv_cart_num.setText(String.valueOf(0));
                         tv_cart_num.setVisibility(View.GONE);
                     }else {
-                        tv_cart_num.setText(String.valueOf(mCount-event.nCount));
+                        if (mCount-event.nCount == 0){
+                            tv_cart_num.setVisibility(View.GONE);
+                        }else {
+                            tv_cart_num.setText(String.valueOf(mCount-event.nCount));
+                        }
                     }
                 }else if (event.type == 2){  //购物车里减
                     String str = tv_cart_num.getText().toString();

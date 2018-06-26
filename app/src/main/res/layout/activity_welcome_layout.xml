@@ -7,12 +7,12 @@
         android:id="@+id/vp_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="63dp"
         android:gravity="center"
-        android:orientation="horizontal" />
+        android:orientation="horizontal" />-->
 </RelativeLayout>

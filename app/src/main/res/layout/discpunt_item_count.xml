@@ -16,6 +16,7 @@
         android:background="@mipmap/coupons_right_red"
         android:layout_height="80dp">
         <TextView
+            android:id="@+id/title_price"
             android:layout_width="match_parent"
             android:text="5 AUD"
             android:textColor="@color/white"
@@ -24,6 +25,7 @@
             android:layout_weight="1"
             android:layout_height="0dp" />
         <TextView
+            android:id="@+id/title_price_activity"
             android:layout_width="match_parent"
             android:text="满10减5"
             android:textSize="14sp"
@@ -36,34 +38,33 @@
     <LinearLayout
         android:layout_width="0dp"
         android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="5dp"
+        android:paddingLeft="10dp"
         android:layout_weight="1"
         android:background="@mipmap/coupons_left_white"
         android:paddingTop="5dp"
         android:layout_height="80dp">
         <TextView
+            android:id="@+id/_price"
             android:layout_width="match_parent"
-            android:text="5 AUD"
+            android:text="5 AUD劵"
             android:textColor="@color/black"
-            android:gravity="center_horizontal"
             android:textSize="16sp"
             android:layout_weight="1"
             android:layout_height="0dp" />
         <TextView
+            android:id="@+id/where_price"
             android:layout_width="match_parent"
             android:text="全场通用(特殊商品除外)"
             android:textSize="14sp"
-            android:textColor="@color/gray"
-            android:gravity="center_horizontal"
+            android:textColor="@color/discount_txt"
             android:layout_weight="1"
             android:layout_height="0dp"/>
         <TextView
+            android:id="@+id/expride_time"
             android:layout_width="match_parent"
             android:text="过期时间:2018.08.1"
             android:textSize="14sp"
-            android:textColor="@color/gray"
-            android:gravity="center_horizontal"
+            android:textColor="@color/discount_txt"
             android:layout_weight="1"
             android:layout_height="0dp" />
     </LinearLayout>

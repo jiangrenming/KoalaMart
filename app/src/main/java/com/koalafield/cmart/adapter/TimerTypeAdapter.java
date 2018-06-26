@@ -34,15 +34,15 @@ public class TimerTypeAdapter extends BaseQuickAdapter<Delivery> {
         TextView type_time = holder.getView(R.id.type_time);
         type_time.setText(item.getDeliveryName());
         if (item.isTypeSelect()){
-            time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
-            type_time.setTextColor(mContext.getResources().getColor(R.color.black));
-            TextPaint tp = type_time.getPaint();
-            tp.setFakeBoldText(true);
+            time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.red));
+            type_time.setTextColor(mContext.getResources().getColor(R.color.white));
+    //        TextPaint tp = type_time.getPaint();
+   //         tp.setFakeBoldText(true);
         }else {
             time_layout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light));
             type_time.setTextColor(mContext.getResources().getColor(R.color.black));
-            TextPaint tp = type_time.getPaint();
-            tp.setFakeBoldText(false);
+      //      TextPaint tp = type_time.getPaint();
+     //       tp.setFakeBoldText(false);
         }
     }
 }

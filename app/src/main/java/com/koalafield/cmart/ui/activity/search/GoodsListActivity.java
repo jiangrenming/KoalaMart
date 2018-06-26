@@ -121,7 +121,6 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     @Override
     public void initDatas() {
         mCateId = getIntent().getIntExtra("cateId", -1);
-        //      typeBrand = getIntent().getIntExtra("typeBrand",-1);
         initRefreshLayout();
         String tickets = ShareBankPreferenceUtils.getString("tickets", null);
         if (!StringUtils.isEmpty(tickets)) {
@@ -349,9 +348,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     }
 
     @Override
-    public void onEmptyData() {
-
-    }
+    public void onEmptyData() {}
 
     @Override
     public void loadMoreData(CateBrandGoodsListBean data) {
@@ -364,7 +361,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     public void loadNoMore() {
         goodsAdapter.loadComplete();
         goodsAdapter.noMoreData();
-        swiperefresh.setBottomRefreshing(false);
+        cancleLoading();
     }
 
     /**
@@ -379,7 +376,13 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
                 cancleLoading();
             }
         });
-        swiperefresh.setBottomRefreshing(false);
+        swiperefresh.setOnBottomRefreshListenrer(new GZoomSwifrefresh.OnBottomRefreshListener() {
+            @Override
+            public void onBottomRefresh() {
+            //    requestData();
+                cancleLoading();
+            }
+        });
     }
 
     /**
@@ -389,6 +392,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
         if (swiperefresh.isRefreshing()) {
             swiperefresh.setRefreshing(false);
         }
+        swiperefresh.setBottomRefreshing(false);
     }
 
     @Override

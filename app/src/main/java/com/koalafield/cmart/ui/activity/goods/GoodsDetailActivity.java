@@ -134,6 +134,10 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     RecyclerView comment_content;
     @BindView(R.id.pay_buy)
     LinearLayout pay_buy;
+    @BindView(R.id.collections)
+    LinearLayout collections;
+    @BindView(R.id.shopping_cart)
+    RelativeLayout shopping_cart;
 
     private  int contentId;
     private IGoodsDetailPresenter mGoodsDetailPresenter;
@@ -180,7 +184,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     }
 
     private  int clickType ;
-    @OnClick({R.id.pay_goods,/*R.id.goods_minus,R.id.goods_add,*/R.id.goods_collection,R.id.judget_more,R.id.goods_car_img,R.id.pay_buy,R.id.goods_back})
+    @OnClick({R.id.pay_goods,/*R.id.goods_minus,R.id.goods_add,*/R.id.collections,R.id.judget_more,R.id.shopping_cart,R.id.pay_buy,R.id.goods_back})
     public  void goodsClick(View view){
         String tickets = null;
         String num = null;
@@ -197,17 +201,17 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                     startActivity(intent);
                 }
                 break;
-            case R.id.goods_collection:
+            case R.id.collections:
                  tickets = ShareBankPreferenceUtils.getString("tickets", null);
                 if (!StringUtils.isEmpty(tickets)){
                     if (!isSelect){
                           Map<String,String> params = new HashMap<>();
-                          params.put("contentId",String.valueOf(mBean.getId()));
+                          params.put("contentId",null != mBean ? String.valueOf(mBean.getId()) :"");
                           IGoodsCollectionPresenter collection = new GoodsCollectionPresenter(this);
                           collection.getDetails(params);
                     }else {
                         Map<String,String> params = new HashMap<>();
-                        params.put("contentId",String.valueOf(mBean.getId()));
+                        params.put("contentId",null != mBean ? String.valueOf(mBean.getId()) :"");
                         IGoodsCollectionDelPresenter collectionDel = new GoodsCollectionDelPresenter(this);
                         collectionDel.getDetails(params);
                     }
@@ -223,7 +227,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
                 startActivity(intent);
                 overridePendingTransition(R.anim.comment_anim_out, R.anim.comment_anim_in);
                 break;
-            case R.id.goods_car_img:
+            case R.id.shopping_cart:
                 tickets = ShareBankPreferenceUtils.getString("tickets", null);
                 if (!StringUtils.isEmpty(tickets)){
                     startActivity(new Intent(GoodsDetailActivity.this,CartShoppingActivity.class));

@@ -32,8 +32,8 @@ public class WelcomeActivity extends Activity  implements PermissionsUtil.IPermi
 
     @BindView(R.id.vp_tip)
     ViewPager vp_tip;
-    @BindView(R.id.ll_container)
-    LinearLayout ll_container;
+   /* @BindView(R.id.ll_container)
+    LinearLayout ll_container;*/
 
     private int  mCurrentIndex = 0 ; //当前小圆点的位置
     private int [] images = {R.mipmap.welcome,R.mipmap.welcome1,R.mipmap.welcome2,R.mipmap.welcome3};
@@ -88,8 +88,16 @@ public class WelcomeActivity extends Activity  implements PermissionsUtil.IPermi
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setImageResource(images[i]);
             imageList.add(imageView);
+            if (i == images.length-1){
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        skipActivity();//切换界面
+                    }
+                });
+            }
         }
-        for (int i = 0; i < images.length ; i++) {
+       /* for (int i = 0; i < images.length ; i++) {
             ImageView dot = new ImageView(this);
             if (i == mCurrentIndex) {
                 dot.setImageResource(R.drawable.cirle_blue);//设置当前页的圆点
@@ -102,7 +110,7 @@ public class WelcomeActivity extends Activity  implements PermissionsUtil.IPermi
             }
             dot.setLayoutParams(layoutParams);
             ll_container.addView(dot) ;//将圆点添加到容器中
-        }
+        }*/
 
         TipPagerAdapter adapter = new TipPagerAdapter(imageList);
         vp_tip.setAdapter(adapter);
@@ -115,14 +123,14 @@ public class WelcomeActivity extends Activity  implements PermissionsUtil.IPermi
             public void onPageSelected(int position) {
             //根据监听的页面改变当前页对应的小圆点
                 mCurrentIndex = position;
-                for (int i = 0; i < ll_container.getChildCount(); i++) {
+                /*for (int i = 0; i < ll_container.getChildCount(); i++) {
                     ImageView imageView = (ImageView) ll_container.getChildAt(i);
                     if (i == position) {
                         imageView.setImageResource(R.drawable.cirle_blue);
                     } else {
                         imageView.setImageResource(R.drawable.cirle_gary);
                     }
-                }
+                }*/
             }
 
             @Override
@@ -136,16 +144,18 @@ public class WelcomeActivity extends Activity  implements PermissionsUtil.IPermi
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         startX = motionEvent.getX();
-
                         break;
                     case MotionEvent.ACTION_UP:
                         endX = motionEvent.getX();
                         //获取屏幕的宽度
                         int width = getNoHasVirtualKey();
                         //根据滑动的距离来切换界面
-                        if (mCurrentIndex == ll_container.getChildCount()-1 && startX - endX >= (width / 5)) {
+                        if (mCurrentIndex == imageList.size()-1 && startX - endX >= (width / 5)) {
                             skipActivity();//切换界面
                         }
+
+                        break;
+                    default:
                         break;
                 }
                 return false;
