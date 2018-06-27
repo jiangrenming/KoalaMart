@@ -18,6 +18,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
 
     private IDisCountListView disCountListView;
     private Map<String,String> params ;
+    private int pageIndex = 0;
 
 
     public DisCountPresenter( IDisCountListView disCountListView){
@@ -27,6 +28,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
 
     @Override
     public void getData() {
+        params.put("pageIndex",String.valueOf(0));
         ApiManager.getDisCountList(params).subscribe(new SubScribeCallBack<List<DisCountBean>>(new CallBack() {
             @Override
             public void onInit() {
@@ -39,6 +41,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
                     List<DisCountBean> disCountBeen = (List<DisCountBean>) data;
                     if (disCountBeen != null && disCountBeen.size() >0){
                         disCountListView.onDisCountSucessFul(disCountBeen);
+                        pageIndex++;
                     }else {
                         disCountListView.loadDisCountEmptyData();
                     }
@@ -62,6 +65,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
 
     @Override
     public void getMoreData() {
+        params.put("pageIndex",String.valueOf(pageIndex));
         ApiManager.getDisCountList(params).subscribe(new SubScribeCallBack<List<DisCountBean>>(new CallBack() {
             @Override
             public void onInit() {
@@ -74,6 +78,7 @@ public class DisCountPresenter implements  IDisCountPresenter{
                     List<DisCountBean> disCountBeen = (List<DisCountBean>) data;
                     if (disCountBeen != null && disCountBeen.size() >0){
                         disCountListView.loadDisCountMoreData(disCountBeen);
+                        pageIndex++;
                     }else {
                         disCountListView.loadDisCountNoMoreData();
                     }

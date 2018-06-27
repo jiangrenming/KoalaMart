@@ -17,10 +17,14 @@ import android.widget.Toast;
 import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.activity.BaseActivity;
+import com.koalafield.cmart.bean.user.CountryCode;
+import com.koalafield.cmart.presenter.user.CountryCodePresenter;
+import com.koalafield.cmart.presenter.user.ICountryCodePresenter;
 import com.koalafield.cmart.presenter.user.IMessageCodePresenter;
 import com.koalafield.cmart.presenter.user.IResetPwdPresenter;
 import com.koalafield.cmart.presenter.user.MessageCodePresenter;
 import com.koalafield.cmart.presenter.user.ResetPwdPresenter;
+import com.koalafield.cmart.ui.view.user.ICountryCodeView;
 import com.koalafield.cmart.ui.view.user.IMessageCodeView;
 import com.koalafield.cmart.ui.view.user.IResetPwdView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
@@ -28,6 +32,7 @@ import com.koalafield.cmart.utils.RegaxUtils;
 import com.koalafield.cmart.utils.StringUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,7 +44,8 @@ import butterknife.OnClick;
  * Created by jiangrenming on 2018/6/4.
  */
 
-public class ForgetPwdActivity extends BaseActivity implements IMessageCodeView<BaseResponseBean>,IResetPwdView<BaseResponseBean> {
+public class ForgetPwdActivity extends BaseActivity implements IMessageCodeView<BaseResponseBean>,IResetPwdView<BaseResponseBean>
+,ICountryCodeView<List<CountryCode>> {
 
     @BindView(R.id.forget_phone)
     EditText forget_phone;
@@ -138,6 +144,8 @@ public class ForgetPwdActivity extends BaseActivity implements IMessageCodeView<
                 return false;
             }
         });
+        ICountryCodePresenter presenter = new CountryCodePresenter(this);
+        presenter.getData();
     }
 
     @OnClick({R.id.forget_btn,R.id.country_id,R.id.forget_comfirm,R.id.back})
@@ -227,7 +235,7 @@ public class ForgetPwdActivity extends BaseActivity implements IMessageCodeView<
             if (remainSecond <= 0) {
                 forget_btn.setEnabled(true);
                 forget_btn.setText("获取验证码");
-                forget_btn.setTextColor(AndoridSysUtils.getColorValueByResId(ForgetPwdActivity.this, R.color.white));
+                forget_btn.setTextColor(AndoridSysUtils.getColorValueByResId(ForgetPwdActivity.this, R.color.blue));
                 forget_btn.setBackgroundDrawable(getDrawable(R.drawable.register_code));
                 countDownTimer.cancel();// 取消
                 remainSecond = 60;
@@ -245,7 +253,7 @@ public class ForgetPwdActivity extends BaseActivity implements IMessageCodeView<
             }
         }, 0, 1000);
         forget_btn.setEnabled(false);
-        forget_btn.setTextColor(AndoridSysUtils.getColorValueByResId(ForgetPwdActivity.this, R.color.white));
+        forget_btn.setTextColor(AndoridSysUtils.getColorValueByResId(ForgetPwdActivity.this, R.color.blue));
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -254,7 +262,7 @@ public class ForgetPwdActivity extends BaseActivity implements IMessageCodeView<
             if (requestCode == 10002){
                 if (data != null){
                     String countyrId = data.getStringExtra("countyrId");
-                    country_id.setText(String.valueOf(countyrId));
+                    country_id.setText(countyrId);
                 }
             }
         }
@@ -271,5 +279,17 @@ public class ForgetPwdActivity extends BaseActivity implements IMessageCodeView<
     @Override
     public void onResetPwdFailure(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCountryCodeFul(List<CountryCode> data) {
+        if (data != null && data.size() >0){
+            country_id.setText(data.get(0).getCodeStr());
+        }
+    }
+
+    @Override
+    public void onCountryCodeFailure(String message) {
+
     }
 }

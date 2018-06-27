@@ -309,7 +309,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     @Override
     public void skipGoodsDeatils(CartDataBean item) {
         Intent intent = new Intent(CartActivity.this,GoodsDetailActivity.class);
-        intent.putExtra("contentId",item.getId());
+        intent.putExtra("contentId",item.getContentId());
         startActivity(intent);
     }
 

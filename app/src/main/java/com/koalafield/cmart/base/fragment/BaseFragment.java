@@ -121,6 +121,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment im
                 @Override
                 public void onRefresh() {
                     updateViews();
+                    SwipeRefreshHelper.controlRefresh(mSwipeRefresh,false);
                 }
             });
         }

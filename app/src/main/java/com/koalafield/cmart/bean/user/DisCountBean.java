@@ -13,7 +13,7 @@ public class DisCountBean implements Serializable {
     private double Amount;
     private String Expire;
     private int Deduct;
-    private String MinBillUseTotalPrice;
+    private double MinBillUseTotalPrice;
 
     public String getCode() {
         return Code;
@@ -47,11 +47,11 @@ public class DisCountBean implements Serializable {
         Deduct = deduct;
     }
 
-    public String getMinBillUseTotalPrice() {
+    public double getMinBillUseTotalPrice() {
         return MinBillUseTotalPrice;
     }
 
-    public void setMinBillUseTotalPrice(String minBillUseTotalPrice) {
+    public void setMinBillUseTotalPrice(double minBillUseTotalPrice) {
         MinBillUseTotalPrice = minBillUseTotalPrice;
     }
 

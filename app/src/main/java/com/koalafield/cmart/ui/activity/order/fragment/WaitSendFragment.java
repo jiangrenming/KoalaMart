@@ -62,6 +62,18 @@ public class WaitSendFragment extends BaseFragment implements IOrderView<List<Or
                 presenter.getMoreData();
             }
         });
+        order_recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int topRowVerticalPosition = (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+                mSwipeRefresh.setEnabled(topRowVerticalPosition >= 0);
+            }
+        });
     }
 
     @Override

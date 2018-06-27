@@ -45,6 +45,7 @@ import com.koalafield.cmart.ui.activity.use.AboutUsActivity;
 import com.koalafield.cmart.ui.activity.use.CollectionActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
 import com.koalafield.cmart.ui.activity.use.PurchareOffActivity;
+import com.koalafield.cmart.ui.activity.use.ShareActivity;
 import com.koalafield.cmart.ui.view.home.IBananerView;
 import com.koalafield.cmart.ui.view.home.IGoodsCategryView;
 import com.koalafield.cmart.ui.view.home.IHomeToolsView;
@@ -236,6 +237,14 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                     }else if ("FollowList".equals(toolsBarBean.getTypeName())){
                         if (!StringUtils.isEmpty(tickets)){
                             Intent intent = new Intent(HomeActivity.this,CollectionActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }else if ("ShareApp".equals(toolsBarBean.getTypeName())){
+                        if (!StringUtils.isEmpty(tickets)){
+                            Intent intent = new Intent(HomeActivity.this,ShareActivity.class);
                             startActivity(intent);
                         }else {
                             Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();

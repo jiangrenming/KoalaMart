@@ -16,6 +16,7 @@ import com.koalafield.cmart.bean.order.OrderItemAttrs;
 import com.koalafield.cmart.bean.order.OrderListBean;
 import com.koalafield.cmart.ui.activity.goods.GoodsDetailActivity;
 import com.koalafield.cmart.ui.activity.order.OrderDetailsActivity;
+import com.koalafield.cmart.widget.FixedRecyclerView;
 
 import java.util.List;
 
