@@ -110,9 +110,7 @@ public class ScoresActivity extends BaseActivity implements IScoresView<List<Sco
     public void onScoresFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(ScoresActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 

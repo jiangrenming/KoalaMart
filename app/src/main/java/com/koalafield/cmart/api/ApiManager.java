@@ -213,6 +213,13 @@ public class ApiManager {
                 .map(getAvtor());
     }
 
+    /**
+     * 分享成功回调
+     */
+    public static Flowable<BaseResponseBean> shareCallBack(Map<String,String> params){
+        return apiSubscribe(AndoridApplication.apiService.shareCallBack(getHeaders(),setParams(params)))
+                .map(shares());
+    }
 
     /************************************订单结算********************************/
 
@@ -519,6 +526,18 @@ public class ApiManager {
      * 确认订单
      */
     private static Function<BaseResponseBean,BaseResponseBean> cancleOrder() {
+        return new Function<BaseResponseBean, BaseResponseBean>() {
+            @Override
+            public BaseResponseBean apply(BaseResponseBean response) throws Exception {
+                Log.i("返回的数据:",response.getCode()+"");
+                return  response;
+            }
+        };
+    }
+    /**
+     *分享成功回调
+     */
+    private static Function<BaseResponseBean,BaseResponseBean> shares() {
         return new Function<BaseResponseBean, BaseResponseBean>() {
             @Override
             public BaseResponseBean apply(BaseResponseBean response) throws Exception {

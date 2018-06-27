@@ -1,6 +1,7 @@
 package com.koalafield.cmart.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.base.presenter.IBasePresenter;
+import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 
 /**
  * Created by jiangrenming on 2018/5/13.
@@ -84,5 +86,18 @@ public abstract class TabBaseActivity extends BaseActivity {
                 .placeholder(errorImageId)
                 .error(errorImageId)
                 .into(imageView);
+    }
+
+    @Override
+    public  void skipLogin(Context context){
+        ShareBankPreferenceUtils.clearData("tickets");
+        Intent intent = new Intent(context,LoginActivity.class);
+        if (context != null && context instanceof PersonActivity){
+            intent.putExtra("type",1);
+        }else if ( context instanceof CartActivity){
+            intent.putExtra("type",2);
+        }
+        startActivity(intent);
+        finish();
     }
 }

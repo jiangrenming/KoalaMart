@@ -451,9 +451,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void onOrderDetailsFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(OrderDetailsActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -491,9 +489,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void onPaySdkFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(OrderDetailsActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -517,9 +513,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void onFailureComfirmOrder(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
 
     }
@@ -536,9 +530,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void onFailureCancleOrder(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 }

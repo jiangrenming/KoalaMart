@@ -69,7 +69,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
         View view = mInflater.inflate(R.layout.popuwindow_categry, null);
         setContentView(view);
         // 设置背景颜色变暗
- //       setBackgroundAlpha(0.7f);
+
         int screenWith=mActivity.getWindowManager().getDefaultDisplay().getWidth();
         int screenHeight=mActivity.getWindowManager().getDefaultDisplay().getHeight();
         this.setWidth(screenWith);
@@ -80,6 +80,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
         setOutsideTouchable(true);
         setFocusable(true);
         setOnDismissListener(this);
+       setBackgroundAlpha(0.7f);
         categry_one =  view.findViewById(R.id.categry_one);
         categry_two =  view.findViewById(R.id.categry_two);
         three = view.findViewById(R.id.categry_three);
@@ -158,7 +159,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
                     if (mContext != null && isShowing()){
                         dismiss();
                         // 设置背景颜色变暗
-                //        setBackgroundAlpha(1);
+                       setBackgroundAlpha(1);
                     }
                     mSelectTitle.select(data.get(position).getName());
                 }
@@ -230,7 +231,7 @@ public  class SpinerPopWindow<T> extends PopupWindow implements ICategryTwoView<
     @Override
     public void onDismiss() {
         // 设置背景颜色变暗
-   //     setBackgroundAlpha(1);
+        setBackgroundAlpha(1);
         dismiss();
     }
     //设置屏幕背景透明效果

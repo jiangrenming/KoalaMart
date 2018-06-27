@@ -112,10 +112,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
         String tickets = ShareBankPreferenceUtils.getString("tickets", null);
         Log.i("返回的tickes", tickets + "");
         if (StringUtils.isEmpty(tickets)) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type", 1);
-            startActivity(intent);
-            finish();
+           skipLogin(this);
         }
         return R.layout.fragment_person;
     }
@@ -129,17 +126,23 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         String tickets = ShareBankPreferenceUtils.getString("tickets", null);
-        Log.i("返回的tickes", tickets + "");
+        Log.i("返回的tickes---", tickets + "");
         if (!StringUtils.isEmpty(tickets)) {
             IInfosPresenter infosPresenter = new InfosPresenter(this);
             infosPresenter.getData();
+        }else {
+            skipLogin(this);
         }
     }
 
     @Override
     public void upDateViews() {
-        IPersonNumberPresenter personNumberPresenter = new PersonNumberPresenter(this);
-        personNumberPresenter.getData();
+        String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+        Log.i("返回的tickes", tickets + "");
+        if (!StringUtils.isEmpty(tickets)) {
+            IPersonNumberPresenter personNumberPresenter = new PersonNumberPresenter(this);
+            personNumberPresenter.getData();
+        }
     }
 
     @OnClick({R.id.share, R.id.person_av, R.id.order_infos, R.id.no_pay, R.id.pay_wait, R.id.wait_self, R.id.old_buy, R.id.discount,
@@ -331,9 +334,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void onPersonNumberFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(PersonActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -350,9 +351,7 @@ public class PersonActivity extends TabBaseActivity implements View.OnClickListe
     public void onInfosFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(PersonActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 

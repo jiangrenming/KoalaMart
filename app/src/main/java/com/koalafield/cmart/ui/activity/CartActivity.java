@@ -135,11 +135,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         Log.e("查找列表失败","异常信息:"+message);
         Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            //session去重新登录
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
-            startActivity(intent);
-            finish();
+           skipLogin(this);
         }
     }
 
@@ -339,11 +335,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     public void onClearFailure(String message,int code) {
         Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            //session去重新登录
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
-            startActivity(intent);
-            finish();
+            skipLogin(this);
         }
     }
 
@@ -373,11 +365,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     public void onChangeItemFailure(String message,int code) {
         Toast.makeText(CartActivity.this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            //session去重新登录
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",2);
-            startActivity(intent);
-            finish();
+            skipLogin(this);
         }
     }
 }

@@ -570,9 +570,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     public void onNumberFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -656,11 +654,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     @Override
     public void onGoodsDetailsFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        /*if (code == 401){
-            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
-        }*/
+
     }
 
     /**
@@ -720,9 +714,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     public void onGoodsCollectionsFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -744,9 +736,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     public void onGoodsCollectionDelFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }    }
 
     //添加购物车
@@ -780,9 +770,7 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     public void onChangeItemFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(GoodsDetailActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 

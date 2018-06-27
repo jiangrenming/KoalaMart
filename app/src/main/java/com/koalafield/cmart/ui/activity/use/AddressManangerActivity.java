@@ -194,9 +194,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
         Log.i("异常的信息:", message);
         Toast.makeText(AddressManangerActivity.this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(AddressManangerActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -223,9 +221,7 @@ public class AddressManangerActivity extends BaseActivity implements IAddressLis
     public void onDelAddressFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(AddressManangerActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 

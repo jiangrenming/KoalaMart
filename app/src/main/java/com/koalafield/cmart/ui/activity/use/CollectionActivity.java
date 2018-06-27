@@ -149,9 +149,7 @@ public class CollectionActivity extends BaseActivity implements ICollectionView<
     public void onCollectionFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(CollectionActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -189,9 +187,7 @@ public class CollectionActivity extends BaseActivity implements ICollectionView<
     public void onGoodsCollectionDelFailure(String message,int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(CollectionActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 }

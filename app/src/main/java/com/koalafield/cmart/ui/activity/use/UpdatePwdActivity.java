@@ -155,9 +155,7 @@ public class UpdatePwdActivity extends BaseActivity implements IChangePwdView<Ba
     public void onChangePwdFailure(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 }

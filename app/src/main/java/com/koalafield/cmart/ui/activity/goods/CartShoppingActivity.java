@@ -230,9 +230,7 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
     public void onClearFailure(String message,int code) {
         Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent =  new Intent(CartShoppingActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -262,10 +260,7 @@ public class CartShoppingActivity extends BaseActivity implements ICartListView<
     public void onChangeItemFailure(String message,int code) {
         Toast.makeText(CartShoppingActivity.this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            //session去重新登录
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 

@@ -294,9 +294,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     public void onPaySdkFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -304,9 +302,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     public void onCreateOrderFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -648,9 +644,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     public void onSubmitFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -750,9 +744,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     public void onPriceFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(PayActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 

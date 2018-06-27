@@ -133,6 +133,9 @@ public interface ApiService {
     @Multipart
     @POST("AppApi/ChangeAvtor")
     Flowable<BaseResponseBean<AvtorBean>> changeUserAvtor(@HeaderMap Map<String,String> headrs,@Part List<MultipartBody.Part> partList);
+    //分享成功回调
+    @POST("AppApi/SharedCallback")
+    Flowable<BaseResponseBean> shareCallBack(@HeaderMap Map<String,String> headrs,@Body RequestBody body);
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);

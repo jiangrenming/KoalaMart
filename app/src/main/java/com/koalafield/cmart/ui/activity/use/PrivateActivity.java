@@ -153,9 +153,7 @@ public class PrivateActivity extends BaseActivity implements IPersonInfosView<Pe
     public void onInfosFailure(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
@@ -171,9 +169,7 @@ public class PrivateActivity extends BaseActivity implements IPersonInfosView<Pe
     public void onFailure(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 

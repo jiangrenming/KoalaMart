@@ -1,5 +1,7 @@
 package com.koalafield.cmart.base.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -15,7 +17,9 @@ import com.koalafield.cmart.R;
 import com.koalafield.cmart.base.fragment.BaseFragment;
 import com.koalafield.cmart.base.presenter.IBasePresenter;
 import com.koalafield.cmart.base.view.IBaseView;
+import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.utils.AndroidTools;
+import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StackActivityManager;
 import com.koalafield.cmart.utils.SwipeRefreshHelper;
 import com.koalafield.cmart.widget.EmptyLayout;
@@ -100,5 +104,13 @@ public abstract  class BaseActivity<T extends IBasePresenter> extends FragmentAc
         view.setFocusableInTouchMode(true);
         view.requestFocus();
     }
-
+    /**
+     * 登录界面
+     */
+    public  void skipLogin(Context context){
+        ShareBankPreferenceUtils.clearData("tickets");
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.putExtra("type",3);
+        startActivity(intent);
+    }
 }

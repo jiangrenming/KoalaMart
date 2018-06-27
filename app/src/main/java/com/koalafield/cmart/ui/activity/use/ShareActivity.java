@@ -13,16 +13,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dl7.recycler.helper.RecyclerViewHelper;
+import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.ShareAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.event.LoginEvent;
 import com.koalafield.cmart.bean.user.ShareBean;
 import com.koalafield.cmart.bean.user.ShareDataBean;
+import com.koalafield.cmart.presenter.user.IShareCallBackPresent;
 import com.koalafield.cmart.presenter.user.ISharePresenter;
+import com.koalafield.cmart.presenter.user.ShareCallBackPresent;
 import com.koalafield.cmart.presenter.user.SharePresenter;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.PersonActivity;
+import com.koalafield.cmart.ui.view.user.IShareCallView;
 import com.koalafield.cmart.ui.view.user.IShareView;
 import com.koalafield.cmart.utils.Constants;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -36,7 +40,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,7 +51,7 @@ import butterknife.OnClick;
  * Created by jiangrenming on 2018/6/20.
  */
 
-public class ShareActivity extends BaseActivity implements IShareView<ShareBean>{
+public class ShareActivity extends BaseActivity implements IShareView<ShareBean>,IShareCallView<BaseResponseBean>{
 
     @BindView(R.id.share_infos)
     RecyclerView share_infos;
@@ -134,7 +140,7 @@ public class ShareActivity extends BaseActivity implements IShareView<ShareBean>
         List<ShareDataBean> itemList = data.getItemList();
         if (itemList != null && itemList.size() >0){
             ShareAdapter mAdapter = new ShareAdapter(this,itemList);
-            RecyclerViewHelper.initRecyclerViewH(this,share_infos,false,mAdapter);
+            RecyclerViewHelper.initRecyclerViewG(this,share_infos,mAdapter,4);
         }
     }
 
@@ -142,16 +148,13 @@ public class ShareActivity extends BaseActivity implements IShareView<ShareBean>
     public void onFailure(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public  void loginEvent(LoginEvent event){
         if (event != null){
-            Log.i("微信分享成功",event.mType+"");
             int mType = event.mType;
             if (mType == Constants.WX_SHARE){
                 int errCode = event.userAggree;
@@ -159,6 +162,11 @@ public class ShareActivity extends BaseActivity implements IShareView<ShareBean>
                     Toast.makeText(ShareActivity.this,"取消分享",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(ShareActivity.this,"分享成功",Toast.LENGTH_SHORT).show();
+                    Map<String ,String> params = new HashMap<>();
+                    params.put("type","ShareApp");
+                    IShareCallBackPresent shareCallBackPresent = new ShareCallBackPresent(this);
+                    shareCallBackPresent.setParams(params);
+                    shareCallBackPresent.getData();
                 }
             }
         }
@@ -167,5 +175,20 @@ public class ShareActivity extends BaseActivity implements IShareView<ShareBean>
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onShareSucessFul(BaseResponseBean data) {
+        Log.i("分成功后的回调",data.getMsg());
+    }
+
+    @Override
+    public void onShareFailure(String message, int code) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        if (code == 401){
+            Intent intent = new Intent(this,LoginActivity.class);
+            intent.putExtra("type",3);
+            startActivity(intent);
+        }
     }
 }

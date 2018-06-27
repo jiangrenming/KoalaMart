@@ -268,9 +268,7 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     public void onNumberFailure(String message,int  code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(SearchListActivity.this, LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            search_cart_num.setVisibility(View.GONE);
         }
     }
 
@@ -842,9 +840,7 @@ public class SearchListActivity extends BaseActivity implements ICartVIew<CartNu
     public void onChangeItemFailure(String message, int code) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
         if (code == 401){
-            Intent intent = new Intent(SearchListActivity.this,LoginActivity.class);
-            intent.putExtra("type",3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
     /**

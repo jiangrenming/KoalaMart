@@ -414,9 +414,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     public void onNumberFailure(String message, int code) {
         Toast.makeText(GoodsListActivity.this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(GoodsListActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            search_cart_num.setVisibility(View.GONE);
         }
     }
 
@@ -441,9 +439,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
     public void onChangeItemFailure(String message, int code) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         if (code == 401) {
-            Intent intent = new Intent(GoodsListActivity.this, LoginActivity.class);
-            intent.putExtra("type", 3);
-            startActivity(intent);
+            skipLogin(this);
         }
     }
 
