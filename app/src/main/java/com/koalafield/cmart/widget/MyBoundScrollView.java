@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
 
+import com.koalafield.cmart.utils.AndroidTools;
+
 /**
  * Created by jiangrenming on 2018/5/10.
  * 个人中心弹性界面的实现
@@ -39,13 +41,16 @@ public class MyBoundScrollView extends ScrollView {
 
     //在手指滑动的过程中记录是否移动了布局
     private boolean isMoved = false;
+    private Context mContext;
 
     public MyBoundScrollView(Context context) {
         super(context);
+        mContext = context;
     }
 
     public MyBoundScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class MyBoundScrollView extends ScrollView {
 
         //ScrollView中的唯一子控件的位置信息, 这个位置信息在整个控件的生命周期中保持不变
         originalRect.set(contentView.getLeft(), contentView.getTop(), contentView
-                .getRight(), contentView.getBottom());
+                .getRight(), contentView.getBottom()+ AndroidTools.dp2px(mContext,50));
     }
 
     //在触摸事件中, 处理上拉和下拉的逻辑

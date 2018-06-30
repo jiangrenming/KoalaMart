@@ -55,6 +55,10 @@ public class SplashActivity extends Activity {
         }
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);// 无标题
         super.onCreate(savedInstanceState);
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         initDatas();

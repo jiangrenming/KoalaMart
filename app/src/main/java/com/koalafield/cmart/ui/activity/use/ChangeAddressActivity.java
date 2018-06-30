@@ -56,6 +56,7 @@ import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 import kankan.wheel.widget.adapters.WheelViewAdapter;
 
+import static com.koalafield.cmart.R.layout.city_item;
 import static com.koalafield.cmart.R.layout.country_layout;
 
 /**
@@ -79,12 +80,14 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
     TextView country_name;
     @BindView(R.id.select_state)
     LinearLayout select_state;
-    @BindView(R.id.state_name)
-    TextView state_name;
+    @BindView(R.id.province)
+    TextView province;
     @BindView(R.id.et_suggestion)
     EditText et_suggestion;
-    @BindView(R.id.area)
-    EditText area;
+    @BindView(R.id.city)
+    TextView city;
+    @BindView(R.id.distance)
+    EditText distance;
     @BindView(R.id.add_address)
     TextView add_address;
     private int addressType;
@@ -109,8 +112,9 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                 castact_name.setText(item.getContactname());
                 castact_phone.setText(item.getContactphone());
                 country_name.setText(item.getCountry());
-                state_name.setText(item.getState());
-                area.setText(item.getArea());
+                province.setText(item.getProvince());
+                city.setText(item.getCity());
+                distance.setText(item.getArea());
                 et_suggestion.setText(item.getAddress());
             }
         }
@@ -149,7 +153,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                     if (StringUtils.isEmpty(pwd) || !RegaxUtils.isMobilePhone(pwd) || pwd.length() == 0) {  //还未对密码格式做判断
                         Toast.makeText(ChangeAddressActivity.this, "电话格式不正确", Toast.LENGTH_SHORT).show();
                     } else {
-                        setFocus(area);
+                        setFocus(distance);
                     }
                     return true;
                 }
@@ -157,19 +161,20 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             }
         });
 
-        area.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        //区域
+        distance.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView view, int action,
                                           KeyEvent event) {
-                if (area.getVisibility() == View.VISIBLE
+                if (distance.getVisibility() == View.VISIBLE
                         && (action == EditorInfo.IME_ACTION_DONE
                         || action == EditorInfo.IME_ACTION_SEND
                         || action == EditorInfo.IME_ACTION_NEXT
                         || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
-                    String pwd = area.getText().toString();
+                    String pwd = distance.getText().toString();
                     if (StringUtils.isEmpty(pwd)) {  //还未对密码格式做判断
-                        Toast.makeText(ChangeAddressActivity.this, "区域地址不能为空", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangeAddressActivity.this, "区不能为空", Toast.LENGTH_SHORT).show();
                     } else {
                         setFocus(et_suggestion);
                     }
@@ -178,6 +183,28 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                 return false;
             }
         });
+
+       /* province.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView view, int action,
+                                          KeyEvent event) {
+                if (province.getVisibility() == View.VISIBLE
+                        && (action == EditorInfo.IME_ACTION_DONE
+                        || action == EditorInfo.IME_ACTION_SEND
+                        || action == EditorInfo.IME_ACTION_NEXT
+                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
+                    String pwd = province.getText().toString();
+                    if (StringUtils.isEmpty(pwd)) {  //还未对密码格式做判断
+                        Toast.makeText(ChangeAddressActivity.this, "州址不能为空", Toast.LENGTH_SHORT).show();
+                    } else {
+                        setFocus(et_suggestion);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });*/
 
         et_suggestion.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -198,13 +225,14 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                             if (RegaxUtils.isMobilePhone(phone)) {
                                 String name = castact_name.getText().toString().trim();
                                 String country = country_name.getText().toString().trim();
-                                String state = state_name.getText().toString().trim();
-                                String distince = area.getText().toString().trim();
+                                String province_name = province.getText().toString().trim();
+                                String city_name = city.getText().toString().trim();
+                                String distance_name = distance.getText().toString().trim();
                                 Map<String, String> params = new HashMap<>();
                                 params.put("country", "Australia");
-                                params.put("state", "");
-                                params.put("city", state == null ? "" : state); //暂时未有
-                                params.put("area",distince== null ?"":distince);//暂时未有
+                                params.put("province", province_name == null ? "" : province_name);
+                                params.put("city", city_name == null ? "" : city_name);
+                                params.put("area",distance_name== null ?"":distance_name);
                                 params.put("address", suggestion == null ? "" : suggestion);
                                 params.put("contactname", name == null ? "" : name);
                                 params.put("contactphone", phone == null ? "" : phone);
@@ -235,7 +263,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
 
     @Override
     public void upDateViews() {
-        initLocation();
+     //   initLocation();
     }
 
     @Override
@@ -278,27 +306,29 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
         switch (v.getId()) {
             case R.id.select_country:
                 break;
-            case R.id.select_state:
+            /*case R.id.select_state:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm.isActive()) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                     openPopupWindow(v);
                 }
-                break;
+                break;*/
             case R.id.add_address:
                 if (checkAllInfos()) {
                     String phone = castact_phone.getText().toString().trim();
                     if (RegaxUtils.isMobilePhone(phone)) {
                         String name = castact_name.getText().toString().trim();
                         String country = country_name.getText().toString().trim();
-                        String state = state_name.getText().toString().trim();
-                        String suggestion = et_suggestion.getText().toString().trim();
+                        String province_name = province.getText().toString().trim();
+                        String city_name = city.getText().toString().trim();
+                        String distance_name = distance.getText().toString().trim();
+                        String suggestion = et_suggestion.getText().toString();
                         Map<String, String> params = new HashMap<>();
                         params.put("country", "Australia");
-                        params.put("state", "");
-                        params.put("city", state == null ? "" : state);
-                        params.put("area", "");
+                        params.put("province", province_name == null ? "" : province_name);
+                        params.put("city", city_name == null ? "" : city_name);
+                        params.put("area",distance_name== null ?"":distance_name);
                         params.put("address", suggestion == null ? "" : suggestion);
                         params.put("contactname", name == null ? "" : name);
                         params.put("contactphone", phone == null ? "" : phone);
@@ -341,8 +371,16 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
         if (StringUtils.isEmpty(country) || country.length() == 0) {
             return false;
         }
-        String state = state_name.getText().toString().trim();
-        if (StringUtils.isEmpty(state) || state.length() == 0) {
+        String province_name = province.getText().toString().trim();
+        if (StringUtils.isEmpty(province_name) || province_name.length() == 0) {
+            return false;
+        }
+        String city_name = city.getText().toString().trim();
+        if (StringUtils.isEmpty(city_name) || city_name.length() == 0) {
+            return false;
+        }
+        String distance_name = distance.getText().toString().trim();
+        if (StringUtils.isEmpty(distance_name) || distance_name.length() == 0) {
             return false;
         }
         String suggestion = et_suggestion.getText().toString().trim();
@@ -457,7 +495,7 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
             case R.id.ib_confirm:
                 if (!StringUtils.isEmpty(statue)) {
                     disPopuWindow();
-                    state_name.setText(statue);
+                    province.setText(statue);
                 }
                 break;
            /* case R.id.select:
@@ -567,8 +605,9 @@ public class ChangeAddressActivity extends BaseActivity implements IAddAddressVi
                     sb.append("纬    度    : " + location.getLatitude() + "\n");
                     String district = location.getDistrict();
                     String address = location.getAddress();
-                    state_name.setText(location.getCity());
-                    area.setText(district);
+                    province.setText(location.getCountry());
+                    city.setText(location.getCity());
+                    distance.setText(district);
                     et_suggestion.setText(address);
                 } else {
                     //定位失败

@@ -11,18 +11,11 @@
         <TextView
             android:id="@+id/limit_time"
             android:layout_width="0dp"
-            android:text="请在0分钟后29分钟后完成支付"
+            android:text="请在0分钟后29分钟前完成支付"
             android:layout_weight="1"
             android:textColor="@color/btn_red"
             android:gravity="center_horizontal|center_vertical"
             android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/close"
-            android:layout_width="20dp"
-            android:src="@mipmap/close"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center_vertical"
-            android:layout_height="20dp" />
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/choose_pay"
@@ -36,6 +29,6 @@
         android:textSize="16sp"
         android:text="确认支付"
         android:background="@color/btn_red"
-        android:layout_height="30dp" />
+        android:layout_height="50dp" />
 
 </LinearLayout>

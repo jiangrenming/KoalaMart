@@ -115,6 +115,8 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
     RecyclerView goods_commonds;
     @BindView(R.id.webViews)
     WebView webViews;
+    @BindView(R.id.title_name)
+    TextView title_name;
     //底部布局
     @BindView(R.id.goods_collection)
     ImageView goods_collection;
@@ -613,8 +615,13 @@ public class GoodsDetailActivity extends BaseActivity implements ICartVIew<CartN
             mTypeList = data.getTypeList();
             mWeightList = data.getWeightList();
             if (!StringUtils.isEmpty(data.getContentHTML())){
+                title_name.setVisibility(View.VISIBLE);
+                webViews.setVisibility(View.VISIBLE);
                 String html =  getHtmlData(data.getContentHTML());
                 webViews.loadData(html, "text/html; charset=UTF-8", null);
+            }else {
+                webViews.setVisibility(View.GONE);
+                title_name.setVisibility(View.GONE);
             }
             String tickets = ShareBankPreferenceUtils.getString("tickets", null);
             if (!StringUtils.isEmpty(tickets)){

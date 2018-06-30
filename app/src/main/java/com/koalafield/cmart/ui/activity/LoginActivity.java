@@ -280,4 +280,5 @@ public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILog
     public void onWXFailure(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
+
 }

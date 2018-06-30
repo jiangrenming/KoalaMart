@@ -22,6 +22,7 @@ import com.koalafield.cmart.utils.AndroidTools;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.EmptyLayout;
 import com.koalafield.cmart.widget.FrontViewToMove;
+import com.koalafield.cmart.widget.SwipeMenuLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -65,7 +66,6 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         TextView goods_cart_color = holder.getView(R.id.goods_cart_color);
         TextView goods_cart_size = holder.getView(R.id.goods_cart_size);
         LinearLayout type_weight_matre = holder.getView(R.id.type_weight_matre);
-
         LinearLayout color_size = holder.getView(R.id.color_size);
         TextView goods_cart_type = holder.getView(R.id.goods_cart_type);
         TextView goods_cart_weight = holder.getView(R.id.goods_cart_weight);
@@ -74,9 +74,10 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
         Log.i("商品的数据:","数量="+item.getCount());
         TextView delete_item = holder.getView(R.id.btn_delete);
         ImageView img = holder.getView(R.id.goods_cart_img);
-       final LinearLayout frontView = holder.getView(R.id.id_front);
+   //    final LinearLayout frontView = holder.getView(R.id.id_front);
         //关键语句，使用自己写的类来对frontView的ontouch事件复写，实现视图滑动效果
-        new FrontViewToMove(frontView, mListView,200);
+   //     new FrontViewToMove(frontView, mListView,200);
+
         holder.setText(R.id.goods_cart_name,commodity.getName())
                 .setText(R.id.goods_cart_curreny,commodity.getCurrency()+":")
                 .setText(R.id.goods_cart_amount, commodity.getCurrentPrice())
@@ -203,7 +204,7 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
                 int addCount  = Integer.valueOf(count);
                 EventBus.getDefault().post(new CartEvent(addCount,1));
                 mCartItemCallBack.changeItemGoodsCount(0,item,isSelected);
-                new FrontViewToMove(frontView, mListView,200).generateRevealAnimate(frontView,0);
+       //         new FrontViewToMove(frontView, mListView,200).generateRevealAnimate(frontView,0);
             }
         });
         img.setOnClickListener(new View.OnClickListener() {

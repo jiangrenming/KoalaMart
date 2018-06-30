@@ -6,8 +6,16 @@
     android:background="@color/bg_white"
     android:orientation="vertical">
 
+    <include layout="@layout/top_header"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:background="@color/gray"
+        android:layout_height="10dp"/>
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/scrollview"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff">
@@ -76,7 +84,8 @@
                         android:layout_height="60dp"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        >
 
                         <LinearLayout
                             android:id="@+id/have_name_adress"
@@ -109,7 +118,7 @@
                             android:id="@+id/have_detail_adress"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp">
@@ -135,10 +144,10 @@
 
                     </LinearLayout>
 
-                    <View
+                   <!-- <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@mipmap/underline" />
+                        android:background="@mipmap/underline" />-->
                 </LinearLayout>
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -150,7 +159,7 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="已选商品"
+                android:text="已选择商品"
                 android:textColor="@color/black" />
             <View
                 android:layout_width="match_parent"
@@ -182,7 +191,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:background="@color/gray_light"
+                    android:background="@color/gray"
                     android:gravity="center_vertical"
                     android:textSize="13sp"
                     android:paddingLeft="10dp"
@@ -222,7 +231,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:background="@color/gray_light"
+                    android:background="@color/gray"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:textSize="13sp"
@@ -276,7 +285,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:text="约合RMB:¥  1.00"
+                            android:text="约合RMB: ¥ 1.00"
                             android:textColor="@color/gray_three"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -284,7 +293,7 @@
                     <TextView
                         android:id="@+id/comfir_order"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
                         android:background="@color/btn_red"
@@ -379,7 +388,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="请选择优惠券" />
+                        android:text="请选择" />
 
                     <ImageView
                         android:layout_width="15dp"

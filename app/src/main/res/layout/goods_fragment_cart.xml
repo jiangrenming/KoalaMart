@@ -76,6 +76,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/gray"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/empty_cart"
         android:layout_toEndOf="@+id/empty_cart">

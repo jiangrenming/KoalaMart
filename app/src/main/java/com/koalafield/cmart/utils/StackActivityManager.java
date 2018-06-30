@@ -1,6 +1,7 @@
 package com.koalafield.cmart.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 
@@ -44,13 +45,15 @@ public class StackActivityManager {
         if (isRemoving)
             isRemoving = false;
         if (activity != null) {
-            int i = activityStack.indexOf(activity);
-            if (i != -1) {
-                activityStack.add(activity);
-            } else {
-                activityStack.push(activity);
-            }
 
+            int i = activityStack.indexOf(activity);
+            if (!containsActivity(activity.getClass())){
+                if (i != -1) {
+                    activityStack.add(activity);
+                } else {
+                    activityStack.push(activity);
+                }
+            }
         }
     }
 
@@ -183,12 +186,13 @@ public class StackActivityManager {
         int size = activityStack.size();
         isRemoving = true;
         for (int i = 0; i < size; i++) {
-            Activity activity = getTopActivity();
+            /*Activity activity = getTopActivity();
             if (activity != null) {
                 removeActivity(activity);
-            }
+            }*/
+            activityStack.get(i).finish();
         }
-        System.gc();
+        activityStack.clear();
     }
 
     /**
@@ -243,7 +247,20 @@ public class StackActivityManager {
         return -1;
     }
 
-
+    /**
+     * 退出应用程序
+     */
+    public  void AppExit(Context context) {
+        try {
+            removeAllActivityExceptOne(MainActivity.class);
+            ActivityManager manager = (ActivityManager) context
+                    .getSystemService(Context.ACTIVITY_SERVICE);
+            manager.killBackgroundProcesses(context.getPackageName());
+            System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * activity的跳转
      * @param context

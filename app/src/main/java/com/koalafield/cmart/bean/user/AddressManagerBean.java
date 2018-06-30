@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class AddressManagerBean implements Serializable{
     private  int Customerid;
     private String Country;
-    private String State;
+    private String Province;
     private String City;
     private String Area;
     private String Address;
@@ -43,12 +43,12 @@ public class AddressManagerBean implements Serializable{
         Country = country;
     }
 
-    public String getState() {
-        return State;
+    public String getProvince() {
+        return Province;
     }
 
-    public void setState(String state) {
-        State = state;
+    public void setProvince(String province) {
+        this.Province = province;
     }
 
     public String getCity() {
@@ -168,7 +168,6 @@ public class AddressManagerBean implements Serializable{
         return "AddressManagerBean{" +
                 "Customerid=" + Customerid +
                 ", Country='" + Country + '\'' +
-                ", State='" + State + '\'' +
                 ", City='" + City + '\'' +
                 ", Area='" + Area + '\'' +
                 ", Address='" + Address + '\'' +

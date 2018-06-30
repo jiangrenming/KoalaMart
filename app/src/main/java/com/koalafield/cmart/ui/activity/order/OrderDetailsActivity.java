@@ -185,7 +185,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 // 正在倒计时
                 has_time.setText("倒计时还剩:" + timer);
                 if (limit_time != null){
-                    limit_time.setText("请在"+timer+"后完成支付");
+                    limit_time.setText("请在"+timer+"前完成支付");
                 }
             }else if (event.mType.equals(Constants.END_RUNNING)){
                 has_time.setText("订单已过期");
@@ -287,7 +287,6 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     private void setOnPopupViewClick(View view) {
          RecyclerView payChoose = view.findViewById(R.id.choose_pay);
          limit_time = view.findViewById(R.id.limit_time);
-        ImageView close = view.findViewById(R.id.close);
         TextView  comfirm_pay = view.findViewById(R.id.comfirm_pay);
         comfirm_pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,6 +299,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     IPaySdkPresenter mPresenter = new PaySdkPresenter(OrderDetailsActivity.this);
                     params.put("billCode",billNo) ;
                     params.put("paymentId",String.valueOf(paymentId)) ;
+                    params.put("bookTime",detailsInfo.getBookDeliveryTime());
                     mPresenter.setParams(params);
                     mPresenter.getData();
                 }else {
@@ -308,15 +308,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 }
             }
         });
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mPopuWindow != null && mPopuWindow.isShowing()){
-                    mPopuWindow.dismiss();
-                    setBackgroundAlpha(1.0f);
-                }
-            }
-        });
+
         if (payList!= null && payList.size() > 0){
             final PayOrderChooseAdapter payAdapter = new PayOrderChooseAdapter(this,payList);
             RecyclerViewHelper.initRecyclerViewV(this,payChoose,true,payAdapter);

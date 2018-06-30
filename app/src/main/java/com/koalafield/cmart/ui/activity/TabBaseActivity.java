@@ -16,6 +16,7 @@ import com.bumptech.glide.request.target.Target;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.base.presenter.IBasePresenter;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
+import com.koalafield.cmart.utils.StackActivityManager;
 
 /**
  * Created by jiangrenming on 2018/5/13.
@@ -35,8 +36,8 @@ public abstract class TabBaseActivity extends BaseActivity {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(this,"再按一次退出",Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
+
             } else {
-       //         System.exit(0);
                 finish();
             }
             return true;
