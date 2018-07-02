@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply from: '../jenkins-build.gradle'
 android {
     compileSdkVersion rootProject.ext.compileSdk
     buildToolsVersion rootProject.ext.buildTools
@@ -44,8 +44,6 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
-          //  manifest.srcFile 'AndroidManifest.xml'
-
         }
     }
 

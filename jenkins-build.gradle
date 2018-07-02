@@ -1,0 +1,39 @@
+/**
+ * 本文件主要用于通过jenkins打包并对文件进行重命名，移动到指定的目录
+ */
+
+def getBuildTypeName(String buildTypeName) {
+    return buildTypeName.substring(0, 1).toUpperCase() + buildTypeName.substring(1)
+}
+
+android.applicationVariants.all { variant ->
+    def packageName = variant.applicationId
+    variant.outputs.each { output ->
+        def outputFile = output.outputFile
+        if (outputFile != null) {
+            def releaseApkName = packageName
+            if ("" != APK_PRE_NAME) {
+                releaseApkName = APK_PRE_NAME
+            }
+            if ("envtest".equalsIgnoreCase(variant.buildType.name)) {
+                releaseApkName = releaseApkName + "_TEST_V"
+            } else if ("envprod".equalsIgnoreCase(variant.buildType.name)) {
+                releaseApkName = releaseApkName + "_PROD_V"
+            }else if ("envdomain".equalsIgnoreCase(variant.buildType.name)) {
+                releaseApkName = releaseApkName + "_DOMAIN_V"
+            } else {
+                releaseApkName = releaseApkName + "_" + getBuildTypeName(variant.buildType.name) + "_V"
+            }
+            if (BUID_APK_NAME_POSTFIX == "") {
+                BUID_APK_NAME_POSTFIX = new Date().format("yyyyMM")
+            }
+            releaseApkName = releaseApkName + variant.getVersionName() + '_' + BUID_APK_NAME_POSTFIX + '.apk';
+            if ("true".equalsIgnoreCase(IS_JENKINS)) {
+                def BUILD_DATE = new Date().format("yyyy-MM-dd")
+                output.outputFile = new File(BUILD_OUT_PATH + "\\" + BUILD_DATE + "\\" + APK_PRE_NAME + "\\" + releaseApkName)
+            } else {
+                output.outputFile = new File(outputFile.parent, releaseApkName)
+            }
+        }
+    }
+}
