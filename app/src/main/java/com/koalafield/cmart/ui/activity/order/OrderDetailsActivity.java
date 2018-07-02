@@ -351,7 +351,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void onOrderDetails(OrderdetailsBean data) {
         if (data != null){
              detailsInfo = data.getDetailsInfo();
-            payList = data.getPaymentDTOList();
+             payList = data.getPaymentDTOList();
             if (detailsInfo != null && detailsInfo.getGoodsList() != null && detailsInfo.getGoodsList().size() >0){
                 order_num.setText(detailsInfo.getBillNo());
                 order_time.setText(detailsInfo.getCreatedTime());
@@ -377,7 +377,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     pay_time_layout.setVisibility(View.VISIBLE);
                     once_pay.setVisibility(View.GONE);
                     pay_time.setText(detailsInfo.getPayTime());
-                    pay_style.setText(detailsInfo.getPaymentName());
+                    pay_style.setText(detailsInfo.getPaymentDisplayName());
                     devilery_time.setText(detailsInfo.getBookDeliveryTime());
                     devilery_style.setText(data.getDelivery().getDeliveryName());
                 }else if (detailsInfo.getStatus() == 2){  //待收货
@@ -390,7 +390,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     pay_style_layout.setVisibility(View.VISIBLE);
                     pay_time_layout.setVisibility(View.VISIBLE);
                     pay_time.setText(detailsInfo.getPayTime());
-                    pay_style.setText(detailsInfo.getPaymentName());
+                    pay_style.setText(detailsInfo.getPaymentDisplayName());
                     devilery_time.setText(detailsInfo.getBookDeliveryTime());
                     devilery_style.setText(data.getDelivery().getDeliveryName());
                 }else if(detailsInfo.getStatus() == 4){  //已完成
@@ -402,7 +402,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     pay_style_layout.setVisibility(View.VISIBLE);
                     pay_time_layout.setVisibility(View.VISIBLE);
                     pay_time.setText(detailsInfo.getPayTime());
-                    pay_style.setText(detailsInfo.getPaymentName());
+                    pay_style.setText(detailsInfo.getPaymentDisplayName());
                     devilery_time.setText(detailsInfo.getBookDeliveryTime());
                     devilery_style.setText(data.getDelivery().getDeliveryName());
                 }
@@ -416,14 +416,14 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
             }
             OrderPrice orderPrice = data.getOrderPrice();
             if (orderPrice != null){
-                order_tax.setText("AUD "+String.format("%.2f",orderPrice.getDeliveryPrice()));
+                order_tax.setText(orderPrice.getCurrency()+" "+String.format("%.2f",orderPrice.getDeliveryPrice()));
                 if (orderPrice.getCouponPrice() == 0 || orderPrice.getCouponPrice() == 0.00){
                     order_discount.setVisibility(View.GONE);
                 }else {
                     order_discount.setVisibility(View.VISIBLE);
-                    order_discount.setText("AUD "+String.format("%.2f",orderPrice.getCouponPrice()));
+                    order_discount.setText(orderPrice.getCurrency()+" "+String.format("%.2f",orderPrice.getCouponPrice()));
                 }
-                order_all_price.setText("AUD "+String.format("%.2f",orderPrice.getTotalPrice()));
+                order_all_price.setText(orderPrice.getCurrency()+" "+String.format("%.2f",orderPrice.getTotalPrice()));
             }
             if (!AndroidTools.isServiceRunning(this,"com.koalafield.cmart.service.TimeService")){
                 new Thread(){

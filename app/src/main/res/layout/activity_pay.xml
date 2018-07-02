@@ -15,10 +15,10 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/scrollview"
-        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:paddingTop="10dp">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/id_appbarlayout"
@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:fadingEdge="none"
             app:elevation="0dp">
-
 
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -84,8 +83,7 @@
                         android:layout_height="60dp"
                         android:background="@color/white"
                         android:orientation="vertical"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:id="@+id/have_name_adress"
@@ -144,7 +142,7 @@
 
                     </LinearLayout>
 
-                   <!-- <View
+                    <!-- <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@mipmap/underline" />-->
@@ -155,12 +153,13 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:textSize="13sp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:text="已选择商品"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -193,9 +192,9 @@
                     android:layout_height="35dp"
                     android:background="@color/gray"
                     android:gravity="center_vertical"
-                    android:textSize="13sp"
                     android:paddingLeft="10dp"
-                    android:text="配送时间" />
+                    android:text="配送时间"
+                    android:textSize="13sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -219,7 +218,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="修改"
-                        android:textColor="@color/btn_red"
+                        android:textColor="@color/red"
                         android:textSize="13sp" />
                 </LinearLayout>
 
@@ -234,8 +233,8 @@
                     android:background="@color/gray"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:textSize="13sp"
-                    android:text="支付方式" />
+                    android:text="支付方式"
+                    android:textSize="13sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/choose_pay"
@@ -244,8 +243,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="25dp"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"

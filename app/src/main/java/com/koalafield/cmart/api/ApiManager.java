@@ -133,6 +133,14 @@ public class ApiManager {
         return apiSubscribe(AndoridApplication.apiService.getDisCountsData(getHeaders(),params))
                 .flatMap(getDisCounts());
     }
+
+    /**
+     * 获取的优惠券
+     */
+    public  static  Flowable<List<DisCountBean>> getCurenyDisCountList(){
+        return apiSubscribe(AndoridApplication.apiService.getCurrentCoupon(getHeaders()))
+                .flatMap(getDisCounts());
+    }
     /**
      * 获取积分列表
      */

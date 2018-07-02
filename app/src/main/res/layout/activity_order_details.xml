@@ -274,7 +274,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="AUD 0.00"
-                            android:textColor="@color/btn_red" />
+                            android:textColor="@color/red" />
                     </LinearLayout>
 
                     <LinearLayout

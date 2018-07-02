@@ -16,12 +16,20 @@ public class OrderDetailsInfo implements Serializable{
     private String StatusText;
     private int Status;
     private int PaymentId;
-
+    private  String PaymentDisplayName;
     private String PaymentName;
     private String PayTime;
     private String CreatedTime;
     private String ExpirePayTimeStamp;
     private String BookDeliveryTime;
+
+    public String getPaymentDisplayName() {
+        return PaymentDisplayName;
+    }
+
+    public void setPaymentDisplayName(String paymentDisplayName) {
+        PaymentDisplayName = paymentDisplayName;
+    }
 
     private List<OrderItemAttrs> GoodsList;
 

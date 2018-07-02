@@ -1,5 +1,7 @@
 package com.koalafield.cmart.api;
 
+import android.widget.LinearLayout;
+
 import com.jrm.retrofitlibrary.retrofit.BaseResponseBean;
 import com.koalafield.cmart.bean.cart.CartDataBean;
 import com.koalafield.cmart.bean.cart.CartIdBean;
@@ -136,6 +138,10 @@ public interface ApiService {
     //分享成功回调
     @POST("AppApi/SharedCallback")
     Flowable<BaseResponseBean> shareCallBack(@HeaderMap Map<String,String> headrs,@Body RequestBody body);
+    //当前订单可用优惠卷
+    @GET("AppApi/GetCurrentEnabledCoupon")
+    Flowable<BaseResponseBean<List<DisCountBean>>> getCurrentCoupon(@HeaderMap Map<String,String> headrs);
+
     /***************************************************Get请求*******************************************/
     @GET("AppApi/CategoryList")
     Flowable<BaseResponseBean<List<CategryOneBean>>> getCategrys(@HeaderMap Map<String,String> headrs,@QueryMap Map<String, String> params);

@@ -82,16 +82,6 @@ public class DisCountTimeFragment extends BaseFragment implements IDisCountListV
         if (data != null &&data.size() >0){
             disCountAdapter.updateItems(data);
         }
-        disCountAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                DisCountBean disCountBean = data.get(position);
-                if (disCountBean  != null){
-                    EventBus.getDefault().post(new DisCountEvent(disCountBean));
-                }
-                getActivity().finish();
-            }
-        });
     }
 
     @Override

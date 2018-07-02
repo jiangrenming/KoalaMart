@@ -14,6 +14,15 @@ public class DisCountBean implements Serializable {
     private String Expire;
     private int Deduct;
     private double MinBillUseTotalPrice;
+    private String Current;
+
+    public String getCurrent() {
+        return Current;
+    }
+
+    public void setCurrent(String current) {
+        Current = current;
+    }
 
     public String getCode() {
         return Code;

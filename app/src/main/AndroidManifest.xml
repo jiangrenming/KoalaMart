@@ -160,6 +160,7 @@
             android:launchMode="singleTop"/>
 
         <activity android:name=".ui.activity.use.UserResponseActivity"/>
+        <activity android:name="com.koalafield.cmart.ui.activity.order.CounPonActivity"/>
     </application>
 
 </manifest>

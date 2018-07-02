@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.dl7.recycler.helper.RecyclerViewHelper;
 import com.dl7.recycler.listener.OnRecyclerViewItemClickListener;
+import com.jrm.retrofitlibrary.retrofit.ExceptionHandle;
 import com.koalafield.cmart.BuildConfig;
 import com.koalafield.cmart.R;
 import com.koalafield.cmart.adapter.PayAdapter;
@@ -171,8 +172,6 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             params.put("scIds", datas);
             payPresenter.setParams(params);
         }
-        EventBus.getDefault().register(this);
-
     }
 
 
@@ -224,8 +223,8 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
                 break;
             case R.id.discount_content:
-                Intent intent1 = new Intent(this,DisCountActivity.class);
-                startActivity(intent1);
+                Intent intent1 = new Intent(this,CounPonActivity.class);
+                startActivityForResult(intent1,10001);
                 break;
             default:
                 break;
@@ -582,10 +581,10 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 }
             }
             count_goods.setText("共" + allCount + "件");
-            actual_amount.setText("实际付款：" + data.getOrderPriceDTO().getCurrency() + " " + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
-            rmb_amount.setText("约合RMB:¥" + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount() * data.getOrderPriceDTO().getRate()));
-            order_total_amount.setText(data.getOrderPriceDTO().getCurrency() + " " + String.format("%.2f", data.getOrderPriceDTO().getTotalGoodsPrice()));
-            tax_amount.setText(data.getOrderPriceDTO().getCurrency() + " " +String.format("%.2f", data.getOrderPriceDTO().getDeliveryPrice()));
+            actual_amount.setText("实际付款：" + data.getOrderPriceDTO().getCurrency()  + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
+            rmb_amount.setText("约合RMB: ¥" + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount() * data.getOrderPriceDTO().getRate()));
+            order_total_amount.setText(data.getOrderPriceDTO().getCurrency()+ String.format("%.2f", data.getOrderPriceDTO().getTotalGoodsPrice()));
+            tax_amount.setText(data.getOrderPriceDTO().getCurrency() +String.format("%.2f", data.getOrderPriceDTO().getDeliveryPrice()));
            /* if (data.isAllowUseScore()){
                 score_count.setVisibility(View.VISIBLE);
                 score_count.setText(String.valueOf(data.getAvailableScore()));
@@ -666,7 +665,16 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                     address_details.setText(addressManagerBean.getCountry() + " " + addressManagerBean.getCity() + addressManagerBean.getAddress());
                     addRessId = addressManagerBean.getId();
                 }
-            } else {
+            } else if (requestCode == 10001){
+                DisCountBean  disCount = (DisCountBean) data.getSerializableExtra("disCount");
+                if (disCount != null){
+                    discount_content.setText("满"+String.format("%.2f",  disCount.getMinBillUseTotalPrice())+"减"+String.format("%.2f",  disCount.getAmount()));
+                    disCountCode = disCount.getCode();
+                    if (payId > 0 && deliveryId > 0){
+                        changePrice();
+                    }
+                }
+            }else {
                 if (data == null) {
                     return;
                 }
@@ -726,7 +734,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
     private void disPopuWindow() {
         if (null != mPopuWindow && mPopuWindow.isShowing()) {
-            mPopuWindow.dismiss();
+            try{
+                mPopuWindow.dismiss();
+            }catch (Exception e){
+
+            }
         }
     }
 
@@ -748,21 +760,4 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         }
     }
 
-    //接收优惠卷
-    @Subscribe(threadMode  = ThreadMode.MAIN)
-    public  void DisCountEvent(DisCountEvent event){
-        if (event != null){
-            discount_content.setText("满"+String.format("%.2f",  event.mDisCountBean.getMinBillUseTotalPrice())+"减"+String.format("%.2f",  event.mDisCountBean.getAmount()));
-            disCountCode = event.mDisCountBean.getCode();
-            if (payId > 0 && deliveryId > 0){
-                changePrice();
-            }
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 }

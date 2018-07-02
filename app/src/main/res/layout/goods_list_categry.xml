@@ -94,12 +94,15 @@
                     android:background="@color/white" />
             </android.support.design.widget.CollapsingToolbarLayout>
             <!--填充置顶的布局-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/categry_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" />
-
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
