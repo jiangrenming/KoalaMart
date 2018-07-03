@@ -134,13 +134,14 @@ public class ShareActivity extends BaseActivity implements IShareView<ShareBean>
     }
     @Override
     public void onSucessFul(ShareBean data) {
-        Glide.with(this).load(data.getImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(share_img);
+        if (this != null){
+            Glide.with(this).load(data.getImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(share_img);
+        }
         share_txt1.setText(data.getText1()+"\n"+data.getText2());
-       // share_txt2.setText(data.getText2());
         List<ShareDataBean> itemList = data.getItemList();
         if (itemList != null && itemList.size() >0){
             ShareAdapter mAdapter = new ShareAdapter(this,itemList);
-            RecyclerViewHelper.initRecyclerViewG(this,share_infos,mAdapter,4);
+            RecyclerViewHelper.initRecyclerViewH(this,share_infos,false,mAdapter);
         }
     }
 

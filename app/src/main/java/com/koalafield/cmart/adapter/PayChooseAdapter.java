@@ -37,7 +37,9 @@ public class PayChooseAdapter extends BaseQuickAdapter<Payment> {
     protected void convert(BaseViewHolder holder, final Payment item) {
         ImageView pay_img = holder.getView(R.id.pay_img);
         holder.setText(R.id.pay_name,item.getDisplayName());
-        Glide.with(mContext).load(item.getIcon()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
+        if (mContext != null){
+            Glide.with(mContext).load(item.getIcon()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
+        }
         final ImageView iv_balance_select = holder.getView(R.id.iv_balance_select);
         if (item.isSelect()){
             iv_balance_select.setImageResource(R.mipmap.select);

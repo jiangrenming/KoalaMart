@@ -1,7 +1,9 @@
 package com.koalafield.cmart.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.View;
+import android.widget.TextView;
 
 import com.dl7.recycler.adapter.BaseQuickAdapter;
 import com.dl7.recycler.adapter.BaseViewHolder;
@@ -28,11 +30,13 @@ public class BrandAdapter extends BaseQuickAdapter<CateListBean> {
 
     @Override
     protected void convert(BaseViewHolder holder, CateListBean item) {
+
+        TextView brand_name = holder.getView(R.id.brand_name);
         View brand_select = holder.getView(R.id.brand_select);
-        holder.setText(R.id.brand_name,item.getName());
+        brand_name.setText(item.getName());
         if (item.isSelect()){
-            brand_select.setVisibility(View.VISIBLE);
-            brand_select.setBackgroundColor(mContext.getResources().getColor(R.color.btn_red));
+          brand_select.setVisibility(View.VISIBLE);
+          brand_select.setBackgroundColor(mContext.getResources().getColor(R.color.btn_red));
         }else {
             brand_select.setVisibility(View.INVISIBLE);
         }

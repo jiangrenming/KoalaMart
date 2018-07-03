@@ -73,6 +73,8 @@ public class PayAdapter extends BaseQuickAdapter<ShoppingCart> {
                 .setText(R.id.pay_price,item.getCommodity().getCurrentPrice())
                 .setText(R.id.pay_count,String.valueOf("共"+item.getCount())+"件");
         ImageView pay_img = holder.getView(R.id.pay_img);
-        Glide.with(mContext).load(item.getCommodity().getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
+        if (mContext != null){
+            Glide.with(mContext).load(item.getCommodity().getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
+        }
     }
 }

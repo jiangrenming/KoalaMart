@@ -136,7 +136,7 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                 @Override
                 public void onPageClick(View view, int position) {
                     String typeName = data.get(position).getTypeName();
-                    if (!StringUtils.isEmpty(typeName) && ("URL".equalsIgnoreCase(typeName) || "Goods".equalsIgnoreCase(typeName) || "Category".equalsIgnoreCase(typeName))){
+                    if (!StringUtils.isEmpty(typeName) && ("URL".equalsIgnoreCase(typeName) || "Goods".equalsIgnoreCase(typeName) || "Category".equalsIgnoreCase(typeName)) ||"ShareApp".equalsIgnoreCase(typeName)){
                         if ("URL".equalsIgnoreCase(typeName)){
                             Intent intent = new Intent(HomeActivity.this, AboutUsActivity.class);
                             intent.putExtra("type",3);
@@ -147,6 +147,15 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                             Intent intent = new Intent(HomeActivity.this,GoodsDetailActivity.class);
                             intent.putExtra("contentId",dataId);
                             startActivity(intent);
+                        }else if ("ShareApp".equalsIgnoreCase(typeName)){
+                            String tickets = ShareBankPreferenceUtils.getString("tickets", null);
+                            if (!StringUtils.isEmpty(tickets)){
+                                Intent intent = new Intent(HomeActivity.this,ShareActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                         }else {
                             int dataId = data.get(position).getDataId();
                             Intent intent = new Intent(HomeActivity.this,GoodsListActivity.class);
@@ -237,14 +246,6 @@ public class HomeActivity extends TabBaseActivity implements IBananerView<List<H
                     }else if ("FollowList".equals(toolsBarBean.getTypeName())){
                         if (!StringUtils.isEmpty(tickets)){
                             Intent intent = new Intent(HomeActivity.this,CollectionActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }else if ("ShareApp".equals(toolsBarBean.getTypeName())){
-                        if (!StringUtils.isEmpty(tickets)){
-                            Intent intent = new Intent(HomeActivity.this,ShareActivity.class);
                             startActivity(intent);
                         }else {
                             Toast.makeText(HomeActivity.this,"请先登录",Toast.LENGTH_SHORT).show();

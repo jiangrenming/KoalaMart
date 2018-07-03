@@ -42,7 +42,9 @@ public class CustomGsonResponseBodyConverter <T> implements Converter<ResponseBo
             value.close();
             switch (responseBean.getCode()){
                 case 300:
-                    throw new ApiException();
+                    ApiException apiException = new ApiException();
+                    apiException.setMessage(responseBean.getMsg());
+                    throw apiException;
                 case 401:
                     throw new TokenExpireException();
             }

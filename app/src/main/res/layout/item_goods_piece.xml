@@ -29,7 +29,7 @@
         android:background="@drawable/home_bg"
         android:gravity="center_vertical|center_horizontal"
         android:text="查看更多食品零食 >>"
-        android:padding="10dp"
+        android:padding="9dp"
         android:layout_margin="5dp"
         android:textSize="13sp"
         android:textColor="@color/white"

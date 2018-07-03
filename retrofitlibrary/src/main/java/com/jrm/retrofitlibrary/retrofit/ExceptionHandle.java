@@ -65,7 +65,7 @@ public class ExceptionHandle {
             return ex;
         }else if (e instanceof  ApiException){
             ex = new ResponeThrowable(e, ERROR.API_EXCEPTION);
-            ex.message = "服务器异常";
+            ex.message = e.getMessage();
             return ex;
         }else if (e instanceof  TokenExpireException){
             ex = new ResponeThrowable(e, ERROR.TOKEN_EXCEPTIN);

@@ -527,12 +527,13 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             @Override
             public void onItemClick(View view, int position) {
                 timeInterval = timeList.get(position);
-                timeId = timeInterval.getTimeId();
-                Log.i("选择的时间为：",timeId);
+                if (timeInterval != null){
+                    timeId = timeInterval.getTimeId();
+                    Log.i("选择的时间为：",timeId+"");
+                }
                 disPopuWindow();
-                if (StringUtils.isEmpty(timeInterval.getEndTime())){
+                if (timeInterval != null && StringUtils.isEmpty(timeInterval.getEndTime())){
                     select_time.setText(date + " " + timeInterval.getStartTime());
-
                 }else {
                     select_time.setText(date + " " + timeInterval.getStartTime() + "-" + timeInterval.getEndTime());
                 }
@@ -733,11 +734,11 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     }
 
     private void disPopuWindow() {
-        if (null != mPopuWindow && mPopuWindow.isShowing()) {
+        if (null != this && null != mPopuWindow && mPopuWindow.isShowing()) {
             try{
                 mPopuWindow.dismiss();
             }catch (Exception e){
-
+                e.printStackTrace();
             }
         }
     }
@@ -745,10 +746,10 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
     @Override
     public void onPriceData(OrderPrice data) {
-        actual_amount.setText("实际付款：" + data.getCurrency() + " " + String.format("%.2f", data.getTotalPriceAfterDiscount()));
+        actual_amount.setText("实际付款: " + data.getCurrency() + String.format("%.2f", data.getTotalPriceAfterDiscount()));
         rmb_amount.setText("约合RMB:¥ " + String.format("%.2f", data.getTotalPriceAfterDiscount() * data.getRate()));
-        order_total_amount.setText(data.getCurrency() + " " + String.format("%.2f", data.getTotalGoodsPrice()));
-        tax_amount.setText(data.getCurrency() + " " + String.format("%.2f", data.getDeliveryPrice()));
+        order_total_amount.setText(data.getCurrency()+ String.format("%.2f", data.getTotalGoodsPrice()));
+        tax_amount.setText(data.getCurrency() + String.format("%.2f", data.getDeliveryPrice()));
 
     }
 
