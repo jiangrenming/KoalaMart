@@ -493,7 +493,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         date = availableChooseDateTime.get(0).getDateStr();
 
         //右侧的时间
-         timeList = availableChooseDateTime.get(0).getTimeList();
+        timeList = availableChooseDateTime.get(0).getTimeList();
         ruleAdapter = new TimeRuleAdapter(this, timeList);
         RecyclerViewHelper.initRecyclerViewV(this, time_categry, false, ruleAdapter);
 
@@ -514,9 +514,9 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 }
                 for (int i = 0; i <availableChooseDateTime.size() ; i++) {
                     if (availableChooseDateTime.get(i).isSelect()){
-                        List<TimeInterval> timeIntervals = availableChooseDateTime.get(i).getTimeList();
+                        timeList = availableChooseDateTime.get(i).getTimeList();
                         if (ruleAdapter!= null){
-                            ruleAdapter.updateItems(timeIntervals);
+                            ruleAdapter.updateItems(timeList);
                         }
                     }
                 }
@@ -572,7 +572,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             if (shoppingCartDTOList != null && shoppingCartDTOList.size() > 0) {
                 if (mPayAdapter == null) {
                     mPayAdapter = new PayAdapter(this, shoppingCartDTOList);
-                    RecyclerViewHelper.initRecyclerViewV(this, goods_pay, true, mPayAdapter);
+                    RecyclerViewHelper.initRecyclerViewV(this, goods_pay, false, mPayAdapter);
                 } else {
                     mPayAdapter.cleanItems();
                     mPayAdapter.addItems(shoppingCartDTOList);
@@ -582,7 +582,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                 }
             }
             count_goods.setText("共" + allCount + "件");
-            actual_amount.setText("实际付款：" + data.getOrderPriceDTO().getCurrency()  + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount()));
+            actual_amount.setText("实际付款：" + data.getOrderPriceDTO().getCurrency()  + String.format("%.2f", data.getOrderPriceDTO().getTotalPrice()));
             rmb_amount.setText("约合RMB: ¥" + String.format("%.2f", data.getOrderPriceDTO().getTotalPriceAfterDiscount() * data.getOrderPriceDTO().getRate()));
             order_total_amount.setText(data.getOrderPriceDTO().getCurrency()+ String.format("%.2f", data.getOrderPriceDTO().getTotalGoodsPrice()));
             tax_amount.setText(data.getOrderPriceDTO().getCurrency() +String.format("%.2f", data.getOrderPriceDTO().getDeliveryPrice()));
@@ -746,7 +746,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
 
     @Override
     public void onPriceData(OrderPrice data) {
-        actual_amount.setText("实际付款: " + data.getCurrency() + String.format("%.2f", data.getTotalPriceAfterDiscount()));
+        actual_amount.setText("实际付款: " + data.getCurrency() + String.format("%.2f", data.getTotalPrice()));
         rmb_amount.setText("约合RMB:¥ " + String.format("%.2f", data.getTotalPriceAfterDiscount() * data.getRate()));
         order_total_amount.setText(data.getCurrency()+ String.format("%.2f", data.getTotalGoodsPrice()));
         tax_amount.setText(data.getCurrency() + String.format("%.2f", data.getDeliveryPrice()));

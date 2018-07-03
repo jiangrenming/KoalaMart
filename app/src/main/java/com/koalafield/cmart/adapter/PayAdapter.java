@@ -46,35 +46,40 @@ public class PayAdapter extends BaseQuickAdapter<ShoppingCart> {
         if (StringUtils.isEmpty(item.getColor())){
             yanse.setVisibility(View.GONE);
         }else {
-            yanse.setText("颜色:"+(item.getColor()));
+            yanse.setText("颜色: "+(item.getColor()));
         }
         if (StringUtils.isEmpty(item.getSize())){
             chicun.setVisibility(View.GONE);
         }else {
-            chicun.setText("尺寸:"+(item.getSize()));
+            chicun.setText("尺寸: "+(item.getSize()));
         }
         if (StringUtils.isEmpty(item.getType())){
             leixing.setVisibility(View.GONE);
         }else {
-            leixing.setText("类型:"+(item.getType()));
+            leixing.setText("类型: "+(item.getType()));
         }
         if (StringUtils.isEmpty(item.getWeight())){
             zhongliang.setVisibility(View.GONE);
         }else {
-            zhongliang.setText("重量:"+(item.getWeight()));
+            zhongliang.setText("重量: "+(item.getWeight()));
         }
         if (StringUtils.isEmpty(item.getMaterial())){
             fenge.setVisibility(View.GONE);
         }else {
-            fenge.setText("风格:"+(item.getMaterial()));
+            fenge.setText("风格: "+(item.getMaterial()));
         }
-
+        View view = holder.getView(R.id.pay_item);
         holder.setText(R.id.goods_name,item.getCommodity().getName())
                 .setText(R.id.pay_price,item.getCommodity().getCurrentPrice())
                 .setText(R.id.pay_count,String.valueOf("共"+item.getCount())+"件");
         ImageView pay_img = holder.getView(R.id.pay_img);
         if (mContext != null){
             Glide.with(mContext).load(item.getCommodity().getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(pay_img);
+        }
+        if (mData.size()-1 == holder.getPosition()){
+            view.setVisibility(View.GONE);
+        }else {
+            view.setVisibility(View.VISIBLE);
         }
     }
 }
