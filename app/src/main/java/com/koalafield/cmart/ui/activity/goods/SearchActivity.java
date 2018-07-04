@@ -102,13 +102,13 @@ public class SearchActivity extends BaseActivity implements IHotWordsView<List<S
     private void initHistoryTag() {
         List<HistoryContent> allHistory =  mHistory.findAllHistory();
         if (allHistory != null && allHistory.size() >0){
+            ll_history.setVisibility(View.VISIBLE);
             //list倒序排列
             Collections.reverse(allHistory);
             String[] strings = new String[allHistory.size()];
             for (int i = 0; i < allHistory.size(); i++) {
                 strings[i] = allHistory.get(i).getContent();
             }
-            ll_history.setVisibility(View.VISIBLE);
             his_flowLayout.setColorful(true);
             his_flowLayout.cleanTag();
             his_flowLayout.setData(strings);

@@ -101,7 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/goods_detail_txt"
-                            android:text="AUD 0.00"
+                            android:text="AUD0.00"
                             android:textColor="@color/red" />
                         <TextView
                             android:id="@+id/goods_detail_sale"

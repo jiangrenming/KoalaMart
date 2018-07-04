@@ -31,10 +31,10 @@ public class DisCountAdapter extends BaseQuickAdapter<DisCountBean> {
 
     @Override
     protected void convert(BaseViewHolder holder, DisCountBean item) {
-        holder.setText(R.id.title_price,String.format("%.2f",  item.getAmount())+" AUD")
+        holder.setText(R.id.title_price,String.format("%.2f",  item.getAmount())+item.getCurrent())
                 .setText(R.id.title_price_activity,"满"+String.format("%.2f",  item.getMinBillUseTotalPrice())
                         +"减"+String.format("%.2f",  item.getAmount()))
-                .setText(R.id._price,String.format("%.2f",  item.getAmount())+" AUD劵")
+                .setText(R.id._price,String.format("%.2f",  item.getAmount())+item.getCurrent()+"劵")
                 .setText(R.id.expride_time,"过期时间: "+item.getExpire());
     }
 }

@@ -33,7 +33,7 @@ public class GoodsCategryThreeAdapter extends BaseQuickAdapter<GoodItemBean> {
     protected void convert(BaseViewHolder holder, GoodItemBean item) {
         ImageView img = holder.getView(R.id.goods_item_three_img);
         holder.setText(R.id.goods_item_three_name,item.getName())
-                .setText(R.id.goods_item_three_price,(item.getCurrency()+" "+ (item.getCurrentPrice() == null ? "0.00" : item.getCurrentPrice())));
+                .setText(R.id.goods_item_three_price,(item.getCurrency()+ (item.getCurrentPrice() == null ? "0.00" : item.getCurrentPrice())));
         Glide.with(mContext).load(item.getCoverImg()).placeholder(R.mipmap.default_img).error(R.mipmap.default_img).into(img);
     }
 

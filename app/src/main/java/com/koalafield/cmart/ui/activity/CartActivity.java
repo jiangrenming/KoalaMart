@@ -107,6 +107,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         presenter.getData();
     }
 
+    private String currenyCD;
     @Override
     public void onSucessCartFul(List<CartDataBean> data) {
         if (data != null && data.size() >0 ){
@@ -119,6 +120,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
             cart_top_layout.setVisibility(View.VISIBLE);
             for (int i = 0; i < data.size(); i++) {
                 data.get(i).setSelect(true);
+                currenyCD = data.get(i).getCommodity().getCurrency();
             }
             mCartBean = data;
             cartItemAdapter = new CartItemAdapter(CartActivity.this,data,goods_item_recycler);
@@ -149,7 +151,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
         clear_all.setEnabled(false);
         clear_all.setClickable(false);
         select_num.setText("0");
-        cart_curreny.setText("AUD:");
+        cart_curreny.setText("AUD");
         select_amount.setText("0.00");
     }
 
@@ -215,7 +217,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
     @Override
     public void getAllPrice(double price) {
         Long.valueOf((long) (price*100));
-        cart_curreny.setText("AUD:");
+        cart_curreny.setText(currenyCD);
         if (price > 0  && price > 0.00){
             select_amount.setText(String.format("%.2f", price));
         }else {
@@ -255,7 +257,7 @@ public class CartActivity extends TabBaseActivity implements ICartListView<List<
 
     @Override
     public void cleatAll(boolean isNull) {
-        cart_curreny.setText("AUD:");
+        cart_curreny.setText("AUD");
         if (isNull){
             select.setImageResource(R.mipmap.un_select);
             select_num.setText("0");

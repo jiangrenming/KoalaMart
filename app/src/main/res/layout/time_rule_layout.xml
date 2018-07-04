@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:background="@color/time"
-        android:gravity="bottom"
+        android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:text="09:00-15:00"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/time_start_price"
@@ -26,7 +26,7 @@
         android:paddingBottom="3dp"
         android:text="(加收运费 $ 0.00)"
         android:textColor="@color/text_black"
-        android:textSize="12sp" />
+        android:textSize="11sp" />
 
 
 </LinearLayout>

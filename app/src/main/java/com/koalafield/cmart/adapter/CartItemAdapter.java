@@ -79,7 +79,7 @@ public class CartItemAdapter extends BaseQuickAdapter<CartDataBean> {
    //     new FrontViewToMove(frontView, mListView,200);
 
         holder.setText(R.id.goods_cart_name,commodity.getName())
-                .setText(R.id.goods_cart_curreny,commodity.getCurrency()+":")
+                .setText(R.id.goods_cart_curreny,commodity.getCurrency())
                 .setText(R.id.goods_cart_amount, commodity.getCurrentPrice())
                 .setText(R.id.goods_cart_number,String.valueOf(item.getCount()));
 

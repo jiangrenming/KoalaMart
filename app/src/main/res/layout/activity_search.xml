@@ -84,7 +84,7 @@
     <LinearLayout
         android:id="@+id/ll_history"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <RelativeLayout
@@ -111,15 +111,16 @@
             <ImageView
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
+                android:layout_height="20dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/delete" />
         </RelativeLayout>
         <com.koalafield.cmart.widget.FlowLayout
             android:id="@+id/his_flowLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </LinearLayout>

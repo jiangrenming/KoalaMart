@@ -178,13 +178,14 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
      * 记录目标项位置
      */
     private int mToPosition;
-
+    private List<CateListBean> cateList;
+    private List<BrandListBean> brandList;
     @Override
     public void onCategryBrandSucessFul(CateBrandGoodsListBean data) {
         if (data != null) {
             //商品分类
             if (isClickCategry) {
-                final List<CateListBean> cateList = data.getCateList();
+                cateList  = data.getCateList();
                 if (cateList != null && cateList.size() > 0) {
                     for (int i = 0; i < cateList.size(); i++) {
                         if (mCateId == cateList.get(i).getId()) {
@@ -211,6 +212,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
                                 }
                             }
                             mAdapter.updateItems(cateList);
+                            mBrandId = 0;
                             requestData();
                         }
                     });
@@ -221,7 +223,7 @@ public class GoodsListActivity extends BaseActivity implements ICategryListView<
             }
             //品牌分类
             if (isClickBrand) {
-                final List<BrandListBean> brandList = data.getBrandList();
+                 brandList = data.getBrandList();
                 if (brandList != null && brandList.size() > 0) {
                     categry_list.setVisibility(View.VISIBLE);
                     for (int i = 0; i < brandList.size(); i++) {
