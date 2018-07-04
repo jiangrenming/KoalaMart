@@ -363,9 +363,9 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     cancle_order.setVisibility(View.VISIBLE);
                     devilery_time_layout.setVisibility(View.VISIBLE);
                     devilery_style_layout.setVisibility(View.VISIBLE);
-                    pay_style_layout.setVisibility(View.GONE);
                     pay_time_layout.setVisibility(View.GONE);
                     once_pay.setVisibility(View.VISIBLE);
+                    pay_style.setText(detailsInfo.getPaymentDisplayName());
                     devilery_time.setText(detailsInfo.getBookDeliveryTime());
                     devilery_style.setText(data.getDelivery().getDeliveryName());
                 }else if (detailsInfo.getStatus() == 1){  //代发货
@@ -373,7 +373,6 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     cancle_order.setVisibility(View.GONE);
                     devilery_time_layout.setVisibility(View.VISIBLE);
                     devilery_style_layout.setVisibility(View.VISIBLE);
-                    pay_style_layout.setVisibility(View.VISIBLE);
                     pay_time_layout.setVisibility(View.VISIBLE);
                     once_pay.setVisibility(View.GONE);
                     pay_time.setText(detailsInfo.getPayTime());
@@ -387,7 +386,6 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     once_pay.setText("确认收货");
                     devilery_time_layout.setVisibility(View.VISIBLE);
                     devilery_style_layout.setVisibility(View.VISIBLE);
-                    pay_style_layout.setVisibility(View.VISIBLE);
                     pay_time_layout.setVisibility(View.VISIBLE);
                     pay_time.setText(detailsInfo.getPayTime());
                     pay_style.setText(detailsInfo.getPaymentDisplayName());
@@ -399,7 +397,6 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     once_pay.setVisibility(View.GONE);
                     devilery_time_layout.setVisibility(View.VISIBLE);
                     devilery_style_layout.setVisibility(View.VISIBLE);
-                    pay_style_layout.setVisibility(View.VISIBLE);
                     pay_time_layout.setVisibility(View.VISIBLE);
                     pay_time.setText(detailsInfo.getPayTime());
                     pay_style.setText(detailsInfo.getPaymentDisplayName());

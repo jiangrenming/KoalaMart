@@ -211,6 +211,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                     params.put("paymentId", String.valueOf(payId));
                     params.put("couponCode ", disCountCode);
                     params.put("bookTime", select_time.getText().toString().trim());
+                    params.put("timeId", StringUtils.isEmpty(timeId) ? "0" :timeId);
                     params.put("remark", "");
                     params.put("isUserScore", "false");
                     ICreateOrderPresenter orderPresenter = new CreateOrderPresenter(this);
