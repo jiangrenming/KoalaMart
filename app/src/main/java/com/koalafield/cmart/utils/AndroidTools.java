@@ -71,7 +71,12 @@ public class AndroidTools {
         String strDate = format.format(date);
         return strDate;
     }
-
+    public  static String formatDate(long time){
+        long hours = (time%(1000*60*60*24))/(1000*60*60);
+        long minuter = (time%(1000*60*60))/(1000*60);
+        long seconds  =  (time%(1000*60))/(1000);
+        return  hours+"小时"+minuter+"分钟"+seconds+"秒";
+    }
 
     public static boolean isServiceRunning(Context context, String serviceName) {
         boolean isRunning = false;

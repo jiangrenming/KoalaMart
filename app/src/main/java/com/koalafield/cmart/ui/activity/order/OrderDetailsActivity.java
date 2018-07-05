@@ -180,7 +180,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         if (event != null){
             if (event.mType.equals(Constants.IN_RUNNING)){
                   mTime = event.mTime;
-                 String timer = AndroidTools.formatMillisecondAllDate(mTime);
+                 String timer = AndroidTools.formatDate(mTime);
                  Log.i("转换的时间为：",timer);
                 // 正在倒计时
                 has_time.setText("倒计时还剩:" + timer);
