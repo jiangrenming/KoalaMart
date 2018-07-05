@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="@dimen/dp_15"
+    android:layout_marginRight="@dimen/dp_10"
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/brand_name"
@@ -11,7 +11,7 @@
         android:textColor="@color/gray_three"
         android:gravity="center_horizontal|center_vertical"
         android:text="全部"
-        android:layout_height="30dp" />
+        android:layout_height="@dimen/dp_30" />
     <View
         android:layout_below="@+id/brand_name"
         android:id="@+id/brand_select"

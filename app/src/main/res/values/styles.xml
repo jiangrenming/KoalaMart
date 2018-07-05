@@ -10,12 +10,12 @@
     </style>
 
     <style name="login_comfirm">
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginTop">15dp</item>
-        <item name="android:layout_marginBottom">15dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">@dimen/dp_15</item>
+        <item name="android:layout_marginBottom">@dimen/dp_15</item>
+        <item name="android:layout_marginLeft">@dimen/dp_20</item>
+        <item name="android:layout_marginRight">@dimen/dp_20</item>
         <item name="android:text">登录</item>
         <item name="android:textSize">20sp</item>
         <item name="android:background">@color/btn_red</item>

@@ -7,21 +7,21 @@
     android:gravity="center_horizontal">
 
     <FrameLayout
-        android:layout_width="40dp"
+        android:layout_width="@dimen/dp_40"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:src="@mipmap/home"/>
 
         <View
             android:id="@+id/red_point"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8"
             android:background="@drawable/circle_point"
             android:layout_marginTop="5dp"
             android:layout_marginRight="6dp"

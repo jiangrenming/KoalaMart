@@ -8,21 +8,21 @@
         android:id="@+id/sectionTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dip"
+        android:layout_marginBottom="@dimen/dp_3"
         android:background="#496491"
-        android:paddingLeft="8dip"
+        android:paddingLeft="@dimen/dp_8"
         android:text="A"
         android:textColor="#ffffff"
-        android:textSize="18sp"
+        android:textSize="@dimen/sp_18"
         android:textStyle="bold"/>
 
     <RelativeLayout
         android:id="@+id/infoRowContainer"
         android:layout_width="fill_parent"
-        android:layout_height="50dip"
+        android:layout_height="@dimen/dp_50"
         android:gravity="center_vertical"
         android:background="@drawable/listitem_selector"
-        android:paddingLeft="10dip" >
+        android:paddingLeft="@dimen/dp_10" >
 
         <TextView
             android:id="@+id/cityName"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="澳大利亚"
-            android:textSize="20dip"
+            android:textSize="@dimen/dp_20"
             android:textStyle="bold" />
 
     </RelativeLayout>

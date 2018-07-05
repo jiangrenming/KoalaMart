@@ -10,22 +10,22 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/goods_img"
-            android:layout_width="110dp"
-            android:paddingLeft="20dp"
+            android:layout_width="@dimen/dp_110"
+            android:paddingLeft="@dimen/dp_20"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/default_img"
-            android:layout_height="110dp" />
+            android:layout_height="@dimen/dp_110" />
         <LinearLayout
             android:layout_toRightOf="@+id/goods_img"
             android:layout_width="fill_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/goods_short_name"
-                android:paddingTop="20dp"
+                android:paddingTop="@dimen/dp_20"
                 android:layout_width="match_parent"
                 android:lines="2"
                 android:text=""
@@ -35,7 +35,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/curreny_"
@@ -51,16 +51,16 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/goods_close"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/close"
-            android:layout_height="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -87,11 +87,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="@color/black"
                     android:text="颜色"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="30dp" />
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_30" />
 
                 <com.koalafield.cmart.widget.MyGridView
                     android:id="@+id/item_color"
@@ -100,8 +100,8 @@
                     android:layout_height="wrap_content"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="11dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginLeft="@dimen/dp_11"
                     android:background="#eee" />
             </LinearLayout>
             <LinearLayout
@@ -113,11 +113,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="@color/black"
                     android:text="尺寸"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="30dp" />
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_30" />
                 <com.koalafield.cmart.widget.MyGridView
                     android:id="@+id/item_size"
                     android:layout_width="match_parent"
@@ -125,8 +125,8 @@
                     android:layout_height="wrap_content"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="11dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginLeft="@dimen/dp_11"
                     android:background="#eee" />
             </LinearLayout>
             <LinearLayout
@@ -138,11 +138,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="@color/black"
                     android:text="重量"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="30dp" />
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_30" />
                 <com.koalafield.cmart.widget.MyGridView
                     android:id="@+id/item_weight"
                     android:numColumns="4"
@@ -150,8 +150,8 @@
                     android:layout_height="wrap_content"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="11dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginLeft="@dimen/dp_11"
                     android:background="#eee" />
             </LinearLayout>
             <LinearLayout
@@ -163,11 +163,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="@color/black"
                     android:text="类型"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="30dp" />
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_30" />
                 <com.koalafield.cmart.widget.MyGridView
                     android:id="@+id/item_type"
                     android:layout_width="match_parent"
@@ -176,8 +176,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="11dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginLeft="@dimen/dp_11"
                     android:background="#eee" />
             </LinearLayout>
             <LinearLayout
@@ -189,11 +189,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="@color/black"
                     android:text="风格"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="30dp" />
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_30" />
                 <com.koalafield.cmart.widget.MyGridView
                     android:id="@+id/item_materi"
                     android:layout_width="match_parent"
@@ -201,8 +201,8 @@
                     android:layout_height="wrap_content"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="11dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginLeft="@dimen/dp_11"
                     android:background="#eee" />
             </LinearLayout>
         </LinearLayout>
@@ -210,18 +210,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:padding="12sp"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:padding="@dimen/sp_12"
         android:gravity="center_vertical" >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="11dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/dp_11"
+            android:layout_marginTop="@dimen/dp_10"
             android:text="购买数量"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
 
         <ImageView
             android:id="@+id/add_goods_num"
@@ -229,7 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="48dp"
+            android:layout_marginRight="@dimen/dp_48"
             android:contentDescription="@null"
             android:src="@mipmap/add" />
 
@@ -238,18 +238,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/dp_5"
             android:layout_toLeftOf="@id/add_goods_num"
             android:text="1"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_18" />
 
         <ImageView
             android:id="@+id/minus_pop_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/dp_5"
             android:layout_toLeftOf="@id/goods_pop_num"
             android:contentDescription="@null"
             android:src="@mipmap/minus" />
@@ -259,8 +259,8 @@
         android:layout_width="match_parent"
         android:text="加入购物车"
         android:background="@color/btn_red"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_16"
         android:textColor="@color/white"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_height="50dp" />
+        android:layout_height="@dimen/dp_50" />
 </LinearLayout>

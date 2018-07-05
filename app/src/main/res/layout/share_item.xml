@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:background="@color/gray_light"
         android:orientation="horizontal"
-        android:layout_height="150dp">
+        android:layout_height="@dimen/dp_150">
 
     <View
         android:layout_width="0dp"
@@ -23,15 +23,15 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:scaleType="fitXY"
             android:src="@mipmap/wx_friend" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center_horizontal"
             android:scaleType="fitXY"
             android:text="朋友分享" />
@@ -46,16 +46,16 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:layout_gravity="center_horizontal"
             android:scaleType="fitXY"
             android:src="@mipmap/wx_cicrl" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center_horizontal"
             android:scaleType="fitXY"
             android:text="朋友圈分享" />

@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/dp_8"
         android:background="@drawable/popup_shape"
         android:orientation="vertical">
 
@@ -14,10 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="16dp"
+            android:padding="@dimen/dp_16"
             android:text="换个头像,换个心情"
             android:textColor="#666"
-            android:textSize="14sp" />
+            android:textSize="@dimen/sp_14" />
 
         <View
             android:layout_width="match_parent"
@@ -29,10 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="16dp"
+            android:padding="@dimen/dp_16"
             android:text="从相册上传"
             android:textColor="#118"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_18" />
 
         <View
             android:layout_width="match_parent"
@@ -44,26 +44,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="16dp"
+            android:padding="@dimen/dp_16"
             android:text="拍照"
             android:textColor="#118"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_18" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/dp_8"
         android:background="@drawable/popup_shape">
         <TextView
             android:id="@+id/tv_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="16dp"
+            android:padding="@dimen/dp_16"
             android:text="取消"
             android:textColor="#118"
-            android:textSize="18sp"
+            android:textSize="@dimen/sp_18"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

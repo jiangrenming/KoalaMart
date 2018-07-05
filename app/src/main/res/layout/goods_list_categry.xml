@@ -9,15 +9,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="@dimen/dp_35"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_5"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
             android:src="@mipmap/back" />
@@ -26,15 +26,15 @@
             android:id="@+id/search_words"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_weight="1"
             android:background="@drawable/edit_bg"
             android:gravity="center_vertical"
             android:hint="搜索您想搜索的东西"
             android:imeOptions="actionSearch"
-            android:paddingLeft="2dp"
-            android:textSize="12sp" />
+            android:paddingLeft="@dimen/dp_2"
+            android:textSize="@dimen/sp_12" />
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -43,10 +43,10 @@
 
             <ImageView
                 android:id="@+id/goods_car_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="@dimen/dp_20"
                 android:scaleType="fitXY"
                 android:src="@mipmap/buy" />
 
@@ -54,7 +54,7 @@
                 android:id="@+id/search_cart_num"
                 style="@style/bg_text_style"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/dp_15"
                 android:textSize="8sp"
                 android:visibility="gone"
                 tools:ignore="SmallSp" />
@@ -65,7 +65,7 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="#ffffff">
 
         <android.support.design.widget.AppBarLayout
@@ -82,8 +82,8 @@
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
+                app:expandedTitleMarginEnd="@dimen/dp_64"
+                app:expandedTitleMarginStart="@dimen/dp_48"
                 app:layout_scrollFlags="scroll">
                 <!--填充置顶可缩进的布局-->
                 <android.support.v7.widget.RecyclerView
@@ -113,7 +113,7 @@
             android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <FrameLayout

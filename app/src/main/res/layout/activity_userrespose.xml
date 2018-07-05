@@ -13,17 +13,17 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="10dp"/>
+        android:layout_height="@dimen/dp_10"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/advices_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <View
         android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"
         android:background="@color/gray_light"
-        android:layout_height="5dp"/>
+        android:layout_height="@dimen/dp_5"/>
     <EditText
         android:id="@+id/content"
         android:scrollbars="vertical"
@@ -31,23 +31,23 @@
         android:minLines="7"
         android:hint="请详细描述您的问题，我们会尽快处理"
         android:gravity="top|left"
-        android:textSize="13sp"
+        android:textSize="@dimen/sp_13"
         android:background="@drawable/address_bg"
         android:layout_width="match_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:text="提交"
-        android:layout_marginTop="30dp"
-        android:background="@color/btn_red"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@color/red"
         android:gravity="center_horizontal|center_vertical"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="@dimen/dp_30"
         android:textColor="@color/white"
-        android:layout_marginRight="30dp"
-        android:layout_height="40dp" />
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_height="@dimen/dp_40" />
     </LinearLayout>
     <include layout="@layout/layout_common_empty"/>
 </FrameLayout>

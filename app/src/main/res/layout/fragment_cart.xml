@@ -8,7 +8,7 @@
         android:id="@+id/cart_top"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="40dp">
+        android:layout_height="@dimen/dp_40">
         <TextView
             android:layout_width="match_parent"
             android:gravity="center_vertical|center_horizontal"
@@ -17,12 +17,12 @@
             android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/clear_all"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/delete"
-            android:layout_marginRight="10dp"
-            android:layout_height="20dp" />
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_height="@dimen/dp_20" />
 
     </RelativeLayout>
     <View
@@ -66,11 +66,11 @@
         android:gravity="center_horizontal"
         android:layout_height="match_parent">
         <ImageView
-            android:layout_width="25dp"
+            android:layout_width="@dimen/dp_25"
             android:src="@mipmap/buy"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
-            android:layout_height="25dp" />
+            android:layout_height="@dimen/dp_25" />
         <TextView
             android:layout_width="wrap_content"
             android:text="购物车空空的"
@@ -80,7 +80,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/dp_50"
         android:background="@color/gray"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/empty_cart"
@@ -91,22 +91,22 @@
             android:layout_height="0.5dp"/>
         <ImageView
             android:id="@+id/select"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:scaleType="fitXY"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:src="@mipmap/select"
             android:layout_centerVertical="true"
-            android:layout_height="20dp" />
+            android:layout_height="@dimen/dp_20" />
         <TextView
             android:layout_toRightOf="@+id/select"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:paddingLeft="5dp"
+            android:paddingLeft="@dimen/dp_5"
             android:text="全选" />
         <LinearLayout
             android:id="@+id/pay_goods"
-            android:layout_width="120dp"
+            android:layout_width="@dimen/dp_120"
             android:layout_alignParentRight="true"
             android:background="@color/red"
             android:gravity="center_horizontal"
@@ -147,24 +147,24 @@
                 android:layout_width="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="1"
-                android:padding="8dp"
+                android:padding="@dimen/dp_8"
                 android:layout_height="0dp">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_14"
                     android:text="总计 "
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/cart_curreny"
                     android:layout_width="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/sp_12"
                     android:text="AUD "
                     android:textColor="@color/red"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/select_amount"
                     android:layout_width="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/sp_12"
                     android:text="0.00"
                     android:textColor="@color/red"
                     android:layout_height="wrap_content" />
@@ -173,8 +173,8 @@
                 android:layout_width="wrap_content"
                 android:text="不含运费"
                 android:layout_gravity="center_horizontal|right"
-                android:textSize="10sp"
-                android:layout_marginRight="8dp"
+                android:textSize="@dimen/sp_10"
+                android:layout_marginRight="@dimen/dp_8"
                 android:layout_weight="0.5"
                 android:layout_height="0dp" />
         </LinearLayout>

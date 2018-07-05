@@ -6,10 +6,10 @@
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/select_time_item"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_40"
         android:gravity="center_horizontal|center_vertical"
-        android:textSize="14sp"
+        android:textSize="@dimen/sp_14"
         android:text="2018-01-27"/>
 
 

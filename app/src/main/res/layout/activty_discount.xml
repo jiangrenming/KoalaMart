@@ -8,7 +8,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dp_1"
         android:background="@color/line" />
 
     <LinearLayout
@@ -21,8 +21,8 @@
             android:id="@+id/indicator_discount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
             android:weightSum="2">
 
             <TextView
@@ -49,7 +49,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="@dimen/dp_5"
             android:background="@color/ub_bg" />
     </LinearLayout>
 

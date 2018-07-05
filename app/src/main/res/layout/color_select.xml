@@ -9,7 +9,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/dp_5"
         android:background="@drawable/shape1"
         android:gravity="center">
 
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView01"
-            android:textSize="13sp"/>
+            android:textSize="@dimen/sp_13"/>
     </LinearLayout>
 
 </LinearLayout>

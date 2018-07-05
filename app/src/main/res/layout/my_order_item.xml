@@ -6,15 +6,15 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/dp_10"
         android:orientation="horizontal"
-        android:layout_height="30dp">
+        android:layout_height="@dimen/dp_30">
         <TextView
             android:layout_width="wrap_content"
             android:text="单号："
-            android:textSize="13sp"
+            android:textSize="@dimen/sp_13"
             android:gravity="center_vertical"
             android:layout_height="match_parent" />
         <TextView
@@ -23,14 +23,14 @@
             android:layout_weight="1"
             android:textColor="@color/black"
             android:text="1234567890"
-            android:textSize="13sp"
+            android:textSize="@dimen/sp_13"
             android:gravity="center_vertical"
             android:layout_height="match_parent" />
         <TextView
             android:id="@+id/order_state"
             android:layout_width="wrap_content"
             android:text="未支付"
-            android:textSize="13sp"
+            android:textSize="@dimen/sp_13"
             android:textColor="@color/red"
             android:gravity="center_vertical"
             android:layout_height="match_parent" />
@@ -44,8 +44,8 @@
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/item_order"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
@@ -62,9 +62,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_5"
         android:orientation="horizontal">
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_weight="1.2"
             android:gravity="center_vertical"
             android:text="2018-05-28 11:22"
-            android:textSize="12sp" />
+            android:textSize="@dimen/sp_12" />
 
         <!--<LinearLayout
             android:layout_width="0dp"
@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="总计: " />
+                android:text="总计 " />
 
             <TextView
                 android:id="@+id/order_curreny"

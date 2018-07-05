@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
-    android:paddingBottom="1dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="5dp"
+    android:paddingBottom="@dimen/dp_1"
+    android:paddingLeft="@dimen/dp_15"
+    android:paddingRight="@dimen/dp_5"
     app:ios="false"
     app:leftSwipe="true"
     app:swipeEnable="true"
-    android:layout_height="100dp">
+    android:layout_height="@dimen/dp_100">
 
     <!--<LinearLayout
         android:id="@+id/id_front"
@@ -31,25 +31,25 @@
 
                 <ImageView
                     android:id="@+id/iv_select"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_gravity="center_vertical"
                     android:scaleType="fitXY"
                     android:src="@mipmap/select" />
 
                 <ImageView
                     android:id="@+id/goods_cart_img"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="@dimen/dp_80"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:scaleType="fitXY"
                     android:src="@mipmap/buy" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="@dimen/dp_5"
                     android:orientation="vertical">
 
                     <TextView
@@ -66,7 +66,7 @@
                         android:id="@+id/color_size"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -74,16 +74,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="颜色:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/goods_cart_size"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:layout_weight="1"
                             android:text="尺寸:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -97,24 +97,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="重量:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/goods_cart_weight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:text="类型:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/goods_cart_mater"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:layout_weight="1"
                             android:text="风格:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -136,7 +136,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="198.88"
+                            android:text=""
                             android:textColor="@color/red" />
 
                         <LinearLayout
@@ -148,10 +148,10 @@
 
                             <ImageView
                                 android:id="@+id/goods_cart_minus"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="@dimen/dp_20"
+                                android:layout_height="@dimen/dp_20"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginLeft="@dimen/dp_5"
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/minus" />
 
@@ -159,16 +159,16 @@
                                 android:id="@+id/goods_cart_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginLeft="@dimen/dp_15"
                                 android:gravity="center_vertical"
                                 android:text="1" />
 
                             <ImageView
                                 android:id="@+id/goods_cart_add"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="@dimen/dp_20"
+                                android:layout_height="@dimen/dp_20"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginLeft="@dimen/dp_15"
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/add" />
                         </LinearLayout>
@@ -186,12 +186,12 @@
 
         <TextView
             android:id="@+id/btn_delete"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/dp_100"
             android:layout_height="match_parent"
             android:background="@color/red"
             android:gravity="center_horizontal|center_vertical"
             android:text="删除"
-            android:textSize="15sp"
+            android:textSize="@dimen/sp_15"
             android:textStyle="bold"
             android:textColor="@android:color/white"/>
     </LinearLayout>

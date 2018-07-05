@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/dp_100"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -32,7 +32,7 @@
                 android:gravity="center_horizontal|center_vertical"
                 android:text="送货时间"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/sp_16" />
 
             <TextView
                 android:id="@+id/comfirm_dievery"
@@ -61,7 +61,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/dp_300"
         android:orientation="horizontal">
 
         <android.support.v7.widget.RecyclerView
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:paddingLeft="10dp"
+            android:paddingLeft="@dimen/dp_10"
             android:scrollbars="none" />
 
         <TextView
@@ -85,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:gravity="center_horizontal|center_vertical"
-                android:paddingTop="10dp"
+                android:paddingTop="@dimen/dp_10"
                 android:text="下单后配送两小时送货"
                 android:textColor="@color/black"/>
     </LinearLayout>

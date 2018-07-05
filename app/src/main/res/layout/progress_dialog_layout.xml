@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/refreshing_img"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
         android:src="@mipmap/loading" />

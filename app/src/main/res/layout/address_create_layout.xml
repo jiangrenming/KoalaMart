@@ -9,18 +9,18 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="5dp"/>
+        android:layout_height="@dimen/dp_5"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center_vertical"
-        android:layout_height="30dp">
+        android:layout_height="@dimen/dp_30">
         <TextView
             android:layout_width="wrap_content"
             android:text="收货人"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_height="match_parent" />
@@ -29,8 +29,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:hint="请输入收货人名称"
-            android:layout_marginLeft="10dp"
-            android:textSize="13sp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textSize="@dimen/sp_13"
             android:background="@null"
             android:layout_height="match_parent" />
 
@@ -38,17 +38,17 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/dp_1"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center_vertical"
-        android:layout_height="30dp">
+        android:layout_height="@dimen/dp_30">
         <TextView
             android:layout_width="wrap_content"
             android:text="联系电话"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_height="match_parent" />
@@ -57,21 +57,21 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:hint="请输入收货人电话"
-            android:layout_marginLeft="10dp"
-            android:textSize="13sp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textSize="@dimen/sp_13"
             android:background="@null"
             android:layout_height="match_parent" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/dp_1"/>
 
     <LinearLayout
         android:id="@+id/select_country"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/dp_30"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -81,7 +81,7 @@
             android:gravity="center_vertical"
             android:text="国家"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/country_name"
@@ -92,8 +92,8 @@
             android:text="澳大利亚" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:scaleType="fitXY"
             android:src="@mipmap/right" />
     </LinearLayout>
@@ -101,13 +101,13 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/dp_1"/>
 
     <LinearLayout
         android:id="@+id/select_state"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/dp_30"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -117,7 +117,7 @@
             android:gravity="center_vertical"
             android:text="州"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/province"
@@ -128,8 +128,8 @@
             android:text="New South Wales" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:scaleType="fitXY"
             android:src="@mipmap/right" />
     </LinearLayout>
@@ -137,17 +137,17 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/dp_1"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center_vertical"
-        android:layout_height="30dp">
+        android:layout_height="@dimen/dp_30">
         <TextView
             android:layout_width="wrap_content"
             android:text="城市"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_height="match_parent" />
@@ -156,9 +156,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:text="Sydney"
-            android:textSize="13sp"
+            android:textSize="@dimen/sp_13"
             android:background="@null"
             android:layout_height="match_parent"/>
 
@@ -166,17 +166,17 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/dp_1"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center_vertical"
-        android:layout_height="30dp">
+        android:layout_height="@dimen/dp_30">
         <TextView
             android:layout_width="wrap_content"
             android:text="区"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_height="match_parent" />
@@ -185,9 +185,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:hint="请输入区域"
-            android:textSize="13sp"
+            android:textSize="@dimen/sp_13"
             android:background="@null"
             android:layout_height="match_parent"/>
 
@@ -195,21 +195,21 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/dp_1"/>
     <EditText
         android:id="@+id/et_suggestion"
         android:layout_width="match_parent"
         android:hint="输入详细地址"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp_10"
         android:layout_height="wrap_content"
         android:background="@drawable/address_bg"
         android:maxLength="40"
-        android:textSize="13sp"
-        android:minHeight="100dp"/>
+        android:textSize="@dimen/sp_13"
+        android:minHeight="@dimen/dp_100"/>
     <View
         android:layout_width="match_parent"
         android:background="@color/gray_light"
-        android:layout_height="5dp"/>
+        android:layout_height="@dimen/dp_5"/>
    <!-- <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -240,8 +240,8 @@
         android:id="@+id/add_address"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:textColor="@color/btn_red"
+        android:textColor="@color/red"
         android:gravity="center_vertical|center_horizontal"
         android:text="新增收货地址"
-        android:layout_height="50dp" />
+        android:layout_height="@dimen/dp_50" />
 </LinearLayout>

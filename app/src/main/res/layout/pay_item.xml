@@ -2,25 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_marginBottom="5dp"
-    android:layout_height="95dp">
+    android:layout_marginBottom="@dimen/dp_5"
+    android:layout_height="@dimen/dp_95">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="90dp">
+        android:layout_height="@dimen/dp_90">
         <ImageView
             android:id="@+id/pay_img"
-            android:layout_width="90dp"
+            android:layout_width="@dimen/dp_90"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
             android:src="@mipmap/default_img"
-            android:layout_height="90dp" />
+            android:layout_height="@dimen/dp_90" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:orientation="vertical">
 
             <LinearLayout
@@ -38,13 +38,13 @@
                     android:lines="3"
                     android:text="红牛功能性饮料"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:id="@+id/pay_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="@dimen/dp_10"
                     android:gravity="bottom"
                     android:text="0.00"
                     android:textColor="@color/red" />
@@ -64,17 +64,17 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
                     android:text="颜色："
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:id="@+id/chicun"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="尺寸："
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
 
             </LinearLayout>
 
@@ -92,26 +92,26 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
                     android:text="重量："
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:id="@+id/leixing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:gravity="bottom"
                     android:text="类型："
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:id="@+id/fenge"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="风格："
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
             </LinearLayout>
 
             <TextView
@@ -120,17 +120,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/dp_10"
                 android:gravity="bottom"
                 android:text="共1件"
                 android:textColor="@color/gray_three"
-                android:textSize="13sp" />
+                android:textSize="@dimen/sp_13" />
         </RelativeLayout>
     </LinearLayout>
     <View
         android:id="@+id/pay_item"
         android:layout_width="match_parent"
         android:background="@color/gray"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/dp_3"
         android:layout_height="0.5dp"/>
 </LinearLayout>

@@ -9,15 +9,15 @@
     <RelativeLayout
         android:id="@+id/top_header"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="@dimen/dp_40">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:scaleType="fitXY"
             android:src="@mipmap/back" />
 
@@ -28,30 +28,30 @@
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center_horizontal"
             android:text="订单详情"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:layout_alignParentRight="true"
             android:id="@+id/cancle_order"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/dp_10"
             android:gravity="center_vertical|center_horizontal"
             android:text="取消订单"
             android:textColor="@color/text_black_light"
-            android:textSize="14sp" />
+            android:textSize="@dimen/sp_14" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/has_time"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/dp_30"
         android:layout_below="@+id/top_header"
         android:background="@color/red"
         android:gravity="center_vertical|center_horizontal"
         android:text="倒计时:"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="@dimen/sp_15" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -76,11 +76,11 @@
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:id="@+id/collapsing_tool_bar_test_ctl"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="@dimen/dp_65"
                     android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
-                    app:expandedTitleMarginEnd="64dp"
-                    app:expandedTitleMarginStart="48dp"
+                    app:expandedTitleMarginEnd="@dimen/dp_64"
+                    app:expandedTitleMarginStart="@dimen/dp_48"
                     app:layout_scrollFlags="scroll">
 
                     <LinearLayout
@@ -93,10 +93,10 @@
                             android:id="@+id/have_name_adress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="@dimen/dp_5"
                             android:orientation="horizontal"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="10dp">
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_10">
 
                             <TextView
                                 android:id="@+id/order_address_name"
@@ -110,7 +110,7 @@
                                 android:id="@+id/order_address_phone"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="@dimen/dp_20"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:text="17621216837"
@@ -121,8 +121,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp">
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_10">
 
                             <TextView
                                 android:id="@+id/order_address_details"
@@ -130,7 +130,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:drawableLeft="@mipmap/address"
-                                android:drawablePadding="15dp"
+                                android:drawablePadding="@dimen/dp_15"
                                 android:ellipsize="end"
                                 android:gravity="center_vertical"
                                 android:lines="2"
@@ -138,8 +138,8 @@
                                 android:textColor="@color/black" />
 
                             <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="@dimen/dp_20"
+                                android:layout_height="@dimen/dp_20"
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/right" />
                         </LinearLayout>
@@ -150,7 +150,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:background="@mipmap/underline"
-                    android:layout_height="1dp"/>
+                    android:layout_height="@dimen/dp_1"/>
                <!-- <View
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
@@ -158,22 +158,22 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:drawableLeft="@mipmap/buy"
-                        android:drawablePadding="8dp"
+                        android:drawablePadding="@dimen/dp_8"
                         android:gravity="center_vertical"
                         android:text="商品清单" />
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
                         android:layout_gravity="center_vertical"
                         android:scaleType="fitXY"
                         android:src="@mipmap/right" />
@@ -182,7 +182,7 @@
                         android:id="@+id/statue_txt"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="@dimen/dp_5"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:text="未支付"
@@ -205,16 +205,16 @@
                         android:id="@+id/order_detail_recy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_10" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -235,9 +235,9 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -257,9 +257,9 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -279,10 +279,10 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_30"
                         android:orientation="horizontal">
 
                         <TextView
@@ -297,14 +297,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="123456789"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/pay_style_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -312,21 +312,21 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="支付方式:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/pay_style"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="微信支付"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/pay_time_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -334,20 +334,20 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="支付时间:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/pay_time"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="2018-05-18"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -355,22 +355,22 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="交易时间:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/order_time"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="123456789"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/devilery_time_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -378,22 +378,22 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="送货时间:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/devilery_time"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="123456789"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/devilery_style_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:orientation="horizontal">
 
                         <TextView
@@ -401,14 +401,14 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="配送方式:"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/devilery_style"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="123456789"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
@@ -417,11 +417,11 @@
     <TextView
         android:id="@+id/once_pay"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/dp_50"
         android:layout_alignParentBottom="true"
         android:background="@color/red"
         android:gravity="center_horizontal|center_vertical"
         android:text="立即付款"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="@dimen/sp_16" />
 </RelativeLayout>

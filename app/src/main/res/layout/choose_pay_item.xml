@@ -8,30 +8,30 @@
         android:id="@+id/pay_type"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_height="50dp">
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_height="@dimen/dp_50">
         <ImageView
             android:id="@+id/pay_img"
-            android:layout_width="25dp"
+            android:layout_width="@dimen/dp_25"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
             android:src="@mipmap/default_img"
-            android:layout_height="25dp" />
+            android:layout_height="@dimen/dp_25" />
         <TextView
             android:id="@+id/pay_name"
             android:layout_width="0dp"
             android:gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:text="微信支付"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/iv_balance_select"
-            android:layout_width="25dp"
+            android:layout_width="@dimen/dp_25"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:layout_height="25dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_height="@dimen/dp_25"
             android:src="@mipmap/un_select" />
     </LinearLayout>
 

@@ -8,11 +8,11 @@
         layout="@layout/top_header"/>
     <RelativeLayout
         android:id="@+id/user_phone"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
+        android:layout_marginTop="@dimen/dp_5"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="@dimen/dp_80">
         <TextView
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
@@ -21,32 +21,32 @@
             android:text="头像"/>
         <ImageView
             android:id="@+id/phone_ava"
-            android:layout_width="40dp"
+            android:layout_width="@dimen/dp_40"
             android:src="@mipmap/ic_launcher_round"
-            android:paddingRight="5dp"
+            android:paddingRight="@dimen/dp_5"
             android:scaleType="fitXY"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@+id/phone"
-            android:layout_height="40dp" />
+            android:layout_height="@dimen/dp_40" />
         <ImageView
             android:id="@+id/phone"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:src="@mipmap/right"
             android:layout_height="match_parent" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:paddingLeft="15dp"
+        android:paddingLeft="@dimen/dp_15"
         android:layout_height="0.5dp"
         android:background="@color/gray_light2"/>
 
     <RelativeLayout
         android:id="@+id/name"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/dp_45">
         <TextView
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
@@ -59,28 +59,28 @@
             android:src="@mipmap/ic_launcher_round"
             android:gravity="center_vertical"
             android:layout_toLeftOf="@+id/user_name"
-            android:paddingRight="5dp"
+            android:paddingRight="@dimen/dp_5"
             android:text="17621216837"
             android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/user_name"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:src="@mipmap/right"
             android:layout_height="match_parent" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:paddingLeft="15dp"
+        android:paddingLeft="@dimen/dp_15"
         android:layout_height="0.5dp"
         android:background="@color/gray_light2"/>
 
     <RelativeLayout
         android:id="@+id/sex"
-        android:paddingLeft="15dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/dp_45">
         <TextView
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
@@ -92,20 +92,20 @@
             android:layout_width="wrap_content"
             android:src="@mipmap/ic_launcher_round"
             android:gravity="center_vertical"
-            android:paddingRight="5dp"
+            android:paddingRight="@dimen/dp_5"
             android:layout_toLeftOf="@+id/user_sex"
             android:text="男"
             android:layout_height="match_parent" />
         <ImageView
             android:id="@+id/user_sex"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:src="@mipmap/right"
             android:layout_height="match_parent" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:paddingLeft="15dp"
+        android:paddingLeft="@dimen/dp_15"
         android:layout_height="0.5dp"
         android:background="@color/gray_light2"/>
 

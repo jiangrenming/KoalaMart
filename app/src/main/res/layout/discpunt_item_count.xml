@@ -2,33 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_10"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="0dp"
         android:orientation="vertical"
         android:layout_weight="0.5"
-        android:paddingTop="5dp"
+        android:paddingTop="@dimen/dp_5"
         android:gravity="center_vertical"
         android:background="@mipmap/coupons_right_red"
-        android:layout_height="80dp">
+        android:layout_height="@dimen/dp_80">
         <TextView
             android:id="@+id/title_price"
             android:layout_width="match_parent"
             android:text="5 AUD"
             android:textColor="@color/white"
             android:gravity="center_horizontal"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:layout_weight="1"
             android:layout_height="0dp" />
         <TextView
             android:id="@+id/title_price_activity"
             android:layout_width="match_parent"
             android:text="满10减5"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp_14"
             android:textColor="@color/white"
             android:gravity="center_horizontal"
             android:layout_weight="1"
@@ -38,24 +38,24 @@
     <LinearLayout
         android:layout_width="0dp"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="@dimen/dp_10"
         android:layout_weight="1"
         android:background="@mipmap/coupons_left_white"
-        android:paddingTop="5dp"
-        android:layout_height="80dp">
+        android:paddingTop="@dimen/dp_5"
+        android:layout_height="@dimen/dp_80">
         <TextView
             android:id="@+id/_price"
             android:layout_width="match_parent"
             android:text="5 AUD劵"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:layout_weight="1"
             android:layout_height="0dp" />
         <TextView
             android:id="@+id/where_price"
             android:layout_width="match_parent"
             android:text="全场通用(特殊商品除外)"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp_14"
             android:textColor="@color/discount_txt"
             android:layout_weight="1"
             android:layout_height="0dp"/>
@@ -63,7 +63,7 @@
             android:id="@+id/expride_time"
             android:layout_width="match_parent"
             android:text="过期时间:2018.08.1"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp_14"
             android:textColor="@color/discount_txt"
             android:layout_weight="1"
             android:layout_height="0dp" />

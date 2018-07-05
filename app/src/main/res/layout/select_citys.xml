@@ -7,10 +7,10 @@
    <RelativeLayout
        android:layout_width="match_parent"
        android:background="@color/white"
-       android:paddingLeft="10dp"
-       android:paddingRight="10dp"
+       android:paddingLeft="@dimen/dp_10"
+       android:paddingRight="@dimen/dp_10"
        android:gravity="center_vertical"
-       android:layout_height="40dp">
+       android:layout_height="@dimen/dp_40">
        <TextView
            android:id="@+id/ib_cancle"
            android:layout_width="wrap_content"
@@ -18,14 +18,14 @@
            android:background="@color/transparent"
            android:layout_gravity="start"
            android:textColor="@color/black"
-           android:textSize="16sp"
+           android:textSize="@dimen/sp_16"
            android:text="取消"
            android:layout_height="match_parent" />
        <TextView
            android:layout_width="wrap_content"
            android:background="@color/transparent"
            android:layout_centerHorizontal="true"
-           android:textSize="18sp"
+           android:textSize="@dimen/sp_18"
            android:layout_gravity="start"
            android:gravity="center_vertical"
            android:text="选择地区"
@@ -45,7 +45,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/dp_250"
         android:background="@color/gray"
         android:orientation="horizontal" >
         <kankan.wheel.widget.WheelView

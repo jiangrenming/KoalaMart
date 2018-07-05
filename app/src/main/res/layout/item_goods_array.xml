@@ -5,8 +5,8 @@
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:paddingBottom="8dp"
+        android:layout_height="@dimen/dp_35"
+        android:paddingBottom="@dimen/dp_8"
         android:background="@color/gray_light">
 
         <TextView
@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            android:paddingLeft="10dp"
+            android:paddingLeft="@dimen/dp_10"
             android:text="各类饮料"
             android:textColor="@color/black" />
 
@@ -24,16 +24,16 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="bottom"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:text="更多"
             android:textColor="@color/black" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5"
         android:id="@+id/categry_one_recycler"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="@dimen/dp_160"/>
 </LinearLayout>
