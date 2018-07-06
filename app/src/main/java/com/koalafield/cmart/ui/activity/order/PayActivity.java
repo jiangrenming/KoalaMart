@@ -29,6 +29,7 @@ import com.koalafield.cmart.adapter.TimerTypeAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.TimerBean;
 import com.koalafield.cmart.bean.event.DisCountEvent;
+import com.koalafield.cmart.bean.event.LoginEvent;
 import com.koalafield.cmart.bean.order.CreateOrderBean;
 import com.koalafield.cmart.bean.order.Delivery;
 import com.koalafield.cmart.bean.order.LeftTimer;
@@ -49,19 +50,24 @@ import com.koalafield.cmart.presenter.order.IPricePresenter;
 import com.koalafield.cmart.presenter.order.PayPresenter;
 import com.koalafield.cmart.presenter.order.PaySdkPresenter;
 import com.koalafield.cmart.presenter.order.PricePresenter;
+import com.koalafield.cmart.presenter.user.IShareCallBackPresent;
+import com.koalafield.cmart.presenter.user.ShareCallBackPresent;
 import com.koalafield.cmart.ui.activity.LoginActivity;
 import com.koalafield.cmart.ui.activity.MainActivity;
 import com.koalafield.cmart.ui.activity.use.AddressManangerActivity;
 import com.koalafield.cmart.ui.activity.use.DisCountActivity;
+import com.koalafield.cmart.ui.activity.use.ShareActivity;
 import com.koalafield.cmart.ui.view.order.ICreateOrderView;
 import com.koalafield.cmart.ui.view.order.IPaySdkView;
 import com.koalafield.cmart.ui.view.order.IPayView;
 import com.koalafield.cmart.ui.view.order.IPriceView;
 import com.koalafield.cmart.utils.AndoridSysUtils;
+import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.MyBoundScrollView;
 
+import java.security.spec.ECField;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,6 +81,7 @@ import java.util.TimeZone;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -172,6 +179,8 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             params.put("scIds", datas);
             payPresenter.setParams(params);
         }
+
+        EventBus.getDefault().register(this);
     }
 
 
@@ -184,7 +193,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             case R.id.click_address:
             case R.id.change_address:
                 Intent intent = new Intent(PayActivity.this, AddressManangerActivity.class);
-                startActivityForResult(intent, 10000);
+                startActivityForResult(intent, 10010);
                 break;
             case R.id.change_time: //配送时间
                 openWindow(view);
@@ -235,16 +244,14 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     /**
      * 测试环境是01，正式环境是00
      */
+    private String orderNo;
     @Override
     public void onCreateOrderData(CreateOrderBean data) {
         if (data != null) {
-            String orderNo = data.getOrderNo();
+             orderNo = data.getOrderNo();
             if (!StringUtils.isEmpty(payName) && payName.equals("CashOnDelivery")) {
                 //货到付款直接跳转到详情
-                Intent intent = new Intent(PayActivity.this, OrderDetailsActivity.class);
-                intent.putExtra("billNo", orderNo);
-                startActivity(intent);
-                finish();
+                skipOrderActivity(orderNo);
             } else {
                 if (!StringUtils.isEmpty(orderNo)) {
                     Map<String, String> params = new HashMap<>();
@@ -268,7 +275,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
             } else if ("UnionPay".equals(payName)) {
                 if (!StringUtils.isEmpty(transactionNo)) {
                     UPPayAssistEx.startPay(PayActivity.this, null, null, transactionNo, BuildConfig.BANK_URL);
-                    finish();
+           //         finish();
                 }
             }
         }
@@ -287,7 +294,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         req.signType = data.getSignType();
         req.packageValue = data.getPackage();
         msgApi.sendReq(req);
-        finish();
+  //      finish();
     }
 
     @Override
@@ -657,7 +664,7 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 10000) {
+            if (requestCode == 10010) {
                 AddressManagerBean addressManagerBean = (AddressManagerBean) data.getSerializableExtra("address");
                 if (addressManagerBean != null) {
                     empty_adress.setVisibility(View.GONE);
@@ -667,28 +674,23 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                     address_details.setText(addressManagerBean.getCountry() + " " + addressManagerBean.getCity() + addressManagerBean.getAddress());
                     addRessId = addressManagerBean.getId();
                 }
-            } else if (requestCode == 10001){
-                DisCountBean  disCount = (DisCountBean) data.getSerializableExtra("disCount");
-                if (disCount != null){
-                    discount_content.setText("满"+String.format("%.2f",  disCount.getMinBillUseTotalPrice())+"减"+String.format("%.2f",  disCount.getAmount()));
+            } else if (requestCode == 10001) {
+                DisCountBean disCount = (DisCountBean) data.getSerializableExtra("disCount");
+                if (disCount != null) {
+                    discount_content.setText("满" + String.format("%.2f", disCount.getMinBillUseTotalPrice()) + "减" + String.format("%.2f", disCount.getAmount()));
                     disCountCode = disCount.getCode();
-                    if (payId > 0 && deliveryId > 0){
+                    if (payId > 0 && deliveryId > 0) {
                         changePrice();
                     }
                 }
-            }else {
+            } else {
                 if (data == null) {
                     return;
                 }
                 String msg = "";
-        /*
-         * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
-         */
                 String str = data.getExtras().getString("pay_result");
+                Log.i("微信支付",str);
                 if (str.equalsIgnoreCase("success")) {
-
-                    // 如果想对结果数据验签，可使用下面这段代码，但建议不验签，直接去商户后台查询交易结果
-                    // result_data结构见c）result_data参数说明
                     if (data.hasExtra("result_data")) {
                         String result = data.getExtras().getString("result_data");
                         try {
@@ -704,12 +706,26 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
                     msg = "支付成功！";
                 } else if (str.equalsIgnoreCase("fail")) {
                     msg = "支付失败！";
+                    skipOrderActivity(orderNo);
                 } else if (str.equalsIgnoreCase("cancel")) {
                     msg = "用户取消了支付";
+                    skipOrderActivity(orderNo);
                 }
                 Toast.makeText(PayActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    /**
+     * 支付失败，取消支付的操作
+     * @param orderNo
+     */
+    private  void skipOrderActivity(String orderNo){
+        //货到付款直接跳转到详情
+        Intent intent = new Intent(PayActivity.this, OrderDetailsActivity.class);
+        intent.putExtra("billNo", orderNo);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -762,4 +778,24 @@ public class PayActivity extends BaseActivity implements IPayView<PayBean>, Popu
         }
     }
 
+    @Subscribe(threadMode  = ThreadMode.MAIN)
+    public  void loginEvent(LoginEvent event){
+        if (event != null){
+            int mType = event.mType;
+            Log.i("支付结果",mType+""+event.userAggree);
+            if (mType == Constants.WX_PAY){
+                int errCode = event.userAggree;
+                if(errCode== BaseResp.ErrCode.ERR_OK){  //微信支付成功
+                    finish();
+                }else{  //失败或取消
+                    skipOrderActivity(orderNo);
+                }
+            }
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -29,6 +29,7 @@ import com.koalafield.cmart.adapter.PayChooseAdapter;
 import com.koalafield.cmart.adapter.PayOrderChooseAdapter;
 import com.koalafield.cmart.base.activity.BaseActivity;
 import com.koalafield.cmart.bean.HistoryContent;
+import com.koalafield.cmart.bean.event.LoginEvent;
 import com.koalafield.cmart.bean.event.UpdateEvent;
 import com.koalafield.cmart.bean.order.OrderAdress;
 import com.koalafield.cmart.bean.order.OrderDetailsInfo;
@@ -36,6 +37,8 @@ import com.koalafield.cmart.bean.order.OrderPrice;
 import com.koalafield.cmart.bean.order.OrderdetailsBean;
 import com.koalafield.cmart.bean.order.Payment;
 import com.koalafield.cmart.bean.order.SdkPayBean;
+import com.koalafield.cmart.bean.user.AddressManagerBean;
+import com.koalafield.cmart.bean.user.DisCountBean;
 import com.koalafield.cmart.db.HistoryService;
 import com.koalafield.cmart.db.IHistoryService;
 import com.koalafield.cmart.presenter.order.CancleOrderPresenter;
@@ -59,6 +62,7 @@ import com.koalafield.cmart.utils.Constants;
 import com.koalafield.cmart.utils.ShareBankPreferenceUtils;
 import com.koalafield.cmart.utils.StringUtils;
 import com.koalafield.cmart.widget.CommonDialog;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -67,6 +71,8 @@ import com.unionpay.UPPayAssistEx;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,17 +82,16 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- *
  * @author jiangrenming
  * @date 2018/5/29
  */
 
-public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsView<OrderdetailsBean>,IPaySdkView<SdkPayBean> ,
-        PopupWindow.OnDismissListener,IComfirmOrderView<BaseResponseBean>,ICancleOrderView<BaseResponseBean>{
+public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsView<OrderdetailsBean>, IPaySdkView<SdkPayBean>,
+        PopupWindow.OnDismissListener, IComfirmOrderView<BaseResponseBean>, ICancleOrderView<BaseResponseBean> {
 
     //头部布局
     @BindView(R.id.back)
-    ImageView  back;
+    ImageView back;
     @BindView(R.id.cancle_order)
     TextView cancle_order;
     @BindView(R.id.has_time)
@@ -136,7 +141,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     @BindView(R.id.pay_style_layout)
     LinearLayout pay_style_layout;
 
-    private  String billNo;
+    private String billNo;
 
     @Override
     public int attchLayoutRes() {
@@ -147,19 +152,11 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void initDatas() {
         billNo = getIntent().getStringExtra("billNo");
         EventBus.getDefault().register(this);
-
     }
 
     @Override
     public void upDateViews() {
-        IOrderDetailsPresenter detailsPresenter = new OrderDetailsPresenter(this);
-        if (StringUtils.isEmpty(billNo)){
-            billNo = "";
-        }
-        Map<String,String> params = new HashMap<>();
-        params.put("billNo",billNo);
-        detailsPresenter.setParams(params);
-        detailsPresenter.getData();
+        updataPage();
     }
 
     @Override
@@ -173,21 +170,22 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         EventBus.getDefault().unregister(this);
     }
 
-    private long mTime ;
-    @Subscribe(threadMode  = ThreadMode.MAIN)
-    public  void changeTime(UpdateEvent event){
-        Log.i("获取的数据",event.mTime+"");
-        if (event != null){
-            if (event.mType.equals(Constants.IN_RUNNING)){
-                  mTime = event.mTime;
-                 String timer = AndroidTools.formatDate(mTime);
-                 Log.i("转换的时间为：",timer);
+    private long mTime;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void changeTime(UpdateEvent event) {
+        Log.i("获取的数据", event.mTime + "");
+        if (event != null) {
+            if (event.mType.equals(Constants.IN_RUNNING)) {
+                mTime = event.mTime;
+                String timer = AndroidTools.formatDate(mTime);
+                Log.i("转换的时间为：", timer);
                 // 正在倒计时
                 has_time.setText("倒计时还剩:" + timer);
-                if (limit_time != null){
-                    limit_time.setText("请在"+timer+"前完成支付");
+                if (limit_time != null) {
+                    limit_time.setText("请在" + timer + "前完成支付");
                 }
-            }else if (event.mType.equals(Constants.END_RUNNING)){
+            } else if (event.mType.equals(Constants.END_RUNNING)) {
                 has_time.setText("订单已过期");
                 has_time.setTextColor(getResources().getColor(R.color.black));
                 has_time.setBackgroundColor(getResources().getColor(R.color.gray));
@@ -197,43 +195,44 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
             }
         }
     }
-    @OnClick({R.id.back,R.id.once_pay,R.id.cancle_order})
-    public void orderDetaiClck(View view){
-        switch (view.getId()){
+
+    @OnClick({R.id.back, R.id.once_pay, R.id.cancle_order})
+    public void orderDetaiClck(View view) {
+        switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
-            case  R.id.once_pay:
-                if (once_pay.getVisibility() == View.VISIBLE){
-                    if (detailsInfo.getStatus() == 2){
+            case R.id.once_pay:
+                if (once_pay.getVisibility() == View.VISIBLE) {
+                    if (detailsInfo.getStatus() == 2) {
                         //确认收货
-                        if (allowNext()){
-                            Map<String,String> params = new HashMap();
-                            params.put("billNo",billNo);
+                        if (allowNext()) {
+                            Map<String, String> params = new HashMap();
+                            params.put("billNo", billNo);
                             IComfirmOrderPresenter comfirmOrderPresenter = new ComfirmOrderPresenter(this);
                             comfirmOrderPresenter.setParams(params);
                             comfirmOrderPresenter.getData();
-                        }else {
-                            Toast.makeText(this,"重复点击的时间间隔太短",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "重复点击的时间间隔太短", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                    }else {
-                        if (payList != null && payList.size() > 0){
+                    } else {
+                        if (payList != null && payList.size() > 0) {
                             openWindow(view);
-                        }else {
-                            Toast.makeText(OrderDetailsActivity.this,"支付方式为空",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(OrderDetailsActivity.this, "支付方式为空", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
                 }
                 break;
             case R.id.cancle_order:
-                if (cancle_order.getVisibility() == View.VISIBLE){
+                if (cancle_order.getVisibility() == View.VISIBLE) {
                     new CommonDialog(this).builder().setTitle("取消订单").setMsg("订单取消后，交易将关闭").setNegativeButton("确定", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Map<String,String> params = new HashMap<>();
-                            params.put("billNo",billNo);
+                            Map<String, String> params = new HashMap<>();
+                            params.put("billNo", billNo);
                             ICancleOrderPresenter cancleOrderPresenter = new CancleOrderPresenter(OrderDetailsActivity.this);
                             cancleOrderPresenter.setParams(params);
                             cancleOrderPresenter.getData();
@@ -251,16 +250,17 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         }
     }
 
-    private int  paymentId;
+    private int paymentId;
     private int navigationHeight = 0;
     private PopupWindow mPopuWindow;
     private List<Payment> payList;
+
     private void openWindow(View v) {
         //防止重复按按钮
         if (mPopuWindow != null && mPopuWindow.isShowing()) {
             return;
         }
-        View view =  LayoutInflater.from(this).inflate(R.layout.choose_pay, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.choose_pay, null);
         mPopuWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         //设置背景
         mPopuWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -269,7 +269,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         mPopuWindow.setOutsideTouchable(true);
         //设置动画
         mPopuWindow.setAnimationStyle(R.style.PopupWindow);
-        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)){
+        if (AndoridSysUtils.checkDeviceHasNavigationBar(this)) {
             navigationHeight = AndoridSysUtils.getNavigationBarHeigh(this);
         }
         //设置显示的位置
@@ -284,50 +284,51 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
 
     private TextView limit_time;
     private String payName;
+
     private void setOnPopupViewClick(View view) {
-         RecyclerView payChoose = view.findViewById(R.id.choose_pay);
-         limit_time = view.findViewById(R.id.limit_time);
-        TextView  comfirm_pay = view.findViewById(R.id.comfirm_pay);
+        RecyclerView payChoose = view.findViewById(R.id.choose_pay);
+        limit_time = view.findViewById(R.id.limit_time);
+        TextView comfirm_pay = view.findViewById(R.id.comfirm_pay);
         comfirm_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPopuWindow != null &&mPopuWindow.isShowing()){
+                if (mPopuWindow != null && mPopuWindow.isShowing()) {
                     mPopuWindow.dismiss();
                 }
-                if (allowNext()){
-                    Map<String,String> params = new HashMap<>();
+                if (allowNext()) {
+                    Map<String, String> params = new HashMap<>();
                     IPaySdkPresenter mPresenter = new PaySdkPresenter(OrderDetailsActivity.this);
-                    params.put("billCode",billNo) ;
-                    params.put("paymentId",String.valueOf(paymentId)) ;
-                    params.put("bookTime",detailsInfo.getBookDeliveryTime());
+                    params.put("billCode", billNo);
+                    params.put("paymentId", String.valueOf(paymentId));
+  //                  params.put("bookTime", detailsInfo.getBookDeliveryTime());
                     mPresenter.setParams(params);
                     mPresenter.getData();
-                }else {
-                    Toast.makeText(OrderDetailsActivity.this,"重复点击的时间间隔太短",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(OrderDetailsActivity.this, "重复点击的时间间隔太短", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
         });
 
-        if (payList!= null && payList.size() > 0){
-            final PayOrderChooseAdapter payAdapter = new PayOrderChooseAdapter(this,payList);
-            RecyclerViewHelper.initRecyclerViewV(this,payChoose,true,payAdapter);
+        if (payList != null && payList.size() > 0) {
+            final PayOrderChooseAdapter payAdapter = new PayOrderChooseAdapter(this, payList);
+            RecyclerViewHelper.initRecyclerViewV(this, payChoose, true, payAdapter);
             payAdapter.setmPayCallBack(new PayOrderChooseAdapter.PayClickCallBack() {
                 @Override
                 public void onSucess(Payment item, boolean isSelect) {
                     for (int i = 0; i < payList.size(); i++) {
                         Payment payment = payList.get(i);
-                        if (payment.getId() == item.getId()){
+                        if (payment.getId() == item.getId()) {
                             payment.setSelect(isSelect);
-                        }else {
-                            if (payment.isSelect()){
+                        } else {
+                            if (payment.isSelect()) {
                                 payment.setSelect(false);
                             }
                         }
                     }
                     payAdapter.updateItems(payList);
                     for (int i = 0; i < payList.size(); i++) {
-                        if (payList.get(i).isSelect()){
+                        if (payList.get(i).isSelect()) {
                             paymentId = payList.get(i).getId();
                             payName = payList.get(i).getPaymentName();
                         }
@@ -343,22 +344,23 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     public void setBackgroundAlpha(float alpha) {
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.alpha = alpha;
-        this. getWindow().setAttributes(lp);
+        this.getWindow().setAttributes(lp);
     }
 
     private OrderDetailsInfo detailsInfo;
+
     @Override
     public void onOrderDetails(OrderdetailsBean data) {
-        if (data != null){
-             detailsInfo = data.getDetailsInfo();
-             payList = data.getPaymentDTOList();
-            if (detailsInfo != null && detailsInfo.getGoodsList() != null && detailsInfo.getGoodsList().size() >0){
+        if (data != null) {
+            detailsInfo = data.getDetailsInfo();
+            payList = data.getPaymentDTOList();
+            if (detailsInfo != null && detailsInfo.getGoodsList() != null && detailsInfo.getGoodsList().size() > 0) {
                 order_num.setText(detailsInfo.getBillNo());
                 order_time.setText(detailsInfo.getCreatedTime());
-                OrderAdapter mAdapter = new OrderAdapter(this,data.getDetailsInfo().getGoodsList());
-                RecyclerViewHelper.initRecyclerViewV(OrderDetailsActivity.this,order_detail_recy,true,mAdapter);
+                OrderAdapter mAdapter = new OrderAdapter(this, data.getDetailsInfo().getGoodsList());
+                RecyclerViewHelper.initRecyclerViewV(OrderDetailsActivity.this, order_detail_recy, true, mAdapter);
 
-                if (detailsInfo.getStatus() == 0){  //待付款
+                if (detailsInfo.getStatus() == 0) {  //待付款
                     has_time.setVisibility(View.VISIBLE);
                     cancle_order.setVisibility(View.VISIBLE);
                     devilery_time_layout.setVisibility(View.VISIBLE);
@@ -368,7 +370,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     pay_style.setText(detailsInfo.getPaymentDisplayName());
                     devilery_time.setText(detailsInfo.getBookDeliveryTime());
                     devilery_style.setText(data.getDelivery().getDeliveryName());
-                }else if (detailsInfo.getStatus() == 1){  //代发货
+                } else if (detailsInfo.getStatus() == 1) {  //代发货
                     has_time.setVisibility(View.GONE);
                     cancle_order.setVisibility(View.GONE);
                     devilery_time_layout.setVisibility(View.VISIBLE);
@@ -379,7 +381,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     pay_style.setText(detailsInfo.getPaymentDisplayName());
                     devilery_time.setText(detailsInfo.getBookDeliveryTime());
                     devilery_style.setText(data.getDelivery().getDeliveryName());
-                }else if (detailsInfo.getStatus() == 2){  //待收货
+                } else if (detailsInfo.getStatus() == 2) {  //待收货
                     has_time.setVisibility(View.GONE);
                     once_pay.setVisibility(View.VISIBLE);
                     cancle_order.setVisibility(View.GONE);
@@ -391,7 +393,7 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                     pay_style.setText(detailsInfo.getPaymentDisplayName());
                     devilery_time.setText(detailsInfo.getBookDeliveryTime());
                     devilery_style.setText(data.getDelivery().getDeliveryName());
-                }else if(detailsInfo.getStatus() == 4){  //已完成
+                } else if (detailsInfo.getStatus() == 4) {  //已完成
                     has_time.setVisibility(View.GONE);
                     cancle_order.setVisibility(View.GONE);
                     once_pay.setVisibility(View.GONE);
@@ -406,29 +408,29 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
                 statue_txt.setText(detailsInfo.getStatusText());
             }
             OrderAdress addressDTO = data.getAddressDTO();
-            if (addressDTO != null){
+            if (addressDTO != null) {
                 order_address_name.setText(addressDTO.getContactname());
                 order_address_phone.setText(addressDTO.getContactphone());
-                order_address_details.setText(addressDTO.getCountry()+" "+addressDTO.getCity() +addressDTO.getAddress());
+                order_address_details.setText(addressDTO.getCountry() + " " + addressDTO.getCity() + addressDTO.getAddress());
             }
             OrderPrice orderPrice = data.getOrderPrice();
-            if (orderPrice != null){
-                order_tax.setText(orderPrice.getCurrency()+String.format("%.2f",orderPrice.getDeliveryPrice()));
-                if (orderPrice.getCouponPrice() == 0 || orderPrice.getCouponPrice() == 0.00){
+            if (orderPrice != null) {
+                order_tax.setText(orderPrice.getCurrency() + String.format("%.2f", orderPrice.getDeliveryPrice()));
+                if (orderPrice.getCouponPrice() == 0 || orderPrice.getCouponPrice() == 0.00) {
                     order_discount.setVisibility(View.GONE);
-                }else {
+                } else {
                     order_discount.setVisibility(View.VISIBLE);
-                    order_discount.setText(orderPrice.getCurrency()+String.format("%.2f",orderPrice.getCouponPrice()));
+                    order_discount.setText(orderPrice.getCurrency() + String.format("%.2f", orderPrice.getCouponPrice()));
                 }
-                order_all_price.setText(orderPrice.getCurrency()+String.format("%.2f",orderPrice.getTotalPrice()));
+                order_all_price.setText(orderPrice.getCurrency() + String.format("%.2f", orderPrice.getTotalPrice()));
             }
-            if (!AndroidTools.isServiceRunning(this,"com.koalafield.cmart.service.TimeService")){
-                new Thread(){
+            if (!AndroidTools.isServiceRunning(this, "com.koalafield.cmart.service.TimeService")) {
+                new Thread() {
                     @Override
                     public void run() {
                         super.run();
-                        Intent intent = new Intent(OrderDetailsActivity.this,TimeService.class);
-                        intent.putExtra("time",detailsInfo.getExpirePayTimeStamp());
+                        Intent intent = new Intent(OrderDetailsActivity.this, TimeService.class);
+                        intent.putExtra("time", detailsInfo.getExpirePayTimeStamp());
                         startService(intent);
                     }
                 }.start();
@@ -437,30 +439,32 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
     }
 
     @Override
-    public void onOrderDetailsFailure(String message,int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+    public void onOrderDetailsFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             skipLogin(this);
         }
     }
 
+
     @Override
     public void onPaySdkData(SdkPayBean data) {
-        if (data != null){
+        if (data != null) {
             String transactionNo = data.getTransactionNo();
-            if (!StringUtils.isEmpty(payName) && "WECHAT".equals(payName)){
+            if (!StringUtils.isEmpty(payName) && "WECHAT".equals(payName)) {
                 onPayWX(data);
-            }else if ("UnionPay".equals(payName)){
-                if (!StringUtils.isEmpty(transactionNo)){
-                    UPPayAssistEx.startPay(OrderDetailsActivity.this,null,null,transactionNo, BuildConfig.BANK_URL);
-                    finish();
+            } else if ("UnionPay".equals(payName)) {
+                if (!StringUtils.isEmpty(transactionNo)) {
+                    UPPayAssistEx.startPay(OrderDetailsActivity.this, null, null, transactionNo, BuildConfig.BANK_URL);
+           //         finish();
                 }
-            }else if ("CashOnDelivery".equals(payName)){  //货到付款
+            } else if ("CashOnDelivery".equals(payName)) {  //货到付款
 
             }
         }
     }
-    private  void onPayWX(SdkPayBean data){
+
+    private void onPayWX(SdkPayBean data) {
         IWXAPI msgApi = WXAPIFactory.createWXAPI(this, data.getAppId());
         msgApi.registerApp(data.getAppId());
         PayReq req = new PayReq();
@@ -474,17 +478,18 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
         req.packageValue = data.getPackage();
         msgApi.sendReq(req);
     }
+
     @Override
-    public void onPaySdkFailure(String message,int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+    public void onPaySdkFailure(String message, int code) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             skipLogin(this);
         }
     }
 
     @Override
     public void onDismiss() {
-        if (null != mPopuWindow && mPopuWindow .isShowing()){
+        if (null != mPopuWindow && mPopuWindow.isShowing()) {
             mPopuWindow.dismiss();
         }
         setBackgroundAlpha(1.0f);
@@ -492,16 +497,16 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
 
     @Override
     public void onComfirmOrderList(BaseResponseBean data) {
-        if (data != null && data.getCode() == 200){
-            Toast.makeText(this,"确认收货成功",Toast.LENGTH_SHORT).show();
+        if (data != null && data.getCode() == 200) {
+            Toast.makeText(this, "确认收货成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
     @Override
     public void onFailureComfirmOrder(String message, int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             skipLogin(this);
         }
 
@@ -509,17 +514,77 @@ public class OrderDetailsActivity extends BaseActivity implements IOrderDetailsV
 
     @Override
     public void onSucessCancleOrder(BaseResponseBean data) {
-        if (data != null && data.getCode() == 200){
-            Toast.makeText(this,"取消订单成功",Toast.LENGTH_SHORT).show();
+        if (data != null && data.getCode() == 200) {
+            Toast.makeText(this, "取消订单成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
     @Override
     public void onFailureCancleOrder(String message, int code) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-        if (code == 401){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        if (code == 401) {
             skipLogin(this);
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+            String msg = "";
+            String str = data.getExtras().getString("pay_result");
+            if (str.equalsIgnoreCase("success")) {
+                if (data.hasExtra("result_data")) {
+                    String result = data.getExtras().getString("result_data");
+                    try {
+                        JSONObject resultJson = new JSONObject(result);
+                        String sign = resultJson.getString("sign");
+                        String dataOrg = resultJson.getString("data");
+                    } catch (JSONException e) {
+                    }
+                }
+                // 结果result_data为成功时，去商户后台查询一下再展示成功
+                msg = "支付成功！";
+            } else if (str.equalsIgnoreCase("fail")) {
+                msg = "支付失败！";
+            } else if (str.equalsIgnoreCase("cancel")) {
+                msg = "用户取消了支付";
+            }
+            Toast.makeText(OrderDetailsActivity.this, msg, Toast.LENGTH_SHORT).show();
+            updataPage();
+        }
+
+    }
+
+    /**
+     * 微信支付回调
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loginEvent(LoginEvent event) {
+        if (event != null) {
+            int mType = event.mType;
+            Log.i("支付结果", mType + "" + event.userAggree);
+            if (mType == Constants.WX_PAY) {
+                updataPage();
+            }
+        }
+    }
+
+    private  void updataPage(){
+        Log.i("订单详情支付",billNo+"11");
+        IOrderDetailsPresenter detailsPresenter = new OrderDetailsPresenter(this);
+        if (StringUtils.isEmpty(billNo)) {
+            billNo = "";
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("billNo", billNo);
+        detailsPresenter.setParams(params);
+        detailsPresenter.getData();
     }
 }

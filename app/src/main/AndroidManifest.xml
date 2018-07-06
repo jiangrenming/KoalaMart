@@ -137,13 +137,12 @@
                 <action android:name="com.koalafield.cmart.service.TimeService" />
             </intent-filter>
         </service>
-
+        <!--银联支付-->
         <activity
             android:name="com.unionpay.uppay.PayActivity"
             android:configChanges="orientation|keyboardHidden|keyboard"
             android:screenOrientation="portrait">
         </activity>
-
         <activity
             android:name="com.unionpay.UPPayWapActivity"
             android:configChanges="orientation|keyboardHidden|fontScale"

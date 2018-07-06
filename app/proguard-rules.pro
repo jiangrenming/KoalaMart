@@ -179,10 +179,14 @@
         @butterknife.* <methods>;
     }
  #微信登录
+-keep class com.tencent.** { *;}
 -keep class com.tencent.mm.opensdk.** {*;}
 -keep class com.tencent.wxop.** {*;}
 -keep class com.tencent.mm.sdk.** {*;}
 
+#银联支付
+-keep class com.unionpay.**{*;}
+-keep class com.UCMobile.PayPlugin.**{*;}
 #定位
 -keep class com.amap.api.location.**{*;}
 -keep class com.amap.api.fence.**{*;}

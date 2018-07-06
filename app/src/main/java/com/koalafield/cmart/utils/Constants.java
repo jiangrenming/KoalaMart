@@ -26,4 +26,5 @@ public class Constants {
     public static  final String APP_SCRECT ="232e5ac8f5a9ca3bd4db418617699fcc";
     public static  final int  WX_SHARE =100;
     public static  final int  WX_LOGIN =101;
+    public static  final int  WX_PAY =102;
 }
