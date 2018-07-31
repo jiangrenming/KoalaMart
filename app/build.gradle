@@ -13,6 +13,7 @@ android {
         ndk { //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
              abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
         }
+        manifestPlaceholders = [APP_NAME: '跨境超市'] // 配置主包的应用名称
     }
     signingConfigs {
         myConfig {
@@ -38,6 +39,11 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.myConfig
+        }
+        shopping.initWith(buildTypes.release) // 以release的配置来初始化马甲包配置
+        shopping {
+            applicationIdSuffix ".shopping" // 修改马甲包的applicationId，马甲包的application将为com.liunian.majiabaotest.majiabaoOne，即在原来的applicationId后加上配置内容
+            manifestPlaceholders = [APP_NAME: '邻家超市'] // 配置马甲包的应用名称
         }
     }
     // 源文件加上aidl文件夹下的java文件，默认只包含java文件夹下的。
