@@ -51,6 +51,7 @@ android {
         from android.sourceSets.main.java.srcDirs, android.sourceSets.main.res.srcDirs
         classifier = 'sources'
     }
+
 }
 
 dependencies {

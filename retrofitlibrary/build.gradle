@@ -15,6 +15,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -32,5 +35,13 @@ dependencies {
     // logger
     compile 'com.orhanobut:logger:1.15'
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
+
+task makeJar(type: Copy) {
+    delete 'build/MyRetrofit_V1.0.jar' //删除之前的旧jar包
+    from('build/intermediates/bundles/default/') //从这个目录下取出默认jar包
+    into('build/') //将jar包输出到指定目录下
+    include('classes.jar')
+    rename('classes.jar', 'MyRetrofit_V1.0.jar') //自定义jar包的名字
+}
+makeJar.dependsOn(build)
